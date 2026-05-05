@@ -18,8 +18,8 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
 
 <img width="400" height="600" alt="image" src="https://github.com/user-attachments/assets/51b3d7c0-b54a-4267-ae77-e930a64322b0" />
 
-Entrenador
 
-# Luis Eduardo Paredes
+
+# Entrenador/Luis Eduardo Paredes
 
 <img width="400" height="600" alt="image" src="https://github.com/user-attachments/assets/12b81259-f88b-43d7-be25-c19f183fe3eb" />
