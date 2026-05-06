@@ -7,9 +7,9 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
 
 ## 📌Tabla de contenido
 
-1.0 [Engineering Document/Trivilyn3.0](#Engineering-Document/Trivilyn30)
+1.[Engineering Document/Trivilyn3.0](#Engineering-Document/Trivilyn30)
 
-2.0 [MIEMBROS DEL TEAMROBOCRV](#MIEMBROS-DEL-TEAMROBOCRV)
+2.[MIEMBROS DEL TEAMROBOCRV](#MIEMBROS-DEL-TEAMROBOCRV)
 
  °[Dennis Adrian Silva Riera](#Dennis-Adrian-Silva-Riera)
    
@@ -19,27 +19,49 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
          
  °[Tutor](#Tutor/Luis-Eduardo-Paredes)
 
-3.0 [Movilidad y Diseño Mecánico](#Movilidad-y-Diseño-Mecánico)
+3. [Movilidad y Diseño Mecánico](#Movilidad-y-Diseño-Mecánico)
 
-4.0 [Arquitectura de Potencia y Sensores](#Arquitectura-de-Potencia-y-Sensores)
+4. [Arquitectura de Potencia y Sensores](#Arquitectura-de-Potencia-y-Sensores)
 
-5.0 [Arquitectura Software y Estratrgia](#Arquitectura-Software-y-Estratrgia)
+5. [Arquitectura Software y Estratrgia](#Arquitectura-Software-y-Estratrgia)
    
-6.0 [Pensamiento sistémico y decisiones de ingeniería](#Pensamiento-Sistémico-y-Decisiones-de-Ingeniería)
+6. [Pensamiento sistémico y decisiones de ingeniería](#Pensamiento-Sistémico-y-Decisiones-de-Ingeniería)
 
 
 # MIEMBROS DEL TEAMROBOCRV
 
 ## 👤Dennis Adrian Silva Riera
 
+### Rol en el equipo: Ingeniero Líder de Hardware e Integrador de Sistemas.
+
+Diseño Mecánico: Se encarga del modelado en 3D de las piezas y el chasis, asegurando que todo sea ligero y funcional.
+
+Electrónica: Responsable de conectar todos los componentes, la gestión de la batería y la ubicación estratégica de los sensores.
+
+Gestión Digital: Administra el repositorio de GitHub y organiza toda la documentación técnica del proyecto.
+
 <img width="400" height="600" alt="image" src="https://github.com/user-attachments/assets/140671eb-8c9f-4bf1-bf3d-6eb409680a4d" />
 
 ## 👤Gianni Marcello Martucci Jerez
+
+### Rol en el equipo: Programador y Desarrollador de Lógica de Navegación.
+
+Algoritmos de Navegación: Desarrolla la lógica que permite al robot detectar obstáculos y decidir hacia dónde moverse de forma autónoma.
+
+Arquitectura del Código: Organiza la estructura del programa para que sea eficiente y responda rápido ante cualquier cambio en la pista.
 
 <img width="400" height="600" alt="image" src="https://github.com/user-attachments/assets/1bcc44ed-ea78-4fa7-93d5-581ea6aad23a" />
 
 
 ## 👤Juan Andres Graterol Teran
+
+### Rol: Especialista en Ensamblaje y Asistente de Operaciones.
+
+Montaje Físico: Se encarga del armado manual del prototipo, asegurando que cada tornillo y pieza esté en su lugar.
+
+Control de Calidad: Revisa que la estructura física sea resistente y que no haya fallos mecánicos durante las pruebas.
+
+Apoyo Logístico: Colabora en la preparación de las pistas de prueba, recolección de datos y mantenimiento preventivo del robot.
 
 <img width="400" height="600" alt="image" src="https://github.com/user-attachments/assets/51b3d7c0-b54a-4267-ae77-e930a64322b0" />
 
