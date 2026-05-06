@@ -7,17 +7,17 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
 
 ## 📌Tabla de contenido
 
-1.[Engineering Document/Trivilyn3.0](#Engineering-Document/Trivilyn30)
+ 1.[Engineering Document/Trivilyn3.0](#Engineering-Document/Trivilyn30)
 
 2.[MIEMBROS DEL TEAMROBOCRV](#MIEMBROS-DEL-TEAMROBOCRV)
 
- °[Dennis Adrian Silva Riera](#Dennis-Adrian-Silva-Riera)
+   °[Dennis Adrian Silva Riera](#Dennis-Adrian-Silva-Riera)
    
- °[Gianni Marcello Martucci Jerez](#Gianni-Marcello-Martucci-Jerez)
+   °[Gianni Marcello Martucci Jerez](#Gianni-Marcello-Martucci-Jerez)
    
- °[Juan Andres Graterol Teran](#Juan-Andres-Graterol-Teran)
+   °[Juan Andres Graterol Teran](#Juan-Andres-Graterol-Teran)
          
- °[Tutor](#Tutor/Luis-Eduardo-Paredes)
+   °[Tutor](#Tutor/Luis-Eduardo-Paredes)
 
 3. [Movilidad y Diseño Mecánico](#Movilidad-y-Diseño-Mecánico)
 
