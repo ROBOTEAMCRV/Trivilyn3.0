@@ -5,10 +5,18 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
 
 # ÍNDICE
 
-## Tabla de contenido
+## 📌Tabla de contenido
 
 1.0 [Engineering Document/Trivilyn3.0](#Engineering-Document/Trivilyn30)
 
+2.0 [MIEMBROS DEL TEAMROBOCRV](#MIEMBROS-DEL-TEAMROBOCRV)
+
+   [Dennis Adrian Silva Riera](#Dennis-Adrian-Silva-Riera)
+   [Gianni Marcello Martucci Jerez](#Gianni-Marcello-Martucci-Jerez)
+   [Juan Andres Graterol Teran](#Juan-Andres-Graterol-Teran)
+   [Tutor](#Tutor/Luis-Eduardo-Paredes)
+   
+3.0 [Pensamiento sistémico y decisiones de ingeniería](#Pensamiento-sistémico-y-decisiones-de-ingeniería)
 
 
 # MIEMBROS DEL TEAMROBOCRV
@@ -28,7 +36,7 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
 
 
 
-## 👤Entrenador/Luis Eduardo Paredes
+## 👤Tutor/Luis Eduardo Paredes
 
 <img width="400" height="600" alt="image" src="https://github.com/user-attachments/assets/12b81259-f88b-43d7-be25-c19f183fe3eb" />
 
