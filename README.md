@@ -33,7 +33,7 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
   
    * [Temporada 2026](#Temporada-2026)
   
-7. [Arvhivos CAD](Archivos-CAD)
+7. [Archivos CAD](Archivos-CAD)
 
 # MIEMBROS DEL TEAMROBOCRV
 
