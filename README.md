@@ -11,15 +11,21 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
 
 2.0 [MIEMBROS DEL TEAMROBOCRV](#MIEMBROS-DEL-TEAMROBOCRV)
 
-   [Dennis Adrian Silva Riera](#Dennis-Adrian-Silva-Riera)
+ °[Dennis Adrian Silva Riera](#Dennis-Adrian-Silva-Riera)
    
-   [Gianni Marcello Martucci Jerez](#Gianni-Marcello-Martucci-Jerez)
+ °[Gianni Marcello Martucci Jerez](#Gianni-Marcello-Martucci-Jerez)
    
-   [Juan Andres Graterol Teran](#Juan-Andres-Graterol-Teran)
+ °[Juan Andres Graterol Teran](#Juan-Andres-Graterol-Teran)
+         
+ °[Tutor](#Tutor/Luis-Eduardo-Paredes)
+
+3.0 [Movilidad y Diseño Mecánico](#Movilidad-y-Diseño-Mecánico)
+
+4.0 [Arquitectura de Potencia y Sensores](#Arquitectura-de-Potencia-y-Sensores)
+
+5.0 [Arquitectura Software y Estratrgia](#Arquitectura-Software-y-Estratrgia)
    
-   [Tutor](#Tutor/Luis-Eduardo-Paredes)
-   
-3.0 [Pensamiento sistémico y decisiones de ingeniería](#Pensamiento-sistémico-y-decisiones-de-ingeniería)
+6.0 [Pensamiento sistémico y decisiones de ingeniería](#Pensamiento-Sistémico-y-Decisiones-de-Ingeniería)
 
 
 # MIEMBROS DEL TEAMROBOCRV
@@ -43,7 +49,105 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
 
 <img width="400" height="600" alt="image" src="https://github.com/user-attachments/assets/12b81259-f88b-43d7-be25-c19f183fe3eb" />
 
-# Pensamiento sistémico y decisiones de ingeniería 
+
+# Movilidad y Diseño Mecánico
+
+
+
+
+
+# Arquitectura de Potencia y Sensores
+
+
+
+
+
+# Arquitectura Software y Estratrgia
+
+## Resumen del Proyecto
+
+Este documentado tiene como objetivo explicar el funcionamiento lógico y estrategia que utilizamos para crear el código que controla al vehículo autónomo que fue diseñado para realizar las pruebas a enfrentar de una competencia llamada WRO de la categoría de futuros ingenieros, costa de que el vehículo tiene que realizar dos prueba abierta que se trata de completar tres vueltas en una pista de competición de 3x3 metros. El sistema debe navegar un entorno variable (centro aleatorizado) que genera pasillos estrechos de hasta 40cm, contabilizar el progreso (esquinas )de la misión y realizar un estacionamiento final en el cuadrante de origen; pero esta no es el única prueba a enfrentar también tiene que hacer la ronda de color, que se trata que el vehículo tiene navegar en una pista 3x3 metros mientras esquiva obstáculos aleatorios diferenciados por colores (rojo o verde ), el sistema emplea una arquitectura de bucle cerrado que integra una cámara de visión HuskyLens que detecta los colores de los obstáculos. La misión principal consiste en completar las vueltas requeridas evadiendo los obstáculos dependiendo del color (Rojo/Verde ) para  ejecutar maniobras de evasión precisas hacia el flanco correcto. Además, el códigos implementa rutinas de autocentrado constante, rectificación por contacto físico en esquinas para eliminar cualquier error o desvío, y una lógica de fin de carrera para estacionar el vehículo en el cuadrante de meta designado tras detectar un marcador de color Magenta.
+
+Arquitectura del Software de Ronda Abierta (Máquina de Estados de Misión)
+
+El código se ha estructurado como una Máquina de Estados Finitos (que quiere decir esto que tiene un fin el código ) jerárquica para gestionar no solo el control del vehículo, sino también la lógica de la misión (conteo de vueltas y estacionamiento).
+
+
+
+A continuancion les describiremos  los Estados de Misión:
+
+ Estado de Salida Preprogramada (if pepe==0): lo primero es que el robot ejecuta una secuencia fija de dirección (myservo.write(67) y retardos para salir de forma segura del cuadro de inicio y alinearse en el carril.
+Después sigue el Estado de Navegación (Crucero y Evasión) Este estado activo utiliza los tres sensores ultrasónicos. Se subdivide en:
+
+1.-) (Corrección Lateral): Si los sensores laterales (leftDistance, rightDistance) detectan una distancia < 25cm,se aplican micro-ajustes de servo para centrar el vehículo.
+
+2.-) Giro de Esquina: Cuando el sensor frontal detecta la pared en la distancia crítica (42– —52cm)), se inicia una maniobra de giro (derecha() o izquierda()).
+
+3.-)Estado de Conteo (pepe++): El código incrementa la variable pepe en cada maniobra de giro realizada. Esto permite contar la progresión de la misión (vueltas completadas).
+
+4.-)Estacionamiento Final: (if pepe > 12) Una vez que el contador de giros (pepe) supera 12 (lo que equivale a las 12 esquinas de las 3 vueltas), el sistema entra en modo de parada. Se ejecuta una función de avance final por tiempo (delay(2000)) para asegurar que el robot cruza la línea de meta y se detiene dentro del cuadrante de origen.
+
+Justificación de la Estrategia y Parámetros de Diseño
+
+Justificación de Umbrales Sensoriales:
+
+• Rango Frontal Crítico
+
+(42cm ≤ middleDistance ≤52cm) ustedes se preguntarán porque esta distancia bueno pues ya que se aleatoriza el centro se llega a crear pasillos de solo 40cm de ancho.El robot debe iniciar el giro antes de entrar en contacto con la pared o de que la lectura de su sensor delantero se vea afectada por las paredes laterales del pasillo estrecho. Este rango de 10cm de "amortiguación" experimental compensa la inercia del vehículo a carSpeed=80, asegurando que el giro se haga  sin un choque lateral en el pasillo más estrecho.
+
+   •Corrección Lateral Crítica  (<25 cm) 
+   
+Ustedes se preguntaran el porqué de esta corrección pues muy fácil la verdad esta corrección nos ayuda en muchas cosas una de ella en los pasillos de 40cm,el robot tiene solo un margen de error de pocos centímetros a cada lado. El umbral de 25cm se seleccionó porque es la distancia en la que la señal ultrasónica de los sensores laterales sigue siendo fiable y permite que el servo reaccione (write(115) o write(73)) antes de que se produzca una colisión,tambien no solo nos ayuda en solo esos momentos si no en todo momento ya que es una de las funciones más importante para que se logre la perfección en la prueba, ya que aveces en algún giro puede que no se  logre posicionar al 100% recto y si no tuviéramos esa corrección hubieran variaciones en el transcurso de la prueba provocando colisiones (algo que nos pasaba en anteriores pruebas antes de agregarle esta función al código ) 
+
+Justificación de Lógica de Sentido de Giro:
+
+El robot debe determinar la dirección del carril al inicio de la carrera. Se implementa una lógica condicional (tilin++, grasa++) que actúa de la siguiente manera:
+
+1.)Si al inicio se detecta una pared a la izquierda (leftDistance <= 100), se establece la dirección "Horaria".
+
+2.)De lo contrario, se establece "Antihoraria".
+
+Métrica de Éxito: Esta lógica permitió al robot adaptarse correctamente en el 100% de los escenarios de prueba para ambos sentidos de pista.
+
+
+
+
+Pruebas, Ajustes y Gestión de Fallos
+El rendimiento final es el resultado de un proceso de optimización iterativo documentado.
+
+
+Gestión de Casos Límite (Edge Cases):
+
+• Falla de Datos Sensoriales: La condición distance > 1 en todos los sensores actúa como un filtro básico para el ruido de "eco nulo" (lectura 0), evitando decisiones erróneas basadas en datos falsos.
+• Prevención de Carrera Infinita: La variable pepe nos ayuda si por alguna razón el robot se desvía pero sigue detectando obstáculos que interpreta como esquinas, el contador forzará la parada tras un número de ciclos determinado, evitando que el vehículo siga operando sin control de forma indefinida.
+
+Bueno listo  ya terminamos con la explicación, técnica y estrategia de el Software de la ronda 1 ( ronda abierta ) pero no es la única a continuación les explicaremos el funcionamiento , técnica  y estrategias que utilizamos para crear el Software de la ronda 2 ( ronda de evasión de obstáculos).
+
+Comenzaremos con la arquitectura del movimiento y visión 
+
+El software integra un sistema de visión HuskyLens vinculado a una lógica de centrado constante. La arquitectura se basa en mantener al robot en el eje central de la pista para maximizar el campo de visión (FOV) de la cámara y asegurar decisiones simétricas.
+
+Estrategia de Inicialización y Autocentrado
+Para evitar el error de deriva inicial, el robot ejecuta una rutina de calibración al encenderse que es ,. El servo se mueve a los extremos y regresa a la variable centro (97°). Esto asegura que el tren delantero esté alineado mecánicamente antes de avanzar. También contamos con un mantenimiento de Trayectoria(correcciónes)Se utiliza un contador de ciclos (contadorLecturas) que cada 17 iteraciones, fuerza un micro-ajuste de alineación. Esto compensa cualquier desviación mecánica del chasis durante la marcha.
+
+Estrategia de Evasión Selectiva (Lógica de Colores)
+La evasión no es un giro simple; es una maniobra coordinada que depende de la posición relativa del objeto en el eje X de la cámara.
+Clasificación de Obstáculos por Flancos:
+Utilizamos el xCenter y la height de la HuskyLens para dividir la pista en zonas de decisión:
+
+Algo importante es que después de cada maniobra de evasión del color , el robot ejecuta una secuencia de contra-giro para regresar al centro de la pista, preparándose para el siguiente obstáculo o la siguiente esquina.
+
+ Estrategia de Moviemto en Esquinas
+Debido a que los sensores ultrasónicos pueden tener errores en ángulos oblicuos, hemos implementado una Estrategia de Navegación por Contacto: primero el sensor frontal detecta e identifica la pared a una distancia mínima (middleDistance <= 4), después prosigue a impactarse Controla la pared delantera, el robot se detiene (stop), retrocede un tiempo exacto para ganar espacio de maniobra, y luego ejecuta el giro, después prosigue a la Rectificación de Centro que retrocede recto después del giro y golpear ligeramente para alinearse con la pared posterior, el robot resetea su ángulo y defectos anteriores, Esto garantiza que cada nuevo cuadrante se inicie desde una posición perfecta, eliminando el error acumulado de los obstáculos anteriores.
+
+Gestión de Casos Límite y Métricas
+Para asegurar la solides del sistema en condiciones de competencia, se han programado los siguientes controles como son, el Filtrado por Tamaño de Objeto por ejemplo El robot solo reacciona si result.height > 70, Esto evita "falsos positivos" con objetos lejanos o reflejos en el suelo, actuando solo cuando el obstáculo es una amenaza inmediata. También contamos con un Contador de Misión (Variable pepe) este nos ayuda a Rastrear el progreso del robot,Al llegar a un umbral de paredes detectadas y detectar el color Magenta (ID 11), el robot comprende que ya ha completado la pista y que ya llegó a la zona de meta, ejecutando una maniobra de estacionamiento final. Y por últimos nosotros tenemos diferentes Controles de velocidad para rectas o evasión. Diferenciada  x carSpeed = 52: Velocidad de crucero para máxima precisión de cámara. Y  carSpeedC = 70, Aumento de velocidad durante la evasión para compensar la pérdida de inercia por el giro del servo.
+
+
+# Pensamiento Sistémico y Decisiones de Ingeniería 
+
+
+
 
 ## Temporada 2024 Rexbot1.0 
 
