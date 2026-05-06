@@ -27,6 +27,11 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
    
 6. [Pensamiento sistémico y decisiones de ingeniería](#Pensamiento-Sistémico-y-Decisiones-de-Ingeniería)
 
+   * [Temporada 2024](#Temporada-2024-Rexbot1.0)
+  
+   * [Temporada 2025](#Temporada-2025-Rexbot2.0)
+  
+   * [Temporada 2026](#Temporada-2026)
 
 # MIEMBROS DEL TEAMROBOCRV
 
@@ -90,11 +95,9 @@ Apoyo Logístico: Colabora en la preparación de las pistas de prueba, recolecci
 
 Este documentado tiene como objetivo explicar el funcionamiento lógico y estrategia que utilizamos para crear el código que controla al vehículo autónomo que fue diseñado para realizar las pruebas a enfrentar de una competencia llamada WRO de la categoría de futuros ingenieros, costa de que el vehículo tiene que realizar dos prueba abierta que se trata de completar tres vueltas en una pista de competición de 3x3 metros. El sistema debe navegar un entorno variable (centro aleatorizado) que genera pasillos estrechos de hasta 40cm, contabilizar el progreso (esquinas )de la misión y realizar un estacionamiento final en el cuadrante de origen; pero esta no es el única prueba a enfrentar también tiene que hacer la ronda de color, que se trata que el vehículo tiene navegar en una pista 3x3 metros mientras esquiva obstáculos aleatorios diferenciados por colores (rojo o verde ), el sistema emplea una arquitectura de bucle cerrado que integra una cámara de visión HuskyLens que detecta los colores de los obstáculos. La misión principal consiste en completar las vueltas requeridas evadiendo los obstáculos dependiendo del color (Rojo/Verde ) para  ejecutar maniobras de evasión precisas hacia el flanco correcto. Además, el códigos implementa rutinas de autocentrado constante, rectificación por contacto físico en esquinas para eliminar cualquier error o desvío, y una lógica de fin de carrera para estacionar el vehículo en el cuadrante de meta designado tras detectar un marcador de color Magenta.
 
-Arquitectura del Software de Ronda Abierta (Máquina de Estados de Misión)
+## Arquitectura del Software de Ronda Abierta (Máquina de Estados de Misión)
 
 El código se ha estructurado como una Máquina de Estados Finitos (que quiere decir esto que tiene un fin el código ) jerárquica para gestionar no solo el control del vehículo, sino también la lógica de la misión (conteo de vueltas y estacionamiento).
-
-
 
 A continuancion les describiremos  los Estados de Misión:
 
@@ -109,15 +112,13 @@ Después sigue el Estado de Navegación (Crucero y Evasión) Este estado activo 
 
 4.-)Estacionamiento Final: (if pepe > 12) Una vez que el contador de giros (pepe) supera 12 (lo que equivale a las 12 esquinas de las 3 vueltas), el sistema entra en modo de parada. Se ejecuta una función de avance final por tiempo (delay(2000)) para asegurar que el robot cruza la línea de meta y se detiene dentro del cuadrante de origen.
 
-Justificación de la Estrategia y Parámetros de Diseño
-
 Justificación de Umbrales Sensoriales:
 
-• Rango Frontal Crítico
+   • Rango Frontal Crítico
 
 (42cm ≤ middleDistance ≤52cm) ustedes se preguntarán porque esta distancia bueno pues ya que se aleatoriza el centro se llega a crear pasillos de solo 40cm de ancho.El robot debe iniciar el giro antes de entrar en contacto con la pared o de que la lectura de su sensor delantero se vea afectada por las paredes laterales del pasillo estrecho. Este rango de 10cm de "amortiguación" experimental compensa la inercia del vehículo a carSpeed=80, asegurando que el giro se haga  sin un choque lateral en el pasillo más estrecho.
 
-   •Corrección Lateral Crítica  (<25 cm) 
+   • Corrección Lateral Crítica  (<25 cm) 
    
 Ustedes se preguntaran el porqué de esta corrección pues muy fácil la verdad esta corrección nos ayuda en muchas cosas una de ella en los pasillos de 40cm,el robot tiene solo un margen de error de pocos centímetros a cada lado. El umbral de 25cm se seleccionó porque es la distancia en la que la señal ultrasónica de los sensores laterales sigue siendo fiable y permite que el servo reaccione (write(115) o write(73)) antes de que se produzca una colisión,tambien no solo nos ayuda en solo esos momentos si no en todo momento ya que es una de las funciones más importante para que se logre la perfección en la prueba, ya que aveces en algún giro puede que no se  logre posicionar al 100% recto y si no tuviéramos esa corrección hubieran variaciones en el transcurso de la prueba provocando colisiones (algo que nos pasaba en anteriores pruebas antes de agregarle esta función al código ) 
 
@@ -149,7 +150,8 @@ Comenzaremos con la arquitectura del movimiento y visión
 
 El software integra un sistema de visión HuskyLens vinculado a una lógica de centrado constante. La arquitectura se basa en mantener al robot en el eje central de la pista para maximizar el campo de visión (FOV) de la cámara y asegurar decisiones simétricas.
 
-Estrategia de Inicialización y Autocentrado
+### Estrategia de Inicialización y Autocentrado
+
 Para evitar el error de deriva inicial, el robot ejecuta una rutina de calibración al encenderse que es ,. El servo se mueve a los extremos y regresa a la variable centro (97°). Esto asegura que el tren delantero esté alineado mecánicamente antes de avanzar. También contamos con un mantenimiento de Trayectoria(correcciónes)Se utiliza un contador de ciclos (contadorLecturas) que cada 17 iteraciones, fuerza un micro-ajuste de alineación. Esto compensa cualquier desviación mecánica del chasis durante la marcha.
 
 Estrategia de Evasión Selectiva (Lógica de Colores)
@@ -159,10 +161,12 @@ Utilizamos el xCenter y la height de la HuskyLens para dividir la pista en zonas
 
 Algo importante es que después de cada maniobra de evasión del color , el robot ejecuta una secuencia de contra-giro para regresar al centro de la pista, preparándose para el siguiente obstáculo o la siguiente esquina.
 
- Estrategia de Moviemto en Esquinas
+### Estrategia de Moviemto en Esquinas
+ 
 Debido a que los sensores ultrasónicos pueden tener errores en ángulos oblicuos, hemos implementado una Estrategia de Navegación por Contacto: primero el sensor frontal detecta e identifica la pared a una distancia mínima (middleDistance <= 4), después prosigue a impactarse Controla la pared delantera, el robot se detiene (stop), retrocede un tiempo exacto para ganar espacio de maniobra, y luego ejecuta el giro, después prosigue a la Rectificación de Centro que retrocede recto después del giro y golpear ligeramente para alinearse con la pared posterior, el robot resetea su ángulo y defectos anteriores, Esto garantiza que cada nuevo cuadrante se inicie desde una posición perfecta, eliminando el error acumulado de los obstáculos anteriores.
 
-Gestión de Casos Límite y Métricas
+### Gestión de Casos Límite y Métricas
+
 Para asegurar la solides del sistema en condiciones de competencia, se han programado los siguientes controles como son, el Filtrado por Tamaño de Objeto por ejemplo El robot solo reacciona si result.height > 70, Esto evita "falsos positivos" con objetos lejanos o reflejos en el suelo, actuando solo cuando el obstáculo es una amenaza inmediata. También contamos con un Contador de Misión (Variable pepe) este nos ayuda a Rastrear el progreso del robot,Al llegar a un umbral de paredes detectadas y detectar el color Magenta (ID 11), el robot comprende que ya ha completado la pista y que ya llegó a la zona de meta, ejecutando una maniobra de estacionamiento final. Y por últimos nosotros tenemos diferentes Controles de velocidad para rectas o evasión. Diferenciada  x carSpeed = 52: Velocidad de crucero para máxima precisión de cámara. Y  carSpeedC = 70, Aumento de velocidad durante la evasión para compensar la pérdida de inercia por el giro del servo.
 
 
@@ -209,9 +213,7 @@ Su sistema de dirección ahora es tipo palanca, este sistema de dirección cuent
 <img width="540" height="610" alt="image" src="https://github.com/user-attachments/assets/df8c4775-64dc-434d-8a1c-3e324067e544" />
 
 
-# Temporada 2025 
-
-## Rexbot2.0 
+# Temporada 2025 Rexbot2.0 
 
 Para la etapa de las regionales lo comenzamos a hacer desde 0, tuvo una reestructuración completa, corregimos la mayoría de errores cometidos en el diseño anterior.
 
@@ -228,6 +230,7 @@ La dirección funciona de la siguiente manera para lograr la adaptación del ser
 Esta base fue re diseñada varias veces hasta que logramos encontrar el punto donde no se deformara por el peso y también para que encajara perfectamente la pieza de hierro a presión y evitar todo el juego  posible(impresicion de los componentes), luego de encajar esta pieza, utilizamos un tipo de abrazadera, que agarra el buje del eje con forma de cruceta
 
 para centrar y estabilizar su eje utilizamos retenes de lego amarillos
+<img width="540" height="610" alt="image" src="https://github.com/user-attachments/assets/59f4dda6-5a0e-40dc-ad73-3c9c41af3f34" />
 
 dos por la parte interior y uno por la parte exterior ¿Por que los ponemos? Facil los dos retenes internos se les pone , luego el diferencial “tuvo transversal” ya antes lubricado con vaselina ¿Por que se tiene que lubricar ? Nos dimos cuenta que si no lo lubricamos antes de probar el vehículo le va acostar mas los giros y pueden producir que varían, ¿Porque se lubrica con vaselina y no con otra cosa? Bueno al inicio nosotros lubricabamos con grasa azul pero lo que pasaba era que se desgastaba y debilitaba las piezas en 3D despues de darnos cuenta de esto lo cambiamos a vaselina que igualmente no  se lubrica de manera perfecta. Este proceso se hace dos veces uno del lado derecho y uno del lado izquierdo. Ya que son dos ejes independientes, unidos por la pieza principal y el diferencial. Si se preguntan, porque no utilizamos un solo eje para las dos ruedas, haciendo varias pruebas, nos dimos cuenta que giraba mal (derrapaba) necesitaba un diferencial, convencional y funcional,. 
 
@@ -235,6 +238,11 @@ dos por la parte interior y uno por la parte exterior ¿Por que los ponemos? Fac
 Su tracción se debe a qué tiene un eje tipo cruceta basado en los que vienen en los kit de lego echo de acero con medidas de 2.8mm de ancho y 4.2mm de alto, en forma de cruceta, su largo es de 119mm, tiene un refuerzo de teflón industrial por alrededor del eje para evitar ser doblado o pandeado por el peso del prototipo. Este eje esta unido a la caja reductora, compuesta por  3 engranajes. Que trabajan de la siguiente manera:
 
 Para calcular la relación de transmisión total (i total ) de una caja reductora compuesta por varias etapas, debemos considerar la relación entre los dientes de los engranajes conductores (entrada) y los conducidos (salida) en cada paso del tren de engranajes. 
+
+<img width="540" height="600" alt="image" src="https://github.com/user-attachments/assets/b0dcd599-29eb-494f-a5d7-9d299ea3cc98" />
+<img width="540" height="600" alt="image" src="https://github.com/user-attachments/assets/af8053d1-77d3-4b1d-8618-e3ee2fdb3cc5" />
+<img width="540" height="600" alt="image" src="https://github.com/user-attachments/assets/e3f04edd-f908-440c-adf8-31eedef2714c" />
+
 
 Tomando como base una configuración de tres etapas con los engranajes de 8, 30, 5, 26, 5 y 20 dientes, el cálculo se desglosa de la siguiente manera: 
 
@@ -277,7 +285,12 @@ Para la nacional no se hicieron muchos cambios de diseñó, realizamos algunas m
 
 ## Evolución 2025
 
-Una de las mayores complicaciones que tuvimos fue, que trivilyn no iba en línea recta, siempre tenía un cierto desvío para solucionar este problema, realizamos diferentes pruebas y maneras, comenzamos con desarmar el servo y ver la raíz del problema,. Nos dimos cuenta que el mg996r tenía mucha tolerancia entre engranajes y eso causaba una especie de juego o espacios entre engranajes. Lo que ocasionaba ese pequeño desvío Dirección: comenzamos utilizando un servo mg995r de 5kg de torque, nos dimos cuenta de su falla y a través de prueba y error utilizamos diferentes métodos como los siguientes. Utilizamos grasa gruesa por ejemplo azul y de grafito, tomamos ciertas pruebas y no nos funcionaba del todo bien, con la grasa azul le costaba girar mucho y no lograba lo que necesitamos. Con la grasa de grafito no era lo suficientemente gruesa para evitar el desvío entre engranajes.
+Una de las mayores complicaciones que tuvimos fue, que trivilyn no iba en línea recta, siempre tenía un cierto desvío para solucionar este problema, realizamos diferentes pruebas y maneras, comenzamos con desarmar el servo y ver la raíz del problema,. Nos dimos cuenta que el mg996r tenía mucha tolerancia entre engranajes y eso causaba una especie de juego o espacios entre engranajes. 
+Lo que ocasionaba ese pequeño desvío.
+
+Dirección: comenzamos utilizando un servo mg995r de 5kg de torque, nos dimos cuenta de su falla y a través de prueba y error utilizamos diferentes métodos como los siguientes. Utilizamos grasa gruesa por ejemplo azul y de grafito, tomamos ciertas pruebas y no nos funcionaba del todo bien, con la grasa azul le costaba girar mucho y no lograba lo que necesitamos. Con la grasa de grafito no era lo suficientemente gruesa para evitar el desvío entre engranajes.
+<img width="540" height="610" alt="image" src="https://github.com/user-attachments/assets/680dbfbb-ae77-4ce0-a641-e7bd5e0aa9b1" />
+
 
 3ra prueba tratamos de ponerle teflón a los engranajesel problema de esta solución era que si funcionaba al principio, pero al hacer varias pruebas y al pasar el tiempo cada vez tendría más desvío.
 En la siguiente gráfica  podemos observar con datos reales, como al realizar pruebas era mayor su desgaste, con 3 pruebas es casi nulo el desvió, pero al seguir utilizándolo se va desviando mas. 
@@ -285,22 +298,27 @@ En la siguiente gráfica  podemos observar con datos reales, como al realizar pr
 
 Para finalizar compramos el servomotr hobbypark de 35kg con las siguientes especificaciones Técnicas:
 
-°Torque Máximo : 35 Kg. 
+- Torque Máximo : 35 Kg. 
 
-°Voltaje de Operación : Rango de DC 4.8V a 8.4V (Alto Voltaje/HV). 
+- Voltaje de Operación : Rango de DC 4.8V a 8.4V (Alto Voltaje/HV). 
 
-°Construcción de la Carcasa : Cuerpo de aluminio anodizado, fabricado mediante mecanizado CNC para una disipación de calor superior.
+- Construcción de la Carcasa : Cuerpo de aluminio anodizado, fabricado mediante mecanizado CNC para una disipación de calor superior.
 
-°Tren de Engranajes : Engranajes de acero inoxidable de alta resistencia para soportar cargas elevadas.  
+- Tren de Engranajes : Engranajes de acero inoxidable de alta resistencia para soportar cargas elevadas.  
 
-°Eje de Salida (Spline Gear) : Estándar de$\Phi 5.9$con 25 dientes (25T). 
+- Eje de Salida (Spline Gear) : Estándar de$\Phi 5.9$con 25 dientes (25T). 
 
-°Protección Ambiental : Sellado completo a prueba de agua (Waterproof) en la carcasa superior, media e inferior.  
+- Protección Ambiental : Sellado completo a prueba de agua (Waterproof) en la carcasa superior, media e inferior.  
 
-°Tipo de motor : Motor central (Motor de núcleo).  Tipo de Señal : Digital y programable de forma inteligente.
+- Tipo de motor : Motor central (Motor de núcleo).  Tipo de Señal : Digital y programable de forma inteligente.
 
 <img width="540" height="610" alt="image" src="https://github.com/user-attachments/assets/d55865b6-9db7-48a9-8f4e-8266a64ae5b0" />
 
-
 Este nos llevo a un mejor rendimiento, no quitarle el desvió a un 100% pero si mejorarlo a cierto punto que sea corregible a través de código o programación, se preguntan como es eso? La respuesta es sencilla, este servomotor, el poco desgaste que tiene y genera desvió, siempre es hacia un mismo lado, en pocas palabras es corregible, porque en el código lo podemos mandar a girar al sentido contrario del desvío cada cierto tiempo. 
+
 Por ejemplo Si el desvío del prototipo es hacia la izquierda, se manda a mover al servo cada tanto milisegundos mover 3 grados haca la derecha y volver al centro. Algunos de los datos que recopilamos, según la velocidad varia por ende hay que ajustar los parametros.
+
+<img width="1079" height="232" alt="image" src="https://github.com/user-attachments/assets/c268ba6c-5119-434d-b968-0c0b843d085d" />
+
+# Temporada 2026
+
