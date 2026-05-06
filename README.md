@@ -32,6 +32,8 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
    * [Temporada 2025](#Temporada-2025-Rexbot2.0)
   
    * [Temporada 2026](#Temporada-2026)
+  
+7. [Arvhivos CAD](Archivos-CAD)
 
 # MIEMBROS DEL TEAMROBOCRV
 
