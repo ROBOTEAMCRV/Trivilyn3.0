@@ -21,6 +21,12 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
 
 3. [Movilidad y Diseño Mecánico](#Movilidad-y-Diseño-Mecánico)
 
+   * [Tracción y Dirección](#Tracción-y-Dirección)
+  
+   * [Movimiento Parte trasera](#¿Como-logramos-que-se-mueva-con-un-solo-motor?)
+  
+   * [Movilidad parte delantera](#Movilidad-parte-delantera)
+
 4. [Arquitectura de Potencia y Sensores](#Arquitectura-de-Potencia-y-Sensores)
 
 5. [Arquitectura Software y Estratrgia](#Arquitectura-Software-y-Estratrgia)
@@ -83,11 +89,95 @@ Apoyo Logístico: Colabora en la preparación de las pistas de prueba, recolecci
 
 ## Tracción y Dirección:
 
--La tracción del prototipo esta constituido por 4 ruedas de goma extraídas por un kit de lego EV3, estas tienen como medida del neumático es de 43mm de diámetro exterior y su respectiva llanta(rin) 29mm.
+- La tracción del prototipo esta constituido por 4 ruedas de goma extraídas por un kit de lego EV3, estas tienen como medida del neumático es de 43mm de diámetro exterior y su respectiva llanta(rin) 29mm.
+
 <img width="540" height="610" alt="image" src="https://github.com/user-attachments/assets/2fb7151d-4170-44b2-8d3b-63890c571fb5" />
+* Anteriormente(Rexbot1.0), el prototipo utilizaba ruedas plásticas rígidas de mayor diámetro.
 
-<img width="1200" height="1600" alt="image" src="https://github.com/user-attachments/assets/a69a4758-90fd-44ca-a29e-b00389318156" />
 
+Sin embargo en 2025 para para Rexbot2.0 y actualmente la temporada 2026 para Trivilyn3.0, se decidió utilizar las ruedas de goma de 43 mm por las siguientes ventajas técnicas:
+
+Mejora de Tracción: El compuesto de caucho del kit EV3 ofrece un coeficiente de fricción superior, eliminando el deslizamiento en aceleraciones rápidas.
+
+Optimización del Centro de Gravedad: Al reducir el tamaño de las ruedas respecto a las versiones anteriores, se logró bajar el chasis, aportando mayor estabilidad en las curvas cerradas y evitando volcamientos.
+
+Torque Efectivo: Un diámetro menor permite que el motor DC trabaje con una carga menor, logrando una respuesta de arranque más ágil y precisa.
+
+<img width="540" height="610" alt="image" src="https://github.com/user-attachments/assets/a69a4758-90fd-44ca-a29e-b00389318156" />
+
+## ¿Como logramos que se mueva con un solo motor?
+
+Esto se logra con una caja de engranajes realizada a medidad que posee un eje tipo cruz basado en los que vienen en los kit de lego echo de acero con medidas de 2.8mm de ancho y 4.2mm de alto, en forma de cruceta, su largo es de 119mm, tiene un refuerzo de teflón industrial por alrededor del eje para evitar ser doblado o pandeado por el peso del prototipo.
+
+La caja reductora o caja de engranajes esta conformada internamente por 3 engranejes 
+<img width="540" height="610" alt="image" src="https://github.com/user-attachments/assets/d757209c-56f3-45bb-a624-5c35fda9360d" /> 
+
+- Trilvilyn se desplaza gracias a lo mencionado anteriormente, pero el que se encarga de dar el inicio del movimiento es un motor Dc de 3  a 6 voltios logrando 13 mil y 15 mil rpm.
+
+<img width="540" height="610" alt="image" src="https://github.com/user-attachments/assets/db57e1e8-c39f-4611-a939-cd46dfc346db" />
+
+Esta insertado en la parte lateral de la caja de engranajes de la siguiente manera
+
+<img width="540" height="610" alt="image" src="https://github.com/user-attachments/assets/51318156-a986-46b9-8569-d86d30154f6d" />
+
+Aclaramos que estos motores se extrajeron de un turbo snake y se pueden sacar de distintos tipos de vehículos a control remoto como:
+
+<img width="894" height="465" alt="image" src="https://github.com/user-attachments/assets/b64f1439-2ba3-4914-9b02-4640ddfbcb7d" />
+
+Este motor es el  corazón del desplazamiento y uno de los componente principales para que Trivilyn tenga su desempeño. Ýa explicado esto pasamos a la parte de ¿Con que sostiene todo esto? Todo lo mencionado anteriormente se sostiene con una base diseñada en 3D por el equipo(Recordamos que los diseños como este se encuentranen el apartada de Archivos CAD)
+
+
+Esta base funciona como una especie de tapa y abrazadera realizada a medida evitando vibraciones y fallos para sostener toda la tracción trasera de Trivilyn encajando  con los soportes del eje  trasero principal, siendo así las partes laterales de la caja de engranajes 
+
+
+y la parte central de la caja de engranajes
+
+<img width="540" height="610" alt="image" src="https://github.com/user-attachments/assets/969327b4-2068-40c5-84bb-7d25c7d60139" />
+
+que al lograr encajar con el sistema de engranajes  se fija a la primera base de Trivilyn por 4 tornillos
+
+Si se puede observar el soporte en la parte inferior tiene una especie de “Vena” (imagen) que es una extencion de filamento cuya funcion es solucionar que en versiones anteriores de este soporte 
+ se fracturaba esa zona problema que resuelve esta “vena” que actúa como un refuerzo 
+
+## Movilidad parte delantera: 
+
+La movilidad en la(Parte delantera) aquí nos referimos a el sistema de direccion(control de giros del roboot), ruedas frontales y todo los componentes de estos para unirse entre si.
+
+Para empezar con esta sección decimos iniciar con explicar ¿Que hace que se mueva las ruedas frontales ? El encargado de esto es un servomotor que esta fijado a la base priincipal de trivilyn con sus respectivos tornillos y tuercas.Este servomotor no se convencional como los modelos sg90 o MG95 es un servomotorHobbyPark 35kg (Modelo HD3523MG)
+Torque (Fuerza):
+* A 6.0V: ~29 kg-cm
+* A 7.4V: ~35 kg-cm
+* Velocidad:
+* A 6.0V: 0.14 seg / 60°
+* A 7.4V: 0.12 seg / 60°
+* Voltaje de operación: 6.0V a 8.4V (soporta baterías LiPo 2S directamente).
+* Tipo de motor: Coreless (sin núcleo), lo que permite una aceleración más rápida y un funcionamiento más suave que los motores estándar.
+* 
+## Construcción y Durabilidad
+
+ Engranajes: Metálicos de alta precisión (Stainless Steel & Aluminum). Esto es lo que le permite manejar los 35kg de presión sin romperse.
+
+Carcasa: Aluminio CNC, Ayuda a disipar el calor del motor durante uso intensivo.
+
+Rodamientos: Doble rodamiento de bolas para reducir la fricción en el eje principal.
+
+Ángulo de control: Generalmente 180° o 270° (según la configuración de fábrica, pero es programable).
+
+(Imagen) que el equipo adquirio en Amazon ¿Porque no se usan servos convencionales? Esto tiene un  motivo ya que utilizamos versiones mas convencionales en prototipos anteriores de nuestro Robot(EL porque de esta decision se puede conseguir mas a detalle en el apartado de"Pensamiento sistémico y decisiones de ingeniería")
+
+-Este contiene un sistema de dirección (Steer-by-Wire) que cada rueda puede moverse con cierto grado de independencia, aunque están montadas en un eje común (lo cual sugiere una posible adaptación diferencial o simplemente flexibilidad del tubo). Ya que la rueda interior gira ligeramente más que la otra, de modo que el robot se mantiene en el mismo arco sin deslizamiento. (Derrape). 
+
+-Con este sistema de direccion, logramos obtener resultados de que trivilyn logre un giro con angulo de 80 grados,(imagen de las ruedas de trivilyn con grados) siendo así mas ágil para llegar a cumplir sus objetivos, (giros a gran velocidad, sortear objetos de manera optima, salir del estacionamiento en paralelo).
+
+A través de experiencias y pruebas nos hemos dado cuenta que la precisión de la dirección, se encuentra en la tolerancia de los engranajes internos del servomotor y su torque, mientras mas peso tenga, mejor giro y tensión va a tener la direccion.
+
+para lograr la adaptación del servo a las ruedas, utilizamos piezas en 3D diseñadas por nosotros, lego y acero, esta consiste en 4 partes principales, encaje de palanca de acero a base en 3D(imagen) 
+
+esta base fue re diseñada barias veces hasta que logramos encontrar el punto donde no se deformara por el peso y también para que encajara perfectamente la piesa de hierro a precion y evitar todo el juego  posible(impresicion de los componentes), luego de encajar esta pieza, utilizamos un tipo de abrazadera, que agarra el buje del eje con forma de cruceta (imagen)
+
+para centrar y estabilizar su eje utilizamos retenes de lego amarillos (imagen)
+
+dos por la parte interior y uno por la parte exterior ¿Por que los ponemos? Facil los dos retenes inetrnos se les pone , luego el diferencial “tuvo transversal” ya antes lubricado con vaselina ¿Por que se tiene que lubricar ? Nos dimos cuenta que si no lo lubricamos antes de probar el veiculo le va acostar mas los giros y pueden preoducir que barien, ¿Porque se lubrica con vaselina y no con otra cosa? Bueno al inicio nosotros lubricabamos con grasa azul pero lo que pasaba era que se desgastaba y devilitaba las piezas en 3D despues de darnos cuenat de esto lo cambiamos a vaselina que igualmente noss lubrica de manera perfecta. Este proceso se hace dos veces uno del lado derecho y uno del lado izquierdo. Ya que son dos ejes independientes, unidos por la pieza principal y el diferencial. Si se preguntan, porque no utilizamos un solo eje para las dos ruedas, haciendo varias pruebas, nos dimos cuenta que giraba mal (derrapaba) necesitaba un diferencial, convencional y funcional,
 
 # Arquitectura de Potencia y Sensores
 
