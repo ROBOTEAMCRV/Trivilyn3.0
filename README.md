@@ -81,8 +81,12 @@ Apoyo Logístico: Colabora en la preparación de las pistas de prueba, recolecci
 
 # Movilidad y Diseño Mecánico
 
+## Tracción y Dirección:
 
+-La tracción del prototipo esta constituido por 4 ruedas de goma extraídas por un kit de lego EV3, estas tienen como medida del neumático es de 43mm de diámetro exterior y su respectiva llanta(rin) 29mm.
+<img width="540" height="610" alt="image" src="https://github.com/user-attachments/assets/2fb7151d-4170-44b2-8d3b-63890c571fb5" />
 
+<img width="1200" height="1600" alt="image" src="https://github.com/user-attachments/assets/a69a4758-90fd-44ca-a29e-b00389318156" />
 
 
 # Arquitectura de Potencia y Sensores
