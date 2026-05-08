@@ -26,6 +26,12 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
    * [Movimiento Parte trasera](#¿Como-logramos-que-se-mueva-con-un-solo-motor?)
   
    * [Movilidad parte delantera](#Movilidad-parte-delantera)
+  
+   * [Base inferior](#Primer-piso)
+  
+   * [Base central](#Segundo-piso)
+  
+   * [Base superior](#Tercer-piso)
 
 4. [Arquitectura de Potencia y Sensores](#Arquitectura-de-Potencia-y-Sensores)
 
@@ -45,7 +51,7 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
 
 ## 👤Dennis Adrian Silva Riera
 
-### Rol en el equipo: Ingeniero Líder de Hardware e Integrador de Sistemas.
+### Rol: Ingeniero Líder de Hardware e Integrador de Sistemas.
 
 Diseño Mecánico: Se encarga del modelado en 3D de las piezas y el chasis, asegurando que todo sea ligero y funcional.
 
@@ -57,7 +63,7 @@ Gestión Digital: Administra el repositorio de GitHub y organiza toda la documen
 
 ## 👤Gianni Marcello Martucci Jerez
 
-### Rol en el equipo: Programador y Desarrollador de Lógica de Navegación.
+### Rol: Programador y Desarrollador de Lógica de Navegación.
 
 Algoritmos de Navegación: Desarrolla la lógica que permite al robot detectar obstáculos y decidir hacia dónde moverse de forma autónoma.
 
@@ -82,17 +88,22 @@ Apoyo Logístico: Colabora en la preparación de las pistas de prueba, recolecci
 
 ## 👤Tutor/Luis Eduardo Paredes
 
+### Rol: Orientar al equipo en la planificación del proyecto y el cumplimiento de los plazos de entrega.
+
 <img width="400" height="600" alt="image" src="https://github.com/user-attachments/assets/12b81259-f88b-43d7-be25-c19f183fe3eb" />
 
 
-# Movilidad y Diseño Mecánico
+# 🔩 Movilidad y Diseño Mecánico
 
 ## Tracción y Dirección:
 
 - La tracción del prototipo esta constituido por 4 ruedas de goma extraídas por un kit de lego EV3, estas tienen como medida del neumático es de 43mm de diámetro exterior y su respectiva llanta(rin) 29mm.
 
 <img width="540" height="610" alt="image" src="https://github.com/user-attachments/assets/2fb7151d-4170-44b2-8d3b-63890c571fb5" />
+
 * Anteriormente(Rexbot1.0), el prototipo utilizaba ruedas plásticas rígidas de mayor diámetro.
+* 
+<img width="540" height="610" alt="image" src="https://github.com/user-attachments/assets/ee28689a-d265-4b38-bbb7-19ae411dfde6" />
 
 
 Sin embargo en 2025 para para Rexbot2.0 y actualmente la temporada 2026 para Trivilyn3.0, se decidió utilizar las ruedas de goma de 43 mm por las siguientes ventajas técnicas:
@@ -142,8 +153,37 @@ Si se puede observar el soporte en la parte inferior tiene una especie de “Ven
 ## Movilidad parte delantera: 
 
 La movilidad en la(Parte delantera) aquí nos referimos a el sistema de direccion(control de giros del roboot), ruedas frontales y todo los componentes de estos para unirse entre si.
+Para esta parte de Trivilyn3.0 nos basamos en la plataforma estable de Trivilyn 2025, para esta temporada 2026 hemos conservado el sistema de dirección por su alta fiabilidad, pero hemos aplicado dos optimizaciones críticas en la respuesta dinámica y la durabilidad de los materiales, las cuales son:
 
-Para empezar con esta sección decimos iniciar con explicar ¿Que hace que se mueva las ruedas frontales ? El encargado de esto es un servomotor que esta fijado a la base priincipal de trivilyn con sus respectivos tornillos y tuercas.Este servomotor no se convencional como los modelos sg90 o MG95 es un servomotorHobbyPark 35kg (Modelo HD3523MG)
+1.Principalmente imprimimos los componentes nuevamente en PETG porque es un material mas resistente al desgaste y posibles fracturas que el PLA, sin embargo desde un punto mas profesional estos son las ventajas de utilizar PETG:
+
+- El PETG (Polietileno Tereftalato Glicol) es químicamente más estable.
+
+- Durante la competencia, los motores DC y los drivers de potencia generan calor. El PLA puede empezar a ablandarse o deformarse si está cerca de una fuente de calor constante o si el robot se deja bajo el sol/luces intensas del evento. El PETG mantiene su integridad estructural.
+
+- El PETG es más "tenaz" (ductilidad). Tiene la capacidad de absorber energía deformándose elásticamente antes de romperse. En un choque, una pieza de PETG tiene más probabilidades de flexionarse y volver a su forma, mientras que una de PLA se rompería, dejando al robot fuera de la competencia.
+
+- El PLA es biodegradable y sensible a la humedad (higroscópico), lo que puede degradar sus propiedades mecánicas con el tiempo. El PETG es resistente al agua y a muchos químicos, lo que garantiza que las piezas del robot no se vuelvan quebradizas meses después de haber sido impresas.
+
+
+
+2.Se Realizo un cambio al tubo transversal.Este cambio del del tubo consiste en su material no en sus medidas o formas, decidimos hacerlo de bronce en un torno por las principales ventajas:
+
+- En la version anterior el tubo era de plastico.El plástico contra plástico genera mucha fricción y calor, lo que provoca que los ejes de LEGO se desgasten ("se limen") con el tiempo, perdiendo su forma de cruz.
+
+- Al ser un material con propiedades autolubricantes, el bronce actúa como una superficie de sacrificio suave. Es mucho más amigable con el plástico que otros metales o que el propio roce plástico-plástico.
+
+- El tubo de bronce aporta una rigidez estructural externa. Al encamisar o soportar el eje con bronce, obliga al eje a mantenerse recto, asegurando que toda la fuerza del servo llegue a las ruedas sin pérdidas por flexión.
+
+- Los conectores de plástico suelen tener tolerancias holgadas (pequeños movimientos flojos).Cosa que no nos podemos permitir para una competencia como la WRO, ese pequeño juego hace que el robot "baile" en las rectas y reduce la precision.
+
+<img width="610" height="540" alt="image" src="https://github.com/user-attachments/assets/9c4a2c56-16b4-4613-b91b-083027a05eef" />
+
+
+Ya teniendo claro esto podemos iniciar con explicar ¿Que hace que se mueva las ruedas frontales ? El encargado de esto es un servomotor que esta fijado a la base priincipal de trivilyn con sus respectivos tornillos y tuercas.Este servomotor no se convencional como los modelos sg90 o MG95 es un servomotorHobbyPark 35kg (Modelo HD3523MG).Sistema de moviento que se implemento en Rexbot2.0 y decidimos conservar esta parte ya que cumple su funcion de manera precisa.
+
+Especificaciones del servomotorHobbyPark 35kg (Modelo HD3523MG):
+
 Torque (Fuerza):
 * A 6.0V: ~29 kg-cm
 * A 7.4V: ~35 kg-cm
@@ -152,10 +192,8 @@ Torque (Fuerza):
 * A 7.4V: 0.12 seg / 60°
 * Voltaje de operación: 6.0V a 8.4V (soporta baterías LiPo 2S directamente).
 * Tipo de motor: Coreless (sin núcleo), lo que permite una aceleración más rápida y un funcionamiento más suave que los motores estándar.
-* 
-## Construcción y Durabilidad
 
- Engranajes: Metálicos de alta precisión (Stainless Steel & Aluminum). Esto es lo que le permite manejar los 35kg de presión sin romperse.
+Engranajes: Metálicos de alta precisión (Stainless Steel & Aluminum). Esto es lo que le permite manejar los 35kg de presión sin romperse.
 
 Carcasa: Aluminio CNC, Ayuda a disipar el calor del motor durante uso intensivo.
 
@@ -163,21 +201,42 @@ Rodamientos: Doble rodamiento de bolas para reducir la fricción en el eje princ
 
 Ángulo de control: Generalmente 180° o 270° (según la configuración de fábrica, pero es programable).
 
-(Imagen) que el equipo adquirio en Amazon ¿Porque no se usan servos convencionales? Esto tiene un  motivo ya que utilizamos versiones mas convencionales en prototipos anteriores de nuestro Robot(EL porque de esta decision se puede conseguir mas a detalle en el apartado de"Pensamiento sistémico y decisiones de ingeniería")
+(Imagen) que el equipo adquirio en Amazon ¿Porque no se usan servos convencionales? Esto tiene un  motivo ya que utilizamos versiones mas convencionales en prototipos anteriores de nuestro Robot(EL porque de esta decision y los retos que tuvo  que paso el equipo para tomar esta decision se puede conseguir mas a detalle en el apartado de"Pensamiento sistémico y decisiones de ingeniería Temporada 2025")
 
--Este contiene un sistema de dirección (Steer-by-Wire) que cada rueda puede moverse con cierto grado de independencia, aunque están montadas en un eje común (lo cual sugiere una posible adaptación diferencial o simplemente flexibilidad del tubo). Ya que la rueda interior gira ligeramente más que la otra, de modo que el robot se mantiene en el mismo arco sin deslizamiento. (Derrape). 
+## Tipo de Direccion y ¿Como funciona?
 
--Con este sistema de direccion, logramos obtener resultados de que trivilyn logre un giro con angulo de 80 grados,(imagen de las ruedas de trivilyn con grados) siendo así mas ágil para llegar a cumplir sus objetivos, (giros a gran velocidad, sortear objetos de manera optima, salir del estacionamiento en paralelo).
+- Este contiene un sistema de dirección (Steer-by-Wire) que cada rueda puede moverse con cierto grado de independencia, aunque están montadas en un eje común (lo cual sugiere una posible adaptación diferencial o simplemente flexibilidad del tubo). Ya que la rueda interior gira ligeramente más que la otra, de modo que el robot se mantiene en el mismo arco sin deslizamiento. (Derrape). 
+
+- Con este sistema de direccion, logramos obtener resultados de que trivilyn logre un giro con angulo de 80 grados,(imagen de las ruedas de trivilyn con grados) siendo así mas ágil para llegar a cumplir sus objetivos, (giros a gran velocidad, sortear objetos de manera optima, salir del estacionamiento en paralelo).
 
 A través de experiencias y pruebas nos hemos dado cuenta que la precisión de la dirección, se encuentra en la tolerancia de los engranajes internos del servomotor y su torque, mientras mas peso tenga, mejor giro y tensión va a tener la direccion.
 
 para lograr la adaptación del servo a las ruedas, utilizamos piezas en 3D diseñadas por nosotros, lego y acero, esta consiste en 4 partes principales, encaje de palanca de acero a base en 3D(imagen) 
 
-esta base fue re diseñada barias veces hasta que logramos encontrar el punto donde no se deformara por el peso y también para que encajara perfectamente la piesa de hierro a precion y evitar todo el juego  posible(impresicion de los componentes), luego de encajar esta pieza, utilizamos un tipo de abrazadera, que agarra el buje del eje con forma de cruceta (imagen)
+esta base fue re diseñada varias veces hasta que logramos encontrar el punto donde no se deformara por el peso y también para que encajara perfectamente la piesa de hierro a precion y evitar todo el juego  posible(impresicion de los componentes), luego de encajar esta pieza, utilizamos un tipo de abrazadera, que agarra el buje del eje con forma de cruceta (imagen)
 
 para centrar y estabilizar su eje utilizamos retenes de lego amarillos (imagen)
 
-dos por la parte interior y uno por la parte exterior ¿Por que los ponemos? Facil los dos retenes inetrnos se les pone , luego el diferencial “tuvo transversal” ya antes lubricado con vaselina ¿Por que se tiene que lubricar ? Nos dimos cuenta que si no lo lubricamos antes de probar el veiculo le va acostar mas los giros y pueden preoducir que barien, ¿Porque se lubrica con vaselina y no con otra cosa? Bueno al inicio nosotros lubricabamos con grasa azul pero lo que pasaba era que se desgastaba y devilitaba las piezas en 3D despues de darnos cuenat de esto lo cambiamos a vaselina que igualmente noss lubrica de manera perfecta. Este proceso se hace dos veces uno del lado derecho y uno del lado izquierdo. Ya que son dos ejes independientes, unidos por la pieza principal y el diferencial. Si se preguntan, porque no utilizamos un solo eje para las dos ruedas, haciendo varias pruebas, nos dimos cuenta que giraba mal (derrapaba) necesitaba un diferencial, convencional y funcional,
+dos por la parte interior y uno por la parte exterior por cada lado ¿Por que los ponemos? Estos se encargan de sujetar los ejes de las ruedas al sistema de direccion , luego el diferencial “tubo transversal” ya antes lubricado con vaselina 
+
+¿Por que se tiene que lubricar ? 
+
+Nos dimos cuenta que si no lo lubricamos antes de probar el veiculo le va acostar mas los giros y pueden preoducir que varien.
+
+¿Porque se lubrica con vaselina y no con otra cosa? 
+
+Bueno al inicio nosotros probamos lubricando con grasa azul pero lo que pasaba era que se desgastaba y devilitaba las piezas en 3D despues de darnos cuenta de esto lo cambiamos a vaselina que igualmente lubrica de manera perfecta. Este proceso se hace dos veces uno del lado derecho y uno del lado izquierdo. Ya que son dos ejes independientes, unidos por la pieza principal y el diferencial. 
+
+Si se preguntan, porque no utilizamos un solo eje para las dos ruedas, haciendo varias pruebas, nos dimos cuenta que giraba mal (derrapaba) necesitaba un diferencial, convencional y funcional
+
+## Primer piso
+
+
+## Segundo piso
+
+
+## Tercer piso
+
 
 # Arquitectura de Potencia y Sensores
 
