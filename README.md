@@ -102,7 +102,7 @@ Apoyo Logístico: Colabora en la preparación de las pistas de prueba, recolecci
 <img width="540" height="610" alt="image" src="https://github.com/user-attachments/assets/2fb7151d-4170-44b2-8d3b-63890c571fb5" />
 
 * Anteriormente(Rexbot1.0), el prototipo utilizaba ruedas plásticas rígidas de mayor diámetro.
-* 
+  
 <img width="540" height="610" alt="image" src="https://github.com/user-attachments/assets/ee28689a-d265-4b38-bbb7-19ae411dfde6" />
 
 
@@ -135,20 +135,29 @@ Aclaramos que estos motores se extrajeron de un turbo snake y se pueden sacar de
 
 <img width="894" height="465" alt="image" src="https://github.com/user-attachments/assets/b64f1439-2ba3-4914-9b02-4640ddfbcb7d" />
 
-Este motor es el  corazón del desplazamiento y uno de los componente principales para que Trivilyn tenga su desempeño. Ýa explicado esto pasamos a la parte de ¿Con que sostiene todo esto? Todo lo mencionado anteriormente se sostiene con una base diseñada en 3D por el equipo(Recordamos que los diseños como este se encuentranen el apartada de Archivos CAD)
+Este motor es el  corazón del desplazamiento y uno de los componente principales para que Trivilyn tenga su desempeño. Ýa explicado esto pasamos a la parte de:
 
+### ¿Con que sostiene todo esto? 
 
-Esta base funciona como una especie de tapa y abrazadera realizada a medida evitando vibraciones y fallos para sostener toda la tracción trasera de Trivilyn encajando  con los soportes del eje  trasero principal, siendo así las partes laterales de la caja de engranajes 
+Todo lo mencionado anteriormente se sostiene con una base diseñada en 3D por el equipo(Recordamos que los diseños como este se encuentranen el apartada de Archivos CAD)
 
+<img width="942" height="621" alt="image" src="https://github.com/user-attachments/assets/ba459d5c-70a8-4925-a69b-d3ea4a817476" />
 
-y la parte central de la caja de engranajes
+Esta base funciona como una especie de tapa y abrazadera realizada a medida evitando vibraciones y fallos para sostener toda la tracción trasera de Trivilyn encajando  con los soportes del eje  trasero principal, siendo así las partes laterales de la caja de engranajes y la parte central de la caja de engranajes
 
 <img width="540" height="610" alt="image" src="https://github.com/user-attachments/assets/969327b4-2068-40c5-84bb-7d25c7d60139" />
 
 que al lograr encajar con el sistema de engranajes  se fija a la primera base de Trivilyn por 4 tornillos
 
-Si se puede observar el soporte en la parte inferior tiene una especie de “Vena” (imagen) que es una extencion de filamento cuya funcion es solucionar que en versiones anteriores de este soporte 
- se fracturaba esa zona problema que resuelve esta “vena” que actúa como un refuerzo 
+Si se puede observar el soporte en la parte inferior tiene una especie de “Vena” 
+
+<img width="821" height="595" alt="image" src="https://github.com/user-attachments/assets/fd59e9b5-5196-427c-8350-e0658c74a73f" />
+
+Es una extencion de filamento cuya funcion es solucionar que en versiones anteriores de este soporte se fracturaba esa zona problema que resuelve esta “vena” que actúa como un refuerzo y proporciona varias ventajas como:
+
+- La vena añade una estructura perpendicular o diagonal que "amarra" las capas principales. Al tener una geometría curva, las líneas de extrusión de la impresora envuelven la pieza, creando una especie de "esqueleto" externo que mantiene las capas unidas bajo presión.
+
+- Esto hace que la pieza sea mucho más resistente a la flexión. En un robot de competencia, los motores y el movimiento generan vibraciones; la vena asegura que el soporte se mantenga rígido y no "oscile", lo cual terminaría quebrando el PETG.
 
 ## Movilidad parte delantera: 
 
@@ -205,19 +214,23 @@ Rodamientos: Doble rodamiento de bolas para reducir la fricción en el eje princ
 
 ## Tipo de Direccion y ¿Como funciona?
 
-- Este contiene un sistema de dirección (Steer-by-Wire) que cada rueda puede moverse con cierto grado de independencia, aunque están montadas en un eje común (lo cual sugiere una posible adaptación diferencial o simplemente flexibilidad del tubo). Ya que la rueda interior gira ligeramente más que la otra, de modo que el robot se mantiene en el mismo arco sin deslizamiento. (Derrape). 
+- Este contiene un sistema de dirección (Steer-by-Wire) que cada rueda puede moverse independientemente, aunque están montadas en un eje común (lo cual sugiere una posible adaptación diferencial) Ya que la rueda interior gira ligeramente más que la otra, de modo que el robot se mantiene en el mismo arco sin deslizamiento. (Derrape). 
 
-- Con este sistema de direccion, logramos obtener resultados de que trivilyn logre un giro con angulo de 80 grados,(imagen de las ruedas de trivilyn con grados) siendo así mas ágil para llegar a cumplir sus objetivos, (giros a gran velocidad, sortear objetos de manera optima, salir del estacionamiento en paralelo).
+- Con este sistema de direccion, logramos obtener resultados de que trivilyn logre un giro con angulo de 80 grados(Imagen)
 
-A través de experiencias y pruebas nos hemos dado cuenta que la precisión de la dirección, se encuentra en la tolerancia de los engranajes internos del servomotor y su torque, mientras mas peso tenga, mejor giro y tensión va a tener la direccion.
+- siendo así mas ágil para llegar a cumplir sus objetivos, (giros a gran velocidad, sortear objetos de manera optima, salir del estacionamiento en paralelo).
 
-para lograr la adaptación del servo a las ruedas, utilizamos piezas en 3D diseñadas por nosotros, lego y acero, esta consiste en 4 partes principales, encaje de palanca de acero a base en 3D(imagen) 
+para lograr la adaptación del servo a las ruedas, utilizamos piezas en 3D diseñadas por nosotros, lego y acero, esta consiste en 3 partes principales:
 
-esta base fue re diseñada varias veces hasta que logramos encontrar el punto donde no se deformara por el peso y también para que encajara perfectamente la piesa de hierro a precion y evitar todo el juego  posible(impresicion de los componentes), luego de encajar esta pieza, utilizamos un tipo de abrazadera, que agarra el buje del eje con forma de cruceta (imagen)
+1. Encaje de palanca de acero a base en 3D(imagen) 
 
-para centrar y estabilizar su eje utilizamos retenes de lego amarillos (imagen)
+Esta base fue re diseñada varias veces hasta que logramos encontrar el punto donde no se deformara por el peso y también para que encajara perfectamente la piesa de hierro a precion y evitar todo el juego  posible(impresicion de los componentes)
 
-dos por la parte interior y uno por la parte exterior por cada lado ¿Por que los ponemos? Estos se encargan de sujetar los ejes de las ruedas al sistema de direccion , luego el diferencial “tubo transversal” ya antes lubricado con vaselina 
+2.Luego de encajar esta pieza, utilizamos un tipo de abrazadera, que sostiene el buje del eje con forma de cruz extraido de un kit Legoeo EVE3(imagen)
+
+3.Para centrar y estabilizar su eje utilizamos retenes de lego amarillos (imagen)
+
+Dos por la parte interior y uno por la parte exterior por cada lado ¿Por que los ponemos? Estos se encargan de sujetar los ejes de las ruedas al sistema de direccion , luego el diferencial “tubo transversal” ya antes lubricado con vaselina 
 
 ¿Por que se tiene que lubricar ? 
 
@@ -225,11 +238,81 @@ Nos dimos cuenta que si no lo lubricamos antes de probar el veiculo le va acosta
 
 ¿Porque se lubrica con vaselina y no con otra cosa? 
 
-Bueno al inicio nosotros probamos lubricando con grasa azul pero lo que pasaba era que se desgastaba y devilitaba las piezas en 3D despues de darnos cuenta de esto lo cambiamos a vaselina que igualmente lubrica de manera perfecta. Este proceso se hace dos veces uno del lado derecho y uno del lado izquierdo. Ya que son dos ejes independientes, unidos por la pieza principal y el diferencial. 
-
-Si se preguntan, porque no utilizamos un solo eje para las dos ruedas, haciendo varias pruebas, nos dimos cuenta que giraba mal (derrapaba) necesitaba un diferencial, convencional y funcional
+Tras diversas pruebas realizadas por el equipo, se descartó el uso de un eje de transmisión sólido (eje rígido).En un eje sólido, ambas ruedas se ven obligadas a girar a la misma velocidad angular. Sin embargo, en curvas, la rueda exterior describe un arco mayor que la interior. Esto generaba un fenómeno de derrape por arrastre, restando precisión a la trayectoria calculada por la HuskyLens. 
 
 ## Primer piso
+
+La base inferior esta realizada en impresión 3D del material PETG(Imagen)  Tiene unas medidas de 90mm de ancho × 190mm de largo  con una forma innovadora en su diseño como las líneas de relieve en la parte superior
+
+<img width="1092" height="500" alt="image" src="https://github.com/user-attachments/assets/3c8b125a-6743-4085-a913-d51589e3d74d" />
+
+estas cumplen una función muy importante en el diseño de manera indirecta la cual es dar mayor rijides a la base para evitar deformaciónes o fracturas.Para esto el equipo se inspiro en las formas de los chasis de los vehiculos.
+
+### ¿Por qué hacemos esto?
+
+Aunque anteriormente nunca hemos tenido problemas con deformaciónes empleamos estos ("Refuerzos") para prevenir problemas en un futuro y Trivilyn3.0 pueda soportar cualquier irregularidad
+
+Ya explicado esto Si pueden observar:
+
+<img width="983" height="669" alt="image" src="https://github.com/user-attachments/assets/f2c2b3cd-d91e-468b-ba42-1c95b16432f7" />
+
+
+está forma decreciente en la parte frontal de la base es el espacio necesario para que el sistema de dirección tenga una movilidad de 40° por lado y fue diseñado de esta forma en base al sistema de direccion que implementamos en Trivilyn.
+
+En la base se encuentran 9 orificios 8 para tornillos, 4 para el servomotor que poseen un ancho de 4.5mm que es la medidad del encaje de los tornuillos que trae el servomotor de fabrica.Todas estas medidas fueron realizadas por un vernier que funciona de la siguiente manera:
+
+### Funcionamiento y Lectura del Vernier
+
+- El vernier funciona mediante la superposición de dos escalas: la Regla Fija (milímetros) y el Nonio (la escala móvil que da la precisión decimal)
+
+<img width="3997" height="2284" alt="image" src="https://github.com/user-attachments/assets/36449bad-08c8-4096-86d2-ca1e4a0e47d8" /> 
+
+1. Lectura de la Escala Principal (Enteros)
+Primero, observa dónde se ubica el cero (0) de la escala móvil (nonio) respecto a la regla fija.
+
+- Si el cero del nonio pasó la marca de los 20 mm pero no llega a los 21 mm, tu medida base es 20 mm.
+
+2. Lectura del Nonio (Decimales)
+
+- Para obtener los decimales (el .2 mm), se debe buscar cuál línea del nonio coincide exactamente en una línea recta con cualquier línea de la regla fija.
+
+<img width="1008" height="1056" alt="image" src="https://github.com/user-attachments/assets/c6a20c74-3cda-4f26-a4d6-2d18b6695170" />
+
+<img width="781" height="458" alt="image" src="https://github.com/user-attachments/assets/ad453807-c352-4319-b679-7ee19adf160e" />
+
+4 para el soporte de la tracción trasera,utilizamos tornillos de 4mm en vez de otras medidas por lo siguiente razon:
+
+- Esta decisión se basa en un análisis de resistencia a la cizalladura, ya que este componente soporta el torque reactivo de los motores. El diámetro de 4 mm ofrece una superficie de contacto superior con el chasis de PETG, minimizando la fatiga del material por vibración y garantizando que la geometría del tren motriz permanezca inalterada ante aceleraciones de alta intensidad.
+
+### ¿Porque no más grandes?
+
+- En piezas impresas en 3D, un agujero muy grande reduce el área de las paredes de relleno (infill), lo que puede debilitar estructuralmente el soporte en lugar de fortalecerlo. El M4 permite mantener una estructura sólida alrededor del tornillo sin comprometer la resistencia de la pieza impresa.
+
+- el motor utilizado no generan el torque suficiente para romper un tornillo de acero M4. Por lo tanto, usar un M6 o M5 no aportaría ninguna seguridad extra real, solo penalizaría el rendimiento del robot.
+
+<img width="682" height="628" alt="image" src="https://github.com/user-attachments/assets/43382cb3-3df2-4cfe-af51-d2b36bcc4ef9" />
+
+El más grande de todos con forma rectangular es el orificio donde se encaja el servomotor de la dirección con unas medidas de 40.2mm*20.2mm 
+
+¿Porque esos 0.2mm extra? 
+
+Esos 0.2mm extra en el diseño para el encaje de la pieza no son un error y su explicacion es la siguiente:
+
+- Aunque se diseñe un hueco de 20 mm, el material alrededor de ese hueco tiende a contraerse hacia adentro mientras se enfría, reduciendo el espacio real disponible. Los 0.2 mm adicionales compensan esa contracción del polímero, asegurando que el componente mantenga un "ajuste deslizante" (clearance fit).
+
+- Las impresoras 3D funcionan depositando cordones de plástico (extrusión). La boquilla (nozzle) suele ser de 0.4 mm, pero el plástico se aplasta ligeramente al salir.Este aplastamiento hace que las paredes internas de un hueco sean siempre unas micras más gruesas de lo que dicta el modelo digital. Al añadir 0.2 mm de tolerancia, estámos compensando el exceso de flujo (over-extrusion) y las irregularidades microscópicas de las capas (capas de 0.2 mm de altura), permitiendo que las superficies deslicen sin quedar atrapadas por la fricción de las capas.
+
+<img width="1050" height="525" alt="image" src="https://github.com/user-attachments/assets/48e42870-3c93-4fa8-b5ce-ad1c5384dbb6" />
+
+Para finalizar la explicación de esta base, posee 3 pilares que se encargan de sostener el segundo piso posicionados estratégicamente 2 en la parte trasera y una en la parte frontal estás se encargan de soportar los demás pisos de Trivilyn
+
+<img width="1035" height="609" alt="image" src="https://github.com/user-attachments/assets/e42034b6-7c6a-4100-a12e-f25d8e6446b7" />
+
+Sus medidas son de 7mm de largo x 6.5mm de ancho x 45mm de alto y en la parte inferior de cada pilar se implementaron soportes en forma de rampa en la base de los pilares que sostienen el segundo nivel del chasis. Esta geometría de cartela estructural tiene como objetivo principal la triangulación de fuerzas, proporcionando rigidez ante los momentos flectores generados por la inercia del robot en fases de aceleración y frenado. El diseño inclinado no solo optimiza la distribución de cargas hacia el chasis principal, sino que mejora la viabilidad de la impresión en PETG al eliminar la necesidad de soportes externos, garantizando una unión mecánica superior entre niveles.
+
+<img width="967" height="591" alt="image" src="https://github.com/user-attachments/assets/75062dcb-3c39-4e53-b115-7a81c80a3a00" />
+
+
 
 
 ## Segundo piso
@@ -387,17 +470,23 @@ Esta base fue re diseñada varias veces hasta que logramos encontrar el punto do
 para centrar y estabilizar su eje utilizamos retenes de lego amarillos
 <img width="540" height="610" alt="image" src="https://github.com/user-attachments/assets/59f4dda6-5a0e-40dc-ad73-3c9c41af3f34" />
 
-dos por la parte interior y uno por la parte exterior ¿Por que los ponemos? Facil los dos retenes internos se les pone , luego el diferencial “tuvo transversal” ya antes lubricado con vaselina ¿Por que se tiene que lubricar ? Nos dimos cuenta que si no lo lubricamos antes de probar el vehículo le va acostar mas los giros y pueden producir que varían, ¿Porque se lubrica con vaselina y no con otra cosa? Bueno al inicio nosotros lubricabamos con grasa azul pero lo que pasaba era que se desgastaba y debilitaba las piezas en 3D despues de darnos cuenta de esto lo cambiamos a vaselina que igualmente no  se lubrica de manera perfecta. Este proceso se hace dos veces uno del lado derecho y uno del lado izquierdo. Ya que son dos ejes independientes, unidos por la pieza principal y el diferencial. Si se preguntan, porque no utilizamos un solo eje para las dos ruedas, haciendo varias pruebas, nos dimos cuenta que giraba mal (derrapaba) necesitaba un diferencial, convencional y funcional,. 
+ ¿Por que los ponemos? Facil los dos retenes internos se colocan para fijar el eje al diferencial “tuvo transversal” ya antes lubricado con vaselina ¿Por que se tiene que lubricar ? Nos dimos cuenta que si no lo lubricamos antes de probar el vehículo le va acostar mas los giros y pueden producir que variaciones al momento de girar.
 
+¿Porque se lubrica con vaselina y no con otra cosa? 
 
-Su tracción se debe a qué tiene un eje tipo cruceta basado en los que vienen en los kit de lego echo de acero con medidas de 2.8mm de ancho y 4.2mm de alto, en forma de cruceta, su largo es de 119mm, tiene un refuerzo de teflón industrial por alrededor del eje para evitar ser doblado o pandeado por el peso del prototipo. Este eje esta unido a la caja reductora, compuesta por  3 engranajes. Que trabajan de la siguiente manera:
+Inicialmente, se utilizó grasa azul industrial, pero se observó una degradación acelerada en los componentes impresos en 3D.
 
-Para calcular la relación de transmisión total (i total ) de una caja reductora compuesta por varias etapas, debemos considerar la relación entre los dientes de los engranajes conductores (entrada) y los conducidos (salida) en cada paso del tren de engranajes. 
+ La grasa azul suele contener aditivos de litio o solventes derivados del petróleo que son agresivos con polímeros como el PLA o el PETG. Estos químicos provocan agrietamiento por tensión (ESC), penetrando las capas de la impresión y debilitando la unión molecular, lo que causaba que las piezas se volvieran quebradizas.
+
+Ventaja de la Vaselina: Se seleccionó vaselina neutra por ser un compuesto químicamente inerte. Proporciona una viscosidad ideal para los ejes de metal/plástico de Trivilyn 3.0, asegurando una lubricación suave que no reacciona con el polímero del chasis, prolongando la vida útil de los mecanismos.
+
+- Su tracción se debe a qué tiene un eje tipo cruz basado en los que vienen en los kit de lego echo de acero con medidas de 2.8mm de ancho y 4.2mm de alto, en forma de cruceta, su largo es de 119mm, tiene un refuerzo de teflón industrial por alrededor del eje para evitar ser doblado o pandeado por el peso del prototipo. Este eje esta unido a la caja reductora, compuesta por  3 engranajes. Que trabajan de la siguiente manera:
 
 <img width="540" height="600" alt="image" src="https://github.com/user-attachments/assets/b0dcd599-29eb-494f-a5d7-9d299ea3cc98" />
 <img width="540" height="600" alt="image" src="https://github.com/user-attachments/assets/af8053d1-77d3-4b1d-8618-e3ee2fdb3cc5" />
 <img width="540" height="600" alt="image" src="https://github.com/user-attachments/assets/e3f04edd-f908-440c-adf8-31eedef2714c" />
 
+## ¿Cómo funciona la "fuerza" de Trivilyn 3.0? (El Sistema de Engranajes)
 
 Tomando como base una configuración de tres etapas con los engranajes de 8, 30, 5, 26, 5 y 20 dientes, el cálculo se desglosa de la siguiente manera: 
 
@@ -447,7 +536,8 @@ Dirección: comenzamos utilizando un servo mg995r de 5kg de torque, nos dimos cu
 <img width="540" height="610" alt="image" src="https://github.com/user-attachments/assets/680dbfbb-ae77-4ce0-a641-e7bd5e0aa9b1" />
 
 
-3ra prueba tratamos de ponerle teflón a los engranajesel problema de esta solución era que si funcionaba al principio, pero al hacer varias pruebas y al pasar el tiempo cada vez tendría más desvío.
+Para la 3ra prueba tratamos de ponerle teflón a los engranajes, el problema de esta solución era que si funcionaba al principio, pero al hacer varias pruebas y al pasar el tiempo cada vez tendría más desvío.
+
 En la siguiente gráfica  podemos observar con datos reales, como al realizar pruebas era mayor su desgaste, con 3 pruebas es casi nulo el desvió, pero al seguir utilizándolo se va desviando mas. 
 <img width="1024" height="425" alt="image" src="https://github.com/user-attachments/assets/98f9c708-b818-4080-a304-b838973416ce" />
 
