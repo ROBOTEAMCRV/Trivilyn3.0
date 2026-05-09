@@ -39,9 +39,9 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
    
 6. [Pensamiento sistémico y decisiones de ingeniería](#Pensamiento-Sistémico-y-Decisiones-de-Ingeniería)
 
-   * [Temporada 2024](#Temporada-2024-Rexbot1.0)
+   * [Temporada 2024](#Temporada-2024-Rexbot10)
   
-   * [Temporada 2025](#Temporada-2025-Rexbot2.0)
+   * [Temporada 2025](#Temporada-2025-Rexbot20)
   
    * [Temporada 2026](#Temporada-2026)
   
@@ -131,9 +131,13 @@ Esta insertado en la parte lateral de la caja de engranajes de la siguiente mane
 
 <img width="540" height="610" alt="image" src="https://github.com/user-attachments/assets/51318156-a986-46b9-8569-d86d30154f6d" />
 
-Aclaramos que estos motores se extrajeron de un turbo snake y se pueden sacar de distintos tipos de vehículos a control remoto como:
+Aclaramos que estos motores se extrajeron de un turbo snake 
 
 <img width="894" height="465" alt="image" src="https://github.com/user-attachments/assets/b64f1439-2ba3-4914-9b02-4640ddfbcb7d" />
+
+y se pueden extraer de distintos tipos de vehículos a control remoto como:
+
+
 
 Este motor es el  corazón del desplazamiento y uno de los componente principales para que Trivilyn tenga su desempeño. Ýa explicado esto pasamos a la parte de:
 
@@ -210,7 +214,7 @@ Rodamientos: Doble rodamiento de bolas para reducir la fricción en el eje princ
 
 Ángulo de control: Generalmente 180° o 270° (según la configuración de fábrica, pero es programable).
 
-(Imagen) que el equipo adquirio en Amazon ¿Porque no se usan servos convencionales? Esto tiene un  motivo ya que utilizamos versiones mas convencionales en prototipos anteriores de nuestro Robot(EL porque de esta decision y los retos que tuvo  que paso el equipo para tomar esta decision se puede conseguir mas a detalle en el apartado de"Pensamiento sistémico y decisiones de ingeniería Temporada 2025")
+(Imagen) que el equipo adquirio en Amazon ¿Porque no se usan servos convencionales? Esto tiene un  motivo ya que utilizamos versiones mas convencionales en prototipos anteriores de nuestro Robot(EL porque de esta decision y los retos que tuvo  que paso el equipo para tomar esta decision se puede conseguir mas a detalle en el apartado de"Pensamiento sistémico y decisiones de ingeniería Evolución)")
 
 ## Tipo de Direccion y ¿Como funciona?
 
@@ -242,11 +246,21 @@ Tras diversas pruebas realizadas por el equipo, se descartó el uso de un eje de
 
 ## Primer piso
 
-La base inferior esta realizada en impresión 3D del material PETG(Imagen)  Tiene unas medidas de 90mm de ancho × 190mm de largo  con una forma innovadora en su diseño como las líneas de relieve en la parte superior
+La base inferior al igual que las demas piezas de Trivilyn3.0 esta realizada en impresión 3D del material PETG de la marca Creality el cual adquirimos mercadolibre de la tienda oficial de Creality ubicada en Caracas 
+
+<img width="720" height="908" alt="image" src="https://github.com/user-attachments/assets/2a5402ab-edbf-4f81-a66b-1d7afbf8ecc6" />
+
+
+La base tiene unas medidas de 90mm de ancho × 170mm de largo x 48mm de alto 
+
+<img width="1026" height="602" alt="image" src="https://github.com/user-attachments/assets/fdf955ae-db07-4ce8-8c70-926ecb760103" />
+
+
+con una forma innovadora en su diseño como las líneas de relieve en la parte superior
 
 <img width="1092" height="500" alt="image" src="https://github.com/user-attachments/assets/3c8b125a-6743-4085-a913-d51589e3d74d" />
 
-estas cumplen una función muy importante en el diseño de manera indirecta la cual es dar mayor rijides a la base para evitar deformaciónes o fracturas.Para esto el equipo se inspiro en las formas de los chasis de los vehiculos.
+estas cumplen una función muy importante en el diseño de manera directa la cual es dar mayor rijides a la base para evitar deformaciónes o fracturas.Para esto el equipo se inspiro en las formas de los chasis de los vehiculos.
 
 ### ¿Por qué hacemos esto?
 
@@ -280,7 +294,8 @@ Primero, observa dónde se ubica el cero (0) de la escala móvil (nonio) respect
 
 <img width="781" height="458" alt="image" src="https://github.com/user-attachments/assets/ad453807-c352-4319-b679-7ee19adf160e" />
 
-4 para el soporte de la tracción trasera,utilizamos tornillos de 4mm en vez de otras medidas por lo siguiente razon:
+
+- 4 para el soporte de la tracción trasera,utilizamos tornillos de 4mm en vez de otras medidas por lo siguiente razon:
 
 - Esta decisión se basa en un análisis de resistencia a la cizalladura, ya que este componente soporta el torque reactivo de los motores. El diámetro de 4 mm ofrece una superficie de contacto superior con el chasis de PETG, minimizando la fatiga del material por vibración y garantizando que la geometría del tren motriz permanezca inalterada ante aceleraciones de alta intensidad.
 
@@ -292,9 +307,9 @@ Primero, observa dónde se ubica el cero (0) de la escala móvil (nonio) respect
 
 <img width="682" height="628" alt="image" src="https://github.com/user-attachments/assets/43382cb3-3df2-4cfe-af51-d2b36bcc4ef9" />
 
-El más grande de todos con forma rectangular es el orificio donde se encaja el servomotor de la dirección con unas medidas de 40.2mm*20.2mm 
+El más grande de todos con forma rectangular es el orificio donde se encaja el servomotor de la dirección con unas medidas de 40.2mm*20.2mm  
 
-¿Porque esos 0.2mm extra? 
+### ¿Porque esos 0.2mm extra? 
 
 Esos 0.2mm extra en el diseño para el encaje de la pieza no son un error y su explicacion es la siguiente:
 
@@ -308,15 +323,65 @@ Para finalizar la explicación de esta base, posee 3 pilares que se encargan de 
 
 <img width="1035" height="609" alt="image" src="https://github.com/user-attachments/assets/e42034b6-7c6a-4100-a12e-f25d8e6446b7" />
 
-Sus medidas son de 7mm de largo x 6.5mm de ancho x 45mm de alto y en la parte inferior de cada pilar se implementaron soportes en forma de rampa en la base de los pilares que sostienen el segundo nivel del chasis. Esta geometría de cartela estructural tiene como objetivo principal la triangulación de fuerzas, proporcionando rigidez ante los momentos flectores generados por la inercia del robot en fases de aceleración y frenado. El diseño inclinado no solo optimiza la distribución de cargas hacia el chasis principal, sino que mejora la viabilidad de la impresión en PETG al eliminar la necesidad de soportes externos, garantizando una unión mecánica superior entre niveles.
+Sus medidas son de 7mm de largo x 6.5mm de ancho x 45mm de alto y en la parte inferior de cada pilar se implementaron soportes en forma de rampa en la base de los pilares que sostienen el segundo nivel del chasis. Esta geometría de cartela estructural tiene como objetivo principal la triangulación de fuerzas, proporcionando rigidez ante los momentos flectores generados por la inercia del robot en fases de aceleración y frenado.El diseño inclinado no solo optimiza la distribución de cargas hacia el chasis principal, sino que mejora la viabilidad de la impresión en PETG al eliminar la necesidad de soportes externos, garantizando una unión mecánica superior entre niveles.
 
 <img width="967" height="591" alt="image" src="https://github.com/user-attachments/assets/75062dcb-3c39-4e53-b115-7a81c80a3a00" />
 
 
-
-
 ## Segundo piso
 
+Para el segundo piso de Trivilyn 3.0 el diseño tuvo una reestructuración, siendo la más notoria su tamaño su anchura subió de 90mm a 122mm mantuvo sus 181.50mm de largo su altura subio de 5mm a 38mm en el momento que se implemento el sistema para regular la altura de los sensores.
+<img width="904" height="664" alt="image" src="https://github.com/user-attachments/assets/f934e917-c560-4c97-a5e7-f0c92a428258" />
+
+<img width="1066" height="640" alt="image" src="https://github.com/user-attachments/assets/b309783a-532b-4e0a-9540-0df9a5505ec8" />
+
+Se observan refuerzos triangulares (nervios) en los pilares laterales de la base beige. Estos refuerzos aseguran que, aunque el sensor esté en su posición más alta, la estructura no vibre, manteniendo la estabilidad de la "mirada" de Trivilyn3.0 durante aceleraciones bruscas.
+
+<img width="1016" height="640" alt="image" src="https://github.com/user-attachments/assets/efd4178f-201e-4202-8be9-622de4fc47dc" />
+
+Se implementó un refuerzo perimetral de 2 mm x 3mm en los laterales del segundo piso para optimizar la relación resistencia-peso del chasis. Este diseño incrementa la rigidez mecánica de la plataforma, mitigando las vibraciones que podrían afectar la precisión de los sensores. Asimismo, funciona como un sistema de contención para la gestión de cableado y protección contra impactos laterales, garantizando la integridad de los componentes electrónicos en condiciones de alta exigencia dinámica.
+
+<img width="1039" height="667" alt="image" src="https://github.com/user-attachments/assets/657d39a6-d7f9-4340-aa42-89521c47e9d5" />
+
+Antes de continuar con la explicación de el sistema de regulacion de altura de los sensores,Esta base posee 3 orifios los cuales encajan perfectamente con los 3 pilares de la base inferios de esta manera se fijan entre si, despues a este diseño se le incorporo los sistemas de "Corredera" en la parte frontal y laterales quedando de la siguiente forma:
+
+<img width="1013" height="611" alt="image" src="https://github.com/user-attachments/assets/2dda79fa-1549-480b-8738-4f1b53c8e473" />
+
+Ahora ¿Por qué se agrando su ancho? se agrando para poder darle espacio de giro ya que se reestructuró el posicionamiento de los sensores , ahora su altura es ajustable mediante a y un sistema de corredera diseñado en 3D por nosotros de la siguiente manera: 
+
+### ¿como funciona?
+
+En lugar de usar piezas comerciales limitadas, diseñamos un sistema de rieles macho-hembra impreso en PETG. El acoplamiento entre el soporte del sensor y el segundo nivel se basa en un sistema de corredera de precisión. Mediante una interfaz de rieles y una ranura longitudinal, se logra una integración que permite el ajuste vertical milimétrico. El bloqueo se realiza mediante un sistema de sujeción por fricción con tornillos de acero, lo que garantiza que la calibración de altura sea permanente durante la competencia, absorbiendo las vibraciones del tren motriz sin comprometer la orientación del eje óptico de los sensores
+
+<img width="1184" height="600" alt="image" src="https://github.com/user-attachments/assets/dc379124-fe33-4ab5-8225-4c344223a759" />
+
+El sistema utiliza una ranura longitudinal que permite un desplazamiento milimétrico.
+
+<img width="976" height="577" alt="image" src="https://github.com/user-attachments/assets/b9aa1daa-26fc-4287-86c7-361bd882a361" />
+
+Se observa cómo el soporte del sensor encaja en un riel vertical del chasis. Esta geometría actúa como una guía lineal, restringiendo el movimiento del sensor para que solo pueda desplazarse hacia arriba o hacia abajo.Esto proporciona benficios técnicos en el diseño como :
+
+- Eliminar cualquier posibilidad de rotación o desviación lateral (eje X e Y). Al asegurar que el sensor siempre mire hacia adelante de forma perfectamente perpendicular, garantizamos que las ondas ultrasónicas regresen correctamente al receptor, evitando errores de lectura por ecos desviados.
+
+En la pieza beige se aprecia una ranura vertical alargada. Esta es la ranura longitudinal que mencionamos antes.El cual su funcionamiento es hacer que el agujero circular del soporte azul se alinea con esta ranura. Al insertar un tornillo y apretarlo con una tuerca por el lado opuesto, se genera una fuerza de compresión que "atrapa" ambas piezas.
+
+Una vez ajustada la altura a la que se quiere que trabaje el sensor, se utiliza un conjunto de tornillo y tuerca M4 para comprimir las piezas de la corredera. Esto crea una unión por fricción que es inmune a las vibraciones de los motores, evitando que el sensor se deslice hacia abajo durante la carrera. 
+
+Este diseño permite fijar el sensor a cualquier altura dentro del rango de la ranura, permitiendo que el robot se adapte a cualquier tipo de paredes en la WRO 2026 sin necesidad de piezas nuevas.
+
+### Sujeción de los sensores
+
+Diseñamos el soporte con paredes laterales que abrazan el PCB del sensor. El secreto de este encaje es la tolerancia (la holgura entre piezas). No es un agujero suelto; es un encaje que calculamos con 0.15 mm a 0.2 mm menos que la medida real del sensor. Esto obliga al plástico PETG a deformarse microscópicamente al insertar el sensor, creando una presión constante que lo mantiene firme en su lugar sin necesidad de tornillos adicionales.
+
+<img width="1007" height="607" alt="image" src="https://github.com/user-attachments/assets/b92c1d87-224a-4abf-9301-7581e3dc5041" />
+
+El círculo que se ve en la pieza azul en la parte superior es el agujero para el tornillo M4. Está centrado para que la fuerza de bloqueo (del mecanismo de corredera que hablamos antes) se distribuya uniformemente, evitando que el soporte del sensor baje o se mueve de su posicion.
+
+<img width="1050" height="1280" alt="image" src="https://github.com/user-attachments/assets/56d30ba7-4585-45e1-bbdd-756e6ca9f833" />
+
+La imagen ilustra la ingeniería de encaje de interferencia diseñada para el sensor ultrasónico. El soporte abraza el PCB con tolerancias de precisión calculadas para el PETG, utilizando una sujeción por fricción. El diseño inteligente deja expuestos los pines de conexión para facilitar el cableado, mientras que el orificio superior central permite que el tornillo M4 de la corredera ejerza una fuerza de bloqueo axial, garantizando que el sensor permanezca en su eje óptico sin movimiento parásito durante la competencia.
+
+ La experiencia de la Nacional 2025 nos enseñó que la rigidez excesiva en el diseño es una debilidad por eso para la Temporada 2026 el equipo hace enfasis en la la filosofia "Adaptarse para ganar". La capacidad de ajustar la altura en segundos durante los tiempos de practica nos da una ventaja competitiva. Si los jueces cambian las especificaciones de la pared o si la pista presenta irregularidades, Trivilyn 3.0 puede recalibrar su visión física sin necesidad de reprogramar el código de detección de distancia.
 
 ## Tercer piso
 
@@ -462,7 +527,8 @@ Comenzamos diseñando como sería el sistema de dirección y cuánto rango de gi
 
 Cara superior: contiene el L298(driver) un porta baterias de 2, 18650 y el servo motor mg995r.
 
-La dirección funciona de la siguiente manera para lograr la adaptación del servo a las ruedas, utilizamos piezas en 3D diseñadas por nosotros, lego y acero, esta consiste en 4 partes principales, encaje de palanca de acero a base en 3D
+La dirección funciona de la siguiente manera para lograr la adaptación del servo a las ruedas, utilizamos piezas en 3D diseñadas por nosotros, lego y acero.
+
 <img width="540" height="610" alt="image" src="https://github.com/user-attachments/assets/990524b0-c7c8-45d3-a1f3-fc57e4ee0549" />
 
 Esta base fue re diseñada varias veces hasta que logramos encontrar el punto donde no se deformara por el peso y también para que encajara perfectamente la pieza de hierro a presión y evitar todo el juego  posible(impresicion de los componentes), luego de encajar esta pieza, utilizamos un tipo de abrazadera, que agarra el buje del eje con forma de cruceta
@@ -470,9 +536,11 @@ Esta base fue re diseñada varias veces hasta que logramos encontrar el punto do
 para centrar y estabilizar su eje utilizamos retenes de lego amarillos
 <img width="540" height="610" alt="image" src="https://github.com/user-attachments/assets/59f4dda6-5a0e-40dc-ad73-3c9c41af3f34" />
 
- ¿Por que los ponemos? Facil los dos retenes internos se colocan para fijar el eje al diferencial “tuvo transversal” ya antes lubricado con vaselina ¿Por que se tiene que lubricar ? Nos dimos cuenta que si no lo lubricamos antes de probar el vehículo le va acostar mas los giros y pueden producir que variaciones al momento de girar.
+ ### ¿Por que los utilizamos?
+ 
+ Los dos retenes internos se colocan para fijar el eje al diferencial “tuvo transversal” ya antes lubricado con vaselina ¿Por que se tiene que lubricar ? Nos dimos cuenta que si no lo lubricamos antes de probar el vehículo le va acostar mas los giros y pueden producir que variaciones al momento de girar.
 
-¿Porque se lubrica con vaselina y no con otra cosa? 
+### ¿Porque vaselina y no otro lubricante? 
 
 Inicialmente, se utilizó grasa azul industrial, pero se observó una degradación acelerada en los componentes impresos en 3D.
 
@@ -486,38 +554,26 @@ Ventaja de la Vaselina: Se seleccionó vaselina neutra por ser un compuesto quí
 <img width="540" height="600" alt="image" src="https://github.com/user-attachments/assets/af8053d1-77d3-4b1d-8618-e3ee2fdb3cc5" />
 <img width="540" height="600" alt="image" src="https://github.com/user-attachments/assets/e3f04edd-f908-440c-adf8-31eedef2714c" />
 
-## ¿Cómo funciona la "fuerza" de Trivilyn 3.0? (El Sistema de Engranajes)
+## ¿Cómo funciona la "fuerza" de Trivilyn 3.0? (Sistema de Engranajes)
 
 Tomando como base una configuración de tres etapas con los engranajes de 8, 30, 5, 26, 5 y 20 dientes, el cálculo se desglosa de la siguiente manera: 
 
-1. Desglose por Etapas En un sistema reductor compuesto, la relación de cada etapa se define como:
+- La primera etapa reduce la velocidad del motor 3.75 veces.
 
- i= Z conducido/Z conductor
- Primera Etapa: Entrada de 8 dientes hacia salida de 30 dientes. 
- 
- i 1= 8/30 =3.75 
- Segunda Etapa: Entrada de 5 dientes hacia salida de 26 dientes. 
- 
- i2 = 5/26 =5.2 
- Tercera Etapa: Entrada de 5 dientes hacia salida de 20 dientes. 
- 
- i3 = 5/20=4.0 
- 
- 2. Relación de Transmisión Total La relación total es el producto de las relaciones de cada etapa:
- 
- itotal =i1 i2 i 3 
- 
- i total=3.75 5.2 4.0 
- 
- i total =78 
+- La segunda etapa toma esa velocidad ya reducida y la vuelve a reducir 5.2 veces más.
+
+- La tercera etapa toma eso y lo reduce 4 veces más.
+-
+- La cuenta final es: 3.75 x 5.2 x 4 = 78:1
  
  Esto significa que la relación de reducción es 78:1. 
  
  3. Análisis de Rendimiento Para obtener datos reales de salida, debemos considerar el efecto de esta reducción en la velocidad y el par motor (torque):
 
- Parámetro Efecto de la ReducciónFórmula Teórica Velocidad (RPM)Disminuye 78 veces n salida =78/nEntrada Torque (Nm) Aumenta 78 veces* salida =M entrada 78 η 
+ Parámetro Efecto de la Reducción Fórmula Teórica Velocidad (RPM)Disminuye 78 veces n salida =78/nEntrada Torque (Nm) Aumenta 78 veces* salida =M entrada 78 η 
  
- Comenzamos con el segundo piso( base del medio): 
+ Comenzamos con el segundo piso: 
+ 
  Está alberga lo que son el sistema de energía (baterías, elevadores y reguladores de voltaje) y sensores ultrasónicos, tiene una forma rectangular con esquinas ovaladas(imagen), Se distribuye de la siguiente manera: 
  
 
@@ -559,7 +615,7 @@ Para finalizar compramos el servomotr hobbypark de 35kg con las siguientes espec
 
 <img width="540" height="610" alt="image" src="https://github.com/user-attachments/assets/d55865b6-9db7-48a9-8f4e-8266a64ae5b0" />
 
-Este nos llevo a un mejor rendimiento, no quitarle el desvió a un 100% pero si mejorarlo a cierto punto que sea corregible a través de código o programación, se preguntan como es eso? La respuesta es sencilla, este servomotor, el poco desgaste que tiene y genera desvió, siempre es hacia un mismo lado, en pocas palabras es corregible, porque en el código lo podemos mandar a girar al sentido contrario del desvío cada cierto tiempo. 
+Este nos llevo a un mejor rendimiento, no quitarle el desvió a un 100% pero si mejorarlo a cierto punto que sea corregible a través de código o programación ¿como? La respuesta es sencilla, este servomotor, el poco desgaste que tiene y genera desvió, siempre es hacia un mismo lado, en pocas palabras es corregible, porque en el código lo podemos enviar a girar al sentido contrario del desvío cada cierto tiempo. 
 
 Por ejemplo Si el desvío del prototipo es hacia la izquierda, se manda a mover al servo cada tanto milisegundos mover 3 grados haca la derecha y volver al centro. Algunos de los datos que recopilamos, según la velocidad varia por ende hay que ajustar los parametros.
 
@@ -567,3 +623,10 @@ Por ejemplo Si el desvío del prototipo es hacia la izquierda, se manda a mover 
 
 # Temporada 2026
 
+### Pensamiento Sistémico (Caso de Estudio: Adaptabilidad Sensorial)
+
+En esta sección, no hablamos de piezas, hablamos de estrategia y resiliencia del sistema.
+
+1. Análisis de Fallo del Entorno (Lección WRO 2025)
+
+- El pensamiento sistémico nos permitió identificar que el robot no es un ente aislado, sino que depende directamente de las variables de su entorno (la pista). En la Final Nacional 2025, detectamos un fallo crítico: el sistema de navegación fallaba no por el código, sino por una falta de correspondencia física entre la altura de los sensores y la altura de las paredes. El Rexbot2.0 estaba 'ciego' ante paredes bajas. Bajo una visión sistémica, decidimos que Trivilyn 3.0 no debía ser un diseño rígido. En lugar de simplemente bajar los sensores, diseñamos un mecanismo de respuesta física (la corredera). Esto permite que el componente mecánico se ajuste a la realidad del entorno en tiempo real, asegurando que el flujo de datos hacia la CPU sea siempre óptimo, sin importar las variaciones de la infraestructura de la pista.
