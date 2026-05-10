@@ -97,7 +97,7 @@ Apoyo Logístico: Colabora en la preparación de las pistas de prueba, recolecci
 
 ## Tracción y Dirección:
 
-- La tracción del prototipo esta constituido por 4 ruedas de goma extraídas por un kit de lego EV3, estas tienen como medida del neumático es de 43mm de diámetro exterior y su respectiva llanta(rin) 29mm.
+- La tracción del prototipo esta constituido por 4 ruedas de goma extraídas de un kit de lego EV3, estas tienen como medida del neumático es de 43mm de diámetro exterior y su respectiva llanta(rin) 29mm.
 
 <img width="540" height="610" alt="image" src="https://github.com/user-attachments/assets/2fb7151d-4170-44b2-8d3b-63890c571fb5" />
 
@@ -118,7 +118,7 @@ Torque Efectivo: Un diámetro menor permite que el motor DC trabaje con una carg
 
 ## ¿Como logramos que se mueva con un solo motor?
 
-Esto se logra con una caja de engranajes realizada a medidad que posee un eje tipo cruz basado en los que vienen en los kit de lego echo de acero con medidas de 2.8mm de ancho y 4.2mm de alto, en forma de cruceta, su largo es de 119mm, tiene un refuerzo de teflón industrial por alrededor del eje para evitar ser doblado o pandeado por el peso del prototipo.
+Esto se logra mediante a una caja de engranajes realizada a medidad que posee un eje tipo cruz basado en los que vienen en los kit de lego echo de acero con medidas de 2.8mm de ancho y 4.2mm de alto, su largo es de 119mm, tiene un refuerzo de teflón industrial por alrededor del eje para evitar ser doblado o pandeado por el peso del prototipo.
 
 La caja reductora o caja de engranajes esta conformada internamente por 3 engranejes 
 <img width="540" height="610" alt="image" src="https://github.com/user-attachments/assets/d757209c-56f3-45bb-a624-5c35fda9360d" /> 
@@ -151,7 +151,7 @@ Esta base funciona como una especie de tapa y abrazadera realizada a medida evit
 
 <img width="540" height="610" alt="image" src="https://github.com/user-attachments/assets/969327b4-2068-40c5-84bb-7d25c7d60139" />
 
-que al lograr encajar con el sistema de engranajes  se fija a la primera base de Trivilyn por 4 tornillos
+que al lograr encajar con el sistema de engranajes se fija a la primera base de Trivilyn por 4 tornillos
 
 Si se puede observar el soporte en la parte inferior tiene una especie de “Vena” 
 
@@ -295,7 +295,7 @@ Primero, observa dónde se ubica el cero (0) de la escala móvil (nonio) respect
 <img width="781" height="458" alt="image" src="https://github.com/user-attachments/assets/ad453807-c352-4319-b679-7ee19adf160e" />
 
 
-- 4 para el soporte de la tracción trasera,utilizamos tornillos de 4mm en vez de otras medidas por lo siguiente razon:
+- 4 tornillos para el soporte de la tracción trasera,utilizamos tornillos de 4mm en vez de otras medidas por lo siguiente razon:
 
 - Esta decisión se basa en un análisis de resistencia a la cizalladura, ya que este componente soporta el torque reactivo de los motores. El diámetro de 4 mm ofrece una superficie de contacto superior con el chasis de PETG, minimizando la fatiga del material por vibración y garantizando que la geometría del tren motriz permanezca inalterada ante aceleraciones de alta intensidad.
 
@@ -303,11 +303,11 @@ Primero, observa dónde se ubica el cero (0) de la escala móvil (nonio) respect
 
 - En piezas impresas en 3D, un agujero muy grande reduce el área de las paredes de relleno (infill), lo que puede debilitar estructuralmente el soporte en lugar de fortalecerlo. El M4 permite mantener una estructura sólida alrededor del tornillo sin comprometer la resistencia de la pieza impresa.
 
-- el motor utilizado no generan el torque suficiente para romper un tornillo de acero M4. Por lo tanto, usar un M6 o M5 no aportaría ninguna seguridad extra real, solo penalizaría el rendimiento del robot.
+- El motor utilizado no generan el torque suficiente para romper un tornillo de acero M4. Por lo tanto, usar un M6 o M5 no aportaría ninguna seguridad extra real, solo penalizaría el rendimiento del robot.
 
 <img width="682" height="628" alt="image" src="https://github.com/user-attachments/assets/43382cb3-3df2-4cfe-af51-d2b36bcc4ef9" />
 
-El más grande de todos con forma rectangular es el orificio donde se encaja el servomotor de la dirección con unas medidas de 40.2mm*20.2mm  
+El agujero más grande de todos con forma rectangular es el orificio donde se encaja el servomotor de la dirección con unas medidas de 40.2mm*20.2mm  
 
 ### ¿Porque esos 0.2mm extra? 
 
