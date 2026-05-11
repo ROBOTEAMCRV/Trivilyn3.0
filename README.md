@@ -216,7 +216,7 @@ Rodamientos: Doble rodamiento de bolas para reducir la fricción en el eje princ
 
 (Imagen) que el equipo adquirio en Amazon ¿Porque no se usan servos convencionales? Esto tiene un  motivo ya que utilizamos versiones mas convencionales en prototipos anteriores de nuestro Robot(EL porque de esta decision y los retos que tuvo  que paso el equipo para tomar esta decision se puede conseguir mas a detalle en el apartado de"Pensamiento sistémico y decisiones de ingeniería Evolución)")
 
-## Tipo de Direccion y ¿Como funciona?
+## Tipo de Direccion y Como funciona
 
 - Este contiene un sistema de dirección (Steer-by-Wire) que cada rueda puede moverse independientemente, aunque están montadas en un eje común (lo cual sugiere una posible adaptación diferencial) Ya que la rueda interior gira ligeramente más que la otra, de modo que el robot se mantiene en el mismo arco sin deslizamiento. (Derrape). 
 
@@ -262,8 +262,6 @@ con una forma innovadora en su diseño como las líneas de relieve en la parte s
 
 estas cumplen una función muy importante en el diseño de manera directa la cual es dar mayor rijides a la base para evitar deformaciónes o fracturas.Para esto el equipo se inspiro en las formas de los chasis de los vehiculos.
 
-### ¿Por qué hacemos esto?
-
 Aunque anteriormente nunca hemos tenido problemas con deformaciónes empleamos estos ("Refuerzos") para prevenir problemas en un futuro y Trivilyn3.0 pueda soportar cualquier irregularidad
 
 Ya explicado esto Si pueden observar:
@@ -299,8 +297,6 @@ Primero, observa dónde se ubica el cero (0) de la escala móvil (nonio) respect
 
 - Esta decisión se basa en un análisis de resistencia a la cizalladura, ya que este componente soporta el torque reactivo de los motores. El diámetro de 4 mm ofrece una superficie de contacto superior con el chasis de PETG, minimizando la fatiga del material por vibración y garantizando que la geometría del tren motriz permanezca inalterada ante aceleraciones de alta intensidad.
 
-### ¿Porque no más grandes?
-
 - En piezas impresas en 3D, un agujero muy grande reduce el área de las paredes de relleno (infill), lo que puede debilitar estructuralmente el soporte en lugar de fortalecerlo. El M4 permite mantener una estructura sólida alrededor del tornillo sin comprometer la resistencia de la pieza impresa.
 
 - El motor utilizado no generan el torque suficiente para romper un tornillo de acero M4. Por lo tanto, usar un M6 o M5 no aportaría ninguna seguridad extra real, solo penalizaría el rendimiento del robot.
@@ -308,8 +304,6 @@ Primero, observa dónde se ubica el cero (0) de la escala móvil (nonio) respect
 <img width="682" height="628" alt="image" src="https://github.com/user-attachments/assets/43382cb3-3df2-4cfe-af51-d2b36bcc4ef9" />
 
 El agujero más grande de todos con forma rectangular es el orificio donde se encaja el servomotor de la dirección con unas medidas de 40.2mm*20.2mm  
-
-### ¿Porque esos 0.2mm extra? 
 
 Esos 0.2mm extra en el diseño para el encaje de la pieza no son un error y su explicacion es la siguiente:
 
