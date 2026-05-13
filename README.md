@@ -37,6 +37,12 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
 
 5. [Arquitectura Software y Estratrgia](#Arquitectura-Software-y-Estratrgia)
    
+   * [Resumen del Proyecto](#Resumen-del-Proyecto)
+  
+   * [Arquitectura del Software](#Arquitectura-del-Software-(Máquina-de-Estados-de-Misión))
+  
+   * [Análisis de Rendimiento](#Análisis-de-Rendimiento:-Optimización-de-Tiempo-vs.-Fiabilidad)
+
 6. [Pensamiento sistémico y decisiones de ingeniería](#Pensamiento-Sistémico-y-Decisiones-de-Ingeniería)
 
    * [Temporada 2024](#Temporada-2024-Rexbot10)
