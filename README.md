@@ -41,7 +41,7 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
   
    * [Arquitectura del Software](#Arquitectura-del-Software-(Máquina-de-Estados-de-Misión))
   
-   * [Análisis de Rendimiento](#Análisis-de-Rendimiento:-Optimización-de-Tiempo-vs.-Fiabilidad)
+   * [Análisis de Rendimiento](#Análisis-de-Rendimiento-Optimización-de-Tiempo-vs-Fiabilidad)
 
 6. [Pensamiento sistémico y decisiones de ingeniería](#Pensamiento-Sistémico-y-Decisiones-de-Ingeniería)
 
@@ -487,7 +487,7 @@ Filtro distance > 1: Esta instrucción filtra las lecturas de 0 cm que genera la
 <img width="725" height="335" alt="image" src="https://github.com/user-attachments/assets/8200de92-a893-49c3-b3da-48048b0b85e6" />
 
 
-## Análisis de Rendimiento: Optimización de Tiempo vs. Fiabilidad
+## Análisis de Rendimiento: Optimización de Tiempo vs Fiabilidad
 
 En el desarrollo de Trivilyn 3.0 , el enfoque principal fue la navegación en Centro Aleatorio (pasillos de 40 cm). Realizamos una comparativa entre nuestra configuración base y nuestra configuración de alto rendimiento para la WRO.
 
