@@ -118,12 +118,12 @@ Torque Efectivo: Un diámetro menor permite que el motor DC trabaje con una carg
 
 ## ¿Como logramos que se mueva con un solo motor?
 
-Esto se logra mediante a una caja de engranajes realizada a medidad que posee un eje tipo cruz basado en los que vienen en los kit de lego echo de acero con medidas de 2.8mm de ancho y 4.2mm de alto, su largo es de 119mm, tiene un refuerzo de teflón industrial por alrededor del eje para evitar ser doblado o pandeado por el peso del prototipo.
+Esto se logra mediante una caja de engranajes realizada a medida, que posee un eje tipo cruz basado en los que vienen en los kits de Lego, hechos de acero con medidas de 2.8 mm de ancho y 4.2 mm de alto; su longitud es de 119 mm. Tiene un refuerzo de teflón industrial alrededor del eje para evitar ser doblado o pandeado por el peso del prototipo.
 
 La caja reductora o caja de engranajes esta conformada internamente por 3 engranejes 
 <img width="540" height="610" alt="image" src="https://github.com/user-attachments/assets/d757209c-56f3-45bb-a624-5c35fda9360d" /> 
 
-- Trilvilyn se desplaza gracias a lo mencionado anteriormente, pero el que se encarga de dar el inicio del movimiento es un motor Dc de 3  a 6 voltios logrando 13 mil y 15 mil rpm.
+- Trivilyn se desplaza gracias a lo mencionado anteriormente, pero el que se encarga de dar el inicio del movimiento es un motor DC de 3 a 6 voltios, logrando entre 13 mil y 15 mil RPM.
 
 <img width="540" height="610" alt="image" src="https://github.com/user-attachments/assets/db57e1e8-c39f-4611-a939-cd46dfc346db" />
 
@@ -138,16 +138,15 @@ Aclaramos que estos motores se extrajeron de un turbo snake
 y se pueden extraer de distintos tipos de vehículos a control remoto como:
 
 
-
-Este motor es el  corazón del desplazamiento y uno de los componente principales para que Trivilyn tenga su desempeño. Ýa explicado esto pasamos a la parte de:
+Este motor es el corazón del desplazamiento y uno de los componentes principales para que Trivilyn tenga su desempeño. Ya explicado esto, pasamos a la parte de:
 
 ### ¿Con que sostiene todo esto? 
 
-Todo lo mencionado anteriormente se sostiene con una base diseñada en 3D por el equipo(Recordamos que los diseños como este se encuentranen el apartada de Archivos CAD)
+Todo lo mencionado anteriormente se sostiene con una base diseñada en 3D por el equipo. (Recordamos que los diseños como este se encuentran en el apartado de Archivos CAD).
 
 <img width="942" height="621" alt="image" src="https://github.com/user-attachments/assets/ba459d5c-70a8-4925-a69b-d3ea4a817476" />
 
-Esta base funciona como una especie de tapa y abrazadera realizada a medida evitando vibraciones y fallos para sostener toda la tracción trasera de Trivilyn encajando  con los soportes del eje  trasero principal, siendo así las partes laterales de la caja de engranajes y la parte central de la caja de engranajes
+Esta base funciona como una especie de tapa y abrazadera realizada a medida, evitando vibraciones y fallos para sostener toda la tracción trasera de Trivilyn; encaja con los soportes del eje trasero principal, siendo así las partes laterales de la caja de engranajes y la parte central de la caja de engranajes.
 
 <img width="540" height="610" alt="image" src="https://github.com/user-attachments/assets/969327b4-2068-40c5-84bb-7d25c7d60139" />
 
@@ -164,9 +163,9 @@ Es una extencion de filamento cuya funcion es solucionar que en versiones anteri
 - Esto hace que la pieza sea mucho más resistente a la flexión. En un robot de competencia, los motores y el movimiento generan vibraciones; la vena asegura que el soporte se mantenga rígido y no "oscile", lo cual terminaría quebrando el PETG.
 
 ## Movilidad parte delantera: 
+La movilidad en la parte delantera: aquí nos referimos al sistema de dirección (control de giros del robot), ruedas frontales y todos los componentes de estos para unirse entre sí.
 
-La movilidad en la(Parte delantera) aquí nos referimos a el sistema de direccion(control de giros del roboot), ruedas frontales y todo los componentes de estos para unirse entre si.
-Para esta parte de Trivilyn3.0 nos basamos en la plataforma estable de Trivilyn 2025, para esta temporada 2026 hemos conservado el sistema de dirección por su alta fiabilidad, pero hemos aplicado dos optimizaciones críticas en la respuesta dinámica y la durabilidad de los materiales, las cuales son:
+Para esta parte de Trivilyn 3.0 nos basamos en la plataforma estable de Trivilyn 2025; Para esta temporada 2026 hemos conservado el sistema de dirección por su alta confiabilidad, pero hemos aplicado dos optimizaciones críticas en la respuesta dinámica y la durabilidad de los materiales, las cuales son:
 
 1.Principalmente imprimimos los componentes nuevamente en PETG porque es un material mas resistente al desgaste y posibles fracturas que el PLA, sin embargo desde un punto mas profesional estos son las ventajas de utilizar PETG:
 
@@ -193,7 +192,7 @@ Para esta parte de Trivilyn3.0 nos basamos en la plataforma estable de Trivilyn 
 <img width="610" height="540" alt="image" src="https://github.com/user-attachments/assets/9c4a2c56-16b4-4613-b91b-083027a05eef" />
 
 
-Ya teniendo claro esto podemos iniciar con explicar ¿Que hace que se mueva las ruedas frontales ? El encargado de esto es un servomotor que esta fijado a la base priincipal de trivilyn con sus respectivos tornillos y tuercas.Este servomotor no se convencional como los modelos sg90 o MG95 es un servomotorHobbyPark 35kg (Modelo HD3523MG).Sistema de moviento que se implemento en Rexbot2.0 y decidimos conservar esta parte ya que cumple su funcion de manera precisa.
+Ya teniendo claro esto, podemos iniciar con explicar: ¿qué hace que se mueven las ruedas frontales? El encargado de esto es un servomotor que está fijado a la base principal de Trivilyn con sus respectivos tornillos y tuercas. Este servomotor no es convencional como los modelos SG90 o MG95; Es un servomotor HobbyPark de 35 kg (Modelo HD3523MG). Sistema de movimiento que se implementó en Rexbot 2.0 y decidimos conservar esta parte, ya que cumple su función de manera precisa.
 
 Especificaciones del servomotorHobbyPark 35kg (Modelo HD3523MG):
 
@@ -214,7 +213,7 @@ Rodamientos: Doble rodamiento de bolas para reducir la fricción en el eje princ
 
 Ángulo de control: Generalmente 180° o 270° (según la configuración de fábrica, pero es programable).
 
-(Imagen) que el equipo adquirio en Amazon ¿Porque no se usan servos convencionales? Esto tiene un  motivo ya que utilizamos versiones mas convencionales en prototipos anteriores de nuestro Robot(EL porque de esta decision y los retos que tuvo  que paso el equipo para tomar esta decision se puede conseguir mas a detalle en el apartado de"Pensamiento sistémico y decisiones de ingeniería Evolución)")
+(Imagen) que el equipo adquirido en Amazon. ¿Por qué no se usan servos convencionales? Esto tiene un motivo, ya que utilizamos versiones más convencionales en prototipos anteriores de nuestro robot. (El porqué de esta decisión y los retos por los que tuvo que pasar el equipo para tomar esta decisión se pueden conseguir más a detalle en el apartado de «Pensamiento sistémico y decisiones de ingeniería: Evolución»).
 
 ## Tipo de Direccion y Como funciona
 
@@ -228,14 +227,13 @@ para lograr la adaptación del servo a las ruedas, utilizamos piezas en 3D dise�
 
 1. Encaje de palanca de acero a base en 3D(imagen) 
 
-Esta base fue re diseñada varias veces hasta que logramos encontrar el punto donde no se deformara por el peso y también para que encajara perfectamente la piesa de hierro a precion y evitar todo el juego  posible(impresicion de los componentes)
+Esta base fue rediseñada varias veces hasta que logramos encontrar el punto donde no se deformara por el peso y, también, para que encajara perfectamente la pieza de hierro a presión y evitar todo el juego posible (imprecisión de los componentes).
 
 2.Luego de encajar esta pieza, utilizamos un tipo de abrazadera, que sostiene el buje del eje con forma de cruz extraido de un kit Legoeo EVE3(imagen)
 
 3.Para centrar y estabilizar su eje utilizamos retenes de lego amarillos (imagen)
 
-Dos por la parte interior y uno por la parte exterior por cada lado ¿Por que los ponemos? Estos se encargan de sujetar los ejes de las ruedas al sistema de direccion , luego el diferencial “tubo transversal” ya antes lubricado con vaselina 
-
+Dos por la parte interior y uno por la parte exterior por cada lado. Estos se encargan de sujetar los ejes de las ruedas al sistema de dirección; luego, el diferencial «tubo transversal», ya antes lubricado con vaselina.
 ¿Por que se tiene que lubricar ? 
 
 Nos dimos cuenta que si no lo lubricamos antes de probar el veiculo le va acostar mas los giros y pueden preoducir que varien.
@@ -269,7 +267,7 @@ Ya explicado esto Si pueden observar:
 <img width="983" height="669" alt="image" src="https://github.com/user-attachments/assets/f2c2b3cd-d91e-468b-ba42-1c95b16432f7" />
 
 
-está forma decreciente en la parte frontal de la base es el espacio necesario para que el sistema de dirección tenga una movilidad de 40° por lado y fue diseñado de esta forma en base al sistema de direccion que implementamos en Trivilyn.
+Esta forma decreciente en la parte frontal de la base es el espacio necesario para que el sistema de dirección tenga una movilidad de 40° por lado, y fue diseñado de esta forma en base al sistema de dirección que implementamos en Trivilyn.
 
 En la base se encuentran 9 orificios 8 para tornillos, 4 para el servomotor que poseen un ancho de 4.5mm que es la medidad del encaje de los tornuillos que trae el servomotor de fabrica.Todas estas medidas fueron realizadas por un vernier que funciona de la siguiente manera:
 
@@ -317,14 +315,14 @@ Para finalizar la explicación de esta base, posee 3 pilares que se encargan de 
 
 <img width="1035" height="609" alt="image" src="https://github.com/user-attachments/assets/e42034b6-7c6a-4100-a12e-f25d8e6446b7" />
 
-Sus medidas son de 7mm de largo x 6.5mm de ancho x 45mm de alto y en la parte inferior de cada pilar se implementaron soportes en forma de rampa en la base de los pilares que sostienen el segundo nivel del chasis. Esta geometría de cartela estructural tiene como objetivo principal la triangulación de fuerzas, proporcionando rigidez ante los momentos flectores generados por la inercia del robot en fases de aceleración y frenado.El diseño inclinado no solo optimiza la distribución de cargas hacia el chasis principal, sino que mejora la viabilidad de la impresión en PETG al eliminar la necesidad de soportes externos, garantizando una unión mecánica superior entre niveles.
+Sus medidas son de 7 mm de largo x 6.5 mm de ancho x 45 mm de alto y, en la parte inferior de cada pilar, se implementaron soportes en forma de rampa en la base de los pilares que sostienen el segundo nivel del chasis. Esta geometría de cartela estructural tiene como objetivo principal la triangulación de fuerzas, proporcionando rigidez ante los momentos flectores generados por la inercia del robot en fases de aceleración y frenado. El diseño inclinado no solo optimiza la distribución de cargas hacia el chasis principal, sino que mejora la viabilidad de la impresión en PETG al eliminar la necesidad de soportes externos, garantizando una unión mecánica superior entre niveles.
 
 <img width="967" height="591" alt="image" src="https://github.com/user-attachments/assets/75062dcb-3c39-4e53-b115-7a81c80a3a00" />
 
 
 ## Segundo piso
 
-Para el segundo piso de Trivilyn 3.0 el diseño tuvo una reestructuración, siendo la más notoria su tamaño su anchura subió de 90mm a 122mm mantuvo sus 181.50mm de largo su altura subio de 5mm a 38mm en el momento que se implemento el sistema para regular la altura de los sensores.
+Para el segundo piso de Trivilyn 3.0, el diseño tuvo una reestructuración, siendo la más notoria su tamaño: su anchura aumentó de 90 mm a 122 mm, mantuvo sus 181.50 mm de largo y su altura aumentó de 5 mm a 38 mm en el momento en que se implementó el sistema para regular la altura de los sensores.
 <img width="904" height="664" alt="image" src="https://github.com/user-attachments/assets/f934e917-c560-4c97-a5e7-f0c92a428258" />
 
 <img width="1066" height="640" alt="image" src="https://github.com/user-attachments/assets/b309783a-532b-4e0a-9540-0df9a5505ec8" />
@@ -345,7 +343,7 @@ Ahora ¿Por qué se agrando su ancho? se agrando para poder darle espacio de gir
 
 ### ¿como funciona?
 
-En lugar de usar piezas comerciales limitadas, diseñamos un sistema de rieles macho-hembra impreso en PETG. El acoplamiento entre el soporte del sensor y el segundo nivel se basa en un sistema de corredera de precisión. Mediante una interfaz de rieles y una ranura longitudinal, se logra una integración que permite el ajuste vertical milimétrico. El bloqueo se realiza mediante un sistema de sujeción por fricción con tornillos de acero, lo que garantiza que la calibración de altura sea permanente durante la competencia, absorbiendo las vibraciones del tren motriz sin comprometer la orientación del eje óptico de los sensores
+En lugar de usar piezas comerciales limitadas, diseñamos un sistema de rieles macho-hembra impreso en PETG. El acoplamiento entre el soporte del sensor y el segundo nivel se basa en un sistema de corredera de precisión. Mediante una interfaz de rieles y una ranura longitudinal, se logra una integración que permite el ajuste vertical milimétrico. El bloqueo se realiza mediante un sistema de sujeción por fricción con tornillos de acero, lo que garantiza que la calibración de altura sea permanente durante la competencia, absorbiendo las vibraciones del tren motriz sin comprometer la orientación del eje óptico de los sensores.
 
 <img width="1184" height="600" alt="image" src="https://github.com/user-attachments/assets/dc379124-fe33-4ab5-8225-4c344223a759" />
 
@@ -373,9 +371,13 @@ El círculo que se ve en la pieza azul en la parte superior es el agujero para e
 
 <img width="1050" height="1280" alt="image" src="https://github.com/user-attachments/assets/56d30ba7-4585-45e1-bbdd-756e6ca9f833" />
 
-La imagen ilustra la ingeniería de encaje de interferencia diseñada para el sensor ultrasónico. El soporte abraza el PCB con tolerancias de precisión calculadas para el PETG, utilizando una sujeción por fricción. El diseño inteligente deja expuestos los pines de conexión para facilitar el cableado, mientras que el orificio superior central permite que el tornillo M4 de la corredera ejerza una fuerza de bloqueo axial, garantizando que el sensor permanezca en su eje óptico sin movimiento parásito durante la competencia.
+La estructura ilustrada muestra la ingeniería de encaje de interferencia diseñada específicamente para el sensor ultrasónico. El soporte abraza la placa (PCB) con tolerancias de precisión calculadas para el filamento PETG, utilizando una sujeción por fricción que elimina la necesidad de adhesivos. El diseño permite dejar expuestos los pines de conexión para facilitar el cableado, mientras que el orificio superior central permite que un tornillo M4 ejerza una fuerza de bloqueo axial. Esto garantiza que el sensor permanezca alineado en su eje óptico, eliminando cualquier movimiento parásito durante las vibraciones de la competencia.
 
- La experiencia de la Nacional 2025 nos enseñó que la rigidez excesiva en el diseño es una debilidad por eso para la Temporada 2026 el equipo hace enfasis en la la filosofia "Adaptarse para ganar". La capacidad de ajustar la altura en segundos durante los tiempos de practica nos da una ventaja competitiva. Si los jueces cambian las especificaciones de la pared o si la pista presenta irregularidades, Trivilyn 3.0 puede recalibrar su visión física sin necesidad de reprogramar el código de detección de distancia.
+Temporada 2026: "Adaptarse para ganar"
+
+La experiencia en la Nacional 2025 dejó una lección clara: la rigidez excesiva en el diseño mecánico es una debilidad. Por ello, para la temporada 2026, el equipo ha adoptado la filosofía de "Adaptarse para ganar" .
+
+La capacidad de ajustar la altura del sensor en cuestión de segundos durante las prácticas nos otorga una ventaja competitiva crítica. Si las especificaciones de las paredes cambian o si la pista presenta irregularidades imprevistas, el Trivilyn 3.0 puede recalibrar su "visión física" mecánicamente. Esto evita la necesidad de realizar cambios de último minuto en el código de detección de distancia, permitiendo que el software se mantenga estable mientras el hardware se adapta al entorno.
 
 ## Tercer piso
 
@@ -388,133 +390,213 @@ La imagen ilustra la ingeniería de encaje de interferencia diseñada para el se
 
 # Arquitectura Software y Estratrgia
 
-## Resumen del Proyecto
+## 📄 Resumen del Proyecto
 
-Este documentado tiene como objetivo explicar el funcionamiento lógico y estrategia que utilizamos para crear el código que controla al vehículo autónomo que fue diseñado para realizar las pruebas a enfrentar de una competencia llamada WRO de la categoría de futuros ingenieros, costa de que el vehículo tiene que realizar dos prueba abierta que se trata de completar tres vueltas en una pista de competición de 3x3 metros. El sistema debe navegar un entorno variable (centro aleatorizado) que genera pasillos estrechos de hasta 40cm, contabilizar el progreso (esquinas )de la misión y realizar un estacionamiento final en el cuadrante de origen; pero esta no es el única prueba a enfrentar también tiene que hacer la ronda de color, que se trata que el vehículo tiene navegar en una pista 3x3 metros mientras esquiva obstáculos aleatorios diferenciados por colores (rojo o verde ), el sistema emplea una arquitectura de bucle cerrado que integra una cámara de visión HuskyLens que detecta los colores de los obstáculos. La misión principal consiste en completar las vueltas requeridas evadiendo los obstáculos dependiendo del color (Rojo/Verde ) para  ejecutar maniobras de evasión precisas hacia el flanco correcto. Además, el códigos implementa rutinas de autocentrado constante, rectificación por contacto físico en esquinas para eliminar cualquier error o desvío, y una lógica de fin de carrera para estacionar el vehículo en el cuadrante de meta designado tras detectar un marcador de color Magenta.
+Este documento detalla el funcionamiento lógico y la estrategia de control del vehículo autónomo diseñado para la categoría Future Engineers de la World Robot Olympiad (WRO). El sistema está programado para enfrentar dos desafíos críticos en una pista de 4 metros x 4 metros:
 
-## Arquitectura del Software de Ronda Abierta (Máquina de Estados de Misión)
+- Ronda Abierta: Navegación en un entorno variable con pasillos estrechos (hasta 40 cm), conteo de esquinas y estacionamiento final tras completar tres vueltas.
 
-El código se ha estructurado como una Máquina de Estados Finitos (que quiere decir esto que tiene un fin el código ) jerárquica para gestionar no solo el control del vehículo, sino también la lógica de la misión (conteo de vueltas y estacionamiento).
+- Ronda Cerrda: Evasión de elementos aleatorios diferenciados por colores (Rojo/Verde) mediante visión artificial con una cámara HuskyLens .El vehículo emplea una arquitectura de bucle cerrado que integra rutinas de autocentrado constante, rectificación física y una lógica de fin de carrera basada en la detección de un marcador color Magenta.
 
-A continuancion les describiremos  los Estados de Misión:
+## ⚙️ Arquitectura del Software (Máquina de Estados de Misión)
 
- Estado de Salida Preprogramada (if pepe==0): lo primero es que el robot ejecuta una secuencia fija de dirección (myservo.write(67) y retardos para salir de forma segura del cuadro de inicio y alinearse en el carril.
-Después sigue el Estado de Navegación (Crucero y Evasión) Este estado activo utiliza los tres sensores ultrasónicos. Se subdivide en:
+El software se basa en un modelo de Control Reactivo gestionado por una Máquina de Estados Finitos (FSM) jerárquica. Este modelo permite coordinar tanto el control dinámico del vehículo como la lógica de misión
+(conteo de vueltas y estacionamiento).
 
-1.-) (Corrección Lateral): Si los sensores laterales (leftDistance, rightDistance) detectan una distancia < 25cm,se aplican micro-ajustes de servo para centrar el vehículo.
+### A. Fase de Inicialización y Calibración Estática
+Para garantizar un arranque reproducible, se implementó una rutina de configuración única controlada por la variable de estado pepe(inicializada en 0).
 
-2.-) Giro de Esquina: Cuando el sensor frontal detecta la pared en la distancia crítica (42– —52cm)), se inicia una maniobra de giro (derecha() o izquierda()).
+Alineación del Tren Delantero: Mediante la instrucción myservo.write(67), el sistema establece un ángulo absoluto de dirección. A diferencia de un motor de tracción, el servomotor permite fijar una posición angular exacta, eliminando desviaciones en el vector de salida.
 
-3.-)Estado de Conteo (pepe++): El código incrementa la variable pepe en cada maniobra de giro realizada. Esto permite contar la progresión de la misión (vueltas completadas).
+Gestión de Inercia: Se integra un delay()estratégico para permitir la transición del estado de reposo al movimiento cinematográfico, estabilizando el voltaje del sistema antes de iniciar la lectura de sensores.
 
-4.-)Estacionamiento Final: (if pepe > 12) Una vez que el contador de giros (pepe) supera 12 (lo que equivale a las 12 esquinas de las 3 vueltas), el sistema entra en modo de parada. Se ejecuta una función de avance final por tiempo (delay(2000)) para asegurar que el robot cruza la línea de meta y se detiene dentro del cuadrante de origen.
+Bloqueo de Estado ( pepe++): Este incremento actúa como un interruptor lógico irreversible. Al cambiar el valor de la variable, el flujo del programa garantiza que la secuencia de salida no se reejecute, cediendo el control total a la lógica autónoma.
 
-Justificación de Umbrales Sensoriales:
+> [!NOTE] 
+> El uso de nombres no convencionales para las variables ( pepe, grasa, tilin,lecler,lewis) es un legado de las fases de prototipado de 2024. Lo que inició como una dinámica de equipo para mitigar la fatiga en el laboratorio, se ha mantenido como un estándar de identidad en nuestro código, simbolizando la evolución histórica del proyecto.
 
-   • Rango Frontal Crítico
+### B. Algoritmo de Navegación y Evasión Dinámica
 
-(42cm ≤ middleDistance ≤52cm) ustedes se preguntarán porque esta distancia bueno pues ya que se aleatoriza el centro se llega a crear pasillos de solo 40cm de ancho.El robot debe iniciar el giro antes de entrar en contacto con la pared o de que la lectura de su sensor delantero se vea afectada por las paredes laterales del pasillo estrecho. Este rango de 10cm de "amortiguación" experimental compensa la inercia del vehículo a carSpeed=80, asegurando que el giro se haga  sin un choque lateral en el pasillo más estrecho.
+El sistema procesa la información de una red tri-sensorial ultrasónica mediante dos lógicas principales:
 
-   • Corrección Lateral Crítica  (<25 cm) 
+1.Corrección de Trayectoria (Control Bang-Bang): 
+El vehículo monitorea constantemente los vectores laterales ( leftDistancey rightDistance). Ante un umbral crítico de aproximación (< 25$cm), el sistema activa microajustes de dirección . Estos son pulsos de corrección de 25 ms en ángulos específicos (73°/115°) que rectifican el rumbo sin inducir oscilaciones incontrolables ( efecto zig-zag ), manteniendo el centro de masa alineado con el carril. 
+
+2.Cinemática de Viraje (Gestión de Esquinas): 
+La maniobra de giro se dispara cuando el sensor frontal detecta un rango de colisión inminente entre 42 cm y 52 cm.
+
+- Optimización de la Radio de Giro: Este rango de 10 cm es el "punto dulce" técnico. Girar antes de los 52 cm provocaría un impacto con el vértice interno; girar después de los 42 cm reduciría el ángulo de ataque, provocando una colisión con el muro exterior.
+
+- Compensación de Torque: Durante el viraje, el servo alcanza su deflexión máxima y el PWM del motor aumenta de 80 a 180 . Este incremento de potencia es fundamental para vencer la fricción lateral generada por el ángulo de las ruedas y garantizar que el impulso cinético complete la curva con éxito.
+
+### C. Protocolo de Finalización y Estacionamiento
+
+La misión concluye mediante una validación de estado acumulativo. Al cumplirse la condición if (pepe > 12), que representa las 12 intersecciones de las 3 vueltas reglamentarias, el robot inicia su rutina de cierre:
+
+- Avance de Seguridad: Se ejecuta una traslación final controlada por tiempo ( 2000 ms).
+
+- Posicionamiento final: El sistema asegura que el eje posterior cruce la línea de meta, logrando el estacionamiento autónomo dentro del cuadrante de origen bajo las normativas de la WRO.
+  
+## Justificación de la Estrategia 
+
+Para que Trivilyn 3.0 sea competitivo, implementamos capas de lógica que permiten al vehículo adaptarse a la variabilidad de la pista sin intervención humana.La arquitectura del software de Trivilyn 3.0 no solo se encarga de la navegación, sino que gestiona una base de datos interna mediante variables de control para garantizar la adaptabilidad y el éxito de la misión.
+
+- Heurística de Decisión: Algoritmo "Tilin/Grasa"
+
+Para que el vehículo sea autónomo en cualquier configuración de pista, implementamos una lógica de decisión binaria en la primera intersección crítica:
+
+Interrogación del Entorno: Al detectar la primera pared frontal ( middleDistance <= 32), el sistema realiza una comparación de vectores laterales:
+
+Vector de Bloqueo ( tilin/ lecrer): Si leftDistance <= rightDistance, el software interpreta que el flanco izquierdo está obstruido. Se activan los contadores de sentido horario ( tilin++y el contador de rendimiento lecrer++).
+
+1.Vector de Apertura ( grasa/ lewis): Si la distancia izquierda es mayor a la derecha, se activa la ruta antihoraria ( grasa++y el contador de rendimiento lewis++).
+
+Redundancia de Estado: Una vez que un contador ( tilino grasa) deja de ser cero, la decisión queda anclada . Esto evita que el ruido ultrasónico a mitad de carrera confunda al robot, garantizando que una vez elegido un sentido (Horario/Antihorario), este se mantiene hasta el estacionamiento final.
+
+2. Gestión de Actuadores y Dinámica de Potencia
+
+El código maneja perfiles de velocidad diferenciados para optimizar el consumo y la tracción:
+
+Velocidad de Crucero ( carSpeed = 65): Configuración para tramos rectos, optimizando la estabilidad de lectura de los sensores.
+
+Velocidad de Maniobra ( carSpeedCurvas = 90): Durante las funciones derecha()e izquierda(), el PWM aumenta para vencer la resistencia por fricción de los neumáticos de 43mm en el momento del giro.
+
+3. Control de Lazo Cerrado: Micro-ajustes Laterales
+
+Para mitigar el error acumulado, el código implementa una rutina de activador reactivo:
+
+Umbral de colisión (9 cm): Si cualquiera de los sensores laterales detecta una proximidad menor a 9 cm, se interrumpirá el flujo principal para ejecutar un pulso de corrección de 30 ms .
+
+Alineación Diferencial: El sistema utiliza centros de dirección específicos según el sentido de la carrera ( centroAo centroH), compensando mecánicamente cualquier desviación propia del chasis impreso en 3D.
+
+4. Procesamiento de Señal y Filtrado de "Eco Nulo"
+
+Debido a que las paredes de la WRO pueden generar reflexiones erráticas, se implementó una condición de validación en las lecturas:
+
+Filtro distance > 1: Esta instrucción filtra las lecturas de 0 cm que genera la librería NewPingcuando no recibe retorno. Al ignorar estos "ecos nulos", evitamos que el robot realice maniobras de evasión ante obstáculos inexistentes.
+
+
+5. Registro de Variables de Control (Telemetría Interna)
    
-Ustedes se preguntaran el porqué de esta corrección pues muy fácil la verdad esta corrección nos ayuda en muchas cosas una de ella en los pasillos de 40cm,el robot tiene solo un margen de error de pocos centímetros a cada lado. El umbral de 25cm se seleccionó porque es la distancia en la que la señal ultrasónica de los sensores laterales sigue siendo fiable y permite que el servo reaccione (write(115) o write(73)) antes de que se produzca una colisión,tambien no solo nos ayuda en solo esos momentos si no en todo momento ya que es una de las funciones más importante para que se logre la perfección en la prueba, ya que aveces en algún giro puede que no se  logre posicionar al 100% recto y si no tuviéramos esa corrección hubieran variaciones en el transcurso de la prueba provocando colisiones (algo que nos pasaba en anteriores pruebas antes de agregarle esta función al código ) 
-
-Justificación de Lógica de Sentido de Giro:
-
-El robot debe determinar la dirección del carril al inicio de la carrera. Se implementa una lógica condicional (tilin++, grasa++) que actúa de la siguiente manera:
-
-1.)Si al inicio se detecta una pared a la izquierda (leftDistance <= 100), se establece la dirección "Horaria".
-
-2.)De lo contrario, se establece "Antihoraria".
-
-Métrica de Éxito: Esta lógica permitió al robot adaptarse correctamente en el 100% de los escenarios de prueba para ambos sentidos de pista.
+<img width="725" height="335" alt="image" src="https://github.com/user-attachments/assets/8200de92-a893-49c3-b3da-48048b0b85e6" />
 
 
+## Análisis de Rendimiento: Optimización de Tiempo vs. Fiabilidad
 
+En el desarrollo de Trivilyn 3.0 , el enfoque principal fue la navegación en Centro Aleatorio (pasillos de 40 cm). Realizamos una comparativa entre nuestra configuración base y nuestra configuración de alto rendimiento para la WRO.
 
-Pruebas, Ajustes y Gestión de Fallos
-El rendimiento final es el resultado de un proceso de optimización iterativo documentado.
+- Prueba de Consistencia (Lenta)	90 seg (1:30 min)	100%	Navegación conservadora, correcciones suaves
 
+- Prueba de Velocidad (Rápida)	40 seg	80%	Agresividad en curvas (PWM 180) y aceleración máxima.
+  
+###  Justificación Técnica de la Tasa de Error en Alta Velocidad
 
-Gestión de Casos Límite (Edge Cases):
+Pasar de 90 a 45 segundos implica duplicar la velocidad media del vehículo. Según nuestros datos, el descenso del 20% en la confiabilidad se debe a tres factores físicos críticos:
 
-• Falla de Datos Sensoriales: La condición distance > 1 en todos los sensores actúa como un filtro básico para el ruido de "eco nulo" (lectura 0), evitando decisiones erróneas basadas en datos falsos.
-• Prevención de Carrera Infinita: La variable pepe nos ayuda si por alguna razón el robot se desvía pero sigue detectando obstáculos que interpreta como esquinas, el contador forzará la parada tras un número de ciclos determinado, evitando que el vehículo siga operando sin control de forma indefinida.
+1. Latencia de Muestreo Ultrasónico (Sensor Lag)
+   
+A máxima velocidad, el robot registra más distancia entre cada pulso del sensor ( sonar.ping_cm()).
 
-Bueno listo  ya terminamos con la explicación, técnica y estrategia de el Software de la ronda 1 ( ronda abierta ) pero no es la única a continuación les explicaremos el funcionamiento , técnica  y estrategias que utilizamos para crear el Software de la ronda 2 ( ronda de evasión de obstáculos).
+Efecto: En un pasillo aleatorio de 40 cm, el margen de maniobra es mínimo. Si el sensor emite un pulso y el robot se mueve 10 cm antes de recibir el eco, la decisión de giro se toma con una posición "desfasada", provocando que el chasis golpee la esquina interna.
 
-Comenzaremos con la arquitectura del movimiento y visión 
+2. Inercia y Momento Lineal
+   
+El peso del segundo piso (110 mm de ancho) y los componentes generan una inercia que es difícil de detener instantáneamente.
 
-El software integra un sistema de visión HuskyLens vinculado a una lógica de centrado constante. La arquitectura se basa en mantener al robot en el eje central de la pista para maximizar el campo de visión (FOV) de la cámara y asegurar decisiones simétricas.
+Efecto: Al entrar en una curva a 40 segundos de ritmo, la fuerza centrífuga empuja al robot hacia el muro exterior. Aunque el software ordene girar, los neumáticos de caucho de 43mm pueden sufrir un deslizamiento lateral ( deriva ), alterando el ángulo de salida y obligando al sistema de microajustes a trabajar al límite.
 
-### Estrategia de Inicialización y Autocentrado
+3. Ruido Ultrasónico por Vibración Mecánica
+   
+A PWM 180, los motores de 15,000 RPM generan vibraciones de alta frecuencia que pueden interferir con la cápsula del sensor ultrasónico.
 
-Para evitar el error de deriva inicial, el robot ejecuta una rutina de calibración al encenderse que es ,. El servo se mueve a los extremos y regresa a la variable centro (97°). Esto asegura que el tren delantero esté alineado mecánicamente antes de avanzar. También contamos con un mantenimiento de Trayectoria(correcciónes)Se utiliza un contador de ciclos (contadorLecturas) que cada 17 iteraciones, fuerza un micro-ajuste de alineación. Esto compensa cualquier desviación mecánica del chasis durante la marcha.
+Efecto: Esto genera lecturas "fantasmales" o ecos falsos. Aunque nuestro filtro distance > 1elimina los ceros, la vibración puede causar variaciones de ±2 cm en la lectura, suficientes para disparar una corrección lateral innecesaria en un pasillo tan estrecho como el de 40 cm.
 
-Estrategia de Evasión Selectiva (Lógica de Colores)
-La evasión no es un giro simple; es una maniobra coordinada que depende de la posición relativa del objeto en el eje X de la cámara.
-Clasificación de Obstáculos por Flancos:
-Utilizamos el xCenter y la height de la HuskyLens para dividir la pista en zonas de decisión:
+## Estrategia de Competición y Gestión de Riesgos
 
-Algo importante es que después de cada maniobra de evasión del color , el robot ejecuta una secuencia de contra-giro para regresar al centro de la pista, preparándose para el siguiente obstáculo o la siguiente esquina.
+Dada la naturaleza de la competencia, donde se dispone de dos intentos por ronda, hemos diseñado una estrategia de dos fases basada en el compromiso entre confiabilidad y velocidad.
 
-### Estrategia de Moviemto en Esquinas
+ 1.Protocolo de Ejecución de Ronda
+   
+- Primer Intento (Modo Consistencia - 100% Fiabilidad):
+
+Objetivo: Asegurar el puntaje máximo de la misión.
+
+Configuración: PWM limitado a 65-80.
+
+Resultado: Tiempo de 1:30 min . Al reducir la velocidad, eliminamos la inercia excesiva en las curvas de los pasillos aleatorios, permitiendo que los sensores ultrasónicos tengan una ventana de lectura óptima y que los microajustes laterales sean casi imperceptibles.
+
+- Segundo Intento (Modo Alto Rendimiento - 80% Fiabilidad):
+
+Objetivo: Reducción drástica del tiempo para mejorar el desempate ( tie-break ).
+
+Configuración: PWM dinámico (hasta 180 en curvas).
+
+Resultado: Tiempo récord de 40 segundos . De este modo, el robot opera al límite de sus capacidades mecánicas y lógicas.
+     
+ ## Conclusión: 
  
-Debido a que los sensores ultrasónicos pueden tener errores en ángulos oblicuos, hemos implementado una Estrategia de Navegación por Contacto: primero el sensor frontal detecta e identifica la pared a una distancia mínima (middleDistance <= 4), después prosigue a impactarse Controla la pared delantera, el robot se detiene (stop), retrocede un tiempo exacto para ganar espacio de maniobra, y luego ejecuta el giro, después prosigue a la Rectificación de Centro que retrocede recto después del giro y golpear ligeramente para alinearse con la pared posterior, el robot resetea su ángulo y defectos anteriores, Esto garantiza que cada nuevo cuadrante se inicie desde una posición perfecta, eliminando el error acumulado de los obstáculos anteriores.
-
-### Gestión de Casos Límite y Métricas
-
-Para asegurar la solides del sistema en condiciones de competencia, se han programado los siguientes controles como son, el Filtrado por Tamaño de Objeto por ejemplo El robot solo reacciona si result.height > 70, Esto evita "falsos positivos" con objetos lejanos o reflejos en el suelo, actuando solo cuando el obstáculo es una amenaza inmediata. También contamos con un Contador de Misión (Variable pepe) este nos ayuda a Rastrear el progreso del robot,Al llegar a un umbral de paredes detectadas y detectar el color Magenta (ID 11), el robot comprende que ya ha completado la pista y que ya llegó a la zona de meta, ejecutando una maniobra de estacionamiento final. Y por últimos nosotros tenemos diferentes Controles de velocidad para rectas o evasión. Diferenciada  x carSpeed = 52: Velocidad de crucero para máxima precisión de cámara. Y  carSpeedC = 70, Aumento de velocidad durante la evasión para compensar la pérdida de inercia por el giro del servo.
-
+- Trivilyn 3.0 ha pasado de ser un diseño reactivo simple a un sistema autónomo capaz de analizar su entorno, corregir su trayectoria milimétricamente y tomar decisiones lógicas basadas en la historia de la misión. La combinación de una estructura mecánica robusta y un software resistente nos permite afrontar la competencia con un alto grado de confianza.
 
 # Pensamiento Sistémico y Decisiones de Ingeniería 
 
 
-
-
 ## Temporada 2024 Rexbot1.0 
 
-Trivilyn a través de los años ha tenido muchos cambios desde su primera versión en 2024 hasta lo que es el día de hoy.
+Trivilyn, a través de los años, ha tenido muchos cambios desde su primera versión en 2024 hasta lo que es el día de hoy.
 
-2024 Rexbot 1.0 Principalmente su diferencia es el tamaño y sus mecanismos. Está versión es muy rudimentaria, hecha con materiales reciclados. Este robot tuvo 3 versiones principales mediante su transcurso para llegar a la final internacional de Turquía.
+2024 Rexbot 1.0: Principalmente, su diferencia es el tamaño y sus mecanismos. Esta versión es muy rudimentaria, hecha con materiales reciclados. Este robot tuvo tres versiones principales durante su transcurso para llegar a la final internacional de Turquía.
 
-1ra regional (Mérida) 
+1.ª Regional (Mérida):
 
-Su chasis estaba conformado por dos niveles, la planta inferior (base) está seleccionada de un kit ya prefabricado y su planta superior fue cortada con un Dremel, con bastantes imperfecciones, su dirección fue extraida de un vehículo a control remoto, con un sistema de corredera, que funcionaba con un servomotor sg90, que al girar para un lado sube la corredera y al bajar tenía el efecto contrario, teniendo así un efecto palanca hacia los lados y mover sus ruedas delanteras con un eje que las une, echo con acetato.
+Su chasis estaba conformado por dos niveles: la planta inferior (base) fue seleccionada de un kit ya prefabricado y su planta superior fue cortada con un Dremel, con bastantes imperfecciones. Su dirección fue extraída de un vehículo a control remoto con un sistema de corredera que funcionaba con un servomotor SG90 que, al girar para un lado, sube la corredera y, al bajar, tenía el efecto contrario; obtenía así un efecto palanca hacia los lados para mover sus ruedas delanteras con un eje que las une, hecho con acetato.
 
 <img width="540" height="610" alt="WhatsApp Image 2026-05-02 at 3 45 30 PM" src="https://github.com/user-attachments/assets/6b317619-f90c-4da6-9673-602f6808ba73" />
 <img width="540" height="610" alt="image" src="https://github.com/user-attachments/assets/4567f543-373a-48aa-b031-3e49976f67c4" />
 
-Por parte de tracción tenía un motor DC de 5v extraído de un vehículo a control remoto con su caja de engranajes. Para su detección utilizaba un sensor ultrasónico en la parte frontal, como placa (cerebro) utilizaba una Arduino mega. Alimentado todo por 2 baterías 18650 de 3.8v Este modelo tuvo muchísimos fallos los cuales fueron:
+Por parte de tracción, tenía un motor DC de 5 V extraído de un vehículo a control remoto con su caja de engranajes. Para su detección utilizaba un sensor ultrasónico en la parte frontal; como placa (cerebro) utilizaba un Arduino Mega. Alimentado todo por dos baterías 18650 de 3.8 V, este modelo tuvo muchísimos fallos, los cuales fueron:
 
-1) falta de potencia en ambos motores, tanto el servo no lograba mover la dirección eficientemente, y la tracción con el motor DC le costaba mucho avanzar a Rexbot1.0
+1.Falta de potencia en ambos motores: tanto el servo no lograba mover la dirección eficientemente, como a la tracción con el motor DC le costaba mucho avanzar a Rexbot 1.0.
 
-2) falta de detección a los costados, para alcanzar un buen desempeño en la ronda abierta (falta se sensores ultrasónicos)
+2.Falta de detección a los costados para alcanzar un buen desempeño en la ronda abierta (falta de sensores ultrasónicos).
 
-3) falta de sensor ocular para la ronda cerrada (camara)
+3.Falta de sensor ocular para la ronda cerrada (cámara).
 
-4) su dirección tenía un rango de giro muy corto, lo que provocaba que para dar las curvas a 90 grados tendría que retroceder y avanzar. 5) falta de baterías o fuente de energía, solamente utilizamos dos baterías 18650 Con rexbot 1.0 logramos hacer la ronda abierta.
+4.Su dirección tenía un rango de giro muy corto, lo que provocaba que, para dar las curvas a 90 grados, tuviera que retroceder y avanzar.
+
+5.Falta de baterías o fuente de energía: solamente utilizamos dos baterías 18650. Con Rexbot 1.0 logramos hacer la ronda abierta.
 
 ## Nacional Caracas 2024
 
-Para rexbot 1.25 logramos corregir diferentes errores pero aún no era lo suficientemente agil, ya que estaba constituido por un gran tamaño, y su mayor fallo, la detección de colores ya que utilizamos  un sensor rgb. Este prototipo cuenta con su base principal y una superior, en la base inferior contiene el sistema de dirección y sistema de tracción, ya aquí corregimos su problema de giro y de torque, de que manera? De la siguiente
+Para Rexbot 1.25 logramos corregir diferentes errores, pero aún no era lo suficientemente ágil, ya que estaba constituido por un gran tamaño, y su mayor fallo: la detección de colores, ya que utilizamos un sensor RGB. Este prototipo cuenta con su base principal y una superior; en la base inferior contiene el sistema de dirección y el sistema de tracción. Ya aquí corregimos su problema de giro y de torsión. De la siguiente forma:
 
 <img width="540" height="610" alt="image" src="https://github.com/user-attachments/assets/faed6657-303a-47ff-9fc6-edd169ceeb7b" />
 
-Su sistema de dirección ahora es tipo palanca, este sistema de dirección cuenta con una palanca que va fija desde el brazo del servomotor hasta el eje de una de las ruedas, que conecta con la otra. Así el servomotor al girar hacia la izquierda o derecha movía esa palanca. Tiene un sistema de calibramiento hecho con un tornillo y una especie de tuerca, para así calibrar y que las ruedas no queden torcidas así evitar que el prototipo vaya torcido. Cabe recalcar que este fue uno de los mayores fallos, con muchas pruebas y probar con diferentes métodos nunca logramos la precisión necesaria para llegar a un rendimiento del 100% 
+Su sistema de dirección ahora es tipo palanca; este sistema de dirección cuenta con una palanca que va fija desde el brazo del servomotor hasta el eje de una de las ruedas, que conecta con la otra. Así, el servomotor, al girar hacia la izquierda o derecha, mueve esa palanca. Tiene un sistema de calibración hecho con un tornillo y una especie de tuerca para así calibrar y que las ruedas no queden torcidas, evitando que el prototipo vaya desviado. Cabe recalcar que este fue uno de los mayores fallos; con muchas pruebas y al probar con diferentes métodos, nunca logramos la precisión necesaria para llegar a un rendimiento del 100%.
 
 ## Final internacional Turquía 2024 
 
-(Rexbot1.5) Este no obtuvo muchos cambios desde la nacional en Caracas, pero si en su rendimiento. Su mayor cambio fue  aumentarle el tamaño y agregarle un sensor ocular, la cámara huskyleans, está nos ayudó mucho en la detección de objetos y su color( señales de trafico) ya que está contiene una IA integrada en su cerebro, que funciona de la siguiente manera, agarra los valores rgb los procesa y mediante lo que el arroge te manda una ID ya aprendida anteriormente. Su mayor error fue en el sistema de tracción y su tamaño ya que media 25x20cm ya alcanzando casi los límites preestablecidos. Se nos hacía muy complicado estacionar y esquivar objetos por su tamaño y su poca agilidad. para mayor información de este proyecto y nuestros antecedentes aquí está nuestro Github de ese año https://github.com/ROBOTEAMCRV/roboteamCRV
+(Rexbot 1.5): Este prototipo no obtuvo muchos cambios estructurales desde la nacional en Caracas, pero sí en su rendimiento. Su mayor modificación fue aumentarle el tamaño y agregarle un sensor ocular: la cámara HuskyLens.
+
+Esta nos ayudó mucho en la detección de objetos y su color (señales de tráfico), ya que contiene una IA integrada que funciona de la siguiente manera: captura los valores RGB, los procesa y, mediante los resultados obtenidos, envía un ID previamente aprendido.
+
+Su mayor error residió en el sistema de tracción y en su tamaño, ya que medía 25 x 20 cm , alcanzando casi los límites preestablecidos. Por su volumen y poca agilidad, se nos hacía muy complicado estacionar y esquivar objetos. Para obtener más información sobre este proyecto y nuestros antecedentes, pueden consultar nuestro GitHub de ese año:https://github.com/ROBOTEAMCRV/roboteamCRV.
 
 <img width="540" height="610" alt="image" src="https://github.com/user-attachments/assets/df8c4775-64dc-434d-8a1c-3e324067e544" />
 
 
 # Temporada 2025 Rexbot2.0 
 
-Para la etapa de las regionales lo comenzamos a hacer desde 0, tuvo una reestructuración completa, corregimos la mayoría de errores cometidos en el diseño anterior.
+Para la etapa de las regionales, comenzamos el diseño desde cero con una reestructuración completa, lo que nos permitió corregir la mayoría de los errores cometidos en versiones anteriores.
 
-Comenzamos diseñando como sería el sistema de dirección y cuánto rango de giro necesitamos, Ya investigado y analizado errores anteriores, optamos por un sistema de dirección (Steer-by-Wire) que cada rueda puede moverse con cierto grado de independencia, aunque están montadas en un eje común (lo cual sugiere una posible adaptación diferencial o simplemente flexibilidad del tubo). Ya que la rueda interior gira ligeramente más que la otra, de modo que el robot se mantiene en el mismo arco sin deslizamiento. (Derrape). Ya sabiendo cómo sería su dirección, diseñamos una base con forma de F1. ( Imagen base blanca). Está base se utiliza en ambas caras. Cara inferior: base de la caja reductora (tracción) Y se logra evidenciar parte del sistema de dirección. 
+Iniciamos diseñando el sistema de dirección y determinando el rango de giro necesario. Después de investigar y analizar los fallos anteriores, optamos por un sistema de dirección Steer-by-Wire . En este esquema, cada rueda posee cierto grado de independencia a pesar de estar montadas sobre un eje común, lo que sugiere una adaptación diferencial o la flexibilidad del tubo transversal.
+
+Este diseño permite que la rueda interior gire ligeramente más que la exterior, logrando que el robot se mantenga en el mismo arco de giro sin deslizamientos ( derrapes ). Una vez definida la mecánica de giro, diseñamos una base inspirada en la aerodinámica de un F1 .
+
+Esta base es multifuncional y se utiliza por ambas caras:
+
+- Cara inferior: Sirve como base para la caja reductora del sistema de tracción y permite evidenciar gran parte del sistema de dirección.
+
+- Cara superior: Soporta la electrónica y los niveles adicionales del chasis.
 
 <img width="540" height="610" alt="image" src="https://github.com/user-attachments/assets/64a613a7-76f1-4cb8-94ee-6a2d8fbced16" />
 
@@ -524,26 +606,26 @@ Cara superior: contiene el L298(driver) un porta baterias de 2, 18650 y el servo
 La dirección funciona de la siguiente manera para lograr la adaptación del servo a las ruedas, utilizamos piezas en 3D diseñadas por nosotros, lego y acero.
 
 <img width="540" height="610" alt="image" src="https://github.com/user-attachments/assets/990524b0-c7c8-45d3-a1f3-fc57e4ee0549" />
+Esta base fue rediseñada varias veces hasta que logramos encontrar el punto donde no se deformara por el peso y, también, para que encajara perfectamente la pieza de hierro a presión, evitando todo el juego posible (imprecisión de los componentes).
 
-Esta base fue re diseñada varias veces hasta que logramos encontrar el punto donde no se deformara por el peso y también para que encajara perfectamente la pieza de hierro a presión y evitar todo el juego  posible(impresicion de los componentes), luego de encajar esta pieza, utilizamos un tipo de abrazadera, que agarra el buje del eje con forma de cruceta
+Luego de encajar esta pieza, utilizamos un tipo de abrazadera que sujeta el buje del eje con forma de cruceta. Este ajuste mecánico es fundamental para asegurar que la transferencia de movimiento sea directa y sin pérdidas de energía, garantizando la estabilidad estructural de la base frente a las cargas operativas del robot.
 
 para centrar y estabilizar su eje utilizamos retenes de lego amarillos
 <img width="540" height="610" alt="image" src="https://github.com/user-attachments/assets/59f4dda6-5a0e-40dc-ad73-3c9c41af3f34" />
 
- ### ¿Por que los utilizamos?
- 
- Los dos retenes internos se colocan para fijar el eje al diferencial “tuvo transversal” ya antes lubricado con vaselina ¿Por que se tiene que lubricar ? Nos dimos cuenta que si no lo lubricamos antes de probar el vehículo le va acostar mas los giros y pueden producir que variaciones al momento de girar.
+ Los dos retenes internos se colocan para fijar el eje al diferencial «tubo transversal», ya antes lubricado con vaselina.
 
-### ¿Porque vaselina y no otro lubricante? 
+Nos dimos cuenta de que, si no lo lubricamos antes de probar el vehículo, le va a costar más realizar los giros y se pueden producir variaciones o inconsistencias al momento de girar. La lubricación con vaselina reduce la fricción entre las piezas móviles del diferencial, permitiendo que las ruedas giren a diferentes velocidades de manera fluida, lo que mejora la precisión de la trayectoria y evita el desgaste prematuro de los componentes impresos o mecánicos.
 
-Inicialmente, se utilizó grasa azul industrial, pero se observó una degradación acelerada en los componentes impresos en 3D.
+## Lubricación
 
- La grasa azul suele contener aditivos de litio o solventes derivados del petróleo que son agresivos con polímeros como el PLA o el PETG. Estos químicos provocan agrietamiento por tensión (ESC), penetrando las capas de la impresión y debilitando la unión molecular, lo que causaba que las piezas se volvieran quebradizas.
+Inicialmente, se utilizó grasa azul industrial, pero se observó una degradación acelerada en los componentes impresos en 3D. La grasa azul suele contener aditivos de litio o solventes derivados del petróleo que son agresivos con polímeros como el PLA o el PETG . Estos químicos provocan agrietamiento por tensión (ESC) , penetrando las capas de la impresión y debilitando la unión molecular, lo que causaba que las piezas se volvieran quebradizas.
 
-Ventaja de la Vaselina: Se seleccionó vaselina neutra por ser un compuesto químicamente inerte. Proporciona una viscosidad ideal para los ejes de metal/plástico de Trivilyn 3.0, asegurando una lubricación suave que no reacciona con el polímero del chasis, prolongando la vida útil de los mecanismos.
+Ventaja de la vaselina: Se seleccionó vaselina neutra por ser un compuesto químicamente inerte. Proporciona una viscosidad ideal para los ejes de metal/plástico de Trivilyn 3.0 , asegurando una lubricación suave que no reacciona con el polímero del chasis, prolongando así la vida útil de los mecanismos.
 
-- Su tracción se debe a qué tiene un eje tipo cruz basado en los que vienen en los kit de lego echo de acero con medidas de 2.8mm de ancho y 4.2mm de alto, en forma de cruceta, su largo es de 119mm, tiene un refuerzo de teflón industrial por alrededor del eje para evitar ser doblado o pandeado por el peso del prototipo. Este eje esta unido a la caja reductora, compuesta por  3 engranajes. Que trabajan de la siguiente manera:
+## Sistema de tracción: 
 
+Su tracción se basa en un eje tipo cruz (inspirado en los kits de LEGO) fabricado en acero, con medidas de 2,8 mm de ancho y 4,2 mm de alto. El eje tiene un largo de 119 mm y cuenta con un refuerzo de teflón industrial a su alrededor para evitar que se doble o sufra pandeo por el peso del prototipo. Este eje está unido a la caja reductora, la cual está compuesta por tres engranajes que trabajan de la siguiente manera:
 <img width="540" height="600" alt="image" src="https://github.com/user-attachments/assets/b0dcd599-29eb-494f-a5d7-9d299ea3cc98" />
 <img width="540" height="600" alt="image" src="https://github.com/user-attachments/assets/af8053d1-77d3-4b1d-8618-e3ee2fdb3cc5" />
 <img width="540" height="600" alt="image" src="https://github.com/user-attachments/assets/e3f04edd-f908-440c-adf8-31eedef2714c" />
@@ -557,7 +639,7 @@ Tomando como base una configuración de tres etapas con los engranajes de 8, 30,
 - La segunda etapa toma esa velocidad ya reducida y la vuelve a reducir 5.2 veces más.
 
 - La tercera etapa toma eso y lo reduce 4 veces más.
--
+
 - La cuenta final es: 3.75 x 5.2 x 4 = 78:1
  
  Esto significa que la relación de reducción es 78:1. 
@@ -575,14 +657,22 @@ Tomando como base una configuración de tres etapas con los engranajes de 8, 30,
 
 ## Nacional Caracas temporada 2025
 
-Para la nacional no se hicieron muchos cambios de diseñó, realizamos algunas mejoras tanto en los diseños como correcciones de errores mecánicos. Principalmente cambiamos el servomotor mg996r por un servomotorHobbyPark de 35Kg que nos daba la precisión necesaria.
+Para la nacional no se realizaron muchos cambios de diseño radicales; en su lugar, nos enfocamos en implementar mejoras en los modelos existentes y en la corrección de errores mecánicos críticos.
+
+El cambio principal fue la sustitución del servomotor MG996R por un servomotor HobbyPark de 35 kg . Esta actualización fue fundamental, ya que nos proporcionó la fuerza y ​​la precisión necesarias para controlar la dirección de manera eficiente, eliminando las holguras y permitiendo un manejo mucho más exacto durante la competencia.
 
 ## Evolución 2025
 
-Una de las mayores complicaciones que tuvimos fue, que trivilyn no iba en línea recta, siempre tenía un cierto desvío para solucionar este problema, realizamos diferentes pruebas y maneras, comenzamos con desarmar el servo y ver la raíz del problema,. Nos dimos cuenta que el mg996r tenía mucha tolerancia entre engranajes y eso causaba una especie de juego o espacios entre engranajes. 
-Lo que ocasionaba ese pequeño desvío.
+Una de las mayores complicaciones que enfrentamos fue que Trivilyn no avanzaba en línea recta, pues siempre presentaba un ligero desvío. Para solucionar este problema, realizamos diversas pruebas; comenzamos desarmando el servomotor para identificar la raíz del fallo y notamos que el MG996R tenía demasiada tolerancia entre sus engranajes, lo que causaba un "juego" o espacio muerto que originaba ese desvío.
 
-Dirección: comenzamos utilizando un servo mg995r de 5kg de torque, nos dimos cuenta de su falla y a través de prueba y error utilizamos diferentes métodos como los siguientes. Utilizamos grasa gruesa por ejemplo azul y de grafito, tomamos ciertas pruebas y no nos funcionaba del todo bien, con la grasa azul le costaba girar mucho y no lograba lo que necesitamos. Con la grasa de grafito no era lo suficientemente gruesa para evitar el desvío entre engranajes.
+Evolución de la dirección: 
+inicialmente, utilizamos un servo MG995R de 5 kg de torque, pero tras detectar sus fallas y pasar por un proceso de prueba y error, experimentamos con los siguientes métodos:
+
+Grasa azul (gruesa): Intentamos compensar el juego mecánico con lubricantes de alta viscosidad, pero esto resultó contraproducente; al servo le costaba mucho girar y no alcanzaba la agilidad necesaria.
+
+Grasa de grafito: Probamos esta alternativa buscando una mejor lubricación, pero no era lo suficientemente densa para eliminar el espacio entre los engranajes y corregir la imprecisión en la dirección.
+
+Finalmente, comprendimos que el problema no era la lubricación, sino la calidad y el ajuste de los componentes internos del motor, lo que nos llevó a buscar una solución más robusta a nivel de hardware.
 <img width="540" height="610" alt="image" src="https://github.com/user-attachments/assets/680dbfbb-ae77-4ce0-a641-e7bd5e0aa9b1" />
 
 
@@ -609,10 +699,13 @@ Para finalizar compramos el servomotr hobbypark de 35kg con las siguientes espec
 
 <img width="540" height="610" alt="image" src="https://github.com/user-attachments/assets/d55865b6-9db7-48a9-8f4e-8266a64ae5b0" />
 
-Este nos llevo a un mejor rendimiento, no quitarle el desvió a un 100% pero si mejorarlo a cierto punto que sea corregible a través de código o programación ¿como? La respuesta es sencilla, este servomotor, el poco desgaste que tiene y genera desvió, siempre es hacia un mismo lado, en pocas palabras es corregible, porque en el código lo podemos enviar a girar al sentido contrario del desvío cada cierto tiempo. 
+Este ajuste nos llevó a un mejor rendimiento. Aunque no eliminamos el desvío al 100 %, logramos mejorarlo hasta un punto en el que fuera corregible a través de código.
 
-Por ejemplo Si el desvío del prototipo es hacia la izquierda, se manda a mover al servo cada tanto milisegundos mover 3 grados haca la derecha y volver al centro. Algunos de los datos que recopilamos, según la velocidad varia por ende hay que ajustar los parametros.
+Esto lo logramos debido a su construcción, este servomotor, genera un desvío constante siempre hacia el mismo lado. Al ser un error sistemático y no aleatorio, se vuelve predecible y, por lo tanto, compensable mediante programación.
 
+En el código, implementamos una instrucción para enviar al servo en el sentido contrario al desvío de forma periódica. Por ejemplo, si el prototipo tiende a desviarse hacia la izquierda, programamos el servo para que, cada ciertos milisegundos, gire 3 grados hacia la derecha y regrese inmediatamente al centro.
+
+Es importante destacar que, según los datos que recopilamos, la magnitud de este desplazamiento varía en función de la velocidad del robot; Por lo tanto, es necesario ajustar los parámetros de compensación dinámicamente para mantener la trayectoria recta en diferentes ritmos de marcha.
 <img width="1079" height="232" alt="image" src="https://github.com/user-attachments/assets/c268ba6c-5119-434d-b968-0c0b843d085d" />
 
 # Temporada 2026
