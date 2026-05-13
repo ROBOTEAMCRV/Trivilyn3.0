@@ -392,7 +392,7 @@ La capacidad de ajustar la altura del sensor en cuestión de segundos durante la
 
 ## 📄 Resumen del Proyecto
 
-Este documento detalla el funcionamiento lógico y la estrategia de control del vehículo autónomo diseñado para la categoría Future Engineers de la World Robot Olympiad (WRO). El sistema está programado para enfrentar dos desafíos críticos en una pista de 4 metros x 4 metros:
+Este documento detalla el funcionamiento lógico y la estrategia de control del vehículo autónomo diseñado para la categoría Future Engineers de la World Robot Olympiad (WRO). El sistema está programado para enfrentar dos desafíos críticos en una pista de 3 metros x 3 metros:
 
 - Ronda Abierta: Navegación en un entorno variable con pasillos estrechos (hasta 40 cm), conteo de esquinas y estacionamiento final tras completar tres vueltas.
 
