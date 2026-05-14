@@ -741,7 +741,7 @@ En este punto, la vaselina actúa como un agente de reducción de fricción est�
 
 3.Viscosidad Adaptativa: A diferencia de los aceites líquidos que se esparcen por la fuerza centrífuga, la vaselina tiene la viscosidad justa para quedarse adherida a los dientes del engranaje incluso a altas revoluciones, manteniendo la lubricación constante durante los 40 segundos de la prueba rápida.
 
->[NOTE]
+>[!NOTE]
 >Aunque el análisis técnico destaca las propiedades de la vaselina, es importante señalar que una de las mayores ventajas de esta solución es su universalidad . Para el mantenimiento de Trivilyn3.0 , no se requiere un lubricante de grado industrial especializado o de alto costo.Cualquier variante de vaselina sólida (petrolato amarillo o blanco) es funcional para este sistema, siempre que sea de consistencia pastosa y no líquida. Esto permite realizar mantenimientos de emergencia en cualquier entorno de competición utilizando productos comerciales de fácil acceso.
 
 ##  Adaptabilidad Sensorial
