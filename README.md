@@ -1,7 +1,8 @@
 # Engineering Document/Trivilyn3.0 
 Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros ingenieros temporada 2026 WRO. En el que el equipo combina sus conocimientos y destreza en la robótica(Mecánica, Electrónica, programación y automatización)  para la elaboración de (Trivilyn) y lograr el máximo desempeño en la categoría.
 
-<img width="1590" height="644" alt="image" src="https://github.com/user-attachments/assets/3cda8af7-7508-41e8-81a8-01996fec2341" />
+<img width="1280" height="518" alt="image" src="https://github.com/user-attachments/assets/348aa223-d3f9-4a99-beae-81b8cf399c66" />
+
 
 # ÍNDICE
 
@@ -240,13 +241,6 @@ Esta base fue rediseñada varias veces hasta que logramos encontrar el punto don
 3.Para centrar y estabilizar su eje utilizamos retenes de lego amarillos (imagen)
 
 Dos por la parte interior y uno por la parte exterior por cada lado. Estos se encargan de sujetar los ejes de las ruedas al sistema de dirección; luego, el diferencial «tubo transversal», ya antes lubricado con vaselina.
-¿Por que se tiene que lubricar ? 
-
-Nos dimos cuenta que si no lo lubricamos antes de probar el veiculo le va acostar mas los giros y pueden preoducir que varien.
-
-¿Porque se lubrica con vaselina y no con otra cosa? 
-
-Tras diversas pruebas realizadas por el equipo, se descartó el uso de un eje de transmisión sólido (eje rígido).En un eje sólido, ambas ruedas se ven obligadas a girar a la misma velocidad angular. Sin embargo, en curvas, la rueda exterior describe un arco mayor que la interior. Esto generaba un fenómeno de derrape por arrastre, restando precisión a la trayectoria calculada por la HuskyLens. 
 
 ## Primer piso
 
@@ -414,7 +408,7 @@ Para garantizar un arranque reproducible, se implementó una rutina de configura
 
 Alineación del Tren Delantero: Mediante la instrucción myservo.write(67), el sistema establece un ángulo absoluto de dirección. A diferencia de un motor de tracción, el servomotor permite fijar una posición angular exacta, eliminando desviaciones en el vector de salida.
 
-Gestión de Inercia: Se integra un delay()estratégico para permitir la transición del estado de reposo al movimiento cinematográfico, estabilizando el voltaje del sistema antes de iniciar la lectura de sensores.
+Gestión de Inercia: Integramos un delay()estratégico para permitir la transición del estado de reposo al movimiento cinematográfico, estabilizando el voltaje del sistema antes de iniciar la lectura de sensores.
 
 Bloqueo de Estado ( pepe++): Este incremento actúa como un interruptor lógico irreversible. Al cambiar el valor de la variable, el flujo del programa garantiza que la secuencia de salida no se reejecute, cediendo el control total a la lógica autónoma.
 
@@ -473,7 +467,7 @@ Para mitigar el error acumulado, el código implementa una rutina de activador r
 
 Umbral de colisión (9 cm): Si cualquiera de los sensores laterales detecta una proximidad menor a 9 cm, se interrumpirá el flujo principal para ejecutar un pulso de corrección de 30 ms .
 
-Alineación Diferencial: El sistema utiliza centros de dirección específicos según el sentido de la carrera ( centroAo centroH), compensando mecánicamente cualquier desviación propia del chasis impreso en 3D.
+El sistema utiliza centros de dirección específicos según el sentido de la carrera ( centroAo centroH), compensando mecánicamente cualquier desviación propia del chasis impreso en 3D.
 
 4. Procesamiento de Señal y Filtrado de "Eco Nulo"
 
@@ -509,7 +503,7 @@ Efecto: En un pasillo aleatorio de 40 cm, el margen de maniobra es mínimo. Si e
    
 El peso del segundo piso (110 mm de ancho) y los componentes generan una inercia que es difícil de detener instantáneamente.
 
-Efecto: Al entrar en una curva a 40 segundos de ritmo, la fuerza centrífuga empuja al robot hacia el muro exterior. Aunque el software ordene girar, los neumáticos de caucho de 43mm pueden sufrir un deslizamiento lateral ( deriva ), alterando el ángulo de salida y obligando al sistema de microajustes a trabajar al límite.
+ Al entrar en una curva a 45 segundos de ritmo, la fuerza centrífuga empuja al robot hacia el muro exterior. Aunque el software ordene girar, los neumáticos de caucho de 43mm pueden sufrir un deslizamiento lateral ( deriva ), alterando el ángulo de salida y obligando al sistema de microajustes a trabajar al límite.
 
 3. Ruido Ultrasónico por Vibración Mecánica
    
@@ -525,19 +519,19 @@ Dada la naturaleza de la competencia, donde se dispone de dos intentos por ronda
    
 - Primer Intento (Modo Consistencia - 100% Fiabilidad):
 
-Objetivo: Asegurar el puntaje máximo de la misión.
+ El objetivo principal es asegurar el puntaje máximo de la misión.
 
-Configuración: PWM limitado a 65-80.
+se configuro un PWM limitado a 65-80.
 
-Resultado: Tiempo de 1:30 min . Al reducir la velocidad, eliminamos la inercia excesiva en las curvas de los pasillos aleatorios, permitiendo que los sensores ultrasónicos tengan una ventana de lectura óptima y que los microajustes laterales sean casi imperceptibles.
+Se logro un tiempo de 1:30 min . Al reducir la velocidad, eliminamos la inercia excesiva en las curvas de los pasillos aleatorios, permitiendo que los sensores ultrasónicos tengan una ventana de lectura óptima y que los microajustes laterales sean casi imperceptibles.
 
 - Segundo Intento (Modo Alto Rendimiento - 80% Fiabilidad):
 
-Objetivo: Reducción drástica del tiempo para mejorar el desempate ( tie-break ).
+Reducción drástica del tiempo para mejorar el desempate ( tie-break ).
 
-Configuración: PWM dinámico (hasta 180 en curvas).
+configuramos PWM dinámico (hasta 180 en curvas).
 
-Resultado: Tiempo récord de 40 segundos . De este modo, el robot opera al límite de sus capacidades mecánicas y lógicas.
+Realizando esta prueba obtuvimos como resultado un Tiempo récord de 45 segundos . De este modo, el robot opera al límite de sus capacidades mecánicas y lógicas.
      
  ## Conclusión: 
  
@@ -627,7 +621,7 @@ Nos dimos cuenta de que, si no lo lubricamos antes de probar el vehículo, le va
 
 Inicialmente, se utilizó grasa azul industrial, pero se observó una degradación acelerada en los componentes impresos en 3D. La grasa azul suele contener aditivos de litio o solventes derivados del petróleo que son agresivos con polímeros como el PLA o el PETG . Estos químicos provocan agrietamiento por tensión (ESC) , penetrando las capas de la impresión y debilitando la unión molecular, lo que causaba que las piezas se volvieran quebradizas.
 
-Ventaja de la vaselina: Se seleccionó vaselina neutra por ser un compuesto químicamente inerte. Proporciona una viscosidad ideal para los ejes de metal/plástico de Trivilyn 3.0 , asegurando una lubricación suave que no reacciona con el polímero del chasis, prolongando así la vida útil de los mecanismos.
+Ventaja de la vaselina: Se seleccionó vaselina neutra por ser un compuesto químicamente inerte. Proporciona una viscosidad ideal para los ejes de metal/plástico de Trivilyn3.0 , asegurando una lubricación suave que no reacciona con el polímero del chasis, prolongando así la vida útil de los mecanismos.
 
 ## Sistema de tracción: 
 
@@ -672,6 +666,7 @@ El cambio principal fue la sustitución del servomotor MG996R por un servomotor 
 Una de las mayores complicaciones que enfrentamos fue que Trivilyn no avanzaba en línea recta, pues siempre presentaba un ligero desvío. Para solucionar este problema, realizamos diversas pruebas; comenzamos desarmando el servomotor para identificar la raíz del fallo y notamos que el MG996R tenía demasiada tolerancia entre sus engranajes, lo que causaba un "juego" o espacio muerto que originaba ese desvío.
 
 Evolución de la dirección: 
+
 inicialmente, utilizamos un servo MG995R de 5 kg de torque, pero tras detectar sus fallas y pasar por un proceso de prueba y error, experimentamos con los siguientes métodos:
 
 Grasa azul (gruesa): Intentamos compensar el juego mecánico con lubricantes de alta viscosidad, pero esto resultó contraproducente; al servo le costaba mucho girar y no alcanzaba la agilidad necesaria.
@@ -716,7 +711,40 @@ Es importante destacar que, según los datos que recopilamos, la magnitud de est
 
 # Temporada 2026
 
-### Pensamiento Sistémico (Caso de Estudio: Adaptabilidad Sensorial)
+##  Gestión de Fricción y Compatibilidad Química
+ 
+En la ingeniería de Trivilyn 3.0 , la lubricación no se considera un mantenimiento externo, sino un componente crítico del sistema de transmisión . La elección de la vaselina neutra frente a lubricantes industriales (como la grasa azul) es el resultado de un análisis de interacción entre materiales y termodinámica.
+
+Durante las fases de prueba con Rexbot 1.25, detectamos que las grasas industriales con base de petróleo y aceites lubricantes como el 3 en 1 y 5 en 1 degradaban químicamente nuestras piezas impresas en PLA y PETG .
+
+Esto ocasionaba que el lubricante rompía las cadenas de polímeros, provocando microfracturas que terminaban por destruir los dientes de los engranajes bajo carga. Este es un error común que ocurre cuando no se analiza la compatibilidad química entre el lubricante y el plástico.
+
+1.Protección del Sistema de Transmisión:
+
+El motor del Turbo Snake opera a revoluciones extremas (15.000 RPM), lo que genera un aumento de temperatura por fricción en el piñón de ataque.
+
+Compatibilidad de Polímeros: A diferencia de las grasas industriales que causan ESC (Environmental Stress Cracking) en el PETG y PLA, la vaselina es químicamente inerte. Esto evita que los dientes de los engranajes se vuelvan quebradizos, garantizando que la relación de 78:1 mantenga su precisión durante los 40 segundos de alta exigencia en la prueba rápida.
+
+Estabilidad Térmica: La vaselina crea una barrera que disipa el calor, evitando que el eje metálico del motor ablande el soporte plástico del engranaje primario, lo que causaría una pérdida de alineación mecánica.
+
+2. Movilidad del Tren Delantero (Tubo Transversal)
+
+En este punto, la vaselina actúa como un agente de reducción de fricción estática. Al lubricar el contacto entre el tubo transversal y el chasis, permitimos que la suspensión reaccione de forma instantánea y suave.
+
+ Si este eje se traba por fricción, el robot se inclina, lo que desvía el ángulo de visión de la HuskyLens y las lecturas de los sensores ultrasónicos. La lubricación constante asegura que el "cuerpo" del robot se mantenga nivelado, proporcionando datos limpios al código de navegación.
+
+### Seleccionamos vaselina neutra como lubricante principal por tres razones sistémicas:
+
+1.Neutralidad Química: Al ser un hidrocarburo saturado de alta pureza, no reacciona con el PETG de nuestra caja de engranajes de 78:1 . Esto garantiza que la integridad estructural de la transmisión se mantendrá intacta durante toda la temporada.
+
+2.Gestión Térmica de las 15.000 RPM: El motor del Turbo Snake genera una fricción mecánica considerable en el primer piñón. La vaselina crea una película protectora que reduce el calor por rozamiento, evitando que el eje del motor (que se calienta) ablande el plástico del engranaje y lo deforme.
+
+3.Viscosidad Adaptativa: A diferencia de los aceites líquidos que se esparcen por la fuerza centrífuga, la vaselina tiene la viscosidad justa para quedarse adherida a los dientes del engranaje incluso a altas revoluciones, manteniendo la lubricación constante durante los 40 segundos de la prueba rápida.
+
+>[NOTE]
+>Aunque el análisis técnico destaca las propiedades de la vaselina, es importante señalar que una de las mayores ventajas de esta solución es su universalidad . Para el mantenimiento de Trivilyn3.0 , no se requiere un lubricante de grado industrial especializado o de alto costo.Cualquier variante de vaselina sólida (petrolato amarillo o blanco) es funcional para este sistema, siempre que sea de consistencia pastosa y no líquida. Esto permite realizar mantenimientos de emergencia en cualquier entorno de competición utilizando productos comerciales de fácil acceso.
+
+##  Adaptabilidad Sensorial
 
 En esta sección, no hablamos de piezas, hablamos de estrategia y resiliencia del sistema.
 
