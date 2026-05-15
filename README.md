@@ -751,3 +751,36 @@ En esta sección, no hablamos de piezas, hablamos de estrategia y resiliencia de
 1. Análisis de Fallo del Entorno (Lección WRO 2025)
 
 - El pensamiento sistémico nos permitió identificar que el robot no es un ente aislado, sino que depende directamente de las variables de su entorno (la pista). En la Final Nacional 2025, detectamos un fallo crítico: el sistema de navegación fallaba no por el código, sino por una falta de correspondencia física entre la altura de los sensores y la altura de las paredes. El Rexbot2.0 estaba 'ciego' ante paredes bajas. Bajo una visión sistémica, decidimos que Trivilyn 3.0 no debía ser un diseño rígido. En lugar de simplemente bajar los sensores, diseñamos un mecanismo de respuesta física (la corredera). Esto permite que el componente mecánico se ajuste a la realidad del entorno en tiempo real, asegurando que el flujo de datos hacia la CPU sea siempre óptimo, sin importar las variaciones de la infraestructura de la pista.
+
+## Evolución del Sistema de Interconexión: 
+
+La confiabilidad de un vehículo autónomo de competición no solo reside en su código, sino en la integridad de sus señales físicas. Para Trivilyn3.0 , hemos transitado por un proceso de mejora continua en nuestro cableado para eliminar el enemigo número uno de la robótica: el falso contacto .
+
+Nuestra evolución se divide en tres etapas principales:
+
+Etapa 1: Jumpers Convencionales (Kits de Prototipado)
+
+Como en todo inicio, utilizamos los cables prefabricados comunes (Macho-Hembra).
+
+- Con estos cables obtuvimso problemas en que los conectores tienen mucha holgura. Con la vibración de los motores, se soltaba el Arduino o perdía continuidad momentánea, provocando reinicios inesperados del sistema. Además, el exceso de cableado afectaba la estética y el orden.
+
+Etapa 2: Cables de Red Estándar (UTP Categoría 6)
+
+Para mejorar la estabilidad, pase a usar cables de red convencionales (Ethernet).
+
+Con estos se mejoro con el uso de pares trenzados ayudó a reducir la diafonía (interferencia entre cables). Son cables más rígidos que los jumpers, lo que permitía que las conexiones fueran más seguras. Sin embargo, seguíamos buscando una protección superior para entornos de alta interferencia electromagnética.
+
+Etapa 3: Cableado Industrial de Alta Gama (Recuperado de Kodak)
+
+La evolución final y actual consiste en el uso de conductores especializados extraídos de infraestructuras de fotocopiadoras e impresoras industriales Kodak. Decidimos utilizar estos por las siguientes ventajas:
+
+- Decidimos utilizar estos cables porque son superiores a los de red comunes por su blindaje SFTP (Shielded Foiled Twisted Pair).
+
+- Poseen una malla metálica y blindaje que actúa como una Jaula de Faraday , protegiendo las señales críticas de los sensores del ruido generado por los motores de 15.000 RPM, esto proporciona Inmunidad al Ruido (EMI).
+
+-  Son conductores diseñados para durar años en máquinas de uso rudo. Soportan tirones y vibraciones constantes sin quebrarse, asegurando que el PWM de 180 llegue al motor con total integridad.
+
+  <img width="1280" height="615" alt="image" src="https://github.com/user-attachments/assets/a87793e1-93b3-4790-a992-c8d0330dc5d5" />
+
+>[!NOTE]
+>  El uso de componentes recuperados de maquinaria Kodak no solo es una decisión de costo, sino de calidad. Estos cables ofrecen un calibre de cobre y un blindaje que es difícil de encontrar en componentes de electrónica de consumo común.Cada cable fue soldado y protegido con termocontraíble (termocontraíble), eliminando los terminales de presión de los jumpers que eran nuestro punto de falla principal.
