@@ -145,9 +145,9 @@ Aclaramos que estos motores se extrajeron de un turbo snake
 y se pueden extraer de distintos tipos de vehículos a control remoto como:
 
 
-Este motor es el corazón del desplazamiento y uno de los componentes principales para que Trivilyn tenga su desempeño. Ya explicado esto, pasamos a la parte de:
 
-### ¿Con que sostiene todo esto? 
+
+Este motor es el corazón del desplazamiento y uno de los componentes principales para que Trivilyn tenga su desempeño. 
 
 Todo lo mencionado anteriormente se sostiene con una base diseñada en 3D por el equipo. (Recordamos que los diseños como este se encuentran en el apartado de Archivos CAD).
 
@@ -170,6 +170,7 @@ Es una extencion de filamento cuya funcion es solucionar que en versiones anteri
 - Esto hace que la pieza sea mucho más resistente a la flexión. En un robot de competencia, los motores y el movimiento generan vibraciones; la vena asegura que el soporte se mantenga rígido y no "oscile", lo cual terminaría quebrando el PETG.
 
 ## Movilidad parte delantera: 
+
 La movilidad en la parte delantera: aquí nos referimos al sistema de dirección (control de giros del robot), ruedas frontales y todos los componentes de estos para unirse entre sí.
 
 Para esta parte de Trivilyn 3.0 nos basamos en la plataforma estable de Trivilyn 2025; Para esta temporada 2026 hemos conservado el sistema de dirección por su alta confiabilidad, pero hemos aplicado dos optimizaciones críticas en la respuesta dinámica y la durabilidad de los materiales, las cuales son:
@@ -322,7 +323,7 @@ Sus medidas son de 7 mm de largo x 6.5 mm de ancho x 45 mm de alto y, en la part
 
 ## Segundo piso
 
-Para el segundo piso de Trivilyn 3.0, el diseño tuvo una reestructuración, siendo la más notoria su tamaño: su anchura aumentó de 90 mm a 122 mm, mantuvo sus 181.50 mm de largo y su altura aumentó de 5 mm a 38 mm en el momento en que se implementó el sistema para regular la altura de los sensores.
+Para el segundo piso de Trivilyn 3.0, el diseño tuvo una reestructuración, siendo la más notoria su tamaño: su anchura aumentó de 90 mm a 100 mm, mantuvo sus 181.50 mm de largo y su altura aumentó de 5 mm a 38 mm en el momento en que se implementó el sistema para regular la altura de los sensores.
 <img width="904" height="664" alt="image" src="https://github.com/user-attachments/assets/f934e917-c560-4c97-a5e7-f0c92a428258" />
 
 <img width="1066" height="640" alt="image" src="https://github.com/user-attachments/assets/b309783a-532b-4e0a-9540-0df9a5505ec8" />
@@ -381,6 +382,35 @@ La capacidad de ajustar la altura del sensor en cuestión de segundos durante la
 
 ## Tercer piso
 
+El tercer piso de Trivilyn3.0 fue rediseñado en su totalidad, principalmente se cambio a un diseño en forma de ("Cabina") 
+
+<img width="1003" height="621" alt="image" src="https://github.com/user-attachments/assets/a3a6098a-792f-43c9-aca0-985b77d3924a" />
+
+asemejandose a vehiculos como:
+
+- Buga de Carreras, Prototipo de Cross-Country o Fastback Off-Road
+<img width="275" height="183" alt="image" src="https://github.com/user-attachments/assets/651aa2bf-e9a9-4847-9a90-d9ba0834eefe" />
+
+
+-  Vehículos Militares Blindados (MRAP / Humvee Modernos)
+<img width="300" height="168" alt="image" src="https://github.com/user-attachments/assets/0158f6df-4120-48de-b617-732ce44e412c" />
+
+## Geometría de Rigidez Estructural Interna
+
+Al inspeccionar la sección inferior interna del encapsulado, se integraron tres nervaduras transversales de refuerzo (vigas longitudinales extruidas en el modelado CAD).
+
+<img width="1204" height="626" alt="image" src="https://github.com/user-attachments/assets/c8acd693-c83b-4391-a0b1-6e80aeb0a8cc" />
+
+ Estas costillas rompen la flexibilidad natural de las capas del polímero, actuando como tensores estructurales. Evitando por completo que la cara superior de la cabina se flexione, hunda o fatiga ante presiones externas de manipulación en boxes o impactos severos durante la carrera.
+
+## Grabado en Relieve Identificativo
+
+La cara frontal externa (el plano inclinado estilo Trophy Truck ) integra una extrusión tipográfica texturizada con el nombre de "TeamCRV Venezuela".
+
+<img width="971" height="556" alt="image" src="https://github.com/user-attachments/assets/88c5eea5-59aa-4b8f-a401-3e9150170681" />
+
+ Más allá del valor estético, reglamentario y de identidad de equipo para la WRO, este relieve altera básicamente la superficie plana de la pieza. Las letras extruídas actúan como un patrón de micronervaduras de refuerzo 
+ y rompen la continuidad de la cara plana, incrementando significativamente la resistencia a la torsión de la sección frontal del polímero. Si el robot sufre una colisión directa a alta velocidad, este alivio distribuye las líneas de estrés mecánico a lo largo de la tipografía, evitando que el plástico se agriete o se fracture el frente de la cabina.
 
 # Arquitectura de Potencia y Sensores
 
@@ -485,9 +515,9 @@ Filtro distance > 1: Esta instrucción filtra las lecturas de 0 cm que genera la
 
 En el desarrollo de Trivilyn 3.0 , el enfoque principal fue la navegación en Centro Aleatorio (pasillos de 40 cm). Realizamos una comparativa entre nuestra configuración base y nuestra configuración de alto rendimiento para la WRO.
 
-- Prueba de Consistencia (Lenta)	90 seg (1:30 min)	100%	Navegación conservadora, correcciones suaves
+- Prueba de Consistencia (Lenta)	40 seg	100%	Navegación conservadora, correcciones suaves
 
-- Prueba de Velocidad (Rápida)	40 seg	80%	Agresividad en curvas (PWM 180) y aceleración máxima.
+- Prueba de Velocidad (Rápida)	25 seg	80%	Agresividad en curvas (PWM 190) y aceleración máxima.
   
 ###  Justificación Técnica de la Tasa de Error en Alta Velocidad
 
@@ -503,7 +533,7 @@ Efecto: En un pasillo aleatorio de 40 cm, el margen de maniobra es mínimo. Si e
    
 El peso del segundo piso (110 mm de ancho) y los componentes generan una inercia que es difícil de detener instantáneamente.
 
- Al entrar en una curva a 45 segundos de ritmo, la fuerza centrífuga empuja al robot hacia el muro exterior. Aunque el software ordene girar, los neumáticos de caucho de 43mm pueden sufrir un deslizamiento lateral ( deriva ), alterando el ángulo de salida y obligando al sistema de microajustes a trabajar al límite.
+ Al entrar en una curva a 25 segundos de ritmo, la fuerza centrífuga empuja al robot hacia el muro exterior. Aunque el software ordene girar, los neumáticos de caucho de 43mm pueden sufrir un deslizamiento lateral ( deriva ), alterando el ángulo de salida y obligando al sistema de microajustes a trabajar al límite.
 
 3. Ruido Ultrasónico por Vibración Mecánica
    
@@ -521,17 +551,17 @@ Dada la naturaleza de la competencia, donde se dispone de dos intentos por ronda
 
  El objetivo principal es asegurar el puntaje máximo de la misión.
 
-se configuro un PWM limitado a 65-80.
+se configuro un PWM limitado a 100-140.
 
-Se logro un tiempo de 1:30 min . Al reducir la velocidad, eliminamos la inercia excesiva en las curvas de los pasillos aleatorios, permitiendo que los sensores ultrasónicos tengan una ventana de lectura óptima y que los microajustes laterales sean casi imperceptibles.
+Se logro un tiempo de 40 Segundos . Al reducir la velocidad, eliminamos la inercia excesiva en las curvas de los pasillos aleatorios, permitiendo que los sensores ultrasónicos tengan una ventana de lectura óptima y que los microajustes laterales sean casi imperceptibles.
 
 - Segundo Intento (Modo Alto Rendimiento - 80% Fiabilidad):
 
 Reducción drástica del tiempo para mejorar el desempate ( tie-break ).
 
-configuramos PWM dinámico (hasta 180 en curvas).
+configuramos PWM dinámico (hasta 190 en curvas).
 
-Realizando esta prueba obtuvimos como resultado un Tiempo récord de 45 segundos . De este modo, el robot opera al límite de sus capacidades mecánicas y lógicas.
+Realizando esta prueba obtuvimos como resultado un Tiempo récord de 25 segundos . De este modo, el robot opera al límite de sus capacidades mecánicas y lógicas.
      
  ## Conclusión: 
  
