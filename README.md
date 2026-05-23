@@ -18,7 +18,7 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
    
    * [Juan Andres Graterol Teran](#Juan-Andres-Graterol-Teran)
          
-   * [Tutor](#Tutor-/-Luis-Eduardo-Paredes)
+   * [Tutor](#Tutor-Luis-Eduardo-Paredes)
 
 3. [Movilidad y Diseño Mecánico](#Movilidad-y-Diseño-Mecánico)
 
