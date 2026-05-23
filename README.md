@@ -52,7 +52,13 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
   
    * [Temporada 2026](#Temporada-2026)
   
-7. [Archivos CAD](Archivos-CAD)
+7. [Archivos CAD](#Archivos-CAD)
+
+8. [Fotos de Trivilyn3.0](#Trivilyn-360)
+
+9. [Videos de Trivilyn3.0](#Rrivilyn3.0-Challenges)
+
+10. 
 
 # MIEMBROS DEL TEAMROBOCRV
 
@@ -378,7 +384,7 @@ Temporada 2026: "Adaptarse para ganar"
 
 La experiencia en la Nacional 2025 dejó una lección clara: la rigidez excesiva en el diseño mecánico es una debilidad. Por ello, para la temporada 2026, el equipo ha adoptado la filosofía de "Adaptarse para ganar" .
 
-La capacidad de ajustar la altura del sensor en cuestión de segundos durante las prácticas nos otorga una ventaja competitiva crítica. Si las especificaciones de las paredes cambian o si la pista presenta irregularidades imprevistas, el Trivilyn 3.0 puede recalibrar su "visión física" mecánicamente. Esto evita la necesidad de realizar cambios de último minuto en el código de detección de distancia, permitiendo que el software se mantenga estable mientras el hardware se adapta al entorno.
+La capacidad de ajustar la altura del sensor en cuestión de segundos durante las prácticas nos otorga una ventaja competitiva crítica. Si las especificaciones de las paredes cambian o si la pista presenta irregularidades imprevistas, Trivilyn 3.0 puede recalibrar su "visión física" mecánicamente. Esto evita la necesidad de realizar cambios de último minuto en el código de detección de distancia, permitiendo que el software se mantenga estable mientras el hardware se adapta al entorno.
 
 ## Tercer piso
 
@@ -809,8 +815,9 @@ La evolución final y actual consiste en el uso de conductores especializados ex
 - Poseen una malla metálica y blindaje que actúa como una Jaula de Faraday , protegiendo las señales críticas de los sensores del ruido generado por los motores de 15.000 RPM, esto proporciona Inmunidad al Ruido (EMI).
 
 -  Son conductores diseñados para durar años en máquinas de uso rudo. Soportan tirones y vibraciones constantes sin quebrarse, asegurando que el PWM de 180 llegue al motor con total integridad.
+-  
+<<img width="1280" height="614" alt="image" src="https://github.com/user-attachments/assets/65b7bfb5-3a7d-4d43-9256-41c4458b69d9" />
 
-  <img width="1280" height="615" alt="image" src="https://github.com/user-attachments/assets/a87793e1-93b3-4790-a992-c8d0330dc5d5" />
 
 >[!NOTE]
 >  El uso de componentes recuperados de maquinaria Kodak no solo es una decisión de costo, sino de calidad. Estos cables ofrecen un calibre de cobre y un blindaje que es difícil de encontrar en componentes de electrónica de consumo común.Cada cable fue soldado y protegido con termocontraíble (termocontraíble), eliminando los terminales de presión de los jumpers que eran nuestro punto de falla principal.
