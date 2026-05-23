@@ -403,7 +403,7 @@ asemejandose a vehiculos como:
 
 ## Geometría de Rigidez Estructural Interna
 
-Al inspeccionar la sección inferior interna del encapsulado, se integraron tres nervaduras transversales de refuerzo (vigas longitudinales extruidas en el modelado CAD).
+Al inspeccionar la sección inferior interna del encapsulado, integramos tres nervaduras transversales de refuerzo (vigas longitudinales extruidas en el modelado CAD).
 
 <img width="1204" height="626" alt="image" src="https://github.com/user-attachments/assets/c8acd693-c83b-4391-a0b1-6e80aeb0a8cc" />
 
@@ -432,7 +432,7 @@ Este documento detalla el funcionamiento lógico y la estrategia de control del 
 
 - Ronda Abierta: Navegación en un entorno variable con pasillos estrechos (hasta 40 cm), conteo de esquinas y estacionamiento final tras completar tres vueltas.
 
-- Ronda Cerrda: Evasión de elementos aleatorios diferenciados por colores (Rojo/Verde) mediante visión artificial con una cámara HuskyLens .El vehículo emplea una arquitectura de bucle cerrado que integra rutinas de autocentrado constante, rectificación física y una lógica de fin de carrera basada en la detección de un marcador color Magenta.
+- Ronda Cerrada: Navegación autónoma y evasión de obstáculos aleatorios diferenciados por color (Rojo/Verde) mediante visión artificial en tiempo real con el sensor HuskyLens . El vehículo implementa un sistema de control en lazo cerrado ( closed-loop ) que integra rutinas de autocentrado constante, rectificación de trayectoria física ante colisiones y una lógica de fin de carrera gobernada por la detección precisa de un marcador Magenta.
 
 ## ⚙️ Arquitectura del Software (Máquina de Estados de Misión)
 
