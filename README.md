@@ -18,7 +18,7 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
    
    * [Juan Andres Graterol Teran](#Juan-Andres-Graterol-Teran)
          
-   * [Tutor](#tutor-Luis-Eduardo-Paredes)
+   * [Tutor](#tutor/Luis-Eduardo-Paredes)
 
 3. [Movilidad y Diseño Mecánico](#Movilidad-y-Diseño-Mecánico)
 
@@ -43,15 +43,17 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
    * [Mitigacion de fallas](#3-mitigación-de-fallas-y-decisiones-críticas)
   
 
-6. [Arquitectura Software y Estratrgia](#Arquitectura-Software-y-Estratrgia)
+6. [Arquitectura Software y Estratrgia](#Arquitectura-Software-y-Estratrgia
    
+- [Ronda Abierta](ronda-abierta)
+
    * [Resumen del Proyecto](#Resumen-del-Proyecto)
   
    * [Arquitectura del Software](#Arquitectura-del-Software-(Máquina-de-Estados-de-Misión))
   
    * [Análisis de Rendimiento](#Análisis-de-Rendimiento-Optimización-de-Tiempo-vs-Fiabilidad)
 
-7. [Pensamiento sistémico y decisiones de ingeniería](#Pensamiento-Sistémico-y-Decisiones-de-Ingeniería)
+8. [Pensamiento sistémico y decisiones de ingeniería](#Pensamiento-Sistémico-y-Decisiones-de-Ingeniería)
 
    * [Temporada 2024](#Temporada-2024-Rexbot10)
   
@@ -59,11 +61,11 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
   
    * [Temporada 2026](#Temporada-2026)
   
-8. [Archivos CAD](#Archivos-CAD)
+9. [Archivos CAD](#Archivos-CAD)
 
-9. [Fotos de Trivilyn3.0](#Trivilyn-360)
+ 10. [Fotos de Trivilyn3.0](#Trivilyn-360)
 
-10. [Videos de Trivilyn3.0](#Trivilyn3.0-Challenges)
+ 11. [Videos de Trivilyn3.0](#Trivilyn3.0-Challenges)
 
 # MIEMBROS DEL TEAMROBOCRV
 
@@ -435,6 +437,8 @@ La cara frontal externa (el plano inclinado estilo Trophy Truck ) integra una ex
 
  Más allá del valor estético, reglamentario y de identidad de equipo para la WRO, este relieve altera básicamente la superficie plana de la pieza. Las letras extruídas actúan como un patrón de micronervaduras de refuerzo 
  y rompen la continuidad de la cara plana, incrementando significativamente la resistencia a la torsión de la sección frontal del polímero. Si el robot sufre una colisión directa a alta velocidad, este alivio distribuye las líneas de estrés mecánico a lo largo de la tipografía, evitando que el plástico se agriete o se fracture el frente de la cabina.
+
+ 
  
   
  # ⚡ Arquitectura de Potencia y Sensores
@@ -470,6 +474,10 @@ Para evitar el problema más crítico en robótica móvil "los reinicios del pro
 > Las celdas 18650 del sistema de dirección presentan una etiqueta comercial de 8800 mAh. Tras realizar un análisis técnico basado en la densidad energética del litio y las dimensiones físicas estándar de una celda 18650, el equipo determinó que este valor es nominal/falso (común en el mercado de consumo). 
 > 
 >* *Mitigación del Riesgo:* Para el diseño del robot, calculamos el peor escenario estimando una capacidad real aproximada de *1200 a 1500 mAh* por celda. Gracias a la configuración en paralelo, la capacidad de corriente se duplica, lo que garantiza autonomía de sobra para las rondas oficiales de la WRO, operando con un factor de seguridad de 3x sobre el consumo real.
+>
+>* Aislamiento de Ruido: La HuskyLens y los sensores ultrasónicos se alimentan exclusivamente desde los pines de 5 V del Arduino para garantizar un voltaje limpio y libre de las fluctuaciones que provocan los motores.
+
+
 
 ## 3. Mitigación de Fallas y Decisiones Críticas
 
@@ -494,6 +502,144 @@ El flujo secuencial de potencia y datos durante una maniobra compleja (ej. evasi
 1. *Fase de Percepción:* Los 3 sensores HC-SR04 miden distancias de los bloques laterales a 5V estables. Simultáneamente, la HuskyLens procesa la pista y envía las coordenadas por el puerto serie Serial1 (TX/RX) del Mega.
 2. *Fase de Procesamiento:* El Arduino Mega procesa las lecturas de proximidad y los datos de visión artificial de manera paralela gracias al ancho de banda libre de la conexión UART.
 
+## 📡 Distribución Geométrica y Calibración de Sensores
+
+Este capítulo detalla la fundamentación matemática, física y de diseño mecánico detrás de la disposición espacial de la red de sensores de Trivilyn3.0. La correcta ubicación geométrica del hardware de percepción es tan crítica como la optimización de los algoritmos de control; una desalineación de milímetros o de pocos grados en los vectores de lectura puede degradar por completo la fiabilidad del vehículo a altas velocidades.
+
+## 1. Vector Frontal: Telemetría de Viraje y Geometría de Giro
+
+El sensor ultrasónico frontal se encuentra montado estrictamente sobre el plano de simetría longitudinal del chasis ($X = 0$), en la sección más avanzada del parachoques. Su propósito principal es monitorear el vector de aproximación frontal (middleDistance) para disparar la transición al subestado de viraje de la Máquina de Estados Finitos (FSM).
+
+### A. Física del Cono de Emisión y Ecos Parásitos
+
+Los transductores piezoeléctricos del sensor HC-SR04 operan emitiendo ráfagas de ultrasonido a una frecuencia de $40\text{ kHz}$. Este haz acústico posee una dispersión natural cónica con un ángulo de apertura de aproximadamente $\alpha \approx 15^\circ$ a $30^\circ$ (dependiendo de la ganancia del transductor).
+
+Para calcular el ancho del área de detección ($W_{\text{detect}}$) a una distancia de colisión crítica ($d = 50\text{ cm}$), empleamos la siguiente relación trigonométrica:
+
+$$W_{\text{detect}} = 2 \cdot d \cdot \tan\left(\frac{\alpha}{2}\right)$$
+
+Para un ángulo de apertura nominal de $\alpha = 15^\circ$:
+
+$$W_{\text{detect}} = 2 \cdot 50\text{ cm} \cdot \tan(7.5^\circ) \approx 100\text{ cm} \cdot 0.1316 = 13.16\text{ cm}$$
+
+>[!CAUTION]
+>Efecto de Rebote Multipath y Ruido por Suelo: Si el sensor frontal se posiciona a una altura inferior a $3\text{ cm}$ respecto al suelo, el lóbulo inferior del cono de emisión ultrasónico impactará contra la pista de la WRO, generando "ecos fantasmas" que el software interpretará como obstáculos frontales inexistentes. La altura óptima del sensor frontal en Trivilyn 3.0 está fijada a un mínimo de $4.5\text{ cm}$ sobre el nivel del suelo.
+
+### B. Cinemática del Punto Dulce de Giro ($42\text{ cm} \le d \le 52\text{ cm}$) bajo Dirección Steer-by-Wire
+
+Esta calibración SbW elimina el deslizamiento lateral (derrape) al mantener ambas ruedas en el mismo arco de giro, logrando un ángulo de deflexión máximo de $\beta = 40^\circ$ por lado (izquierdo y derecho), lo que equivale a un barrido de dirección total de $80^\circ$ de tope a tope (lock-to-lock). El rango de disparo del sensor frontal está directamente sincronizado con esta capacidad cinemática:
+
+- Límite Inferior ($42\text{ cm}$): Gracias al agresivo ángulo de deflexión de $40^\circ$ por lado provisto por el sistema SbW, el robot es capaz de realizar virajes sumamente cerrados. Si la aproximación desciende de $42\text{ cm}$, el tiempo de respuesta del servomotor HobbyPark ($t_{\text{resp}} \approx 0.12\text{ s}$) y el momento lineal del chasis empujarán el parachoques delantero contra la pared exterior antes de que las ruedas completen la deflexión de $40^\circ$.
+
+- Límite Superior ($52\text{ cm}$): Iniciar el giro SbW de $40^\circ$ de forma anticipada (lecturas frontales superiores a $52\text{ cm}$) cerrará demasiado rápido el radio de giro del chasis. Esto provocará que la rueda trasera interna "muerda" o choque directamente contra la esquina o vértice interno del muro.
+
+## 2. Vectores Laterales: Control de Centrado Dinámico y Prevención de Cross-Talk
+
+Los sensores ultrasónicos laterales se orientan de forma estrictamente ortogonal al eje longitudinal del chasis ($90^\circ$ a la izquierda y derecha). Son los encargados de alimentar el bucle cerrado de microcorrecciones reactivas.
+
+              Muro Izquierdo de la Pista
+  ┌─────────────────────────────────────────────────────────┐
+  │                                                         │
+  │                     ◄───[ Haz Ultrasónico: L_dist ]     │
+  ├─────────┐                                   ┌───────────┤
+  │         │                                   │           │
+  │         │           [ Trivilyn 3.0 ]        │           │
+  │         │                                   │           │
+  ├─────────┘                                   └───────────┤
+  │                     [ Haz Ultrasónico: R_dist ]───►     │
+  │                                                         │
+  └─────────────────────────────────────────────────────────┘
+              Muro Derecho de la Pista
+
+
+### A. Alineación Coaxial vs. Desfase Longitudinal
+
+En prototipos anteriores, la desalineación longitudinal de los sensores laterales provocaba un desfase de tiempo en el cálculo del diferencial de distancia. En Trivilyn 3.0, ambos sensores laterales están posicionados exactamente sobre el eje del centro de masa (CoM) transversal.
+
+Esta disposición garantiza que cualquier corrección de dirección generada por el algoritmo de control afecte por igual la lectura de ambos lados, evitando la inestabilidad por oscilaciones amplificadas (over-correction).
+
+### B. Mitigación de Interferencia Cruzada (Cross-Talk)
+
+Cuando dos sensores ultrasónicos idénticos operan en paralelo en un entorno cerrado y estrecho de $40\text{ cm}$, el pulso emitido por el sensor izquierdo puede rebotar de manera errática e ingresar en el receptor del sensor derecho.
+
+Para erradicar esta interferencia física en Trivilyn 3.0, el software implementa un protocolo de muestreo alternado temporal (secuenciado por flancos de reloj) gobernado por la librería NewPing de la siguiente manera:
+
+Tiempo (ms):  │ [Ping Izq.] │  29 ms Espera  │ [Ping Der.] │  29 ms Espera  │ [Ping Front.] │
+              └─────────────┴────────────────┴─────────────┴────────────────┴───────────────┘
+              ◄───────────────────────── Ciclo Total: 87 ms ────────────────────────────────►
+
+
+>[!IMPORTANT]
+>Aislamiento Acústico del Soporte: El PETG de las piezas de la corredera puede propagar vibraciones mecánicas directamente del chasis al sensor en forma de "ruido de conducción sólida". Hemos diseñado paredes de acoplamiento de friction de $2\text{ mm}$ que rodean el cuerpo del transductor, actuando como un filtro mecánico pasivo que disipa las vibraciones por encima de los $20\text{ kHz}$.
+
+## 3. Sensor de Visión: Geometría de Proyección Tridimensional (HuskyLens)
+
+La cámara HuskyLens se localiza en la sección superior frontal (tercer piso). No está orientada en paralelo al suelo, sino que posee un ángulo de inclinación descendente de cabeceo (Pitch, $\theta_{\text{tilt}}$) calibrado con precisión de grado.
+
+          [ Cámara HuskyLens ]
+               │ \ 
+               │  \  Límite Superior FOV
+               │   \ 
+      h_cam    │    \ 
+               │     \ 
+               │_ θ_tilt\  Línea de Mirada Central (Centroide de Detección)
+               └───────  \ 
+    ──────────────────────\───────────────────────◄ [Suelo / Pista]
+             ◄─ Zona Ciega ──►
+                (d_ciega)
+
+
+### A. Cálculo Trigonométrico del Ángulo Óptimo de Inclinación
+
+La cámara debe ser capaz de detectar tanto los pilares de color Rojo/Verde (cuya altura típica de diseño es de $15\text{ cm}$) como la línea de delimitación de parqueo de color Magenta situada en el suelo. Para calcular la distancia de inicio de detección útil ($d_{\text{util}}$) y evitar una zona ciega excesiva frente al robot, aplicamos la siguiente relación trigonométrica:
+
+$$d_{\text{ciega}} = h_{\text{cam}} \cdot \cot\left(\theta_{\text{tilt}} + \frac{V_{\text{FOV}}}{2}\right)$$
+
+Donde:
+
+$h_{\text{cam}} = 12.5\text{ cm}$ (Altura de montaje de la lente en el tercer piso).
+
+$V_{\text{FOV}} = 48^\circ$ (Campo de visión vertical de la HuskyLens).
+
+$\theta_{\text{tilt}} = 22^\circ$ (Ángulo de inclinación descendente respecto a la horizontal).
+
+Sustituyendo los valores de diseño de Trivilyn 3.0:
+
+$$d_{\text{ciega}} = 12.5\text{ cm} \cdot \cot(22^\circ + 24^\circ) = 12.5\text{ cm} \cdot \cot(46^\circ)$$
+
+$$\cot(46^\circ) \approx 0.9657 \implies d_{\text{ciega}} \approx 12.5\text{ cm} \cdot 0.9657 \approx 12.07\text{ cm}$$
+
+Este ángulo óptimo de $\theta_{\text{tilt}} = 22^\circ$ reduce la zona ciega a tan solo $12\text{ cm}$ por delante de la carrocería, garantizando que si el robot se aproxima a un pilar, este permanezca dentro del espacio de procesamiento visual y no "desaparezca" antes de realizar el desvío.
+
+>[!CAUTION]
+>Error por Reflexión Lumínica (Glint): Un ángulo de inclinación demasiado agresivo ($\theta_{\text{tilt}} > 35^\circ$) expone el sensor óptico a reflejos directos de las luminarias del recinto del evento sobre la pista brillante. Esto altera drásticamente los valores de saturación y tono de la imagen, provocando falsos negativos de detección (o confundiendo el Magenta del parqueo con Rojo). El valor de $22^\circ$ ha demostrado ser el umbral de mayor robustez bajo iluminación artificial variable.
+
+## 4. El Sistema de Correderas de Precisión: Adaptabilidad en Pista
+
+La gran lección de la temporada pasada fue la necesidad de ajustar físicamente la altura de lectura de los sensores. Las irregularidades del terreno de competencia y los desniveles milimétricos en el material de las paredes de la WRO exigen un ajuste ágil.
+
+         [ SOPORTE DEL SENSOR ] 
+         (Ajuste Vertical Deslizante)
+                 │  ▲
+                 ▼  │ (Rango de Desplazamiento: 28 mm)
+             ┌───────┐
+             │  [O]  │ ◄─── Perno de Ajuste M4 (Fijación por fricción)
+             │       │
+             │ [  ]  │ ◄─── Riel de Acoplamiento Macho
+             └───────┘
+                 │
+                 ▼
+         [ SEGUNDO PISO ] (Riel Hembra Integrado)
+
+
+## Características Mecánicas de la Corredera en Trivilyn3.0
+
+Fijación por Fricción de Alta Resistencia: Al apretar el perno de acero M4 sobre la tuerca encastrada en la ranura longitudinal de la pieza beige, se genera un esfuerzo de compresión normal que produce una fuerza de fricción estática estricta ($F_s \ge \mu_s \cdot N$). Esta fuerza supera la aceleración de gravedad de los componentes mecánicos y la fuerza del impacto de vibración generada por el motor DC a $15,000\text{ RPM}$.
+
+Ajuste Milimétrico Fino (Rango de $28\text{ mm}$): Permite subir o bajar los sensores laterales de manera continua sin escalonamientos artificiales. El robot puede adaptarse a paredes con diferentes alturas de base en menos de $15\text{ segundos}$ de calibración en boxes.
+
+Precisión de Guía Lineal: El diseño de riel macho-hembra con holgura de ajuste deslizante calibrada a $0.18\text{ mm}$ garantiza que, durante el desplazamiento vertical, no se introduzca ningún tipo de rotación parásita sobre el eje $Y$ (Yaw). Esto asegura que la orientación del eje óptico de los sensores permanezca perpendicular a la pista.
+
 # Arquitectura Software y Estratrgia
 
 ## 📄 Resumen del Proyecto
@@ -503,6 +649,8 @@ Este documento detalla el funcionamiento lógico y la estrategia de control del 
 - Ronda Abierta: Navegación en un entorno variable con pasillos estrechos (hasta 40 cm), conteo de esquinas y estacionamiento final tras completar tres vueltas.
 
 - Ronda Cerrada: Navegación autónoma y evasión de obstáculos aleatorios diferenciados por color (Rojo/Verde) mediante visión artificial en tiempo real con el sensor HuskyLens . El vehículo implementa un sistema de control en lazo cerrado ( closed-loop ) que integra rutinas de autocentrado constante, rectificación de trayectoria física ante colisiones y una lógica de fin de carrera gobernada por la detección precisa de un marcador Magenta.
+
+# Ronda Abierta
 
 ## ⚙️ Arquitectura del Software (Máquina de Estados de Misión)
 
@@ -607,8 +755,12 @@ Filtro distance > 1: Esta instrucción filtra las lecturas de 0 cm que genera la
 
 
 ### 5. Registro de Variables de Control (Telemetría Interna)
-   
-<img width="725" height="335" alt="image" src="https://github.com/user-attachments/assets/8200de92-a893-49c3-b3da-48048b0b85e6" />
+| Variable | Función Técnica | Propósito en Misión |
+| :--- | :--- | :--- |
+| pepe | Contador de Estados | Gestión de arranque, conteo de esquinas y fin de carrera. |
+| tilin / groso | Banderas de Sentido | Bloqueo lógico del sentido de la pista (Horario/Antihorario). |
+| lewis / lecrer | Contadores de Rendimiento | Registro interno de maniobras ejecutadas por flanco. |
+| middleDistance | Vector frontal | Disparador de subrutinas de giro (Umbral 32 cm). |
 
 
 ## Análisis de Rendimiento: Optimización de Tiempo vs Fiabilidad
@@ -617,11 +769,17 @@ En el desarrollo de Trivilyn 3.0 , el enfoque principal fue la navegación en Ce
 
 - Prueba de Consistencia (Lenta)	40 seg	100%	Navegación conservadora, correcciones suaves
 
+  <img width="1221" height="618" alt="image" src="https://github.com/user-attachments/assets/0cc12374-9470-4a28-a08c-0c9216a4e385" />
+
+
 - Prueba de Velocidad (Rápida)	25 seg	80%	Agresividad en curvas (PWM 190) y aceleración máxima.
+
+  <img width="1231" height="620" alt="image" src="https://github.com/user-attachments/assets/d65d0253-3925-47d5-8445-2d506e6343b8" />
+
   
 ###  Justificación Técnica de la Tasa de Error en Alta Velocidad
 
-Pasar de 90 a 45 segundos implica duplicar la velocidad media del vehículo. Según nuestros datos, el descenso del 20% en la confiabilidad se debe a tres factores físicos críticos:
+Pasar de 40 a 25 segundos implica duplicar la velocidad media del vehículo. Según nuestros datos, el descenso del 20% en la confiabilidad se debe a tres factores físicos críticos:
 
 1. Latencia de Muestreo Ultrasónico (Sensor Lag)
    
@@ -631,7 +789,7 @@ Efecto: En un pasillo aleatorio de 40 cm, el margen de maniobra es mínimo. Si e
 
 2. Inercia y Momento Lineal
    
-El peso del segundo piso (110 mm de ancho) y los componentes generan una inercia que es difícil de detener instantáneamente.
+El peso del segundo piso (140 mm de ancho) y los componentes generan una inercia que es difícil de detener instantáneamente.
 
  Al entrar en una curva a 25 segundos de ritmo, la fuerza centrífuga empuja al robot hacia el muro exterior. Aunque el software ordene girar, los neumáticos de caucho de 43mm pueden sufrir un deslizamiento lateral ( deriva ), alterando el ángulo de salida y obligando al sistema de microajustes a trabajar al límite.
 
@@ -666,6 +824,10 @@ Realizando esta prueba obtuvimos como resultado un Tiempo récord de 25 segundos
  ## Conclusión: 
  
 - Trivilyn 3.0 ha pasado de ser un diseño reactivo simple a un sistema autónomo capaz de analizar su entorno, corregir su trayectoria milimétricamente y tomar decisiones lógicas basadas en la historia de la misión. La combinación de una estructura mecánica robusta y un software resistente nos permite afrontar la competencia con un alto grado de confianza.
+
+# Ronda cerrada 
+
+## 
 
 # Pensamiento Sistémico y Decisiones de Ingeniería 
 
@@ -839,79 +1001,127 @@ En el código, implementamos una instrucción para enviar al servo en el sentido
 Es importante destacar que, según los datos que recopilamos, la magnitud de este desplazamiento varía en función de la velocidad del robot; Por lo tanto, es necesario ajustar los parámetros de compensación dinámicamente para mantener la trayectoria recta en diferentes ritmos de marcha.
 <img width="1079" height="232" alt="image" src="https://github.com/user-attachments/assets/c268ba6c-5119-434d-b968-0c0b843d085d" />
 
-# Temporada 2026
+# Temporada 2026 Trivilyn3.0
 
-##  Gestión de Fricción y Compatibilidad Química
- 
-En la ingeniería de Trivilyn 3.0 , la lubricación no se considera un mantenimiento externo, sino un componente crítico del sistema de transmisión . La elección de la vaselina neutra frente a lubricantes industriales (como la grasa azul) es el resultado de un análisis de interacción entre materiales y termodinámica.
+## Evolución
 
-Durante las fases de prueba con Rexbot 1.25, detectamos que las grasas industriales con base de petróleo y aceites lubricantes como el 3 en 1 y 5 en 1 degradaban químicamente nuestras piezas impresas en PLA y PETG .
+El pensamiento sistémico define que un vehículo autónomo de alto rendimiento no es simplemente una colección de motores, sensores y algoritmos aislados, sino un sistema cerrado interconectado. Cada modificación física altera la dinámica del software, la compatibilidad química de las interfaces mecánicas y la robustez de las señales ante perturbaciones del entorno de la WRO.
 
-Esto ocasionaba que el lubricante rompía las cadenas de polímeros, provocando microfracturas que terminaban por destruir los dientes de los engranajes bajo carga. Este es un error común que ocurre cuando no se analiza la compatibilidad química entre el lubricante y el plástico.
+###  Lógica de Interconexión: Física del Chasis vs. Calibración del Software
 
-1.Protección del Sistema de Transmisión:
+El punto de disparo de nuestros sensores no se eligió al azar, es el resultado de un análisis sistémico que interconecta la distribución física de los componentes con la respuesta dinámica del vehículo. El siguiente mapa describe esta dependencia:
 
-El motor del Turbo Snake opera a revoluciones extremas (15.000 RPM), lo que genera un aumento de temperatura por fricción en el piñón de ataque.
+## Desglose del Análisis Sistémico
 
-Compatibilidad de Polímeros: A diferencia de las grasas industriales que causan ESC (Environmental Stress Cracking) en el PETG y PLA, la vaselina es químicamente inerte. Esto evita que los dientes de los engranajes se vuelvan quebradizos, garantizando que la relación de 78:1 mantenga su precisión durante los 40 segundos de alta exigencia en la prueba rápida.
+1. *Ubicación del Sensor (Efecto en la Percepción):*
+   Al posicionar los sensores ultrasónicos HC-SR04 en la parte más avanzada del parachoques delantero, maximizamos la *Ventana de Lectura*. El sensor detecta la pared con anticipación, lo que otorga al microcontrolador una "ganancia de tiempo" crítica para procesar los datos antes de ejecutar el giro.
 
-Estabilidad Térmica: La vaselina crea una barrera que disipa el calor, evitando que el eje metálico del motor ablande el soporte plástico del engranaje primario, lo que causaría una pérdida de alineación mecánica.
+2. *Distribución de Masas (Efecto en la Dinámica):*
+   Llevar los sensores y soportes tan adelante provoca que el *Centro de Masa (CoM)* se desplace hacia el eje frontal. Esto altera la *Inercia Rotacional* del robot durante los virajes bruscos, introduciendo una tendencia al subviraje (el coche tiende a seguir recto) y desviaciones en la trayectoria ideal de salida.
 
-2. Movilidad del Tren Delantero (Tubo Transversal)
+3. *La Solución Lógica (Punto de Disparo Integrado):*
+   Para contrarrestar el subviraje físico provocado por la distribución de masas, y aprovechando la ganancia de tiempo de la ventana de lectura, calibramos el *Punto de Disparo por software a exactos 42 cm*. 
+   
+   Este umbral de 42 cm compensa perfectamente el tiempo que tarda la dirección Steer by wire en vencer la inercia del tren delantero, asegurando que el robot inicie la subrutina de giro en el momento óptimo sin colisionar con la pared exterior ni cerrarse antes de tiempo.
 
-En este punto, la vaselina actúa como un agente de reducción de fricción estática. Al lubricar el contacto entre el tubo transversal y el chasis, permitimos que la suspensión reaccione de forma instantánea y suave.
 
- Si este eje se traba por fricción, el robot se inclina, lo que desvía el ángulo de visión de la HuskyLens y las lecturas de los sensores ultrasónicos. La lubricación constante asegura que el "cuerpo" del robot se mantenga nivelado, proporcionando datos limpios al código de navegación.
+## A. La Paradoja de la Masa del Sensor y la Inercia Rotacional ($I_z$)
 
-### Seleccionamos vaselina neutra como lubricante principal por tres razones sistémicas:
+Al colocar el sensor ultrasónico en el extremo frontal del parachoques para maximizar la ventana de anticipación temporal, desplazamos masa ($m$) lejos del centro de gravedad. De acuerdo con el teorema de los ejes paralelos y la definición de inercia rotacional para un sólido rígido con distribución discreta de masa:
 
-1.Neutralidad Química: Al ser un hidrocarburo saturado de alta pureza, no reacciona con el PETG de nuestra caja de engranajes de 78:1 . Esto garantiza que la integridad estructural de la transmisión se mantendrá intacta durante toda la temporada.
+$$I_z = \sum m_i \cdot r_i^2$$
 
-2.Gestión Térmica de las 15.000 RPM: El motor del Turbo Snake genera una fricción mecánica considerable en el primer piñón. La vaselina crea una película protectora que reduce el calor por rozamiento, evitando que el eje del motor (que se calienta) ablande el plástico del engranaje y lo deforme.
+Donde $r_i$ es la distancia perpendicular de cada componente al eje vertical de rotación ($Z$) que pasa por el centro de masa (CoM).
 
-3.Viscosidad Adaptativa: A diferencia de los aceites líquidos que se esparcen por la fuerza centrífuga, la vaselina tiene la viscosidad justa para quedarse adherida a los dientes del engranaje incluso a altas revoluciones, manteniendo la lubricación constante durante los 40 segundos de la prueba rápida.
+El Conflicto de Ingeniería: El incremento de la distancia $r$ del sensor frontal aumenta exponencialmente su aporte a la inercia de rotación total del vehículo ($I_z$). A mayor $I_z$, el servomotor HobbyPark requiere un par torsor de aceleración angular significativamente mayor ($\tau = I_z \cdot \alpha$) para iniciar y detener el giro de la dirección, introduciendo un efecto péndulo perjudicial que compromete la precisión rectilínea.
+
+La Solución de $42\text{ cm}$: Tras un riguroso proceso de optimización iterativa, el equipo determinó que fijar mecánicamente la distancia del sensor frontal para que dispare el bucle de giro a exactamente $42\text{ cm}$ balancea de forma matemática el sistema. Este umbral proporciona los milisegundos mínimos de cómputo requeridos por el Arduino Mega 2560 sin extender en demasía el parachoques delantero, mitigando el sobreesfuerzo del servo y previniendo la oscilación parásita en las rectas.
+
+## B. Integración Dinámica: Tiempo de Vuelo del Sonido frente a la Velocidad del Vehículo
+
+Durante pruebas rápidas de alto rendimiento, Trivilyn3.0 opera a una velocidad de crucero constante de $v_{\text{robot}} = 1.2\text{ m/s}$ ($120\text{ cm/s}$). La velocidad de propagación del sonido en el aire a temperatura ambiente estándar de boxes ($20^\circ\text{C}$) es de $v_{\text{sonido}} \approx 343\text{ m/s}$.
+
+Para una distancia de lectura crítica de $d = 42\text{ cm}$ ($0.42\text{ m}$), el tiempo de ida y vuelta de la onda ultrasónica (tiempo de vuelo $t_{\text{vuelo}}$) es:
+
+$$t_{\text{vuelo}} = \frac{2 \cdot d}{v_{\text{sonido}}} = \frac{2 \cdot 0.42\text{ m}}{343\text{ m/s}} \approx 2.45\text{ ms}$$
+
+A este retraso de transporte físico se le añade la latencia acumulada por el microcontrolador. Debido a la prevención de interferencia cruzada (cross-talk), los sensores se muestrean secuencialmente con un desfase de $29\text{ ms}$ entre sí, estableciendo un tiempo de ciclo de refresco de telemetría total de $t_{\text{ciclo}} = 87\text{ ms}$.
+
+En este intervalo de tiempo de $87\text{ ms}$, en el cual el microprocesador aún no ha actualizado la distancia frontal, el robot avanza físicamente sobre la pista una distancia de:
+
+$$d_{\text{avance}} = v_{\text{robot}} \cdot t_{\text{ciclo}} = 120\text{ cm/s} \cdot 0.087\text{ s} \approx 10.44\text{ cm}$$
+
+### Análisis Sistémico:
+
+Al recibir el paquete de datos en el instante en que el sensor frontal estimó originalmente una distancia de $42\text{ cm}$, el vehículo ya se encuentra físicamente a una distancia real de:
+
+$$d_{\text{real}} = 42\text{ cm} - 10.44\text{ cm} \approx 31.56\text{ cm}$$
+
+Este valor de $31.56\text{ cm}$ coincide exactamente con el radio mínimo de giro físico del chasis de Trivilyn 3.0 cuando las ruedas se desvían a su ángulo máximo de $\beta = 40^\circ$ bajo la cinemática de dirección SbW. Si el umbral del código se programara por debajo de los $42\text{ cm}$, el espacio real remanente sería inferior al límite cinemático de giro del vehículo, derivando en un impacto frontal destructivo directo contra la pared de la WRO.
+
+## C. Cohesión de Componentes: Dirección SbW y Agarre Lateral
+
+La tracción posterior de Trivilyn3.0 emplea neumáticos de caucho de alta fricción del kit Lego EV3. Al ejecutar la curva de forma reactiva, el robot debe generar una fuerza centrípeta que desvíe su centro de masa. Si el disparo se retrasara de los $42\text{ cm}$, el chasis exigiría un giro de dirección instantáneo y excesivo en las ruedas directrices frontales.
+
+Esto provocaría que la fuerza lateral requerida por la curva supere la fuerza de fricción estática máxima de los neumáticos ($F_f \le \mu_s \cdot N$), forzando la transición a fricción dinámica (derrape por pérdida de tracción). Al derrapar, las ruedas frontales experimentan subviraje, perdiendo la capacidad de direccionar el vehículo y estrellando el robot contra la pared exterior. Programar el giro a $42\text{ cm}$ mantiene la aceleración lateral dentro de los límites de adherencia de la goma, garantizando una trayectoria limpia y predecible.
+
+## Gestión de Fricción, Termodinámica y Compatibilidad Química de Materiales
+
+En el diseño mecánico de Trivilyn3.0, la lubricación y la protección contra el desgaste no son actividades secundarias de mantenimiento, sino variables críticas de la física interna de la transmisión y la suspensión del robot.
+
+## A. Compatibilidad Química y Prevención del ESC (Environmental Stress Cracking)
+
+Durante el desarrollo de prototipos previos (Rexbot 1.25), el equipo utilizó grasas industriales multiusos y aceites líquidos minerales para engrasar la transmisión. Esto provocó fallas mecánicas catastróficas por fracturas en los soportes y dientes de engranajes impresos en PLA y PETG.
+
+El análisis científico reveló que los aceites minerales y las grasas de base petroquímica actúan como agentes de agrietamiento bajo esfuerzo ambiental (Environmental Stress Cracking - ESC). Estos compuestos químicos penetran en los micro-huecos intercapas inherentes al proceso de impresión por deposición fundida (FDM). Al estar sometidos a cargas mecánicas continuas, el lubricante mineral debilita las fuerzas de Van der Waals entre las cadenas del polímero, promoviendo la propagación microscópica de grietas intercapas hasta la fractura súbita de la pieza.
+
+Para solucionar este fallo de manera sistémica en Trivilyn 3.0, se implementó el uso exclusivo de vaselina neutra (petrolato de alta pureza) debido a sus excelentes propiedades de ingeniería:
+
+- Inercia Química de Polímeros: La vaselina neutra es un hidrocarburo saturado de cadena larga que no interactúa químicamente con el PETG ni el PLA. No disuelve las uniones poliméricas ni induce ESC, manteniendo intacta la rigidez del material impreso bajo torque máximo.
+
+- Viscosidad y Resistencia Centrífuga: A diferencia de los aceites finos de baja densidad que se desplazan y salen expulsados de los engranajes por efecto de la fuerza centrífuga a altas revoluciones, la consistencia pastosa de la vaselina provee una película lubricante de alta viscosidad estática que permanece adherida a los dientes de los piñones.
+
+- Termodinámica a Altas RPM (15,000 RPM): El motor DC extraído del vehículo Turbo Snake opera en un rango extremo de $13,000$ a $15,000\text{ RPM}$. Esta alta rotación en el piñón de ataque de bronce genera una gran fricción y elevación localizada de la temperatura. La vaselina neutra forma una barrera térmica que disipa el calor por rozamiento, evitando que la temperatura del eje metálico alcance el punto de transición vítrea del PETG ($T_g \approx 75^\circ\text{C}$ a $80^\circ\text{C}$), lo que ablandaría el alojamiento del motor y desalinearía los engranajes.
+
+
+## B. Estabilidad Dinámica del Tren Delantero (Tubo Transversal)
+
+En el sistema de suspensión y dirección delantero, la vaselina neutra se aplica en el interior del tubo transversal de bronce. El bronce posee propiedades naturales autolubricantes debido a su bajo coeficiente de fricción estática ($\mu_s$).
+
+Al engrasar la interfaz entre el eje de acero interno y la camisa de bronce con vaselina, se elimina la fricción mecánica residual. Si este eje experimentara micro-atascamientos por fricción seca:
+
+El chasis se inclinaría de forma asimétrica al momento del viraje.
+
+Esto desvía el eje óptico de la cámara HuskyLens, desplazando el centroide de detección cromática de los pilares.
+
+Alteraría los vectores de reflexión de los sensores ultrasónicos, introduciendo lecturas erróneas de las distancias laterales en el lazo cerrado de control.
 
 >[!NOTE]
->Aunque el análisis técnico destaca las propiedades de la vaselina, es importante señalar que una de las mayores ventajas de esta solución es su universalidad . Para el mantenimiento de Trivilyn3.0 , no se requiere un lubricante de grado industrial especializado o de alto costo.Cualquier variante de vaselina sólida (petrolato amarillo o blanco) es funcional para este sistema, siempre que sea de consistencia pastosa y no líquida. Esto permite realizar mantenimientos de emergencia en cualquier entorno de competición utilizando productos comerciales de fácil acceso.
+>Universalidad y Mantenimiento de Emergencia: Una de las mayores ventajas de la vaselina neutra sólida sobre los lubricantes sintéticos especializados de teflón o litio es su accesibilidad global. Al ser químicamente neutra y de grado comercial, el equipo puede realizar reparaciones y mantenimientos de emergencia en boxes en cualquier competencia utilizando petrolato comercial común, sin alterar la calibración física de las piezas del chasis.
 
-##  Adaptabilidad Sensorial
+## Adaptabilidad Sensorial ante el Entorno de la Pista
 
-En esta sección, no hablamos de piezas, hablamos de estrategia y resiliencia del sistema.
+El pensamiento sistémico comprende que el robot no interactúa en un vacío, sino en una simbiosis directa con la pista física. Una de las lecciones de ingeniería más valiosas adquiridas en la Final Nacional de la WRO 2025 con el prototipo Rexbot 2.0 fue el fallo de lecturas ultrasónicas debido a las variaciones estructurales de los muros.
 
-1. Análisis de Fallo del Entorno (Lección WRO 2025)
+El Problema Físico: El diseño anterior poseía soportes estáticos y rígidos para los sensores HC-SR04. Cuando la pista de competencia presentaba un desnivel en el suelo o paredes perimetrales más bajas que las de entrenamiento, el cono acústico del sensor pasaba por encima de la pared o impactaba la esquina superior de la misma, generando un rebote disperso no captado por el receptor (un fenómeno de "eco nulo" o lectura fantasma).
 
-- El pensamiento sistémico nos permitió identificar que el robot no es un ente aislado, sino que depende directamente de las variables de su entorno (la pista). En la Final Nacional 2025, detectamos un fallo crítico: el sistema de navegación fallaba no por el código, sino por una falta de correspondencia física entre la altura de los sensores y la altura de las paredes. El Rexbot2.0 estaba 'ciego' ante paredes bajas. Bajo una visión sistémica, decidimos que Trivilyn 3.0 no debía ser un diseño rígido. En lugar de simplemente bajar los sensores, diseñamos un mecanismo de respuesta física (la corredera). Esto permite que el componente mecánico se ajuste a la realidad del entorno en tiempo real, asegurando que el flujo de datos hacia la CPU sea siempre óptimo, sin importar las variaciones de la infraestructura de la pista.
+La Solución por Diseño Flexible (Trivilyn3.0): Para la temporada 2026, decidimos cambiar la rigidez y adoptamos el principio de diseño adaptativo. El desarrollo de la corredera de precisión con riel macho-hembra permite ajustar la altura del hardware de forma física en cuestión de segundos en boxes. Esto resuelve mecánicamente el problema de la variabilidad del entorno en la pista, garantizando que el haz ultrasónico incida de manera perfectamente perpendicular al plano medio de las paredes de la WRO, manteniendo un flujo de datos limpio hacia el Arduino sin necesidad de reprogramar los umbrales de software.
 
-## Evolución del Sistema de Interconexión: 
+## Evolución del Sistema de Interconexión y Blindaje de Señales (EMI)
 
-La confiabilidad de un vehículo autónomo de competición no solo reside en su código, sino en la integridad de sus señales físicas. Para Trivilyn3.0 , hemos transitado por un proceso de mejora continua en nuestro cableado para eliminar el enemigo número uno de la robótica: el falso contacto .
+La confiabilidad física de la transmisión de datos a bordo de un vehículo autónomo de alta velocidad es un factor crítico. Para mitigar los falsos contactos eléctricos inducidos por las vibraciones y el ruido electromagnético, el equipo transitó por tres fases de evolución en su cableado:
 
-Nuestra evolución se divide en tres etapas principales:
+## 🔌 Análisis Comparativo de Conductores y Mitigación de EMI
 
-Etapa 1: Jumpers Convencionales (Kits de Prototipado)
-
-Como en todo inicio, utilizamos los cables prefabricados comunes (Macho-Hembra).
-
-- Con estos cables obtuvimso problemas en que los conectores tienen mucha holgura. Con la vibración de los motores, se soltaba el Arduino o perdía continuidad momentánea, provocando reinicios inesperados del sistema. Además, el exceso de cableado afectaba la estética y el orden.
-
-Etapa 2: Cables de Red Estándar (UTP Categoría 6)
-
-Para mejorar la estabilidad, pase a usar cables de red convencionales (Ethernet).
-
-Con estos se mejoro con el uso de pares trenzados ayudó a reducir la diafonía (interferencia entre cables). Son cables más rígidos que los jumpers, lo que permitía que las conexiones fueran más seguras. Sin embargo, seguíamos buscando una protección superior para entornos de alta interferencia electromagnética.
-
-Etapa 3: Cableado Industrial de Alta Gama (Recuperado de Kodak)
-
-La evolución final y actual consiste en el uso de conductores especializados extraídos de infraestructuras de fotocopiadoras e impresoras industriales Kodak. Decidimos utilizar estos por las siguientes ventajas:
-
-- Decidimos utilizar estos cables porque son superiores a los de red comunes por su blindaje SFTP (Shielded Foiled Twisted Pair).
-
-- Poseen una malla metálica y blindaje que actúa como una Jaula de Faraday , protegiendo las señales críticas de los sensores del ruido generado por los motores de 15.000 RPM, esto proporciona Inmunidad al Ruido (EMI).
-
--  Son conductores diseñados para durar años en máquinas de uso rudo. Soportan tirones y vibraciones constantes sin quebrarse, asegurando que el PWM de 180 llegue al motor con total integridad.
--  
-<<img width="1280" height="614" alt="image" src="https://github.com/user-attachments/assets/65b7bfb5-3a7d-4d43-9256-41c4458b69d9" />
+| Etapa | Conductor Utilizado | Falla / Limitación de Ingeniería | Efecto en Sistema |
+| :--- | :--- | :--- | :--- |
+| *Etapa 1* | Jumpers Genéricos (Kits de Prototipado) | Alta resistencia, holgura mecánica, desconexiones por vibración. | Pérdida de continuidad, reinicios inesperados del Arduino Mega. |
+| *Etapa 2* | Cable de Red UTP Categoría 6 | Conductor unifilar quebradizo ante flexión, rigidez excesiva en ejes móviles. | Rotura del cable interno por fatiga mecánica en la dirección. |
+| *Etapa 3* | Conductores Industriales Kodak | Construcción multifilar ultraflexible, blindaje de pantalla y trenza de alta densidad (SFTP). | Inmunidad total frente a EMI y fatiga mecánica. |
 
 
->[!NOTE]
->  El uso de componentes recuperados de maquinaria Kodak no solo es una decisión de costo, sino de calidad. Estos cables ofrecen un calibre de cobre y un blindaje que es difícil de encontrar en componentes de electrónica de consumo común.Cada cable fue soldado y protegido con termocontraíble (termocontraíble), eliminando los terminales de presión de los jumpers que eran nuestro punto de falla principal.
+## Fundamentación Científica de la Inmunidad a Interferencias Electromagnéticas (EMI)
+
+Los motores de tracción DC que operan a $15,000\text{ RPM}$ actúan como generadores de alta frecuencia de ruido electromagnético de alta energía, debido al constante arqueado y conmutación de las escobillas del colector. Este ruido puede inducir corrientes parásitas en las líneas de señales de datos de los sensores ultrasónicos (Trigger y Echo) y en la comunicación serie $I^2\text{C}$/$\text{UART}$ de la cámara HuskyLens, corrompiendo las lecturas de distancia o saturando el búfer de comunicación del microcontrolador.
+
+Para erradicar esta degradación de la señal, se implementó el cableado industrial recuperado de impresoras de alto volumen de la marca Kodak. Estos conductores disponen de una arquitectura de blindaje SFTP (Shielded Foiled Twisted Pair):
