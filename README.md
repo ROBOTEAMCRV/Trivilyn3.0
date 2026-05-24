@@ -412,8 +412,21 @@ Al inspeccionar la sección inferior interna del encapsulado, integramos tres ne
 
 <img width="1204" height="626" alt="image" src="https://github.com/user-attachments/assets/c8acd693-c83b-4391-a0b1-6e80aeb0a8cc" />
 
- Estas costillas rompen la flexibilidad natural de las capas del polímero, actuando como tensores estructurales. Evitando por completo que la cara superior de la cabina se flexione, hunda o fatiga ante presiones externas de manipulación en boxes o impactos severos durante la carrera.
+ Estas costillas rompen la flexibilidad natural de las capas del polímero, Debido a que las piezas fabricadas mediante modelado por deposición fundida (FDM) presentan un comportamiento mecánico anisotrópico (menor resistencia en el eje Z entre capas de impresión), un encapsulado completamente hueco sería propenso a fracturas por cizalladura o flexión ante la manipulación repetida en boxes o choques en pista.
 
+Para solucionar esta limitación física sin penalizar el peso general del robot, integramos tres nervaduras transversales de refuerzo en la sección inferior interna del encapsulado superior. Estas vigas longitudinales fueron extruidas directamente en el modelado CAD original.
+
+### Beneficios Técnicos del Diseño de Nervaduras:
+
+Reducción del Momento Flector: Estas costillas actúan como tensores que limitan la elasticidad del polímero PETG bajo cargas de compresión vertical. Evitan que la cara superior de la cabina se hunda ante presiones de agarre externas durante el mantenimiento rápido.
+
+Mitigación de Vibraciones de Alta Frecuencia: Al actuar como un esqueleto rígido interno, las nervaduras desplazan la frecuencia de resonancia natural del encapsulado. Esto evita que las vibraciones inducidas por el motor DC a 15,000 RPM desestabilicen mecánicamente los componentes de percepción ópticos (HuskyLens) situados en las inmediaciones.
+
+Preservación de Tolerancias: Impiden que la contracción térmica natural del PETG durante la fase de enfriamiento de la impresión 3D deforme las paredes laterales, garantizando un acoplamiento micrométrico constante con los niveles inferiores.
+
+>[!TIP]
+>Para mitigar la anisotropía en las zonas críticas del encapsulado, configuramos una altura de capa de $0.2\text{ mm}$ y se incrementó el número de perímetros de pared (perimeters) a $4$ en el rebanador (slicer). Esto asegura que las líneas de extrusión de PETG corran continuas a lo largo de los nervios de refuerzo, incrementando drásticamente la resistencia al esfuerzo cortante transversal ($\tau$) sin necesidad de aumentar el porcentaje de relleno (infill), manteniendo la cabina extremadamente ligera.
+>
 ## Grabado en Relieve Identificativo
 
 La cara frontal externa (el plano inclinado estilo Trophy Truck ) integra una extrusión tipográfica texturizada con el nombre de "TeamCRV Venezuela".
@@ -422,8 +435,9 @@ La cara frontal externa (el plano inclinado estilo Trophy Truck ) integra una ex
 
  Más allá del valor estético, reglamentario y de identidad de equipo para la WRO, este relieve altera básicamente la superficie plana de la pieza. Las letras extruídas actúan como un patrón de micronervaduras de refuerzo 
  y rompen la continuidad de la cara plana, incrementando significativamente la resistencia a la torsión de la sección frontal del polímero. Si el robot sufre una colisión directa a alta velocidad, este alivio distribuye las líneas de estrés mecánico a lo largo de la tipografía, evitando que el plástico se agriete o se fracture el frente de la cabina.
-
-# Arquitectura de Potencia y Sensores
+ 
+  
+ # ⚡ Arquitectura de Potencia y Sensores
 
 Este apartado documenta de manera exhaustiva la distribución de energía, el aislamiento de ruido eléctrico y la configuración del sistema de sensores de Trivilyn3.0. El diseño ha sido calculado para garantizar la estabilidad del procesamiento de visión artificial y la respuesta inmediata de los actuadores bajo condiciones críticas de competencia.
 
