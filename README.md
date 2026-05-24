@@ -56,7 +56,7 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
 
 8. [Fotos de Trivilyn3.0](#Trivilyn-360)
 
-9. [Videos de Trivilyn3.0](#Rrivilyn3.0-Challenges)
+9. [Videos de Trivilyn3.0](#Trivilyn3.0-Challenges)
 
 10. 
 
@@ -442,7 +442,7 @@ El software se basa en un modelo de Control Reactivo gestionado por una Máquina
 ### A. Fase de Inicialización y Calibración Estática
 Para garantizar un arranque reproducible, se implementó una rutina de configuración única controlada por la variable de estado pepe(inicializada en 0).
 
-Alineación del Tren Delantero: Mediante la instrucción myservo.write(67), el sistema establece un ángulo absoluto de dirección. A diferencia de un motor de tracción, el servomotor permite fijar una posición angular exacta, eliminando desviaciones en el vector de salida.
+Alineación del Tren Delantero: Mediante la instrucción myservo.write(75), el sistema establece un ángulo absoluto de dirección. A diferencia de un motor de tracción, el servomotor permite fijar una posición angular exacta, eliminando desviaciones en el vector de salida.
 
 Gestión de Inercia: Integramos un delay()estratégico para permitir la transición del estado de reposo al movimiento cinematográfico, estabilizando el voltaje del sistema antes de iniciar la lectura de sensores.
 
@@ -475,21 +475,45 @@ La misión concluye mediante una validación de estado acumulativo. Al cumplirse
   
 ## Justificación de la Estrategia 
 
-Para que Trivilyn 3.0 sea competitivo, implementamos capas de lógica que permiten al vehículo adaptarse a la variabilidad de la pista sin intervención humana.La arquitectura del software de Trivilyn 3.0 no solo se encarga de la navegación, sino que gestiona una base de datos interna mediante variables de control para garantizar la adaptabilidad y el éxito de la misión.
+La arquitectura del software de Trivilyn 3.0 no solo se encarga de la navegación reactiva, sino que gestiona una base de datos de estado interno mediante variables de control para garantizar la adaptabilidad y el éxito de la misión sin intervención humana.
 
-- Heurística de Decisión: Algoritmo "Tilin/Grasa"
+### 1. Heurística de Decisión: Algoritmo "Tilin/Grasa"
 
-Para que el vehículo sea autónomo en cualquier configuración de pista, implementamos una lógica de decisión binaria en la primera intersección crítica:
+Para que el vehículo sea completamente autónomo ante cualquier configuración o sentido de la pista, implementamos una lógica de decisión binaria e irreversible que se dispara en la primera intersección crítica.
 
-Interrogación del Entorno: Al detectar la primera pared frontal ( middleDistance <= 32), el sistema realiza una comparación de vectores laterales:
+#### A. Diagrama de Flujo Lógico de Decisión en Lazo Cerrado
+El siguiente esquema representa el pipeline de toma de decisiones del microcontrolador al encontrarse con la primera pared frontal del circuito:
 
-Vector de Bloqueo ( tilin/ lecrer): Si leftDistance <= rightDistance, el software interpreta que el flanco izquierdo está obstruido. Se activan los contadores de sentido horario ( tilin++y el contador de rendimiento lecrer++).
+```text
+               [ Lectura de Proximidad Frontal ]
+                              │
+                              ▼
+             ¿Pared Detectada? (middleDistance <= 32 cm)
+                              │
+             ┌────────────────┴────────────────┐
+             ▼ SÍ                              ▼ NO
+ [Comparación de Vectores Laterales]    [Mantener Marcha]
+             │                             forward()
+             ├─────────────────────────────────┐
+             ▼ ¿leftDistance <= rightDistance? │
+             │                                 │
+     ┌───────┴───────┐                         │
+     ▼ SÍ            ▼ NO                      ▼
+[Ruta Horaria]  [Ruta Antihoraria]     [Retorno al Loop]
+  tilin++          grasa++
+  lecrer++         lewis++
+     │               │
+     ▼               ▼
+[Anclaje de     [Anclaje de
+ Trayectoria]    Trayectoria]
+     │               │
+     └───────┬───────┘
+             ▼
+    [Bloqueo de Decisión]
+ (tilin o grasa ya no son 0)
+```
 
-1.Vector de Apertura ( grasa/ lewis): Si la distancia izquierda es mayor a la derecha, se activa la ruta antihoraria ( grasa++y el contador de rendimiento lewis++).
-
-Redundancia de Estado: Una vez que un contador ( tilino grasa) deja de ser cero, la decisión queda anclada . Esto evita que el ruido ultrasónico a mitad de carrera confunda al robot, garantizando que una vez elegido un sentido (Horario/Antihorario), este se mantiene hasta el estacionamiento final.
-
-2. Gestión de Actuadores y Dinámica de Potencia
+### 2. Gestión de Actuadores y Dinámica de Potencia
 
 El código maneja perfiles de velocidad diferenciados para optimizar el consumo y la tracción:
 
@@ -497,7 +521,7 @@ Velocidad de Crucero ( carSpeed = 65): Configuración para tramos rectos, optimi
 
 Velocidad de Maniobra ( carSpeedCurvas = 90): Durante las funciones derecha()e izquierda(), el PWM aumenta para vencer la resistencia por fricción de los neumáticos de 43mm en el momento del giro.
 
-3. Control de Lazo Cerrado: Micro-ajustes Laterales
+### 3. Control de Lazo Cerrado: Micro-ajustes Laterales
 
 Para mitigar el error acumulado, el código implementa una rutina de activador reactivo:
 
@@ -505,14 +529,14 @@ Umbral de colisión (9 cm): Si cualquiera de los sensores laterales detecta una 
 
 El sistema utiliza centros de dirección específicos según el sentido de la carrera ( centroAo centroH), compensando mecánicamente cualquier desviación propia del chasis impreso en 3D.
 
-4. Procesamiento de Señal y Filtrado de "Eco Nulo"
+### 4. Procesamiento de Señal y Filtrado de "Eco Nulo"
 
 Debido a que las paredes de la WRO pueden generar reflexiones erráticas, se implementó una condición de validación en las lecturas:
 
 Filtro distance > 1: Esta instrucción filtra las lecturas de 0 cm que genera la librería NewPingcuando no recibe retorno. Al ignorar estos "ecos nulos", evitamos que el robot realice maniobras de evasión ante obstáculos inexistentes.
 
 
-5. Registro de Variables de Control (Telemetría Interna)
+### 5. Registro de Variables de Control (Telemetría Interna)
    
 <img width="725" height="335" alt="image" src="https://github.com/user-attachments/assets/8200de92-a893-49c3-b3da-48048b0b85e6" />
 
