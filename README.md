@@ -36,7 +36,14 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
 
 4. [Arquitectura de Potencia y Sensores](#Arquitectura-de-Potencia-y-Sensores)
 
-5. [Arquitectura Software y Estratrgia](#Arquitectura-Software-y-Estratrgia)
+   * [Percepción-y-Control](#Topología-del-Hardware-(Percepción-y-Control))
+  
+   * [Presupuesto de potencia](#2.-Presupuesto-de-Potencia-(Power-Budget)-y-Distribución)
+  
+   * [Mitigacion de fallas](#3.-Mitigación-de-Fallas-y-Decisiones-Críticas)
+  
+
+6. [Arquitectura Software y Estratrgia](#Arquitectura-Software-y-Estratrgia)
    
    * [Resumen del Proyecto](#Resumen-del-Proyecto)
   
@@ -44,7 +51,7 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
   
    * [Análisis de Rendimiento](#Análisis-de-Rendimiento-Optimización-de-Tiempo-vs-Fiabilidad)
 
-6. [Pensamiento sistémico y decisiones de ingeniería](#Pensamiento-Sistémico-y-Decisiones-de-Ingeniería)
+7. [Pensamiento sistémico y decisiones de ingeniería](#Pensamiento-Sistémico-y-Decisiones-de-Ingeniería)
 
    * [Temporada 2024](#Temporada-2024-Rexbot10)
   
@@ -52,13 +59,13 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
   
    * [Temporada 2026](#Temporada-2026)
   
-7. [Archivos CAD](#Archivos-CAD)
+8. [Archivos CAD](#Archivos-CAD)
 
-8. [Fotos de Trivilyn3.0](#Trivilyn-360)
+9. [Fotos de Trivilyn3.0](#Trivilyn-360)
 
-9. [Videos de Trivilyn3.0](#Trivilyn3.0-Challenges)
+10. [Videos de Trivilyn3.0](#Trivilyn3.0-Challenges)
 
-10. 
+11. 
 
 # MIEMBROS DEL TEAMROBOCRV
 
@@ -251,7 +258,7 @@ Dos por la parte interior y uno por la parte exterior por cada lado. Estos se en
 
 ## Primer piso
 
-La base inferior al igual que las demas piezas de Trivilyn3.0 esta realizada en impresión 3D del material PETG de la marca Creality el cual adquirimos mercadolibre de la tienda oficial de Creality ubicada en Caracas 
+La base inferior al igual que las demas piezas de Trivilyn3.0 esta realizada en impresión 3D del material PETG de la marca Creality el cual adquirimos de la tienda oficial de Creality ubicada en Caracas 
 
 <img width="720" height="908" alt="image" src="https://github.com/user-attachments/assets/2a5402ab-edbf-4f81-a66b-1d7afbf8ecc6" />
 
@@ -265,11 +272,11 @@ con una forma innovadora en su diseño como las líneas de relieve en la parte s
 
 <img width="1092" height="500" alt="image" src="https://github.com/user-attachments/assets/3c8b125a-6743-4085-a913-d51589e3d74d" />
 
-estas cumplen una función muy importante en el diseño de manera directa la cual es dar mayor rijides a la base para evitar deformaciónes o fracturas.Para esto el equipo se inspiro en las formas de los chasis de los vehiculos.
+Estas cumplen una función muy importante en el diseño de manera directa la cual es dar mayor rijides a la base para evitar deformaciónes o fracturas.Para esto el equipo se inspiro en las formas de los chasis de los vehiculos.
 
 Aunque anteriormente nunca hemos tenido problemas con deformaciónes empleamos estos ("Refuerzos") para prevenir problemas en un futuro y Trivilyn3.0 pueda soportar cualquier irregularidad
 
-Ya explicado esto Si pueden observar:
+Ya explicado esto se pueden observar:
 
 <img width="983" height="669" alt="image" src="https://github.com/user-attachments/assets/f2c2b3cd-d91e-468b-ba42-1c95b16432f7" />
 
@@ -420,9 +427,59 @@ La cara frontal externa (el plano inclinado estilo Trophy Truck ) integra una ex
 
 # Arquitectura de Potencia y Sensores
 
+Este apartado documenta de manera exhaustiva la distribución de energía, el aislamiento de ruido eléctrico y la configuración del sistema de sensores de Trivilyn3.0. El diseño ha sido calculado para garantizar la estabilidad del procesamiento de visión artificial y la respuesta inmediata de los actuadores bajo condiciones críticas de competencia.
 
+---
 
+## 1. Topología del Hardware (Percepción y Control)
 
+El sistema electrónico se divide en tres capas fundamentales: Control Central, Visión Artificial y Telemetría Ultrasónica.
+
+* *Microcontrolador Central:* Arduino Mega 2560. Elegido por su alta disponibilidad de pines, múltiples puertos serie por hardware y memoria extendida para gestionar las instrucciones lógicas de navegación.
+* *Coprosamiento de Visión:* Cámara inteligente *HuskyLens*.
+    * Protocolo de Comunicación: Conectada mediante interfaz *UART (Puertos dedicados TX/RX)* del Arduino Mega. Esta conexión por hardware garantiza una transmisión de datos de telemetría bidireccional limpia, de alta velocidad y libre de las colisiones de bus comunes en entornos I2C satura-dos.
+* *Matriz de Proximidad (Trifocal):* 3 Sensores Ultrasónicos *HC-SR04* posicionados estratégicamente (Izquierda, Centro, Derecha) para generar un mapa perimetral de obstáculos en tiempo real.
+
+---
+
+## 2. Presupuesto de Potencia (Power Budget) y Distribución
+
+Para evitar el problema más crítico en robótica móvil "los reinicios del procesador por caídas de tensión" (voltage sags) provocados por los motores, hemos aislado la alimentación en *tres líneas eléctricas independientes*:
+
+### Desglose Eléctrico de los Bancos de Energía
+
+| Subsistema | Configuración de Baterías | Voltaje Nominal | Modulación de Voltaje | Propósito y Ventaja de Ingeniería |
+| :--- | :--- | :--- | :--- | :--- |
+| *Lógica y Percepción* | 2x 18650 Litio en *Serie* | ~7.4V - 8.4V | Regulador interno del Arduino (salida 5V) | Alimenta el Arduino Mega, la HuskyLens y los 3 sensores HC-SR04. Al no compartir línea con motores, la cámara mantiene un voltaje ultraestable de 5V para el procesamiento de imágenes. |
+| *Actuación (Dirección)* | 2x 18650 Litio en *Paralelo* | ~3.7V - 4.2V | *Elevador de Voltaje (Step-Up)* a *6.5V* | Dedicado exclusivamente al servomotor de 35kg. El elevador asegura un flujo constante de 6.5V, manteniendo el torque crítico de dirección incluso si las baterías empiezan a descargarse. |
+| *Tracción e Iluminación* | 2x 18650 Litio en *Serie* | ~7.4V - 8.4V | *Step-Up (10V)* + Regulador posterior a *3.1V* | Alimenta los motores de tracción y un circuito cerrado de 2 LEDs en paralelo para condiciones de iluminación controlada. |
+>[!NOTE]
+>  Auditoría de Capacidad de las Baterías:
+> Las celdas 18650 del sistema de dirección presentan una etiqueta comercial de 8800 mAh. Tras realizar un análisis técnico basado en la densidad energética del litio y las dimensiones físicas estándar de una celda 18650, el equipo determinó que este valor es nominal/falso (común en el mercado de consumo). 
+> 
+>* *Mitigación del Riesgo:* Para el diseño del robot, calculamos el peor escenario estimando una capacidad real aproximada de *1200 a 1500 mAh* por celda. Gracias a la configuración en paralelo, la capacidad de corriente se duplica, lo que garantiza autonomía de sobra para las rondas oficiales de la WRO, operando con un factor de seguridad de 3x sobre el consumo real.
+
+## 3. Mitigación de Fallas y Decisiones Críticas
+
+> ### 💡 TIP DE REPRODUCIBILIDAD: Aislamiento de Tierras (GND)
+> [!IMPORTANT]
+>  Al utilizar tres bancos de baterías físicamente separados, es estrictamente obligatorio interconectar todos los cables negativos (*GND Común*) en un solo nodo central del Arduino Mega. Sin esta referencia cero unificada, las señales lógicas UART de la HuskyLens y los pulsos de los ultrasonidos sufrirían de flotación, provocando lecturas erróneas o la pérdida completa de paquetes de datos.
+
+### Lógica del Sistema de Iluminación Regulada (3.1V)
+¿Por qué elevar el voltaje a 10V para luego regularlo a 3.1V en los LEDs?
+
+1. *Estabilidad Lumínica:* Los motores de tracción generan picos de demanda masivos al arrancar o frenar. Si los LEDs se conectaran directo a la batería, parpadearían, afectando el balance de blancos y el umbral de reconocimiento de color de la HuskyLens.
+   
+2. *Filtrado de Ruido:* El elevador a 10V actúa como una "barrera de aislamiento". Al pasar luego por el regulador de 3.1V, los LEDs reciben una energía limpia y constante, asegurando que la HuskyLens siempre vea la pista con la misma intensidad de luz, eliminando falsos positivos en el reconocimiento de señales.
+
+---
+
+## 4. Interacción del Sistema (Pensamiento Sistémico)
+
+El flujo secuencial de potencia y datos durante una maniobra compleja (ej. evasión u obstáculo en el estacionamiento) se ejecuta de la siguiente manera:
+
+1. *Fase de Percepción:* Los 3 sensores HC-SR04 miden distancias de los bloques laterales a 5V estables. Simultáneamente, la HuskyLens procesa la pista y envía las coordenadas por el puerto serie Serial1 (TX/RX) del Mega.
+2. *Fase de Procesamiento:* El Arduino Mega procesa las lecturas de proximidad y los datos de visión artificial de manera paralela gracias al ancho de banda libre de la conexión UART.
 
 # Arquitectura Software y Estratrgia
 
