@@ -52,14 +52,20 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
    * [Arquitectura del Software](#Arquitectura-del-Software-(Máquina-de-Estados-de-Misión))
   
    * [Análisis de Rendimiento](#Análisis-de-Rendimiento-Optimización-de-Tiempo-vs-Fiabilidad)
+ 
+ - [Ronda Cerrada](ronda-cerrada)
 
 8. [Pensamiento sistémico y decisiones de ingeniería](#Pensamiento-Sistémico-y-Decisiones-de-Ingeniería)
 
-   * [Temporada 2024](#Temporada-2024-Rexbot10)
+   - [Temporada 2024](#Temporada-2024-Rexbot10)
   
-   * [Temporada 2025](#Temporada-2025-Rexbot20)
+   - [Temporada 2025](#Temporada-2025-Rexbot20)
   
-   * [Temporada 2026](#Temporada-2026)
+   - [Temporada 2026](#Temporada-2026)
+  
+     * [Lógica-de-Interconexión](#lógica-de-interconexión:-física-del-chasis-v-calibración-del-software)
+    
+     * [Inercia Rotacional](#A-la-Paradoja-de-la-masa-del-sensor-y-la-inercia-rotacional)
   
 9. [Archivos CAD](#Archivos-CAD)
 
@@ -1003,7 +1009,7 @@ Es importante destacar que, según los datos que recopilamos, la magnitud de est
 
 # Temporada 2026 Trivilyn3.0
 
-## Evolución
+## Evolución 2026
 
 El pensamiento sistémico define que un vehículo autónomo de alto rendimiento no es simplemente una colección de motores, sensores y algoritmos aislados, sino un sistema cerrado interconectado. Cada modificación física altera la dinámica del software, la compatibilidad química de las interfaces mecánicas y la robustez de las señales ante perturbaciones del entorno de la WRO.
 
