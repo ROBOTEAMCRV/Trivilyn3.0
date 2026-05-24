@@ -18,7 +18,7 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
    
    * [Juan Andres Graterol Teran](#Juan-Andres-Graterol-Teran)
          
-   * [Tutor](#Tutor-Luis-Eduardo-Paredes)
+   * [Tutor](#tutor-Luis-Eduardo-Paredes)
 
 3. [Movilidad y Diseño Mecánico](#Movilidad-y-Diseño-Mecánico)
 
@@ -36,11 +36,11 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
 
 4. [Arquitectura de Potencia y Sensores](#Arquitectura-de-Potencia-y-Sensores)
 
-   * [Percepción-y-Control](#Topología-del-Hardware-(Percepción-y-Control))
+   * [Percepción-y-Control](#1-topología-del-hardware-percepción-y-control)
   
-   * [Presupuesto de potencia](#2.-Presupuesto-de-Potencia-(Power-Budget)-y-Distribución)
+   * [Presupuesto de potencia](#2-presupuesto-de-potencia-power-budget-y-distribución)
   
-   * [Mitigacion de fallas](#3.-Mitigación-de-Fallas-y-Decisiones-Críticas)
+   * [Mitigacion de fallas](#3-mitigación-de-fallas-y-decisiones-críticas)
   
 
 6. [Arquitectura Software y Estratrgia](#Arquitectura-Software-y-Estratrgia)
@@ -64,8 +64,6 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
 9. [Fotos de Trivilyn3.0](#Trivilyn-360)
 
 10. [Videos de Trivilyn3.0](#Trivilyn3.0-Challenges)
-
-11. 
 
 # MIEMBROS DEL TEAMROBOCRV
 
@@ -461,7 +459,8 @@ Para evitar el problema más crítico en robótica móvil "los reinicios del pro
 
 ## 3. Mitigación de Fallas y Decisiones Críticas
 
-> ### 💡 TIP DE REPRODUCIBILIDAD: Aislamiento de Tierras (GND)
+### Aislamiento de Tierras (GND)
+
 > [!IMPORTANT]
 >  Al utilizar tres bancos de baterías físicamente separados, es estrictamente obligatorio interconectar todos los cables negativos (*GND Común*) en un solo nodo central del Arduino Mega. Sin esta referencia cero unificada, las señales lógicas UART de la HuskyLens y los pulsos de los ultrasonidos sufrirían de flotación, provocando lecturas erróneas o la pérdida completa de paquetes de datos.
 
