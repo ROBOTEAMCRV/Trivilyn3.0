@@ -43,7 +43,7 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
    * [Mitigacion de fallas](#3-mitigación-de-fallas-y-decisiones-críticas)
   
 
-6. [Arquitectura Software y Estratrgia](#Arquitectura-Software-y-Estratrgia
+6. [Arquitectura Software y Estratrgia](#Arquitectura-Software-y-Estratrgia)
    
 - [Ronda Abierta](ronda-abierta)
 
@@ -597,25 +597,36 @@ La cámara HuskyLens se localiza en la sección superior frontal (tercer piso). 
 
 ### A. Cálculo Trigonométrico del Ángulo Óptimo de Inclinación
 
-La cámara debe ser capaz de detectar tanto los pilares de color Rojo/Verde (cuya altura típica de diseño es de $15\text{ cm}$) como la línea de delimitación de parqueo de color Magenta situada en el suelo. Para calcular la distancia de inicio de detección útil ($d_{\text{util}}$) y evitar una zona ciega excesiva frente al robot, aplicamos la siguiente relación trigonométrica:
+La cámara debe ser capaz de detectar tanto los pilares de color Rojo/Verde (cuya altura típica es de $15\text{ cm}$) como la línea de parqueo Magenta en el suelo. Para calcular la distancia de la zona ciega ($d_{ciega}$) por delante del robot, aplicamos la siguiente fórmula trigonométrica basada en la cotangente:
 
-$$d_{\text{ciega}} = h_{\text{cam}} \cdot \cot\left(\theta_{\text{tilt}} + \frac{V_{\text{FOV}}}{2}\right)$$
+$$d_{ciega} = h_{cam} \cdot \cot\left(\theta_{tilt} + \frac{V_{FOV}}{2}\right)$$
 
-Donde:
+Definición de las variables:
 
-$h_{\text{cam}} = 12.5\text{ cm}$ (Altura de montaje de la lente en el tercer piso).
+$h_{cam} = 12.5\text{ cm}$ (Altura de la lente de la cámara en el tercer piso).
 
-$V_{\text{FOV}} = 48^\circ$ (Campo de visión vertical de la HuskyLens).
+$V_{FOV} = 48^\circ$ (Campo de visión vertical de la HuskyLens).
 
-$\theta_{\text{tilt}} = 22^\circ$ (Ángulo de inclinación descendente respecto a la horizontal).
+$\theta_{tilt} = 22^\circ$ (Ángulo de inclinación o cabeceo descendente de la cámara).
 
-Sustituyendo los valores de diseño de Trivilyn 3.0:
+Cálculo paso a paso en limpio:
 
-$$d_{\text{ciega}} = 12.5\text{ cm} \cdot \cot(22^\circ + 24^\circ) = 12.5\text{ cm} \cdot \cot(46^\circ)$$
+Sumamos el ángulo de inclinación y la mitad del campo de visión vertical de la cámara:
 
-$$\cot(46^\circ) \approx 0.9657 \implies d_{\text{ciega}} \approx 12.5\text{ cm} \cdot 0.9657 \approx 12.07\text{ cm}$$
 
-Este ángulo óptimo de $\theta_{\text{tilt}} = 22^\circ$ reduce la zona ciega a tan solo $12\text{ cm}$ por delante de la carrocería, garantizando que si el robot se aproxima a un pilar, este permanezca dentro del espacio de procesamiento visual y no "desaparezca" antes de realizar el desvío.
+$$22^\circ + \frac{48^\circ}{2} = 22^\circ + 24^\circ = 46^\circ$$
+
+Calculamos la cotangente de ese ángulo acumulado ($46^\circ$):
+
+
+$$\cot(46^\circ) \approx 0.9657$$
+
+Multiplicamos el resultado anterior por la altura física de la cámara ($12.5\text{ cm}$):
+
+
+$$d_{ciega} \approx 12.5\text{ cm} \cdot 0.9657 \approx 12.07\text{ cm}$$
+
+Este ángulo óptimo de inclinación de $22^\circ$ reduce la zona ciega a tan solo $12.07\text{ cm}$ por delante de la carrocería. Esto garantiza que cuando el robot se aproxime a un pilar, la HuskyLens nunca lo pierda de vista antes de que el tren de dirección Steer-by-Wire inicie de forma autónoma la maniobra evasiva.
 
 >[!CAUTION]
 >Error por Reflexión Lumínica (Glint): Un ángulo de inclinación demasiado agresivo ($\theta_{\text{tilt}} > 35^\circ$) expone el sensor óptico a reflejos directos de las luminarias del recinto del evento sobre la pista brillante. Esto altera drásticamente los valores de saturación y tono de la imagen, provocando falsos negativos de detección (o confundiendo el Magenta del parqueo con Rojo). El valor de $22^\circ$ ha demostrado ser el umbral de mayor robustez bajo iluminación artificial variable.
