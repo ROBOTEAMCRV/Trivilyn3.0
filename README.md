@@ -18,7 +18,7 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
    
    * [Juan Andres Graterol Teran](#Juan-Andres-Graterol-Teran)
          
-   * [Tutor](#tutor/Luis-Eduardo-Paredes)
+   * [Tutor](#tutor---luis-eduardo-paredes)
 
 3. [Movilidad y Diseño Mecánico](#Movilidad-y-Diseño-Mecánico)
 
@@ -45,7 +45,7 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
 
 6. [Arquitectura Software y Estratrgia](#Arquitectura-Software-y-Estratrgia)
    
-- [Ronda Abierta](ronda-abierta)
+- [Ronda Abierta](#ronda-abierta)
 
    * [Resumen del Proyecto](#Resumen-del-Proyecto)
   
@@ -53,7 +53,7 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
   
    * [Análisis de Rendimiento](#Análisis-de-Rendimiento-Optimización-de-Tiempo-vs-Fiabilidad)
  
- - [Ronda Cerrada](ronda-cerrada)
+ - [Ronda Cerrada](#ronda-cerrada)
 
 8. [Pensamiento sistémico y decisiones de ingeniería](#Pensamiento-Sistémico-y-Decisiones-de-Ingeniería)
 
@@ -65,7 +65,7 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
   
      * [Lógica-de-Interconexión](#lógica-de-interconexión-física-del-chasis-vs-calibración-del-software)
     
-     * [Inercia Rotacional](#a.-la-paradoja-de-la-masa-del-sensor-y-la-inercia-rotacional-Iz)
+     * [Inercia Rotacional](#a-la-paradoja-de-la-masa-del-sensor-y-la-inercia-rotacional-I_z)
   
 9. [Archivos CAD](#Archivos-CAD)
 
@@ -112,7 +112,7 @@ Apoyo Logístico: Colabora en la preparación de las pistas de prueba, recolecci
 
 
 
-## 👤Tutor/Luis Eduardo Paredes
+## 👤Tutor - Luis Eduardo Paredes
 
 ### Rol: Orientar al equipo en la planificación del proyecto y el cumplimiento de los plazos de entrega.
 
