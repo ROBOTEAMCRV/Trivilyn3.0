@@ -543,21 +543,6 @@ Esta calibración SbW elimina el deslizamiento lateral (derrape) al mantener amb
 
 Los sensores ultrasónicos laterales se orientan de forma estrictamente ortogonal al eje longitudinal del chasis ($90^\circ$ a la izquierda y derecha). Son los encargados de alimentar el bucle cerrado de microcorrecciones reactivas.
 
-              Muro Izquierdo de la Pista
-  ┌─────────────────────────────────────────────────────────┐
-  │                                                         │
-  │                     ◄───[ Haz Ultrasónico: L_dist ]     │
-  ├─────────┐                                   ┌───────────┤
-  │         │                                   │           │
-  │         │           [ Trivilyn 3.0 ]        │           │
-  │         │                                   │           │
-  ├─────────┘                                   └───────────┤
-  │                     [ Haz Ultrasónico: R_dist ]───►     │
-  │                                                         │
-  └─────────────────────────────────────────────────────────┘
-              Muro Derecho de la Pista
-
-
 ### A. Alineación Coaxial vs. Desfase Longitudinal
 
 En prototipos anteriores, la desalineación longitudinal de los sensores laterales provocaba un desfase de tiempo en el cálculo del diferencial de distancia. En Trivilyn 3.0, ambos sensores laterales están posicionados exactamente sobre el eje del centro de masa (CoM) transversal.
@@ -635,27 +620,6 @@ Este ángulo óptimo de inclinación de $22^\circ$ reduce la zona ciega a tan so
 
 La gran lección de la temporada pasada fue la necesidad de ajustar físicamente la altura de lectura de los sensores. Las irregularidades del terreno de competencia y los desniveles milimétricos en el material de las paredes de la WRO exigen un ajuste ágil.
 
-         [ SOPORTE DEL SENSOR ] 
-         (Ajuste Vertical Deslizante)
-                 │  ▲
-                 ▼  │ (Rango de Desplazamiento: 28 mm)
-             ┌───────┐
-             │  [O]  │ ◄─── Perno de Ajuste M4 (Fijación por fricción)
-             │       │
-             │ [  ]  │ ◄─── Riel de Acoplamiento Macho
-             └───────┘
-                 │
-                 ▼
-         [ SEGUNDO PISO ] (Riel Hembra Integrado)
-
-
-## Características Mecánicas de la Corredera en Trivilyn3.0
-
-Fijación por Fricción de Alta Resistencia: Al apretar el perno de acero M4 sobre la tuerca encastrada en la ranura longitudinal de la pieza beige, se genera un esfuerzo de compresión normal que produce una fuerza de fricción estática estricta ($F_s \ge \mu_s \cdot N$). Esta fuerza supera la aceleración de gravedad de los componentes mecánicos y la fuerza del impacto de vibración generada por el motor DC a $15,000\text{ RPM}$.
-
-Ajuste Milimétrico Fino (Rango de $28\text{ mm}$): Permite subir o bajar los sensores laterales de manera continua sin escalonamientos artificiales. El robot puede adaptarse a paredes con diferentes alturas de base en menos de $15\text{ segundos}$ de calibración en boxes.
-
-Precisión de Guía Lineal: El diseño de riel macho-hembra con holgura de ajuste deslizante calibrada a $0.18\text{ mm}$ garantiza que, durante el desplazamiento vertical, no se introduzca ningún tipo de rotación parásita sobre el eje $Y$ (Yaw). Esto asegura que la orientación del eje óptico de los sensores permanezca perpendicular a la pista.
 
 # Arquitectura Software y Estratrgia
 
