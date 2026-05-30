@@ -61,17 +61,25 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
   
    - [Temporada 2025](#Temporada-2025-Rexbot20)
   
-   - [Temporada 2026](#Temporada-2026)
+   - [Temporada 2026](#Temporada-2026-Trivyln30)
   
      * [Lógica-de-Interconexión](#lógica-de-interconexión-física-del-chasis-vs-calibración-del-software)
     
      * [Inercia Rotacional](#a-la-paradoja-de-la-masa-del-sensor-y-la-inercia-rotacional-I_z)
+    
+     * [Gestión de Fricción, Termodinámica y Compatibilidad Química](#Gestión-de-Fricción-Termodinámica-y-Compatibilidad-Química-de-Materiales)
+      
+     * [Adaptabilidad Sensorial y Sistema de Correderas de Batería](#Sistema-de-corredera-de-baterias-y-Optimización-Cinemática)
+     
+     * [Evolución del Sistema de Interconexión y Blindaje (EMI)](#Evolución-del-Sistema-de-Interconexión-y-Blindaje-de-Señales-(EMI))
+     
+9. [Desafíos Técnicos, Limitaciones y Soluciones en el Desarrollo](#Desafíos-Técnicos-Limitaciones-y-Soluciones-en-el-Desarrollo)
   
-9. [Archivos CAD](#Archivos-CAD)
+10. [Archivos CAD](#Archivos-CAD)
 
- 10. [Fotos de Trivilyn3.0](#Trivilyn-360)
+ 11. [Fotos de Trivilyn3.0](#Trivilyn-360)
 
- 11. [Videos de Trivilyn3.0](#Trivilyn3.0-Challenges)
+ 12. [Videos de Trivilyn3.0](#Trivilyn3.0-Challenges)
 
 # MIEMBROS DEL TEAMROBOCRV
 
@@ -370,16 +378,16 @@ Cartucho Macho Porta-Celdas: Un contenedor compacto impreso en PETG que aloja fi
 ________________________________________________________________________________________________________
 ### Explicación de sistema de cola de milano 
 
-El diseño de la interfaz de deslizamiento entre el chasis inferior (riel  macho) y el cartucho porta-celdas (riel hembra) implementa un perfil prismático con geometría de cola de milano (unión trapezoidal angular). Esta decisión de diseño sustituye a las guías planas tradicionales con el objetivo de aprovechar las propiedades mecánicas de auto-alineación y restricción de esfuerzos multiaxiales que ofrece esta configuración geométrica.
+El diseño de la interfaz de deslizamiento entre el chasis inferior (riel macho) y el cartucho porta-celdas (riel hembra) implementa un perfil prismático con geometría de cola de milano (unión trapezoidal angular). Esta decisión de diseño sustituye a las guías planas tradicionales con el objetivo de aprovechar las propiedades mecánicas de auto-alineación y restricción de esfuerzos multiaxiales que ofrece esta configuración geométrica.
 
 <img width="225" height="225" alt="image" src="https://github.com/user-attachments/assets/d61266ee-3ee3-43b1-aa0a-c83a0a44c314" />
 
 
-A diferencia de los rieles de sección cuadrada o en "T", donde las fuerzas de torsión se concentran de forma crítica en ángulos rectos de$90^\circ$(provocando zonas de alta concentración de esfuerzos y fracturas por cizalladura), la cola de milano distribuye las cargas a lo largo de planos inclinados (típicamente configuradas a un ángulo de flanco$\theta = 60°).Cuando el robot experimenta una fuerza centrífuga lateral a PWM 190, el flanco inclinado descompone la fuerza normal en componentes vectoriales, aumentando la fricción estática interna de contacto y bloqueando el conjunto firmemente en su sitio. Cuanto mayor es la fuerza que intenta separar el cartucho lateralmente, más se acuña la geometría dentro de su contraparte.La implementación de este sistema proporciona las siguientes ventajas:
+A diferencia de los rieles de sección cuadrada o en "T", donde las fuerzas de torsión se concentran de forma crítica en ángulos rectos de 90°(provocando zonas de alta concentración de esfuerzos y fracturas por cizalladura), la cola de milano distribuye las cargas a lo largo de planos inclinados (típicamente configuradas a un ángulo de flanco = 60°).Cuando el robot experimenta una fuerza centrífuga lateral a PWM 190, el flanco inclinado descompone la fuerza normal en componentes vectoriales, aumentando la fricción estática interna de contacto y bloqueando el conjunto firmemente en su sitio. Cuanto mayor es la fuerza que intenta separar el cartucho lateralmente, más se acuña la geometría dentro de su contraparte.La implementación de este sistema proporciona las siguientes ventajas:
 
 - Al introducir el cartucho, la conicidad natural de los flancos laterales actúa como una guía autocentrante. Esto compensa pequeños errores de aproximación manual del operario bajo condiciones de estrés en competencia, encauzando mecánicamente el porta-celdas hacia los terminales eléctricos de fondo.
 
-- Estabilidad de la Distancia al Suelo ( Ground Clearance ): Al quedar la junta entrelazada de forma interna, el espacio total ocupado por el mecanismo se reduce al espesor nominal del chasis, permitiendo un despeje constante de$15\text{ mm}$respecto al suelo sin protuberancias externas que puedan encallarse en las imperfecciones de la pista.
+- Estabilidad de la Distancia al Suelo ( Ground Clearance ): Al quedar la junta entrelazada de forma interna, el espacio total ocupado por el mecanismo se reduce al espesor nominal del chasis, permitiendo un despeje constante de 15 mm respecto al suelo sin protuberancias externas que puedan encallarse en las imperfecciones de la pista.
 
 - Compensación de Desgaste por Fricción: Las superficies anguladas se asientan mejor con el uso continuo. El sutil desgaste microscópico provocado por el ciclo de inserciones no genera holgura holgada (como ocurriría en un riel cuadrado), sino que permite que el cartucho se asiente de manera más íntima dentro del cono receptor.
 
@@ -468,7 +476,7 @@ La capacidad de ajustar la altura del sensor en cuestión de segundos durante la
 
 # Tercer piso
 
-El tercer piso de Trivilyn3.0 fue rediseñado en su totalidad, principalmente se cambio a un diseño en forma de ("Cabina") 
+El tercer piso de Trivilyn 3.0 rompe con los esquemas de placas planas convencionales mediante un rediseño total estructurado en forma de "Cabina Monolítica de Polígono Cerrado" . La geometría exterior toma inspiración automotriz y aeroespacial de vehículos de alto rendimiento.
 
 <img width="1003" height="621" alt="image" src="https://github.com/user-attachments/assets/a3a6098a-792f-43c9-aca0-985b77d3924a" />
 
@@ -483,25 +491,21 @@ asemejandose a vehiculos como:
 
 ## Geometría de Rigidez Estructural Interna
 
-Al inspeccionar la sección inferior interna del encapsulado, integramos tres nervaduras transversales de refuerzo (vigas longitudinales extruidas en el modelado CAD).
-
 <img width="1204" height="626" alt="image" src="https://github.com/user-attachments/assets/c8acd693-c83b-4391-a0b1-6e80aeb0a8cc" />
 
- Estas costillas rompen la flexibilidad natural de las capas del polímero, Debido a que las piezas fabricadas mediante modelado por deposición fundida (FDM) presentan un comportamiento mecánico anisotrópico (menor resistencia en el eje Z entre capas de impresión), un encapsulado completamente hueco sería propenso a fracturas por cizalladura o flexión ante la manipulación repetida en boxes o choques en pista.
+Debido a que las piezas fabricadas mediante modelado por deposición fundida (FDM) presentan un comportamiento mecánico anisotrópico (menor resistencia en el eje Z entre capas de impresión), un encapsulado completamente hueco sería propenso a fracturas por cizalladura o flexión ante la manipulación repetida en cajas o choques en pista.
 
-Para solucionar esta limitación física sin penalizar el peso general del robot, integramos tres nervaduras transversales de refuerzo en la sección inferior interna del encapsulado superior. Estas vigas longitudinales fueron extruidas directamente en el modelado CAD original.
+Para solucionar esta limitación física sin penalizar el peso general del robot, integramos tres nervaduras transversales de refuerzo en la sección inferior interna del encapsulado superior. Estas vigas longitudinales fueron extruidas directamente en el modelado CAD original y aportan los siguientes beneficios:
 
-### Beneficios Técnicos del Diseño de Nervaduras:
+Reducción del Momento Flector: Estas costillas actúan como tensores que limitan la elasticidad del polímero PETG bajo cargas de compresión vertical. Eviten que la cara superior de la cabina se hunda ante presiones de agarre externas durante el mantenimiento rápido.
 
-Reducción del Momento Flector: Estas costillas actúan como tensores que limitan la elasticidad del polímero PETG bajo cargas de compresión vertical. Evitan que la cara superior de la cabina se hunda ante presiones de agarre externas durante el mantenimiento rápido.
-
-Mitigación de Vibraciones de Alta Frecuencia: Al actuar como un esqueleto rígido interno, las nervaduras desplazan la frecuencia de resonancia natural del encapsulado. Esto evita que las vibraciones inducidas por el motor DC a 15,000 RPM desestabilicen mecánicamente los componentes de percepción ópticos (HuskyLens) situados en las inmediaciones.
+Mitigación de Vibraciones de Alta Frecuencia: Al actuar como un esqueleto rígido interno, las nervaduras desplazan la frecuencia de resonancia natural del encapsulado. Esto evita que las vibraciones inducidas por el motor DC a 15.000 RPM desestabilicen mecánicamente los componentes de percepción óptica (HuskyLens) situados en las inmediaciones.
 
 Preservación de Tolerancias: Impiden que la contracción térmica natural del PETG durante la fase de enfriamiento de la impresión 3D deforme las paredes laterales, garantizando un acoplamiento micrométrico constante con los niveles inferiores.
 
 >[!TIP]
->Para mitigar la anisotropía en las zonas críticas del encapsulado, configuramos una altura de capa de $0.2\text{ mm}$ y se incrementó el número de perímetros de pared (perimeters) a $4$ en el rebanador (slicer). Esto asegura que las líneas de extrusión de PETG corran continuas a lo largo de los nervios de refuerzo, incrementando drásticamente la resistencia al esfuerzo cortante transversal ($\tau$) sin necesidad de aumentar el porcentaje de relleno (infill), manteniendo la cabina extremadamente ligera.
->
+>Para mitigar la anisotropía en las zonas críticas del encapsulado, configuramos una altura de capa de 0,2 mm y se incrementa el número de perímetros de pared ( perimeters ) a 4 en el rebanador ( slicer ). Esto asegura que las líneas de extrusión de PETG corran continuas a lo largo de los nervios de refuerzo, incrementando presionando la resistencia al esfuerzo cortante transversal sin necesidad de aumentar el porcentaje de relleno ( infill ), manteniendo la cabina extremadamente ligera.
+
 ## Grabado en Relieve Identificativo
 
 La cara frontal externa (el plano inclinado estilo Trophy Truck ) integra una extrusión tipográfica texturizada con el nombre de "TeamCRV Venezuela".
@@ -1055,150 +1059,186 @@ Es importante destacar que, según los datos que recopilamos, la magnitud de est
 
 El pensamiento sistémico define que un vehículo autónomo de alto rendimiento no es simplemente una colección de motores, sensores y algoritmos aislados, sino un sistema cerrado interconectado. Cada modificación física altera la dinámica del software, la compatibilidad química de las interfaces mecánicas y la robustez de las señales ante perturbaciones del entorno de la WRO.
 
-##  Lógica de Interconexión: Física del Chasis vs. Calibración del Software
+## Lógica de Interconexión: Física del Chasis vs. Calibración del Software
 
-El punto de disparo de nuestros sensores no se eligió al azar, es el resultado de un análisis sistémico que interconecta la distribución física de los componentes con la respuesta dinámica del vehículo. El siguiente mapa describe esta dependencia:
+El punto de disparo de nuestros sensores no se eligió al azar; es el resultado de un análisis sistémico que interconecta la distribución física de los componentes con la respuesta dinámica del vehículo. El siguiente análisis describe esta dependencia fundamental.
 
-## Desglose del Análisis Sistémico
+### Desglose del Análisis Sistémico
 
-1. *Ubicación del Sensor (Efecto en la Percepción):*
-   Al posicionar los sensores ultrasónicos HC-SR04 en la parte más avanzada del parachoques delantero, maximizamos la *Ventana de Lectura*. El sensor detecta la pared con anticipación, lo que otorga al microcontrolador una "ganancia de tiempo" crítica para procesar los datos antes de ejecutar el giro.
+1. **Ubicación del Sensor (Efecto en la Percepción):**
+   Al posicionar los sensores ultrasónicos en la parte más avanzada del parachoques delantero, maximizamos la *Ventana de Lectura*. El sensor detecta la pared con anticipación, lo que otorga al microcontrolador una "ganancia de tiempo" crítica para procesar los datos antes de ejecutar el giro.
 
-2. *Distribución de Masas (Efecto en la Dinámica):*
+2. **Distribución de Masas (Efecto en la Dinámica):**
    Llevar los sensores y soportes tan adelante provoca que el *Centro de Masa (CoM)* se desplace hacia el eje frontal. Esto altera la *Inercia Rotacional* del robot durante los virajes bruscos, introduciendo una tendencia al subviraje (el coche tiende a seguir recto) y desviaciones en la trayectoria ideal de salida.
 
-3. *La Solución Lógica (Punto de Disparo Integrado):*
+3. **La Solución Lógica (Punto de Disparo Integrado):**
    Para contrarrestar el subviraje físico provocado por la distribución de masas, y aprovechando la ganancia de tiempo de la ventana de lectura, calibramos el *Punto de Disparo por software a exactos 42 cm*. 
    
-   Este umbral de 42 cm compensa perfectamente el tiempo que tarda la dirección Steer by wire en vencer la inercia del tren delantero, asegurando que el robot inicie la subrutina de giro en el momento óptimo sin colisionar con la pared exterior ni cerrarse antes de tiempo.
+   Este umbral de 42 cm compensa perfectamente el tiempo que tarda la dirección *Steer-by-Wire* (SbW) en vencer la inercia del tren delantero, asegurando que el robot inicie la subrutina de giro en el momento óptimo sin colisionar con la pared exterior ni cerrarse antes de tiempo.
 
+---
 
 ## A. La Paradoja de la Masa del Sensor y la Inercia Rotacional ($I_z$)
 
-Al colocar el sensor ultrasónico en el extremo frontal del parachoques para maximizar la ventana de anticipación temporal, desplazamos masa ($m$) lejos del centro de gravedad. De acuerdo con el teorema de los ejes paralelos y la definición de inercia rotacional para un sólido rígido con distribución discreta de masa:
+Para optimizar el software, la tentación inicial fue colocar el sensor ultrasónico en un parachoques muy alargado. Sin embargo, la física gobierna este comportamiento mediante la ley de la Inercia Rotacional ($I_z = \sum m_i \cdot r_i^2$). 
 
-$$I_z = \sum m_i \cdot r_i^2$$
+Esta ecuación demuestra que la resistencia de un objeto a cambiar de dirección depende de su masa ($m$), pero se incrementa **exponencialmente** según la distancia ($r$) respecto al centro de giro (el "efecto martillo"). Si alejábamos en demasía el sensor del centro del robot, el servomotor de la dirección requería un torque excesivo para iniciar el viraje, generando un "efecto péndulo" parásito que destruía la precisión en línea recta.
 
-Donde $r_i$ es la distancia perpendicular de cada componente al eje vertical de rotación ($Z$) que pasa por el centro de masa (CoM).
+### 📊 Glosario Cinemático y Desglose de Variables de Control
 
-El Conflicto de Ingeniería: El incremento de la distancia $r$ del sensor frontal aumenta exponencialmente su aporte a la inercia de rotación total del vehículo ($I_z$). A mayor $I_z$, el servomotor HobbyPark requiere un par torsor de aceleración angular significativamente mayor ($\tau = I_z \cdot \alpha$) para iniciar y detener el giro de la dirección, introduciendo un efecto péndulo perjudicial que compromete la precisión rectilínea.
+| Variable | Nombre Técnico | Valor Nominal | Impacto Físico en la Misión |
+| :---: | :--- | :---: | :--- |
+| $v_{\text{robot}}$ | Velocidad de Crucero Lineal | $1.2\text{ m/s}$ ($120\text{ cm/s}$) | Es la velocidad real de desplazamiento del chasis en las rectas. Indica que el vehículo avanza $120\text{ cm}$ por cada segundo transcurrido. |
+| $v_{\text{sonido}}$ | Velocidad de Propagación Acústica | $\approx 343\text{ m/s}$ | La constante física del sonido en el aire a una temperatura estándar de boxes ($20^\circ\text{C}$). Es el medio físico que usan los sensores para medir distancias. |
+| $t_{\text{vuelo}}$ | Tiempo de Vuelo del Eco | $2.45\text{ ms}$ | El intervalo de tiempo que le toma a la onda mecánica salir del sensor, chocar contra el muro del pasillo y regresar al receptor a la distancia de disparo ($42\text{ cm}$). |
+| $t_{\text{ciclo}}$ | Período de Refresco de Telemetría | $87\text{ ms}$ | El tiempo total que tarda el microcontrolador en actualizar secuencialmente la red de 3 sensores (Frente, Izquierda, Derecha) para evitar interferencia cruzada (*cross-talk*). |
+| $d_{\text{avance}}$ | Distancia de Desplazamiento Ciego | $\approx 10.44\text{ cm}$ | El espacio físico lineal que el robot recorre en la pista hacia el obstáculo mientras el sensor frontal está en espera y el Arduino procesa los flancos laterales. |
 
-La Solución de $42\text{ cm}$: Tras un riguroso proceso de optimización iterativa, el equipo determinó que fijar mecánicamente la distancia del sensor frontal para que dispare el bucle de giro a exactamente $42\text{ cm}$ balancea de forma matemática el sistema. Este umbral proporciona los milisegundos mínimos de cómputo requeridos por el Arduino Mega 2560 sin extender en demasía el parachoques delantero, mitigando el sobreesfuerzo del servo y previniendo la oscilación parásita en las rectas.
+---
 
-## B. Integración Dinámica: Tiempo de Vuelo del Sonido frente a la Velocidad del Vehículo
+### 🧠 Desglose Pedagógico de las Ecuaciones Fundamentales### A. Desglose del Análisis Sistémico de Percepción y Masa
+1. **Ubicación del Sensor (Efecto en la Percepción):** Al posicionar los sensores ultrasónicos en el extremo más avanzado del parachoques delantero, se maximiza la *Ventana de Lectura Temprana*. El sensor detecta la pared perimetral con anticipación, otorgando al microcontrolador una ganancia de tiempo crítica para procesar las lecturas antes de iniciar el viraje.
+2. **Distribución de Masas (Efecto en la Dinámica):** Desplazar el hardware de soporte de los sensores hacia el extremo frontal desplaza inevitablemente el *Centro de Masa (CoM)* hacia adelante. Esto incrementa de forma crítica la **Inercia Rotacional ($I_z$)** del vehículo durante virajes rápidos, introduciendo una fuerza de subviraje física (tendencia a seguir recto) y oscilaciones parásitas en las rectas ("efecto péndulo").
+3. **La Solución Lógica (Punto de Disparo Integrado):** Para contrarrestar el subviraje mecánico y aprovechar la ventana de lectura, se calibró por software el **Punto de Disparo a exactamente 42 cm**. Este umbral matemático compensa el retraso dinámico de la dirección *Steer-by-Wire* (SbW) para vencer la inercia del tren delantero, ejecutando la maniobra en el momento óptimo sin colisionar con la pared exterior ni cerrar la trayectoria antes de tiempo.
 
-Durante pruebas rápidas de alto rendimiento, Trivilyn3.0 opera a una velocidad de crucero constante de $v_{\text{robot}} = 1.2\text{ m/s}$ ($120\text{ cm/s}$). La velocidad de propagación del sonido en el aire a temperatura ambiente estándar de boxes ($20^\circ\text{C}$) es de $v_{\text{sonido}} \approx 343\text{ m/s}$.
+---
 
-Para una distancia de lectura crítica de $d = 42\text{ cm}$ ($0.42\text{ m}$), el tiempo de ida y vuelta de la onda ultrasónica (tiempo de vuelo $t_{\text{vuelo}}$) es:
+### B. Análisis Dinámico y Temporal del Sistema Ultrasónico
 
-$$t_{\text{vuelo}} = \frac{2 \cdot d}{v_{\text{sonido}}} = \frac{2 \cdot 0.42\text{ m}}{343\text{ m/s}} \approx 2.45\text{ ms}$$
+#### 1. El Factor Multiplicador en el Tiempo de Vuelo ($2 \cdot d$)
+En la ecuación del eco ultrasónico:
 
-A este retraso de transporte físico se le añade la latencia acumulada por el microcontrolador. Debido a la prevención de interferencia cruzada (cross-talk), los sensores se muestrean secuencialmente con un desfase de $29\text{ ms}$ entre sí, estableciendo un tiempo de ciclo de refresco de telemetría total de $t_{\text{ciclo}} = 87\text{ ms}$.
+$$t_{\text{vuelo}} = \frac{2 \cdot d}{v_{\text{sonido}}}$$
 
-En este intervalo de tiempo de $87\text{ ms}$, en el cual el microprocesador aún no ha actualizado la distancia frontal, el robot avanza físicamente sobre la pista una distancia de:
+El uso del multiplicador **$2$** responde a que el sonido debe realizar un trayecto bidireccional continuo (ida hacia el obstáculo y vuelta hacia el receptor). Omitir este factor en el firmware provocaría un error del $50\%$ en la estimación de distancia en el bucle cerrado de control, causando giros anticipados destructivos.
 
-$$d_{\text{avance}} = v_{\text{robot}} \cdot t_{\text{ciclo}} = 120\text{ cm/s} \cdot 0.087\text{ s} \approx 10.44\text{ cm}$$
+#### 2. La Paradoja del "Pestañeo" Electrónico ($t_{\text{ciclo}} = 87\text{ ms}$)
+Si los tres sensores ultrasónicos se dispararan simultáneamente, el receptor del sensor izquierdo captaría las ondas rebotadas por el sensor central debido a la dispersión cónica del sonido. Este fenómeno, denominado **interferencia cruzada (*cross-talk*)**, generaría lecturas falsas de proximidad. 
 
-### Análisis Sistémico:
+La decisión de ingeniería fue implementar una multiplexación por división de tiempo (*Time-Division Multiplexing*):
+* **Sensor Izquierdo:** Activo de $0\text{ ms}$ a $29\text{ ms}$.
+* **Sensor Central (Frente):** Activo de $29\text{ ms}$ a $58\text{ ms}$.
+* **Sensor Derecho:** Activo de $58\text{ ms}$ a $87\text{ ms}$.
 
+Por lo tanto, la tasa de refresco efectiva para el sensor frontal es de $87\text{ ms}$. Durante este intervalo, el robot se desplaza basándose exclusivamente en la última información conocida.
+
+#### 3. El Fenómeno del Avance Transitorio Ciego ($d_{\text{avance}} = 10.44\text{ cm}$)
+Aplicando la ecuación cinemática de movimiento rectilíneo uniforme ($d = v \cdot t$), multiplicamos la velocidad real del chasis por el tiempo de retraso de la telemetría:
+
+$$d_{\text{avance}} = 120\text{ cm/s} \cdot 0.087\text{ s} = 10.44\text{ cm}$$
+
+Este resultado matemático revela que el robot avanza casi **$10.5\text{ centímetros}$ completamente "a ciegas"** entre cada actualización del sensor frontal. 
+
+#### 4. Justificación Crítica del Umbral de los 42 cm
 Al recibir el paquete de datos en el instante en que el sensor frontal estimó originalmente una distancia de $42\text{ cm}$, el vehículo ya se encuentra físicamente a una distancia real de:
 
 $$d_{\text{real}} = 42\text{ cm} - 10.44\text{ cm} \approx 31.56\text{ cm}$$
 
-Este valor de $31.56\text{ cm}$ coincide exactamente con el radio mínimo de giro físico del chasis de Trivilyn 3.0 cuando las ruedas se desvían a su ángulo máximo de $\beta = 40^\circ$ bajo la cinemática de dirección SbW. Si el umbral del código se programara por debajo de los $42\text{ cm}$, el espacio real remanente sería inferior al límite cinemático de giro del vehículo, derivando en un impacto frontal destructivo directo contra la pared de la WRO.
+Este valor de $31.56\text{ cm}$ coincide exactamente con el radio mínimo de giro físico del chasis de Trivilyn3.0 cuando las ruedas se desvían a su ángulo máximo de $\beta = 40^\circ$ bajo la cinemática de dirección SbW. Si el umbral del código se programara por debajo de los $42\text{ cm}$, el espacio real remanente sería inferior al límite cinemático de giro del vehículo, derivando en un impacto frontal destructivo directo contra la pared de la WRO.
 
-## C. Cohesión de Componentes: Dirección SbW y Agarre Lateral
+---
 
-La tracción posterior de Trivilyn3.0 emplea neumáticos de caucho de alta fricción del kit Lego EV3. Al ejecutar la curva de forma reactiva, el robot debe generar una fuerza centrípeta que desvíe su centro de masa. Si el disparo se retrasara de los $42\text{ cm}$, el chasis exigiría un giro de dirección instantáneo y excesivo en las ruedas directrices frontales.
+### C. Cohesión de Componentes: Dirección SbW y Agarre Lateral
 
-Esto provocaría que la fuerza lateral requerida por la curva supere la fuerza de fricción estática máxima de los neumáticos ($F_f \le \mu_s \cdot N$), forzando la transición a fricción dinámica (derrape por pérdida de tracción). Al derrapar, las ruedas frontales experimentan subviraje, perdiendo la capacidad de direccionar el vehículo y estrellando el robot contra la pared exterior. Programar el giro a $42\text{ cm}$ mantiene la aceleración lateral dentro de los límites de adherencia de la goma, garantizando una trayectoria limpia y predecible.
-__________________________________________________________________________________________________________________
-## Gestión de Fricción, Termodinámica y Compatibilidad Química de Materiales
+La tracción posterior de Trivilyn3.0 emplea neumáticos de caucho de alta fricción. Al ejecutar la curva de forma reactiva, el robot debe generar una fuerza centrípeta que altere el vector de trayectoria de su centro de masa. Si el disparo se retrasara por debajo de los $42\text{ cm}$, el chasis se vería obligado a exigir un cambio de dirección instantáneo y sumamente agresivo en las ruedas frontales para no chocar.
 
-En el diseño mecánico de Trivilyn3.0, la lubricación y la protección contra el desgaste no son actividades secundarias de mantenimiento, sino variables críticas de la física interna de la transmisión y la suspensión del robot.
+Desde la perspectiva de la física de partículas, esto somete a los neumáticos a la ley del **Límite de Fricción Estática**:
 
-## A. Compatibilidad Química y Prevención del ESC (Environmental Stress Cracking)
+$$F_f \le \mu_s \cdot N$$
 
-Durante el desarrollo de prototipos previos (Rexbot 1.25), el equipo utilizó grasas industriales multiusos y aceites líquidos minerales para engrasar la transmisión. Esto provocó fallas mecánicas catastróficas por fracturas en los soportes y dientes de engranajes impresos en PLA y PETG.
+* **$F_f$ (Fuerza de Fricción Lateral):** Es la fuerza de agarre que las llantas delanteras deben ejercer contra la pista para obligar al chasis a cambiar de dirección.
+* **$\mu_s$ (Coeficiente de Fricción Estática):** Es el factor de adherencia química entre el caucho de los neumáticos y la lona de la pista WRO.
+* **$N$ (Fuerza Normal):** El peso neto del robot ejerciendo presión vertical sobre el suelo ($N = m \cdot g$).
 
-El análisis científico reveló que los aceites minerales y las grasas de base petroquímica actúan como agentes de agrietamiento bajo esfuerzo ambiental (Environmental Stress Cracking - ESC). Estos compuestos químicos penetran en los micro-huecos intercapas inherentes al proceso de impresión por deposición fundida (FDM). Al estar sometidos a cargas mecánicas continuas, el lubricante mineral debilita las fuerzas de Van der Waals entre las cadenas del polímero, promoviendo la propagación microscópica de grietas intercapas hasta la fractura súbita de la pieza.
+Esta fórmula matemática demuestra que los neumáticos tienen un "presupuesto" máximo de agarre limitado por el producto $\mu_s \cdot N$. Si el robot intenta girar de golpe porque detectó la pared demasiado tarde, la fuerza lateral requerida para completar la curva supera el límite máximo de fricción estática. En ese instante, las ruedas agotan su capacidad de adherencia y rompen su contacto estático con el suelo, transicionando inmediatamente a **fricción dinámica (derrape por pérdida de tracción)**. 
 
-Para solucionar este fallo de manera sistémica en Trivilyn 3.0, se implementó el uso exclusivo de vaselina neutra (petrolato de alta pureza) debido a sus excelentes propiedades de ingeniería:
+Al derrapar, el coeficiente de fricción cae drásticamente. Las llantas frontales se deslizan sin oponer resistencia, provocando un efecto de **subviraje** (el vehículo pierde la capacidad de direccionar y continúa desplazándose en línea recta debido a su propia inercia). Programar el punto de disparo a **exactamente $42\text{ cm}$** distribuye el viraje a lo largo de una trayectoria curva más suave y prolongada. Esto reduce la demanda de fuerza centrípeta instantánea, manteniendo la fuerza lateral requerida holgadamente por debajo del límite crítico de $\mu_s \cdot N$. De esta forma, se garantiza un guiado limpio, predecible y con tracción perfecta en todo momento.
 
-- Inercia Química de Polímeros: La vaselina neutra es un hidrocarburo saturado de cadena larga que no interactúa químicamente con el PETG ni el PLA. No disuelve las uniones poliméricas ni induce ESC, manteniendo intacta la rigidez del material impreso bajo torque máximo.
+---
 
-- Viscosidad y Resistencia Centrífuga: A diferencia de los aceites finos de baja densidad que se desplazan y salen expulsados de los engranajes por efecto de la fuerza centrífuga a altas revoluciones, la consistencia pastosa de la vaselina provee una película lubricante de alta viscosidad estática que permanece adherida a los dientes de los piñones.
+## 2. Gestión de Fricción, Termodinámica y Compatibilidad Química de Materiales
 
-- Termodinámica a Altas RPM (15,000 RPM): El motor DC extraído del vehículo Turbo Snake opera en un rango extremo de $13,000$ a $15,000\text{ RPM}$. Esta alta rotación en el piñón de ataque de bronce genera una gran fricción y elevación localizada de la temperatura. La vaselina neutra forma una barrera térmica que disipa el calor por rozamiento, evitando que la temperatura del eje metálico alcance el punto de transición vítrea del PETG ($T_g \approx 75^\circ\text{C}$ a $80^\circ\text{C}$), lo que ablandaría el alojamiento del motor y desalinearía los engranajes.
+La lubricación y la protección contra el desgaste en Trivilyn3.0 no son actividades secundarias de mantenimiento, sino variables críticas de la física interna de la transmisión y la suspensión del robot.
 
+### A. Compatibilidad Química y Prevención del ESC (Environmental Stress Cracking)
+Durante el desarrollo de prototipos previos (Rexbot 1.25), el uso de grasas industriales multiusos y aceites líquidos minerales para lubricar la transmisión provocó fallas mecánicas catastróficas por fracturas súbitas en los soportes y dientes de engranajes impresos en PLA y PETG.
 
-## B. Estabilidad Dinámica del Tren Delantero (Tubo Transversal)
+El análisis científico reveló que los aceites minerales y las grasas de base petroquímica actúan como agentes de **agrietamiento bajo esfuerzo ambiental (Environmental Stress Cracking - ESC)**. Estos compuestos químicos penetran en los micro-huecos intercapas inherentes al proceso de impresión FDM. Al estar sometidos a cargas mecánicas continuas, el lubricante mineral debilita las fuerzas de *Van der Waals* entre las cadenas del polímero, promoviendo la propagación microscópica de grietas intercapas hasta la fractura súbita de la pieza.
 
-En el sistema de suspensión y dirección delantero, la vaselina neutra se aplica en el interior del tubo transversal de bronce. El bronce posee propiedades naturales autolubricantes debido a su bajo coeficiente de fricción estática ($\mu_s$).
+Para solucionar este fallo de manera sistémica en Trivilyn3.0, se implementó el uso exclusivo de **vaselina neutra** (petrolato de alta pureza) debido a sus excelentes propiedades de ingeniería:
+* **Inercia Química de Polímeros:** Al ser un hidrocarburo saturado de cadena larga, no interactúa químicamente con el PETG ni el PLA. No disuelve las uniones poliméricas ni induce ESC, manteniendo intacta la rigidez del material impreso bajo torque máximo.
+* **Viscosidad y Resistencia Centrífuga:** A diferencia de los aceites finos de baja densidad que son expulsados de los engranajes por efecto de la fuerza centrífuga a altas revoluciones, la consistencia pastosa de la vaselina provee una película lubricante de alta viscosidad estática que permanece adherida a los dientes de los piñones.
+* **Termodinámica a Altas RPM (15,000 RPM):** El motor DC extraído del vehículo *Turbo Snake* opera en un rango extremo de 13,000 a 15,000 RPM. Esta alta rotación en el piñón de ataque de bronce genera una gran fricción y elevación localizada de la temperatura. La vaselina neutra forma una barrera térmica que disipa el calor por rozamiento, evitando que la temperatura del eje metálico alcance el punto de **transición vítrea del PETG (approx 75° a 80°, lo que ablandaría el alojamiento del motor y desalinearía los engranajes destruyendo la transmisión.
 
-Al engrasar la interfaz entre el eje de acero interno y la camisa de bronce con vaselina, se elimina la fricción mecánica residual. Si este eje experimentara micro-atascamientos por fricción seca:
+### B. Estabilidad Dinámica del Tren Delantero (Tubo Transversal)
+En el sistema de suspensión y dirección delantero, la vaselina neutra se aplica en el interior del tubo transversal de bronce. El bronce posee propiedades naturales autolubricantes debido a su bajo coeficiente de fricción estática ($\mu_s$). 
 
-El chasis se inclinaría de forma asimétrica al momento del viraje.
+Al engrasar la interfaz entre el eje de acero interno y la camisa de bronce con vaselina, se elimina la fricción mecánica residual. Si este eje experimentara micro-atascamientos por fricción seca, el impacto sistémico destruiría la lógica de control del robot:
+1. El chasis se inclinaría de forma asimétrica al momento del viraje.
+2. Esto desvía el eje óptico de la cámara HuskyLens, desplazando el centroide de detección cromática de los pilares de la pista.
+3. Alteraría los vectores de reflexión de los sensores ultrasónicos, introduciendo lecturas erróneas de las distancias laterales en el lazo cerrado de control y provocando un fallo crítico en la trayectoria.
 
-Esto desvía el eje óptico de la cámara HuskyLens, desplazando el centroide de detección cromática de los pilares.
+> [!NOTE]
+> **Universalidad y Mantenimiento de Emergencia**
+> Una de las mayores ventajas de la vaselina neutra sólida sobre los lubricantes sintéticos especializados de teflón o litio es su accesibilidad global. Al ser químicamente neutra y de grado comercial, el equipo puede realizar reparaciones y mantenimientos de emergencia en boxes en cualquier competencia utilizando petrolato comercial común, sin alterar la calibración física de las piezas del chasis.
 
-Alteraría los vectores de reflexión de los sensores ultrasónicos, introduciendo lecturas erróneas de las distancias laterales en el lazo cerrado de control.
+---
 
->[!NOTE]
->Universalidad y Mantenimiento de Emergencia: Una de las mayores ventajas de la vaselina neutra sólida sobre los lubricantes sintéticos especializados de teflón o litio es su accesibilidad global. Al ser químicamente neutra y de grado comercial, el equipo puede realizar reparaciones y mantenimientos de emergencia en boxes en cualquier competencia utilizando petrolato comercial común, sin alterar la calibración física de las piezas del chasis.
-______________________________________________________________________________________________________________
-
-## Adaptabilidad Sensorial ante el Entorno de la Pista
+## 3. Adaptabilidad Sensorial ante el Entorno de la Pista
 
 El pensamiento sistémico comprende que el robot no interactúa en un vacío, sino en una simbiosis directa con la pista física. Una de las lecciones de ingeniería más valiosas adquiridas en la Final Nacional de la WRO 2025 con el prototipo Rexbot 2.0 fue el fallo de lecturas ultrasónicas debido a las variaciones estructurales de los muros.
 
-El Problema Físico: El diseño anterior poseía soportes estáticos y rígidos para los sensores HC-SR04. Cuando la pista de competencia presentaba un desnivel en el suelo o paredes perimetrales más bajas que las de entrenamiento, el cono acústico del sensor pasaba por encima de la pared o impactaba la esquina superior de la misma, generando un rebote disperso no captado por el receptor (un fenómeno de "eco nulo" o lectura fantasma).
+* **El Problema Físico (Eco Nulo):** El diseño anterior poseía soportes estáticos y rígidos para los sensores HC-SR04. Cuando la pista de competencia presentaba un desnivel en el suelo o paredes perimetrales más bajas que las de entrenamiento, el cono acústico del sensor pasaba por encima de la pared o impactaba la esquina superior de la misma, generando un rebote disperso no captado por el receptor (un fenómeno de "eco nulo" o lectura fantasma).
+* **La Solución por Diseño Flexible en Trivilyn3.0:** Para la temporada 2026, decidimos reemplazar la rigidez estructural por el principio de diseño adaptativo. El desarrollo de una corredera de precisión con riel macho-hembra permite ajustar la altura del hardware de forma física en cuestión de segundos en boxes. Esto resuelve mecánicamente el problema de la variabilidad del entorno en la pista, garantizando que el haz ultrasónico incida de manera perfectamente perpendicular al plano medio de las paredes de la WRO, manteniendo un flujo de datos limpio hacia el Arduino sin necesidad de reprogramar los umbrales de software.
 
-La Solución por Diseño Flexible (Trivilyn3.0): Para la temporada 2026, decidimos cambiar la rigidez y adoptamos el principio de diseño adaptativo. El desarrollo de la corredera de precisión con riel macho-hembra permite ajustar la altura del hardware de forma física en cuestión de segundos en boxes. Esto resuelve mecánicamente el problema de la variabilidad del entorno en la pista, garantizando que el haz ultrasónico incida de manera perfectamente perpendicular al plano medio de las paredes de la WRO, manteniendo un flujo de datos limpio hacia el Arduino sin necesidad de reprogramar los umbrales de software.
+---
 
-______________________________________________________________________________________________
-
-## Sistema de corredera de baterias y Optimización Cinemática
+## 4. Sistema de Corredera de Baterías y Optimización Cinemática
  
 La integración de un sistema de alojamiento modular en corredera (mecanismo de riel guía tipo macho-hembra impreso en 3D) para el banco de baterías principal de dos celdas 18650 responde a una estrategia de diseño sistémico. Este enfoque resuelve simultáneamente restricciones de empaquetamiento volumétrico, eficiencia en la gestión de tiempos en fosos y la estabilidad dinámica del vehículo.
 
-1. Optimización Volumétrica y Reducción del Perfil Vertical
-
-En el diseño de vehículos autónomos a escala para la WRO, la gestión del espacio tridimensional es un factor crítico. La implementación del cartucho deslizable horizontal en la sección inferior del chasis elimina la necesidad de un despeje vertical para la extracción de las celdas.Si el acceso a las baterías fuese superior o vertical, la arquitectura de la carrocería requeriría elevar el segundo nivel (placa de control y distribución lógica) un mínimo de 50 mm adicionales para permitir el vector de extracción manual. Al desplazar este plano de forma lateral, se compacta el perfil vertical del robot, garantizando el cumplimiento holgado de las normativas de dimensiones máximas de la competencia sin sacrificar área útil para los sensores superiores.
+### 1. Optimización Volumétrica y Reducción del Perfil Vertical
+En el diseño de vehículos autónomos a escala para la WRO, la gestión del espacio tridimensional es un factor crítico. La implementación del cartucho deslizable horizontal en la sección inferior del chasis elimina la necesidad de un despeje vertical para la extracción de las celdas. Si el acceso a las baterías fuese superior o vertical, la arquitectura de la carrocería requeriría elevar el segundo nivel (placa de control y distribución lógica) un mínimo de $50\text{ mm}$ adicionales para permitir el vector de extracción manual. Al desplazar este plano de forma lateral, se compacta el perfil vertical de Trivilyn3.0, garantizando el cumplimiento holgado de las normativas de dimensiones máximas de la competencia sin sacrificar área útil para los sensores superiores.
   
-2. Eficiencia Operacional en Entornos de Competición (Gestión de Rondas)
-
-El diseño de hardware para competencia debe contemplar la mantenibilidad bajo condiciones de alta presión temporal. El sistema de corredera actúa como un método de sustitución rápida ( Quick-Change ) que mitiga el riesgo de error humano.Al permitir el intercambio periférico del bloque de energía, se evita por completo la manipulación, desconexión o desensamblaje de los componentes lógicos, el cableado blindaje SFTP o el soporte del microcontrolador Arduino Mega. Esto reduce el tiempo de permanencia en los pits para recargar a un intervalo menor a 10 segundos, manteniendo la integridad del hardware intacta entre los intentos de la ronda.
+### 2. Eficiencia Operacional en Entornos de Competición (Gestión de Rondas)
+El diseño de hardware para competencia debe contemplar la mantenibilidad bajo condiciones de alta presión temporal. El sistema de corredera actúa como un método de sustitución rápida (*Quick-Change*) que mitiga el riesgo de error humano. Al permitir el intercambio periférico del bloque de energía, se evita por completo la manipulación, desconexión o desensamblaje de los componentes lógicos, el cableado con blindaje SFTP o el soporte del microcontrolador Arduino Mega. Esto reduce el tiempo de permanencia en los pits para recargar a un intervalo menor a 10 segundos, manteniendo la integridad del hardware intacta entre los intentos de la ronda.
   
-3. Análisis Dinámico: Desplazamiento del Centro de Masa y Estabilidad CinemáticaDesde la perspectiva de la dinámica vehicular, el banco de baterías 18650 representa uno de los vectores de masa más significativos del conjunto total del robot (aproximadamente el 25% del peso neto). Ubicar mecánicamente este componente en el plano más bajo del chasis optimiza el comportamiento cinematográfico de Trivilyn3.0 en dos aspectos fundamentales:
-  
- -  Reducción del Momento de Vuelco: Al minimizar la altura del centro de gravedad ($h_{CG}$), se reduce directamente el brazo de palanca cizallante generado por la fuerza centrífuga cuando el vehículo ejecuta virajes de alta velocidad a un régimen de PWM 190. Esto mitiga el momento de vuelco transversal, manteniendo el chasis firmemente paralelo al plano de la pista.
- 
- -  Estabilización del Vector de Carga (Grip Neumático): La concentración de la masa en la zona inferior e interaxil (entre ambos ejes) distribuye de manera uniforme la fuerza normal sobre los neumáticos de caucho de 43 mm. Al suprimir la transferencia de carga transitoria excesiva hacia las ruedas exteriores durante las curvas, se contrarresta el efecto de subviraje ( understeer ) y el deslizado por deriva lateral, asegurando que la trayectoria calculada por el algoritmo de control reactivo se traduzca fielmente en el desplazamiento físico sobre el pasillo.
+### 3. Análisis Dinámico: Desplazamiento del Centro de Masa y Estabilidad Cinemática
+Desde la perspectiva de la dinámica vehicular, el banco de baterías 18650 representa uno de los vectores de masa más significativos del conjunto total del robot (aproximadamente el $25\%$ del peso neto). Ubicar mecánicamente este componente en el plano más bajo del chasis optimiza el comportamiento cinemático de Trivilyn3.0 en dos aspectos fundamentales:
+* **Reducción del Momento de Vuelco:** Al minimizar la altura del centro de gravedad (h_{CG}), se reduce directamente el brazo de palanca cizallante generado por la fuerza centrífuga cuando el vehículo ejecuta virajes de alta velocidad a un régimen de PWM 190. Esto mitiga el momento de vuelco transversal, manteniendo el chasis firmemente paralelo al plano de la pista.
+* **Estabilización del Vector de Carga (Grip Neumático):** La concentración de la masa en la zona inferior e interaxil (entre ambos ejes) distribuye de manera uniforme la fuerza normal sobre los neumáticos de caucho de 43 mm. Al suprimir la transferencia de carga transitoria excesiva hacia las ruedas exteriores durante las curvas, se contrarresta el efecto de subviraje (*understeer*) y el deslizamiento por deriva lateral, asegurando que la trayectoria calculada por el algoritmo de control reactivo se traduzca fielmente en el desplazamiento físico sobre el pasillo.
 
-   ### Contexto Histórico y Evolución del Sistema de Acoplamiento en Trivilyn
-   
+### Contexto Histórico y Evolución del Sistema de Acoplamiento en Trivilyn
+
 La adopción de la geometría en cola de milano para la fijación del banco de potencia no fue una decisión arbitraria, sino el resultado de un proceso de ingeniería iterativo basado en el análisis de fallas de los prototipos de temporadas anteriores. El desarrollo de esta interfaz se divide en tres fases evolutivas:
 
-- Fase 1: Rexbot 1.0 y 2.0 (Contenedor Fijo con Fijación por Tornillería): En las primeras versiones, las baterías se alojaban en un compartimento estático cerrado mediante una tapa atornillada en el segundo piso. Esta arquitectura presentaba dos fallas críticas: obligaba a elevar la altura del chasis para permitir el acceso superior y los ciclos constantes de atornillado terminaban barriendo las roscas del plástico. El tiempo de sustitución en boxes superaba los  60 segundos, un margen muy alto de tiempo.
+* **Fase 1: Rexbot 1.0 a 2.0(Contenedor Fijo con Fijación por Tornillería):** En las primeras versiones, las baterías se alojaban en un compartimento estático cerrado mediante una tapa atornillada en el segundo piso. Esta arquitectura presentaba dos fallas críticas: obligaba a elevar la altura del chasis para permitir el acceso superior y los ciclos constantes de atornillado terminaban barriendo las roscas del plástico. El tiempo de sustitución en boxes superaba los 60 segundos, un margen de tiempo inaceptable para las ventanas de pits.
 
-- Fase 2: Trivilyn 3.0 (Solución Sistémica mediante Cola de Milano): Para la temporada 2026, el equipo recurrió a la ingeniería clásica de ensamblaje prismático, adaptando la unión en cola de milano (un diseño con siglos de aplicación en la carpintería fina y la ingeniería de maquinaria pesada por su alta resistencia a la tracción sin necesidad de sujetadores). Al trasladar esta geometría a la fabricación aditiva en PETG, se logró bloquear cinco grados de libertad mediante el propio cierre de forma de la pieza, distribuyendo los esfuerzos mecánicos a lo largo de flancos angulados 60° optimizando la dinámica vehicular de manera definitiva.
-________________________________________________________________________________
-## Evolución del Sistema de Interconexión y Blindaje de Señales (EMI)
+* **Fase 2: Trivilyn3.0 (Solución Sistémica mediante Cola de Milano):** Para la temporada 2026, el equipo recurrió a la ingeniería clásica de ensamblaje prismático, adaptando la unión en cola de milano por su alta resistencia a la tracción sin necesidad de sujetadores. Al trasladar esta geometría a la fabricación aditiva en PETG, se logró bloquear cinco grados de libertad mediante el propio cierre de forma de la pieza, distribuyendo los esfuerzos mecánicos a lo largo de flancos angulados a 60° y optimizando la dinámica vehicular de manera definitiva.
+
+---
+
+## 5. Evolución del Sistema de Interconexión y Blindaje de Señales (EMI)
 
 La confiabilidad física de la transmisión de datos a bordo de un vehículo autónomo de alta velocidad es un factor crítico. Para mitigar los falsos contactos eléctricos inducidos por las vibraciones y el ruido electromagnético, el equipo transitó por tres fases de evolución en su cableado:
 
-## 🔌 Análisis Comparativo de Conductores y Mitigación de EMI
+### 🔌 Análisis Comparativo de Conductores y Mitigación de EMI
 
 | Etapa | Conductor Utilizado | Falla / Limitación de Ingeniería | Efecto en Sistema |
 | :--- | :--- | :--- | :--- |
-| *Etapa 1* | Jumpers Genéricos (Kits de Prototipado) | Alta resistencia, holgura mecánica, desconexiones por vibración. | Pérdida de continuidad, reinicios inesperados del Arduino Mega. |
-| *Etapa 2* | Cable de Red UTP Categoría 6 | Conductor unifilar quebradizo ante flexión, rigidez excesiva en ejes móviles. | Rotura del cable interno por fatiga mecánica en la dirección. |
-| *Etapa 3* | Conductores Industriales Kodak | Construcción multifilar ultraflexible, blindaje de pantalla y trenza de alta densidad (SFTP). | Inmunidad total frente a EMI y fatiga mecánica. |
+| **Etapa 1** | Jumpers Genéricos (Kits de Prototipado) | Alta resistencia, holgura mecánica, desconexiones por vibración. | Pérdida de continuidad, reinicios inesperados del Arduino Mega. |
+| **Etapa 2** | Cable de Red UTP Categoría 6 | Conductor unifilar quebradizo ante flexión, rigidez excesiva en ejes móviles. | Rotura del cable interno por fatiga mecánica en el sistema de dirección. |
+| **Etapa 3** | Conductores Industriales Kodak | Construcción multifilar ultraflexible, blindaje de pantalla y trenza de alta densidad (SFTP). | Inmunidad total frente a EMI y fatiga mecánica. |
 
+### Fundamentación Científica de la Inmunidad a Interferencias Electromagnéticas (EMI)
+Los motores de tracción DC que operan a $15,000 RPM actúan como generadores de alta frecuencia de ruido electromagnético de alta energía, debido al constante arqueado y conmutación de las escobillas del colector. Este ruido puede inducir corrientes parásitas en las líneas de señales de datos de los sensores ultrasónicos (*Trigger* y *Echo*) y en la comunicación serie I^2C de la cámara HuskyLens, corrompiendo las lecturas de distancia o saturando el búfer de comunicación del microcontrolador.
 
-## Fundamentación Científica de la Inmunidad a Interferencias Electromagnéticas (EMI)
+Para erradicar esta degradación de la señal, se implementó el cableado industrial recuperado de impresoras de alto volumen de la marca Kodak. Estos conductores disponen de una arquitectura de blindaje **SFTP (*Shielded Foiled Twisted Pair*)**:
+1. **Par Trenzado:** Cancela el ruido por simetría acoplando las interferencias por igual en ambas líneas de datos, permitiendo que el Arduino las anule por rechazo en modo común.
+2. **Lámina de Aluminio (Foil):** Bloquea de forma perimetral las interferencias electromagnéticas de alta frecuencia radiadas por las chispas internas del motor DC.
+3. **Malla de Cobre Trenzada:** Absorbe y deriva a la masa común del chasis las corrientes de baja frecuencia provocadas por el par torsor del servomotor de la dirección SbW, blindando la red tri-sensorial de Trivilyn3.0 y asegurando datos puros en alta velocidad.
 
-Los motores de tracción DC que operan a $15,000\text{ RPM}$ actúan como generadores de alta frecuencia de ruido electromagnético de alta energía, debido al constante arqueado y conmutación de las escobillas del colector. Este ruido puede inducir corrientes parásitas en las líneas de señales de datos de los sensores ultrasónicos (Trigger y Echo) y en la comunicación serie $I^2\text{C}$/$\text{UART}$ de la cámara HuskyLens, corrompiendo las lecturas de distancia o saturando el búfer de comunicación del microcontrolador.
+# Desafíos Técnicos, Limitaciones y Soluciones en el Desarrollo
 
-Para erradicar esta degradación de la señal, se implementó el cableado industrial recuperado de impresoras de alto volumen de la marca Kodak. Estos conductores disponen de una arquitectura de blindaje SFTP (Shielded Foiled Twisted Pair):
+Durante la construcciÓn y ensamblaje nuestro prototipo enfrentamos varios desafios los cuales resolvimos y decidimos documentar para demostrar que la construcción de un vehiculo autonomo no se realiza de la noche a la mañana. Que las cosas no siempre salen la primera vez y consta de un proceso de prueba-error para llegar al resultado deseado.
+
