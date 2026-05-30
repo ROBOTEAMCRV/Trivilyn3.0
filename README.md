@@ -75,11 +75,11 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
      
 9. [Desafíos Técnicos, Limitaciones y Soluciones en el Desarrollo](#Desafíos-Técnicos-Limitaciones-y-Soluciones-en-el-Desarrollo)
   
-10. [Archivos CAD](#Archivos-CAD)
+10. [Archivos CAD](Archivos-CAD)
 
- 11. [Fotos de Trivilyn3.0](#Trivilyn-360)
+ 11. [Fotos de Trivilyn3.0](Trivilyn-360)
 
- 12. [Videos de Trivilyn3.0](#Trivilyn3.0-Challenges)
+ 12. [Videos de Trivilyn3.0](Trivilyn3.0-Challenges)
 
 # MIEMBROS DEL TEAMROBOCRV
 
