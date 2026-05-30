@@ -262,7 +262,7 @@ Esta base fue rediseñada varias veces hasta que logramos encontrar el punto don
 
 Dos por la parte interior y uno por la parte exterior por cada lado. Estos se encargan de sujetar los ejes de las ruedas al sistema de dirección; luego, el diferencial «tubo transversal», ya antes lubricado con vaselina.
 
-## Primer piso
+# Primer piso
 
 La base inferior al igual que las demas piezas de Trivilyn3.0 esta realizada en impresión 3D del material PETG de la marca Creality el cual adquirimos de la tienda oficial de Creality ubicada en Caracas 
 
@@ -331,7 +331,7 @@ Esos 0.2mm extra en el diseño para el encaje de la pieza no son un error y su e
 
 <img width="1050" height="525" alt="image" src="https://github.com/user-attachments/assets/48e42870-3c93-4fa8-b5ce-ad1c5384dbb6" />
 
-Para finalizar la explicación de esta base, posee 3 pilares que se encargan de sostener el segundo piso posicionados estratégicamente 2 en la parte trasera y una en la parte frontal estás se encargan de soportar los demás pisos de Trivilyn
+Esta base, posee 3 pilares que se encargan de sostener el segundo piso posicionados estratégicamente 2 en la parte trasera y una en la parte frontal estás se encargan de soportar los demás pisos de Trivilyn
 
 <img width="1035" height="609" alt="image" src="https://github.com/user-attachments/assets/e42034b6-7c6a-4100-a12e-f25d8e6446b7" />
 
@@ -339,8 +339,75 @@ Sus medidas son de 7 mm de largo x 6.5 mm de ancho x 45 mm de alto y, en la part
 
 <img width="967" height="591" alt="image" src="https://github.com/user-attachments/assets/75062dcb-3c39-4e53-b115-7a81c80a3a00" />
 
+Para finalizar es necesario analizar la integración en el "primer piso" o chasis inferior del vehículo un sistema para la extracción de 1 par de baterias 18650 que se ubican en el. Este plano fundamental no solo actúa como el soporte rígido de la suspensión y los ejes de tracción, sino que ha sido diseñado geométricamente para encapsular el contenedor de baterías sin interferir con los actuadores ni comprometer la distancia al suelo ( distancia al suelo ).
 
-## Segundo piso
+<img width="1206" height="616" alt="image" src="https://github.com/user-attachments/assets/8dd94d39-3d53-4fd0-aa05-a83744581030" />
+
+El riel guía macho de la corredera está integrado directamente en la matriz del chasis inferior, ubicado en el espacio simétrico comprendido entre el eje de dirección delantero y el conjunto motor-reductor trasero. Esta disposición central asegura que el volumen de las celdas 18650 ocupa un espacio que básicamente no restringe el radio de giro de las ruedas delanteras ni la cinemática de los eslabones de dirección.
+
+  <img width="1047" height="600" alt="image" src="https://github.com/user-attachments/assets/86313b49-ee50-43eb-a047-0a2b3f0958b3" />
+
+
+ Al formar parte del primer piso, el cartucho deslizable queda protegido perimetralmente por la estructura sólida del chasis impreso en PETG. Esto significa que las baterías no están suspendidas ni expuestas a impactos directos en caso de colisión; el chasis actúa como un exoesqueleto protector. Además, al situarse en el nivel más bajo, el peso del banco de energía se descarga directamente sobre los puntos de apoyo de los ejes, evitando flexiones mecánicas en las placas superiores del segundo y tercer piso.
+
+-  La corredera macho cuenta con un tope mecánico en el extremo interno que alinea automáticamente los terminales de presión de las celdas con el bloque de distribución del primer piso. Desde este punto basal, las líneas de alimentación de alta corriente (conductores de calibre adecuado para soportar los picos del motor y el servo) ascienden de manera vertical y ordenada a través de pasacables integrados hacia el segundo piso, donde se conectan al interruptor general ya los módulos de regulación. Esto mantiene el primer piso libre de bucles de cableado sueltos que pueden atascarse con elementos externos de la pista o con el propio movimiento de la corredera.
+
+## Especificaciones de Fabricación y Tolerancias Geométricas
+
+- Material de Fabricación: Polímero de Polietileno Tereftalato Glicolizado ( PETG ). Se seleccionó este material sobre el estándar PLA debido a su alta resistencia al impacto, superior tenacidad y resiliencia ante esfuerzos mecánicos de flexión, además de su inmunidad química frente a agentes lubricantes industriales.
+
+- Parámetros de Fabricación: Relleno de tipo giroscópico al 35% con 4 perímetros de pared exteriores. Esta configuración genera una estructura interna alveolar con una relación resistencia-peso óptima, capaz de absorber las vibraciones mecánicas de alta frecuencia del motor sin transmitir fatiga por esfuerzo a las uniones del chasis.
+
+- Ajuste Mecánico del Riel: El canal hembra integrado en el chasis presenta una tolerancia geométrica de +0.2 mm respecto a la corredera macho de las baterías. Este margen de holgura de precisión es crítico: previene el juego mecánico o las oscilaciones del banco de energía durante las aceleraciones transversales, pero mantiene el coeficiente de fricción lo suficientemente bajo para permitir un deslizamiento manual suave y fluido.
+
+## Mecanismo Deslizable en Corredera Lateral (Macho-Hembra)
+El sistema de alimentación no utiliza contenedores fijos ni requiere el desmontaje de los niveles superiores. El sistema está compuesto por dos subconjuntos mecánicos interconectados:
+
+Riel Hembra Integrado: Una cavidad longitudinal con guías en ángulo de geometría trapezoidal (similar a una cola de milano invertida), extruida directamente en el centro geométrico del primer piso. Su ubicación interaxil aprovecha el espacio muerto comprendido entre el servo de dirección y el tren motriz trasero, optimizando la distancia libre al suelo a un valor constante de 15 mm .
+
+Cartucho Macho Porta-Celdas: Un contenedor compacto impreso en PETG que aloja firmemente dos celdas de litio de formato 18650 dispuestas en paralelo. Cuenta con ranuras laterales que se acoplan simétricamente al riel hembra del chasis y una pestaña ergonómica en el extremo exterior que facilita el agarre y la tracción manual para el operario.
+
+________________________________________________________________________________________________________
+### Explicación de sistema de cola de milano 
+
+El diseño de la interfaz de deslizamiento entre el chasis inferior (riel  macho) y el cartucho porta-celdas (riel hembra) implementa un perfil prismático con geometría de cola de milano (unión trapezoidal angular). Esta decisión de diseño sustituye a las guías planas tradicionales con el objetivo de aprovechar las propiedades mecánicas de auto-alineación y restricción de esfuerzos multiaxiales que ofrece esta configuración geométrica.
+
+<img width="225" height="225" alt="image" src="https://github.com/user-attachments/assets/d61266ee-3ee3-43b1-aa0a-c83a0a44c314" />
+
+
+A diferencia de los rieles de sección cuadrada o en "T", donde las fuerzas de torsión se concentran de forma crítica en ángulos rectos de$90^\circ$(provocando zonas de alta concentración de esfuerzos y fracturas por cizalladura), la cola de milano distribuye las cargas a lo largo de planos inclinados (típicamente configuradas a un ángulo de flanco$\theta = 60°).Cuando el robot experimenta una fuerza centrífuga lateral a PWM 190, el flanco inclinado descompone la fuerza normal en componentes vectoriales, aumentando la fricción estática interna de contacto y bloqueando el conjunto firmemente en su sitio. Cuanto mayor es la fuerza que intenta separar el cartucho lateralmente, más se acuña la geometría dentro de su contraparte.La implementación de este sistema proporciona las siguientes ventajas:
+
+- Al introducir el cartucho, la conicidad natural de los flancos laterales actúa como una guía autocentrante. Esto compensa pequeños errores de aproximación manual del operario bajo condiciones de estrés en competencia, encauzando mecánicamente el porta-celdas hacia los terminales eléctricos de fondo.
+
+- Estabilidad de la Distancia al Suelo ( Ground Clearance ): Al quedar la junta entrelazada de forma interna, el espacio total ocupado por el mecanismo se reduce al espesor nominal del chasis, permitiendo un despeje constante de$15\text{ mm}$respecto al suelo sin protuberancias externas que puedan encallarse en las imperfecciones de la pista.
+
+- Compensación de Desgaste por Fricción: Las superficies anguladas se asientan mejor con el uso continuo. El sutil desgaste microscópico provocado por el ciclo de inserciones no genera holgura holgada (como ocurriría en un riel cuadrado), sino que permite que el cartucho se asiente de manera más íntima dentro del cono receptor.
+
+>[!NOTE]
+> Consideración de Tolerancia Crítica en Manufactura Aditiva (Impresión 3D) 
+Al imprimir perfiles en cola de milano de forma horizontal, el fenómeno de la gravedad puede provocar un leve colapso de las capas superiores del riel hembra ( overhangs sin soporte). Para contrarrestar esto en Trivilyn3.0, el ángulo de los flancos se limitó estrictamente  60° respecto a la horizontal. Esto permite que las impresoras depositen el filamento PETG utilizando puentes térmicos autosoportados, manteniendo la fidelidad dimensional del canal intacta y eliminando la necesidad de soportes internos que arruinarían el acabado superficial y el coeficiente de fricción de la guía.
+
+>[!TIP]
+>Al preparar el código G ( G-code ) en el software de laminado (PrusaSlicer, Cura, etc.), la pieza matriz del chasis inferior (riel hembra) debe orientarse obligatoriamente de forma plana sobre la cama de impresión (planos de los ejes XY) .
+
+La importancia de esta configuración de fabricación radica en la física del material anisotrópico (las impresiones 3D son más débiles en la unión entre capas):
+
+Alineación de Filamentos: Esta orientación garantiza que los hilos de plástico extruido corran de forma longitudinal, paralelos a la longitud del riel de la cola de milano.
+
+Resistencia Estructural: Las fuerzas de tracción y cizallamiento laterales que ejerce el cartucho de baterías en las curvas cerradas actuarán de forma perpendicular a la deposición de las capas. Esto aprovecha la resistencia máxima del polímero PETG en su plano sólido molecular, eliminando por completo el riesgo de delaminación o desprendimiento de los rieles del primer piso durante la carrera.
+
+## Topes Mecánicos y Retención Dinámica (Sistemas de Seguridad)
+
+Para contrarrestar las fuerzas de inercia durante los frenados bruscos o cambios de dirección extremos a regímenes de alta velocidad (PWM 190), el diseño mecánico incorpora dos sistemas de seguridad geométricos por hardware:
+
+- Tope de Profundidad Trasero: Una pared sólida al final del riel macho que actúa como final de carrera física, manteniendo el avance del cartucho macho exactamente en el punto donde los contactos de presión hacen interfaz eléctrica con el bloque de distribución basal.
+
+## Interfaz de Conexión y Guiado de Cableado
+Al formar parte del primer piso, el cartucho deslizable queda protegido perimetralmente por la estructura sólida del chasis, la cual actúa como un exoesqueleto protector ante colisiones. Desde el bloque de distribución basal, las líneas de alimentación de alta corriente (conductores de calibre adecuado para soportar los picos del motor de tracción y el servomotor de 35 kg) ascienden de manera vertical y ordenada a través de pasacables integrados hacia el segundo piso.
+
+Esta disposición mantiene el primer piso completamente libre de bucles de cableado sueltos que pueden atascarse con elementos externos de la pista o interferir con la cinemática del sistema de dirección Ackermann y el propio movimiento de la corredera.
+
+# Segundo piso
 
 Para el segundo piso de Trivilyn 3.0, el diseño tuvo una reestructuración, siendo la más notoria su tamaño: su anchura aumentó de 90 mm a 100 mm, mantuvo sus 181.50 mm de largo y su altura aumentó de 5 mm a 38 mm en el momento en que se implementó el sistema para regular la altura de los sensores.
 <img width="904" height="664" alt="image" src="https://github.com/user-attachments/assets/f934e917-c560-4c97-a5e7-f0c92a428258" />
@@ -363,7 +430,7 @@ Ahora ¿Por qué se agrando su ancho? se agrando para poder darle espacio de gir
 
 ### ¿como funciona?
 
-En lugar de usar piezas comerciales limitadas, diseñamos un sistema de rieles macho-hembra impreso en PETG. El acoplamiento entre el soporte del sensor y el segundo nivel se basa en un sistema de corredera de precisión. Mediante una interfaz de rieles y una ranura longitudinal, se logra una integración que permite el ajuste vertical milimétrico. El bloqueo se realiza mediante un sistema de sujeción por fricción con tornillos de acero, lo que garantiza que la calibración de altura sea permanente durante la competencia, absorbiendo las vibraciones del tren motriz sin comprometer la orientación del eje óptico de los sensores.
+En lugar de usar piezas comerciales limitadas, diseñamos un sistema de rieles macho-hembra impreso en PETG (Sistema de cola de milano). El acoplamiento entre el soporte del sensor y el segundo nivel se basa en un sistema de corredera de precisión. Mediante una interfaz de rieles y una ranura longitudinal, se logra una integración que permite el ajuste vertical milimétrico. El bloqueo se realiza mediante un sistema de sujeción por fricción con tornillos de acero, lo que garantiza que la calibración de altura sea permanente durante la competencia, absorbiendo las vibraciones del tren motriz sin comprometer la orientación del eje óptico de los sensores.
 
 <img width="1184" height="600" alt="image" src="https://github.com/user-attachments/assets/dc379124-fe33-4ab5-8225-4c344223a759" />
 
@@ -399,7 +466,7 @@ La experiencia en la Nacional 2025 dejó una lección clara: la rigidez excesiva
 
 La capacidad de ajustar la altura del sensor en cuestión de segundos durante las prácticas nos otorga una ventaja competitiva crítica. Si las especificaciones de las paredes cambian o si la pista presenta irregularidades imprevistas, Trivilyn 3.0 puede recalibrar su "visión física" mecánicamente. Esto evita la necesidad de realizar cambios de último minuto en el código de detección de distancia, permitiendo que el software se mantenga estable mientras el hardware se adapta al entorno.
 
-## Tercer piso
+# Tercer piso
 
 El tercer piso de Trivilyn3.0 fue rediseñado en su totalidad, principalmente se cambio a un diseño en forma de ("Cabina") 
 
@@ -988,7 +1055,7 @@ Es importante destacar que, según los datos que recopilamos, la magnitud de est
 
 El pensamiento sistémico define que un vehículo autónomo de alto rendimiento no es simplemente una colección de motores, sensores y algoritmos aislados, sino un sistema cerrado interconectado. Cada modificación física altera la dinámica del software, la compatibilidad química de las interfaces mecánicas y la robustez de las señales ante perturbaciones del entorno de la WRO.
 
-###  Lógica de Interconexión: Física del Chasis vs. Calibración del Software
+##  Lógica de Interconexión: Física del Chasis vs. Calibración del Software
 
 El punto de disparo de nuestros sensores no se eligió al azar, es el resultado de un análisis sistémico que interconecta la distribución física de los componentes con la respuesta dinámica del vehículo. El siguiente mapa describe esta dependencia:
 
@@ -1045,7 +1112,7 @@ Este valor de $31.56\text{ cm}$ coincide exactamente con el radio mínimo de gir
 La tracción posterior de Trivilyn3.0 emplea neumáticos de caucho de alta fricción del kit Lego EV3. Al ejecutar la curva de forma reactiva, el robot debe generar una fuerza centrípeta que desvíe su centro de masa. Si el disparo se retrasara de los $42\text{ cm}$, el chasis exigiría un giro de dirección instantáneo y excesivo en las ruedas directrices frontales.
 
 Esto provocaría que la fuerza lateral requerida por la curva supere la fuerza de fricción estática máxima de los neumáticos ($F_f \le \mu_s \cdot N$), forzando la transición a fricción dinámica (derrape por pérdida de tracción). Al derrapar, las ruedas frontales experimentan subviraje, perdiendo la capacidad de direccionar el vehículo y estrellando el robot contra la pared exterior. Programar el giro a $42\text{ cm}$ mantiene la aceleración lateral dentro de los límites de adherencia de la goma, garantizando una trayectoria limpia y predecible.
-
+__________________________________________________________________________________________________________________
 ## Gestión de Fricción, Termodinámica y Compatibilidad Química de Materiales
 
 En el diseño mecánico de Trivilyn3.0, la lubricación y la protección contra el desgaste no son actividades secundarias de mantenimiento, sino variables críticas de la física interna de la transmisión y la suspensión del robot.
@@ -1079,6 +1146,7 @@ Alteraría los vectores de reflexión de los sensores ultrasónicos, introducien
 
 >[!NOTE]
 >Universalidad y Mantenimiento de Emergencia: Una de las mayores ventajas de la vaselina neutra sólida sobre los lubricantes sintéticos especializados de teflón o litio es su accesibilidad global. Al ser químicamente neutra y de grado comercial, el equipo puede realizar reparaciones y mantenimientos de emergencia en boxes en cualquier competencia utilizando petrolato comercial común, sin alterar la calibración física de las piezas del chasis.
+______________________________________________________________________________________________________________
 
 ## Adaptabilidad Sensorial ante el Entorno de la Pista
 
@@ -1088,6 +1156,34 @@ El Problema Físico: El diseño anterior poseía soportes estáticos y rígidos 
 
 La Solución por Diseño Flexible (Trivilyn3.0): Para la temporada 2026, decidimos cambiar la rigidez y adoptamos el principio de diseño adaptativo. El desarrollo de la corredera de precisión con riel macho-hembra permite ajustar la altura del hardware de forma física en cuestión de segundos en boxes. Esto resuelve mecánicamente el problema de la variabilidad del entorno en la pista, garantizando que el haz ultrasónico incida de manera perfectamente perpendicular al plano medio de las paredes de la WRO, manteniendo un flujo de datos limpio hacia el Arduino sin necesidad de reprogramar los umbrales de software.
 
+______________________________________________________________________________________________
+
+## Sistema de corredera de baterias y Optimización Cinemática
+ 
+La integración de un sistema de alojamiento modular en corredera (mecanismo de riel guía tipo macho-hembra impreso en 3D) para el banco de baterías principal de dos celdas 18650 responde a una estrategia de diseño sistémico. Este enfoque resuelve simultáneamente restricciones de empaquetamiento volumétrico, eficiencia en la gestión de tiempos en fosos y la estabilidad dinámica del vehículo.
+
+1. Optimización Volumétrica y Reducción del Perfil Vertical
+
+En el diseño de vehículos autónomos a escala para la WRO, la gestión del espacio tridimensional es un factor crítico. La implementación del cartucho deslizable horizontal en la sección inferior del chasis elimina la necesidad de un despeje vertical para la extracción de las celdas.Si el acceso a las baterías fuese superior o vertical, la arquitectura de la carrocería requeriría elevar el segundo nivel (placa de control y distribución lógica) un mínimo de 50 mm adicionales para permitir el vector de extracción manual. Al desplazar este plano de forma lateral, se compacta el perfil vertical del robot, garantizando el cumplimiento holgado de las normativas de dimensiones máximas de la competencia sin sacrificar área útil para los sensores superiores.
+  
+2. Eficiencia Operacional en Entornos de Competición (Gestión de Rondas)
+
+El diseño de hardware para competencia debe contemplar la mantenibilidad bajo condiciones de alta presión temporal. El sistema de corredera actúa como un método de sustitución rápida ( Quick-Change ) que mitiga el riesgo de error humano.Al permitir el intercambio periférico del bloque de energía, se evita por completo la manipulación, desconexión o desensamblaje de los componentes lógicos, el cableado blindaje SFTP o el soporte del microcontrolador Arduino Mega. Esto reduce el tiempo de permanencia en los pits para recargar a un intervalo menor a 10 segundos, manteniendo la integridad del hardware intacta entre los intentos de la ronda.
+  
+3. Análisis Dinámico: Desplazamiento del Centro de Masa y Estabilidad CinemáticaDesde la perspectiva de la dinámica vehicular, el banco de baterías 18650 representa uno de los vectores de masa más significativos del conjunto total del robot (aproximadamente el 25% del peso neto). Ubicar mecánicamente este componente en el plano más bajo del chasis optimiza el comportamiento cinematográfico de Trivilyn3.0 en dos aspectos fundamentales:
+  
+ -  Reducción del Momento de Vuelco: Al minimizar la altura del centro de gravedad ($h_{CG}$), se reduce directamente el brazo de palanca cizallante generado por la fuerza centrífuga cuando el vehículo ejecuta virajes de alta velocidad a un régimen de PWM 190. Esto mitiga el momento de vuelco transversal, manteniendo el chasis firmemente paralelo al plano de la pista.
+ 
+ -  Estabilización del Vector de Carga (Grip Neumático): La concentración de la masa en la zona inferior e interaxil (entre ambos ejes) distribuye de manera uniforme la fuerza normal sobre los neumáticos de caucho de 43 mm. Al suprimir la transferencia de carga transitoria excesiva hacia las ruedas exteriores durante las curvas, se contrarresta el efecto de subviraje ( understeer ) y el deslizado por deriva lateral, asegurando que la trayectoria calculada por el algoritmo de control reactivo se traduzca fielmente en el desplazamiento físico sobre el pasillo.
+
+   ### Contexto Histórico y Evolución del Sistema de Acoplamiento en Trivilyn
+   
+La adopción de la geometría en cola de milano para la fijación del banco de potencia no fue una decisión arbitraria, sino el resultado de un proceso de ingeniería iterativo basado en el análisis de fallas de los prototipos de temporadas anteriores. El desarrollo de esta interfaz se divide en tres fases evolutivas:
+
+- Fase 1: Rexbot 1.0 y 2.0 (Contenedor Fijo con Fijación por Tornillería): En las primeras versiones, las baterías se alojaban en un compartimento estático cerrado mediante una tapa atornillada en el segundo piso. Esta arquitectura presentaba dos fallas críticas: obligaba a elevar la altura del chasis para permitir el acceso superior y los ciclos constantes de atornillado terminaban barriendo las roscas del plástico. El tiempo de sustitución en boxes superaba los  60 segundos, un margen muy alto de tiempo.
+
+- Fase 2: Trivilyn 3.0 (Solución Sistémica mediante Cola de Milano): Para la temporada 2026, el equipo recurrió a la ingeniería clásica de ensamblaje prismático, adaptando la unión en cola de milano (un diseño con siglos de aplicación en la carpintería fina y la ingeniería de maquinaria pesada por su alta resistencia a la tracción sin necesidad de sujetadores). Al trasladar esta geometría a la fabricación aditiva en PETG, se logró bloquear cinco grados de libertad mediante el propio cierre de forma de la pieza, distribuyendo los esfuerzos mecánicos a lo largo de flancos angulados 60° optimizando la dinámica vehicular de manera definitiva.
+________________________________________________________________________________
 ## Evolución del Sistema de Interconexión y Blindaje de Señales (EMI)
 
 La confiabilidad física de la transmisión de datos a bordo de un vehículo autónomo de alta velocidad es un factor crítico. Para mitigar los falsos contactos eléctricos inducidos por las vibraciones y el ruido electromagnético, el equipo transitó por tres fases de evolución en su cableado:
