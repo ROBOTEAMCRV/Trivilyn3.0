@@ -63,7 +63,7 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
   
    - [Temporada 2026](#Temporada-2026)
   
-     * [Lógica-de-Interconexión](#lógica-de-interconexión:-física-del-chasis-v-calibración-del-software)
+     * [Lógica-de-Interconexión](#lógica-de-interconexión-física-del-chasis-vs-calibración-del-software)
     
      * [Inercia Rotacional](#A-la-Paradoja-de-la-masa-del-sensor-y-la-inercia-rotacional)
   
