@@ -112,8 +112,6 @@ Arquitectura del Código: Organiza la estructura del programa para que sea efici
 
 Montaje Físico: Se encarga del armado manual del prototipo, asegurando que cada tornillo y pieza esté en su lugar.
 
-Control de Calidad: Revisa que la estructura física sea resistente y que no haya fallos mecánicos durante las pruebas.
-
 Apoyo Logístico: Colabora en la preparación de las pistas de prueba, recolección de datos y mantenimiento preventivo del robot.
 
 <img width="400" height="600" alt="image" src="https://github.com/user-attachments/assets/51b3d7c0-b54a-4267-ae77-e930a64322b0" />
