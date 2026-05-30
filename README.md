@@ -65,7 +65,7 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
   
      * [Lógica-de-Interconexión](#lógica-de-interconexión-física-del-chasis-vs-calibración-del-software)
     
-     * [Inercia Rotacional](#a-la-paradoja-de-la-masa-del-sensor-y-la-inercia-rotacional)
+     * [Inercia Rotacional](#a.-la-paradoja-de-la-masa-del-sensor-y-la-inercia-rotacional-Iz)
   
 9. [Archivos CAD](#Archivos-CAD)
 
