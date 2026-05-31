@@ -77,7 +77,7 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
   
 10. [Archivos CAD](#Archivos-CAD)
 
- 11. [Fotos de Trivilyn3.0](#Trivilyn-360)
+ 11. [Fotos de Trivilyn3.0](Trivilyn-360)
 
  12. [Videos de Trivilyn3.0](#Trivilyn3.0-Challenges)
 
