@@ -395,12 +395,12 @@ Al imprimir perfiles en cola de milano de forma horizontal, el fenómeno de la g
 
 >[!TIP]
 >Al preparar el código G ( G-code ) en el software de laminado (PrusaSlicer, Cura, etc.), la pieza matriz del chasis inferior (riel hembra) debe orientarse obligatoriamente de forma plana sobre la cama de impresión (planos de los ejes XY) .
-
-La importancia de esta configuración de fabricación radica en la física del material anisotrópico (las impresiones 3D son más débiles en la unión entre capas):
-
-Alineación de Filamentos: Esta orientación garantiza que los hilos de plástico extruido corran de forma longitudinal, paralelos a la longitud del riel de la cola de milano.
-
-Resistencia Estructural: Las fuerzas de tracción y cizallamiento laterales que ejerce el cartucho de baterías en las curvas cerradas actuarán de forma perpendicular a la deposición de las capas. Esto aprovecha la resistencia máxima del polímero PETG en su plano sólido molecular, eliminando por completo el riesgo de delaminación o desprendimiento de los rieles del primer piso durante la carrera.
+>
+>La importancia de esta configuración de fabricación radica en la física del material anisotrópico (las impresiones 3D son más débiles en la unión entre capas):
+>
+> Alineación de Filamentos: Esta orientación garantiza que los hilos de plástico extruido corran de forma longitudinal, paralelos a la longitud del riel de la cola de milano.
+>
+>- Resistencia Estructural: Las fuerzas de tracción y cizallamiento laterales que ejerce el cartucho de baterías en las curvas cerradas actuarán de forma perpendicular a la deposición de las capas. Esto aprovecha la resistencia máxima del polímero PETG en su plano sólido molecular, eliminando por completo el riesgo de delaminación o desprendimiento de los rieles del primer piso durante la carrera.
 
 ## Topes Mecánicos y Retención Dinámica (Sistemas de Seguridad)
 
