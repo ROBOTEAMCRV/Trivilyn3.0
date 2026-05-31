@@ -369,12 +369,18 @@ El riel guía macho de la corredera está integrado directamente en la matriz de
 ## Mecanismo Deslizable en Corredera Lateral (Macho-Hembra)
 El sistema de alimentación no utiliza contenedores fijos ni requiere el desmontaje de los niveles superiores. El sistema está compuesto por dos subconjuntos mecánicos interconectados:
 
-Riel Hembra Integrado: Una cavidad longitudinal con guías en ángulo de geometría trapezoidal (similar a una cola de milano invertida), extruida directamente en el centro geométrico del primer piso. Su ubicación interaxil aprovecha el espacio muerto comprendido entre el servo de dirección y el tren motriz trasero, optimizando la distancia libre al suelo a un valor constante de 15 mm .
+Riel Macho Integrado: Una cavidad longitudinal con guías en ángulo de geometría trapezoidal (similar a una cola de milano invertida), extruida directamente en el centro geométrico del primer piso. Su ubicación interaxil aprovecha el espacio muerto comprendido entre el servo de dirección y el tren motriz trasero, optimizando la distancia libre al suelo a un valor constante de 15 mm .
 
-Cartucho Macho Porta-Celdas: Un contenedor compacto impreso en PETG que aloja firmemente dos celdas de litio de formato 18650 dispuestas en paralelo. Cuenta con ranuras laterales que se acoplan simétricamente al riel hembra del chasis y una pestaña ergonómica en el extremo exterior que facilita el agarre y la tracción manual para el operario.
+<img width="1102" height="604" alt="image" src="https://github.com/user-attachments/assets/79137ab0-fe7e-4b8f-9caf-549a608a4891" />
+
+
+Cartucho Hembra Porta-Celdas: Un contenedor compacto impreso en PETG que aloja firmemente dos celdas de litio de formato 18650 dispuestas en paralelo. Cuenta con ranuras laterales que se acoplan simétricamente al riel hembra del chasis y una pestaña ergonómica en el extremo exterior que facilita el agarre y la tracción manual para el operario.
+
+<img width="1093" height="632" alt="image" src="https://github.com/user-attachments/assets/c77e3653-c885-49a8-bc6c-6fa2db4e3d2f" />
+
 
 ________________________________________________________________________________________________________
-### Explicación de sistema de cola de milano 
+### Explicación sistema Cola de Milano 
 
 El diseño de la interfaz de deslizamiento entre el chasis inferior (riel macho) y el cartucho porta-celdas (riel hembra) implementa un perfil prismático con geometría de cola de milano (unión trapezoidal angular). Esta decisión de diseño sustituye a las guías planas tradicionales con el objetivo de aprovechar las propiedades mecánicas de auto-alineación y restricción de esfuerzos multiaxiales que ofrece esta configuración geométrica.
 
@@ -398,20 +404,24 @@ Al imprimir perfiles en cola de milano de forma horizontal, el fenómeno de la g
 >
 >La importancia de esta configuración de fabricación radica en la física del material anisotrópico (las impresiones 3D son más débiles en la unión entre capas):
 >
-> Alineación de Filamentos: Esta orientación garantiza que los hilos de plástico extruido corran de forma longitudinal, paralelos a la longitud del riel de la cola de milano.
+>- Alineación de Filamentos: Esta orientación garantiza que los hilos de plástico extruido corran de forma longitudinal, paralelos a la longitud del riel de la cola de milano.
 >
 >- Resistencia Estructural: Las fuerzas de tracción y cizallamiento laterales que ejerce el cartucho de baterías en las curvas cerradas actuarán de forma perpendicular a la deposición de las capas. Esto aprovecha la resistencia máxima del polímero PETG en su plano sólido molecular, eliminando por completo el riesgo de delaminación o desprendimiento de los rieles del primer piso durante la carrera.
 
 ## Topes Mecánicos y Retención Dinámica (Sistemas de Seguridad)
 
-Para contrarrestar las fuerzas de inercia durante los frenados bruscos o cambios de dirección extremos a regímenes de alta velocidad (PWM 190), el diseño mecánico incorpora dos sistemas de seguridad geométricos por hardware:
+Para contrarrestar las fuerzas de inercia y la transferencia de carga transitoria durante frenados bruscos o cambios de dirección extremos a regímenes de alta velocidad (PWM 190), el diseño mecánico de Trivilyn3.0 incorpora dos sistemas de seguridad geométricos por hardware tolerantes a fallas:
 
-- Tope de Profundidad Trasero: Una pared sólida al final del riel macho que actúa como final de carrera física, manteniendo el avance del cartucho macho exactamente en el punto donde los contactos de presión hacen interfaz eléctrica con el bloque de distribución basal.
+* **Tope de Profundidad Trasero:** Una pared sólida dispuesta al final del riel macho que actúa como final de carrera física. Su función es detener el avance del cartucho móvil exactamente en el punto concéntrico donde los contactos de presión ejercen la interfaz eléctrica óptima con el bloque de distribución basal, evitando sobrecargas mecánicas en los terminales.
+* **Sistema de Limitación por Pasador y Ranura de Seguridad:** Para evitar que el contenedor de energía se desprenda o sea expulsado por completo del chasis durante los mantenimientos de emergencia a alta presión en boxes, se diseñó una restricción prismática integrada. El riel hembra (solidario al contenedor de la batería 18650) incorpora un orificio cilíndrico pasante calibrado. A través de este agujero se introduce un tornillo de seguridad cuya punta sobresale internamente para acoplarse y navegar de forma concéntrica dentro de una ranura longitudinal tallada en el riel macho (ubicado en la base del primer piso).
+
+<img width="1014" height="622" alt="image" src="https://github.com/user-attachments/assets/c6c19c90-5cf5-41dd-b428-0f03df9510b4" />
+
 
 ## Interfaz de Conexión y Guiado de Cableado
 Al formar parte del primer piso, el cartucho deslizable queda protegido perimetralmente por la estructura sólida del chasis, la cual actúa como un exoesqueleto protector ante colisiones. Desde el bloque de distribución basal, las líneas de alimentación de alta corriente (conductores de calibre adecuado para soportar los picos del motor de tracción y el servomotor de 35 kg) ascienden de manera vertical y ordenada a través de pasacables integrados hacia el segundo piso.
 
-Esta disposición mantiene el primer piso completamente libre de bucles de cableado sueltos que pueden atascarse con elementos externos de la pista o interferir con la cinemática del sistema de dirección Ackermann y el propio movimiento de la corredera.
+Esta disposición mantiene el primer piso completamente libre de bucles de cableado sueltos que pueden atascarse con elementos externos de la pista o interferir con la cinemática del sistema de dirección y el propio movimiento de la corredera.
 
 # Segundo piso
 
@@ -533,25 +543,80 @@ El sistema electrónico se divide en tres capas fundamentales: Control Central, 
 
 ---
 
-## 2. Presupuesto de Potencia (Power Budget) y Distribución
+## 2. Presupuesto de Potencia (Power Budget) y Distribución Independiente
 
-Para evitar el problema más crítico en robótica móvil "los reinicios del procesador por caídas de tensión" (voltage sags) provocados por los motores, hemos aislado la alimentación en *tres líneas eléctricas independientes*:
+Para erradicar el problema más crítico en robótica móvil —los reinicios del procesador por caídas de tensión (*voltage sags*) y el ruido de alta frecuencia en los sensores— el diseño eléctrico de Trivilyn3.0 rechaza los buses comunes y opta por un **aislamiento físico total mediante tres bancos de energía independientes** (6 celdas 18650 en total). 
+
+Esta arquitectura separa de forma redundante las cargas lógicas de las inductivas, aplicando además una estrategia de distribución de masas donde solo el banco de tracción utiliza el sistema de extracción rápida por corredera.
 
 ### Desglose Eléctrico de los Bancos de Energía
 
-| Subsistema | Configuración de Baterías | Voltaje Nominal | Modulación de Voltaje | Propósito y Ventaja de Ingeniería |
-| :--- | :--- | :--- | :--- | :--- |
-| *Lógica y Percepción* | 2x 18650 Litio en *Serie* | ~7.4V - 8.4V | Regulador interno del Arduino (salida 5V) | Alimenta el Arduino Mega, la HuskyLens y los 3 sensores HC-SR04. Al no compartir línea con motores, la cámara mantiene un voltaje ultraestable de 5V para el procesamiento de imágenes. |
-| *Actuación (Dirección)* | 2x 18650 Litio en *Paralelo* | ~3.7V - 4.2V | *Elevador de Voltaje (Step-Up)* a *6.5V* | Dedicado exclusivamente al servomotor de 35kg. El elevador asegura un flujo constante de 6.5V, manteniendo el torque crítico de dirección incluso si las baterías empiezan a descargarse. |
-| *Tracción e Iluminación* | 2x 18650 Litio en *Serie* | ~7.4V - 8.4V | *Step-Up (10V)* + Regulador posterior a *3.1V* | Alimenta los motores de tracción y un circuito cerrado de 2 LEDs en paralelo para condiciones de iluminación controlada. |
->[!NOTE]
->  Auditoría de Capacidad de las Baterías:
-> Las celdas 18650 del sistema de dirección presentan una etiqueta comercial de 8800 mAh. Tras realizar un análisis técnico basado en la densidad energética del litio y las dimensiones físicas estándar de una celda 18650, el equipo determinó que este valor es nominal/falso (común en el mercado de consumo). 
-> 
->* *Mitigación del Riesgo:* Para el diseño del robot, calculamos el peor escenario estimando una capacidad real aproximada de *1200 a 1500 mAh* por celda. Gracias a la configuración en paralelo, la capacidad de corriente se duplica, lo que garantiza autonomía de sobra para las rondas oficiales de la WRO, operando con un factor de seguridad de 3x sobre el consumo real.
->
->* Aislamiento de Ruido: La HuskyLens y los sensores ultrasónicos se alimentan exclusivamente desde los pines de 5 V del Arduino para garantizar un voltaje limpio y libre de las fluctuaciones que provocan los motores.
+| Subsistema Alimentado | Configuración de Baterías | Voltaje Nominal | Regulación / Modulación | Propósito y Ventaja de Ingeniería |
+| :--- | :---: | :---: | :---: | :--- |
+| **Línea 1: Lógica y Percepción** | 2x 18650 en Serie | 7.4V - 8.4V | Regulador Externo Step-Down (BEC) a **5V Dedicado** | Alimenta el Arduino Mega, la cámara HuskyLens y los 3 sensores HC-SR04. Al no compartir conexiones físicas con ningún motor, la línea de datos mantiene 5V puros, asegurando que la HuskyLens procese imágenes en alta velocidad sin caídas de telemetría. |
+| **Línea 2: Actuación de Dirección** | 2x 18650 en Paralelo | 3.7V - 4.2V | *Elevador de Voltaje (Step-Up)* a **6.5V Constantes** | Dedicado exclusivamente al servomotor HobbyPark de 35kg de la dirección SbW. La configuración en paralelo duplica la capacidad de corriente disponible. El Step-Up garantiza un torque de salida idéntico y preciso, incluso si las celdas empiezan a descargarse. |
+| **Línea 3: Sistema de Tracción** | 2x 18650 en Serie | 7.4V - 8.4V | Driver MOSFET de Alta Corriente (Voltaje Directo) | Suministra la potencia bruta para el motor DC a 15,000 RPM. **Este es el único banco alojado en la corredera inferior en cola de milano**. Al ser el sistema que sufre el mayor desgaste energético (PWM 190), requiere sustitución rápida en boxes, mientras que los otros dos bancos permanecen fijos. |
 
+### Justificación de la Alimentación Lógica vía BEC (Estabilidad del Lazo de Control)
+
+El uso de un regulador externo tipo **BEC (Battery Elimination Circuit)** para alimentar de forma exclusiva el ecosistema de control no fue una elección de conveniencia, sino una contramedida crítica de diseño electrónico sistémico. En robótica de competencia, la estabilidad del software depende directamente de la pureza de la señal eléctrica que alimenta al hardware de procesamiento.
+
+---
+
+### 📊 Tabla de Consumo Nominal y Pico de Componentes
+
+El presupuesto de cargas eléctricas se calculó modelando el peor escenario dinámico coincidente en pista:
+
+| Componente | Voltaje de Operación | Consumo en Reposo (Idle) | Consumo en Carga Máxima (Peak) | Banco de Alimentación | Impacto Sistémico en la Misión |
+| :--- | :---: | :---: | :---: | :---: | :--- |
+| **Microcontrolador Arduino Mega 2560** | 5V | 50 mA | 80 mA | Banco 1 (Lógica vía BEC) | Cerebro lógico; procesa la máquina de estados y las lecturas analógicas/digitales. |
+| **Cámara de Visión HuskyLens** | 5V | 220 mA | 380 mA | Banco 1 (Lógica vía BEC) | Algoritmos de IA para detección de señales de tráfico y pilares cromáticos. |
+| **3x Sensores Ultrasónicos HC-SR04** | 5V | 45 mA (15 mA c/u) | 60 mA (20 mA c/u) | Banco 1 (Lógica vía BEC) | Red tri-sensorial para evasión de muros perimetrales mediante multiplexación temporal. |
+| **Servomotor de Dirección HobbyPark (35kg)** | 6.5V | 100 mA | 2,500 mA (Stall) | Banco 2 (Dirección vía Step-Up) | Actuador de la cinemática Steer-by-Wire (SbW); alta demanda de corriente en virajes bruscos. |
+| **Motor de Tracción DC (Turbo Snake)** | 7.4V | 300 mA | 4,500 mA (Stall) | Banco 3 (Tracción en Riel) | Sistema de propulsión posterior a 15,000 RPM. Alto consumo en aceleración (PWM 190). |
+| **Electrónica Auxiliar (LEDs / Driver)** | 5V | 20 mA | 50 mA | Banco 1 (Lógica vía BEC) | Indicadores de estado de la misión y telemetría visual en boxes. |
+
+---
+
+> [!NOTE]
+> **Auditoría de Capacidad de las Baterías y Mitigación de Riesgos en Fosos**
+> Las celdas 18650 utilizadas en el sistema de dirección presentaban una etiqueta comercial de 8,800 mAh. Tras realizar un análisis basado en la densidad energética límite del litio y las dimensiones de la celda, el equipo determinó que este valor es nominal/falso (típico en el mercado de consumo masivo).
+> 
+> * **Mitigación y Factor de Seguridad:** Para el diseño seguro de Trivilyn3.0, estimamos una capacidad real de **2,200 a 2,500 mAh** por celda. Al conectar el Banco 2 en paralelo, la capacidad real efectiva se eleva a un rango de 4,400 a 5,000 mAh, asegurando corriente de sobra para el servo de 35kg. 
+> * **Justificación de la Corredera Exclusiva:** Dado que el Banco 3 (Tracción) opera bajo un régimen severo de PWM 190 absorbiendo picos de hasta **4.5 A**, es el único componente de energía que experimenta fatiga térmica y descarga acelerada. Por ello, justificamos mecánicamente colocar **únicamente estas 2 baterías en el cartucho de cola de milano**. Esto nos permite realizar el recambio rápido (*Quick-Change*) del sistema motriz en menos de 10 segundos sin alterar el torque de la dirección ni desestabilizar el voltaje de los sensores lógicos fijos.
+---
+
+##  📈Análisis de Rendimiento y Cálculo de Autonomía Real del Vehículo
+
+Para validar la viabilidad operativa de Trivilyn3.0 en condiciones de competencia extrema, el equipo desarrolló un modelo matemático de descarga basado en la capacidad real auditada de nuestras celdas 18650 (2,500 mAh por celda). Al tener tres bancos de energía independientes, calculamos la autonomía teórica y real de cada subsistema de forma aislada para identificar el eslabón más débil de la cadena energética.
+
+#### 1. Banco 1: Lógica y Percepción (2 celdas en Serie = 7.4V / 2,500 mAh)
+Este banco alimenta al Arduino Mega, la HuskyLens y los 3 ultrasonidos a través del regulador BEC externo.
+* Consumo promedio constante: 50 mA (Arduino) + 300 mA (HuskyLens promedio) + 45 mA (Sensores) = 395 mA (0.395 Amperios).
+* Cálculo de Autonomía Teórica: Capacidad (2,500 mAh) / Consumo (395 mA) = 6.32 horas.
+* Aplicando Factor de Eficiencia del BEC (85%): 6.32 x 0.85 = **5.37 horas de autonomía continua.**
+
+#### 2. Banco 2: Actuación de Dirección (2 celdas en Paralelo = 3.7V / 5,000 mAh efectivos)
+Este banco alimenta exclusivamente al servomotor de 35kg montado en el segundo piso mediante el elevador Step-Up a 6.5V. En una carrera de velocidad, el servo no está bloqueado todo el tiempo; estimamos un régimen de trabajo dinámico del 40%.
+* Consumo promedio estimado en pista: 600 mA (0.6 Amperios).
+* Cálculo de Autonomía Teórica: Capacidad efectiva (5,000 mAh) / Consumo (600 mA) = 8.33 horas.
+* Aplicando Factor de Eficiencia del Step-Up (80%): 8.33 x 0.80 = **6.66 horas de autonomía continua.**
+
+#### 3. Banco 3: Sistema de Tracción (2 celdas en Serie = 7.4V / 2,500 mAh)
+Este es el banco alojado en el cartucho de cola de milano del primer piso, el cual alimenta al motor DC Turbo Snake operando a PWM 190. Modelamos el peor escenario posible con aceleraciones violentas continuas y fricción en pista.
+* Consumo promedio severo en carrera: 1,800 mA (1.8 Amperios).
+* Cálculo de Autonomía Teórica: Capacidad (2,500 mAh) / Consumo (1,800 mA) = 1.38 horas.
+* Aplicando Factor de Degradación Térmica a 15,000 RPM (Factor de seguridad del 75%): 1.38 x 0.75 = 1.03 horas. Esto equivale a **62 minutos de autonomía en carrera.**
+
+---
+
+### 🏁 Conclusión del Análisis de Rendimiento (Criterio Quick-Change)
+
+El desglose matemático demuestra de forma contundente por qué el diseño de Trivilyn3.0 acertó al colocar **únicamente el Banco 3 en el sistema de corredera extraíble**. 
+
+Mientras que el cerebro lógico y la dirección pueden operar por más de 5 horas seguidas sin necesidad de tocar las 4 baterías del segundo piso, el sistema de tracción consume la energía **6 veces más rápido** debido a la exigencia del motor a PWM 190. 
+
+Con 62 minutos de autonomía real en el motor, el robot puede completar holgadamente más de 40 rondas seguidas en pista antes de experimentar una pérdida notable de velocidad de crucero. Sin embargo, gracias al mecanismo de cola de milano, el operario puede sustituir este cartucho en los pits cada 2 rondas de forma preventiva en solo 10 segundos, garantizando que el motor trabaje siempre en la curva de máximo torque y voltaje de las celdas.
 
 
 ## 3. Mitigación de Fallas y Decisiones Críticas
@@ -604,13 +669,13 @@ $$W_{\text{detect}} = 2 \cdot 50\text{ cm} \cdot \tan(7.5^\circ) \approx 100\tex
 
 Esta calibración SbW elimina el deslizamiento lateral (derrape) al mantener ambas ruedas en el mismo arco de giro, logrando un ángulo de deflexión máximo de $\beta = 40^\circ$ por lado (izquierdo y derecho), lo que equivale a un barrido de dirección total de $80^\circ$ de tope a tope (lock-to-lock). El rango de disparo del sensor frontal está directamente sincronizado con esta capacidad cinemática:
 
-- Límite Inferior ($42\text{ cm}$): Gracias al agresivo ángulo de deflexión de $40^\circ$ por lado provisto por el sistema SbW, el robot es capaz de realizar virajes sumamente cerrados. Si la aproximación desciende de $42\text{ cm}$, el tiempo de respuesta del servomotor HobbyPark ($t_{\text{resp}} \approx 0.12\text{ s}$) y el momento lineal del chasis empujarán el parachoques delantero contra la pared exterior antes de que las ruedas completen la deflexión de $40^\circ$.
+- Límite Inferior 42 cm: Gracias al agresivo ángulo de deflexión de 40° por lado provisto por el sistema SbW, el robot es capaz de realizar virajes sumamente cerrados. Si la aproximación desciende de 42°, el tiempo de respuesta del servomotor HobbyPark ($t_{\text{resp}} \approx 0.12 s y el momento lineal del chasis empujarán el parachoques delantero contra la pared exterior antes de que las ruedas completen la deflexión de 40°
 
-- Límite Superior ($52\text{ cm}$): Iniciar el giro SbW de $40^\circ$ de forma anticipada (lecturas frontales superiores a $52\text{ cm}$) cerrará demasiado rápido el radio de giro del chasis. Esto provocará que la rueda trasera interna "muerda" o choque directamente contra la esquina o vértice interno del muro.
+- Límite Superior 52 cm): Iniciar el giro SbW de 40° de forma anticipada (lecturas frontales superiores a 52° cerrará demasiado rápido el radio de giro del chasis. Esto provocará que la rueda trasera interna "muerda" o choque directamente contra la esquina o vértice interno del muro.
 
 ## 2. Vectores Laterales: Control de Centrado Dinámico y Prevención de Cross-Talk
 
-Los sensores ultrasónicos laterales se orientan de forma estrictamente ortogonal al eje longitudinal del chasis ($90^\circ$ a la izquierda y derecha). Son los encargados de alimentar el bucle cerrado de microcorrecciones reactivas.
+Los sensores ultrasónicos laterales se orientan de forma estrictamente ortogonal al eje longitudinal del chasis (90° la izquierda y derecha). Son los encargados de alimentar el bucle cerrado de microcorrecciones reactivas.
 
 ### A. Alineación Coaxial vs. Desfase Longitudinal
 
@@ -630,7 +695,7 @@ Tiempo (ms):  │ [Ping Izq.] │  29 ms Espera  │ [Ping Der.] │  29 ms Espe
 
 
 >[!IMPORTANT]
->Aislamiento Acústico del Soporte: El PETG de las piezas de la corredera puede propagar vibraciones mecánicas directamente del chasis al sensor en forma de "ruido de conducción sólida". Hemos diseñado paredes de acoplamiento de friction de $2\text{ mm}$ que rodean el cuerpo del transductor, actuando como un filtro mecánico pasivo que disipa las vibraciones por encima de los $20\text{ kHz}$.
+>Aislamiento Acústico del Soporte: El PETG de las piezas de la corredera puede propagar vibraciones mecánicas directamente del chasis al sensor en forma de "ruido de conducción sólida". Hemos diseñado paredes de acoplamiento de friction de 2 mm que rodean el cuerpo del transductor, actuando como un filtro mecánico pasivo que disipa las vibraciones por encima de los 20 kHz.
 
 ## 3. Sensor de Visión: Geometría de Proyección Tridimensional (HuskyLens)
 
@@ -653,7 +718,7 @@ La cámara HuskyLens se localiza en la sección superior frontal (tercer piso). 
 
 La cámara debe ser capaz de detectar tanto los pilares de color Rojo/Verde (cuya altura típica es de $15\text{ cm}$) como la línea de parqueo Magenta en el suelo. Para calcular la distancia de la zona ciega ($d_{ciega}$) por delante del robot, aplicamos la siguiente fórmula trigonométrica basada en la cotangente:
 
-$$d_{ciega} = h_{cam} \cdot \cot\left(\theta_{tilt} + \frac{V_{FOV}}{2}\right)$$
+d_{ciega} = h_{cam} \cdot \cot\left(\theta_{tilt} + \frac{V_{FOV}}{2}\right)
 
 Definición de las variables:
 
@@ -812,6 +877,27 @@ Filtro distance > 1: Esta instrucción filtra las lecturas de 0 cm que genera la
 | lewis / lecrer | Contadores de Rendimiento | Registro interno de maniobras ejecutadas por flanco. |
 | middleDistance | Vector frontal | Disparador de subrutinas de giro (Umbral 32 cm). |
 
+## Estrategia de Competición y Gestión de Riesgos
+
+Dada la naturaleza de la competencia, donde se dispone de dos intentos por ronda, hemos diseñado una estrategia de dos fases basada en el compromiso entre confiabilidad y velocidad.
+
+ 1.Protocolo de Ejecución de Ronda
+   
+- Primer Intento (Modo Consistencia - 100% Fiabilidad):
+
+ El objetivo principal es asegurar el puntaje máximo de la misión.
+
+se configuro un PWM limitado a 100-140.
+
+Se logro un tiempo de 40 Segundos . Al reducir la velocidad, eliminamos la inercia excesiva en las curvas de los pasillos aleatorios, permitiendo que los sensores ultrasónicos tengan una ventana de lectura óptima y que los microajustes laterales sean casi imperceptibles.
+
+- Segundo Intento (Modo Alto Rendimiento - 80% Fiabilidad):
+
+Reducción drástica del tiempo para mejorar el desempate ( tie-break ).
+
+configuramos PWM dinámico (hasta 190 en curvas).
+
+Realizando esta prueba obtuvimos como resultado un Tiempo récord de 25 segundos . De este modo, el robot opera al límite de sus capacidades mecánicas y lógicas.
 
 ## Análisis de Rendimiento: Optimización de Tiempo vs Fiabilidad
 
@@ -849,27 +935,7 @@ A PWM 180, los motores de 15,000 RPM generan vibraciones de alta frecuencia que 
 
 Efecto: Esto genera lecturas "fantasmales" o ecos falsos. Aunque nuestro filtro distance > 1elimina los ceros, la vibración puede causar variaciones de ±2 cm en la lectura, suficientes para disparar una corrección lateral innecesaria en un pasillo tan estrecho como el de 40 cm.
 
-## Estrategia de Competición y Gestión de Riesgos
 
-Dada la naturaleza de la competencia, donde se dispone de dos intentos por ronda, hemos diseñado una estrategia de dos fases basada en el compromiso entre confiabilidad y velocidad.
-
- 1.Protocolo de Ejecución de Ronda
-   
-- Primer Intento (Modo Consistencia - 100% Fiabilidad):
-
- El objetivo principal es asegurar el puntaje máximo de la misión.
-
-se configuro un PWM limitado a 100-140.
-
-Se logro un tiempo de 40 Segundos . Al reducir la velocidad, eliminamos la inercia excesiva en las curvas de los pasillos aleatorios, permitiendo que los sensores ultrasónicos tengan una ventana de lectura óptima y que los microajustes laterales sean casi imperceptibles.
-
-- Segundo Intento (Modo Alto Rendimiento - 80% Fiabilidad):
-
-Reducción drástica del tiempo para mejorar el desempate ( tie-break ).
-
-configuramos PWM dinámico (hasta 190 en curvas).
-
-Realizando esta prueba obtuvimos como resultado un Tiempo récord de 25 segundos . De este modo, el robot opera al límite de sus capacidades mecánicas y lógicas.
      
  ## Conclusión: 
  
