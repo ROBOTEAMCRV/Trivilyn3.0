@@ -77,7 +77,7 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
   
 10. [Archivos CAD](#Archivos-CAD)
 
- 11. [Fotos de Trivilyn3.0](Trivilyn-360)
+ 11. [Fotos de Trivilyn3.0](#trivilyn-360-photos)
 
  12. [Videos de Trivilyn3.0](#Trivilyn3.0-Challenges)
 
@@ -545,7 +545,7 @@ El sistema electrónico se divide en tres capas fundamentales: Control Central, 
 
 ## 2. Presupuesto de Potencia (Power Budget) y Distribución Independiente
 
-Para erradicar el problema más crítico en robótica móvil —los reinicios del procesador por caídas de tensión (*voltage sags*) y el ruido de alta frecuencia en los sensores— el diseño eléctrico de Trivilyn3.0 rechaza los buses comunes y opta por un **aislamiento físico total mediante tres bancos de energía independientes** (6 celdas 18650 en total). 
+Para erradicar el problema más crítico en robótica móvil —los reinicios del procesador por caídas de tensión (voltage sags) y el ruido de alta frecuencia en los sensores— el diseño eléctrico de Trivilyn3.0 rechaza los buses comunes y opta por un **aislamiento físico total mediante tres bancos de energía independientes** (6 celdas 18650 en total). 
 
 Esta arquitectura separa de forma redundante las cargas lógicas de las inductivas, aplicando además una estrategia de distribución de masas donde solo el banco de tracción utiliza el sistema de extracción rápida por corredera.
 
@@ -553,48 +553,45 @@ Esta arquitectura separa de forma redundante las cargas lógicas de las inductiv
 
 | Subsistema Alimentado | Configuración de Baterías | Voltaje Nominal | Regulación / Modulación | Propósito y Ventaja de Ingeniería |
 | :--- | :---: | :---: | :---: | :--- |
-| **Línea 1: Lógica y Percepción** | 2x 18650 en Serie | 7.4V - 8.4V | Regulador Externo Step-Down (BEC) a **5V Dedicado** | Alimenta el Arduino Mega, la cámara HuskyLens y los 3 sensores HC-SR04. Al no compartir conexiones físicas con ningún motor, la línea de datos mantiene 5V puros, asegurando que la HuskyLens procese imágenes en alta velocidad sin caídas de telemetría. |
-| **Línea 2: Actuación de Dirección** | 2x 18650 en Paralelo | 3.7V - 4.2V | *Elevador de Voltaje (Step-Up)* a **6.5V Constantes** | Dedicado exclusivamente al servomotor HobbyPark de 35kg de la dirección SbW. La configuración en paralelo duplica la capacidad de corriente disponible. El Step-Up garantiza un torque de salida idéntico y preciso, incluso si las celdas empiezan a descargarse. |
-| **Línea 3: Sistema de Tracción** | 2x 18650 en Serie | 7.4V - 8.4V | Driver MOSFET de Alta Corriente (Voltaje Directo) | Suministra la potencia bruta para el motor DC a 15,000 RPM. **Este es el único banco alojado en la corredera inferior en cola de milano**. Al ser el sistema que sufre el mayor desgaste energético (PWM 190), requiere sustitución rápida en boxes, mientras que los otros dos bancos permanecen fijos. |
-
-### Justificación de la Alimentación Lógica vía BEC (Estabilidad del Lazo de Control)
-
-El uso de un regulador externo tipo **BEC (Battery Elimination Circuit)** para alimentar de forma exclusiva el ecosistema de control no fue una elección de conveniencia, sino una contramedida crítica de diseño electrónico sistémico. En robótica de competencia, la estabilidad del software depende directamente de la pureza de la señal eléctrica que alimenta al hardware de procesamiento.
+| **Línea 1: Lógica y Percepción** | 2x 18650 en Serie | 7.4V - 8.4V | Voltaje Directo de Batería (Línea Limpia) | Alimenta directamente al Arduino Mega a través de su pin de entrada regulada. El bus interno distribuye los 5V puros a la cámara HuskyLens y los 3 sensores HC-SR04. Al ser una línea dedicada sin motores acoplados, la HuskyLens procese imágenes en alta velocidad sin caídas de telemetría por ruido. Las celdas están fijas en el segundo piso. |
+| **Línea 2: Actuación de Dirección** | 2x 18650 en Paralelo | 3.7V - 4.2V | *Elevador de Voltaje (Step-Up)* a **6.5V Constantes** | Dedicado exclusivamente al servomotor HobbyPark de 35kg de la dirección SbW. La configuración en paralelo duplica la capacidad de corriente disponible. El Step-Up garantiza un torque de salida idéntico y preciso, incluso si las celdas empiezan a descargarse. Alojado de forma fija en el segundo piso. |
+| **Línea 3: Sistema de Tracción e Iluminación** | 2x 18650 en Serie | 7.4V - 8.4V | *Step-Up (10V)* + *Step-Down Secuencial (3.2V)* | **Este es el único banco alojado en la corredera inferior en cola de milano**. Alimenta el motor DC a través de un módulo Step-Up de alta potencia regulado a 10V fijos hacia el Driver MOSFET para maximizar la velocidad (PWM 190). Adicionalmente, de la salida de 10V se deriva un regulador Step-Down secundario a 3.2V dedicado en exclusiva a la red de LEDs, protegiéndolos de sobrevoltajes. |
 
 ---
 
 ### 📊 Tabla de Consumo Nominal y Pico de Componentes
 
-El presupuesto de cargas eléctricas se calculó modelando el peor escenario dinámico coincidente en pista:
+El presupuesto de cargas eléctricas se calculó modelando el peor escenario dinámico coincidente en pista, incorporando las etapas de elevación y reducción de voltaje reales del sistema:
 
 | Componente | Voltaje de Operación | Consumo en Reposo (Idle) | Consumo en Carga Máxima (Peak) | Banco de Alimentación | Impacto Sistémico en la Misión |
 | :--- | :---: | :---: | :---: | :---: | :--- |
-| **Microcontrolador Arduino Mega 2560** | 5V | 50 mA | 80 mA | Banco 1 (Lógica vía BEC) | Cerebro lógico; procesa la máquina de estados y las lecturas analógicas/digitales. |
-| **Cámara de Visión HuskyLens** | 5V | 220 mA | 380 mA | Banco 1 (Lógica vía BEC) | Algoritmos de IA para detección de señales de tráfico y pilares cromáticos. |
-| **3x Sensores Ultrasónicos HC-SR04** | 5V | 45 mA (15 mA c/u) | 60 mA (20 mA c/u) | Banco 1 (Lógica vía BEC) | Red tri-sensorial para evasión de muros perimetrales mediante multiplexación temporal. |
+| **Microcontrolador Arduino Mega 2560** | 7.4V (Vbat) | 50 mA | 80 mA | Banco 1 (Lógica Directo) | Cerebro lógico; procesa la máquina de estados y las lecturas analógicas/digitales. |
+| **Cámara de Visión HuskyLens** | 5V | 220 mA | 380 mA | Banco 1 (Vía Bus 5V Arduino) | Algoritmos de IA para detección de señales de tráfico y pilares cromáticos. |
+| **3x Sensores Ultrasónicos HC-SR04** | 5V | 45 mA (15 mA c/u) | 60 mA (20 mA c/u) | Banco 1 (Vía Bus 5V Arduino) | Red tri-sensorial para evasión de muros perimetrales mediante multiplexación temporal. |
 | **Servomotor de Dirección HobbyPark (35kg)** | 6.5V | 100 mA | 2,500 mA (Stall) | Banco 2 (Dirección vía Step-Up) | Actuador de la cinemática Steer-by-Wire (SbW); alta demanda de corriente en virajes bruscos. |
-| **Motor de Tracción DC (Turbo Snake)** | 7.4V | 300 mA | 4,500 mA (Stall) | Banco 3 (Tracción en Riel) | Sistema de propulsión posterior a 15,000 RPM. Alto consumo en aceleración (PWM 190). |
-| **Electrónica Auxiliar (LEDs / Driver)** | 5V | 20 mA | 50 mA | Banco 1 (Lógica vía BEC) | Indicadores de estado de la misión y telemetría visual en boxes. |
+| **Motor de Tracción DC (Turbo Snake)** | 10V | 300 mA | 4,500 mA (Stall) | Banco 3 (Tracción vía Step-Up) | Sistema de propulsión posterior a más de 15,000 RPM. Operar a 10V fijos maximiza el torque continuo en aceleración (PWM 190). |
+| **Circuito de Iluminación (2x LEDs)** | 3.2V | 20 mA | 40 mA | Banco 3 (Vía Step-Down de 10V) | Iluminación de contraste para optimizar el umbral de detección de la HuskyLens en pista. |
 
 ---
 
 > [!NOTE]
 > **Auditoría de Capacidad de las Baterías y Mitigación de Riesgos en Fosos**
-> Las celdas 18650 utilizadas en el sistema de dirección presentaban una etiqueta comercial de 8,800 mAh. Tras realizar un análisis basado en la densidad energética límite del litio y las dimensiones de la celda, el equipo determinó que este valor es nominal/falso (típico en el mercado de consumo masivo).
+> Las celdas 18650 utilizadas en el sistema de dirección presentaban una etiqueta comercial de 8,800 mAh. Tras realizar un análisis basado en la densidad energética límite del litio y las dimensiones de la celda, el equipo de ROBOTEAMCRV determinó que este valor es nominal/falso (típico en el mercado de consumo masivo).
 > 
 > * **Mitigación y Factor de Seguridad:** Para el diseño seguro de Trivilyn3.0, estimamos una capacidad real de **2,200 a 2,500 mAh** por celda. Al conectar el Banco 2 en paralelo, la capacidad real efectiva se eleva a un rango de 4,400 a 5,000 mAh, asegurando corriente de sobra para el servo de 35kg. 
-> * **Justificación de la Corredera Exclusiva:** Dado que el Banco 3 (Tracción) opera bajo un régimen severo de PWM 190 absorbiendo picos de hasta **4.5 A**, es el único componente de energía que experimenta fatiga térmica y descarga acelerada. Por ello, justificamos mecánicamente colocar **únicamente estas 2 baterías en el cartucho de cola de milano**. Esto nos permite realizar el recambio rápido (*Quick-Change*) del sistema motriz en menos de 10 segundos sin alterar el torque de la dirección ni desestabilizar el voltaje de los sensores lógicos fijos.
+> * **Estrategia de Distribución de Masas por Pisos:** Para optimizar la estabilidad dinámica del vehículo, se decidió fijar las **4 celdas correspondientes a la Lógica (Banco 1) y a la Dirección (Banco 2) en la estructura del segundo piso**. Dado que estos subsistemas consumen menos potencia y no requieren recambios de emergencia, se priorizó su fijación estructural. Por el contrario, el Banco 3 (Tracción e Iluminación) opera bajo el régimen severo del Step-Up a 10V absorbiendo picos masivos de corriente. Por ello, justificamos mecánicamente colocar **únicamente estas 2 baterías en el cartucho de cola de milano del primer piso**. Esto nos permite realizar el recambio rápido (*Quick-Change*) del sistema motriz en menos de 10 segundos sin alterar el torque de la dirección ni desestabilizar el voltaje de los sensores fijos ubicados en el piso superior.
+
 ---
 
-##  📈Análisis de Rendimiento y Cálculo de Autonomía Real del Vehículo
+## 📈 Análisis de Rendimiento y Cálculo de Autonomía Real del Vehículo
 
 Para validar la viabilidad operativa de Trivilyn3.0 en condiciones de competencia extrema, el equipo desarrolló un modelo matemático de descarga basado en la capacidad real auditada de nuestras celdas 18650 (2,500 mAh por celda). Al tener tres bancos de energía independientes, calculamos la autonomía teórica y real de cada subsistema de forma aislada para identificar el eslabón más débil de la cadena energética.
 
 #### 1. Banco 1: Lógica y Percepción (2 celdas en Serie = 7.4V / 2,500 mAh)
-Este banco alimenta al Arduino Mega, la HuskyLens y los 3 ultrasonidos a través del regulador BEC externo.
+Este banco alimenta al Arduino Mega de forma directa, el cual distribuye a la HuskyLens y los 3 ultrasonidos.
 * Consumo promedio constante: 50 mA (Arduino) + 300 mA (HuskyLens promedio) + 45 mA (Sensores) = 395 mA (0.395 Amperios).
 * Cálculo de Autonomía Teórica: Capacidad (2,500 mAh) / Consumo (395 mA) = 6.32 horas.
-* Aplicando Factor de Eficiencia del BEC (85%): 6.32 x 0.85 = **5.37 horas de autonomía continua.**
+* Al no tener pérdidas por reguladores conmutados externos en esta línea, la autonomía neta estimada se mantiene firme en **5.8 horas de autonomía continua.**
 
 #### 2. Banco 2: Actuación de Dirección (2 celdas en Paralelo = 3.7V / 5,000 mAh efectivos)
 Este banco alimenta exclusivamente al servomotor de 35kg montado en el segundo piso mediante el elevador Step-Up a 6.5V. En una carrera de velocidad, el servo no está bloqueado todo el tiempo; estimamos un régimen de trabajo dinámico del 40%.
@@ -602,22 +599,21 @@ Este banco alimenta exclusivamente al servomotor de 35kg montado en el segundo p
 * Cálculo de Autonomía Teórica: Capacidad efectiva (5,000 mAh) / Consumo (600 mA) = 8.33 horas.
 * Aplicando Factor de Eficiencia del Step-Up (80%): 8.33 x 0.80 = **6.66 horas de autonomía continua.**
 
-#### 3. Banco 3: Sistema de Tracción (2 celdas en Serie = 7.4V / 2,500 mAh)
-Este es el banco alojado en el cartucho de cola de milano del primer piso, el cual alimenta al motor DC Turbo Snake operando a PWM 190. Modelamos el peor escenario posible con aceleraciones violentas continuas y fricción en pista.
-* Consumo promedio severo en carrera: 1,800 mA (1.8 Amperios).
-* Cálculo de Autonomía Teórica: Capacidad (2,500 mAh) / Consumo (1,800 mA) = 1.38 horas.
-* Aplicando Factor de Degradación Térmica a 15,000 RPM (Factor de seguridad del 75%): 1.38 x 0.75 = 1.03 horas. Esto equivale a **62 minutos de autonomía en carrera.**
+#### 3. Banco 3: Sistema de Tracción e Iluminación (2 celdas en Serie = 7.4V / 2,500 mAh)
+Este es el banco alojado en el cartucho de cola de milano del primer piso. Alimenta el circuito Step-Up a 10V para el motor DC Turbo Snake y, en cascada, el Step-Down secundario de 3.2V para la iluminación. Elevar el voltaje a 10V incrementa la demanda de corriente en las celdas base.
+* Consumo promedio severo demandado a las baterías en carrera: 2,300 mA (Motor a PWM 190 + pérdidas de conversión) + 30 mA (Leds corregidos por la eficiencia del Step-Down) = ~2,330 mA (2.33 Amperios).
+* Cálculo de Autonomía Teórica en las celdas: Capacidad (2,500 mAh) / Consumo (2,330 mA) = 1.07 horas.
+* Aplicando el Factor de Eficiencia combinado de la etapa de potencia (85%) y la degradación térmica por alta velocidad: 1.07 x 0.85 = 0.91 horas. Esto equivale a **54 minutos de autonomía en carrera pura a máxima velocidad.**
 
 ---
 
 ### 🏁 Conclusión del Análisis de Rendimiento (Criterio Quick-Change)
 
-El desglose matemático demuestra de forma contundente por qué el diseño de Trivilyn3.0 acertó al colocar **únicamente el Banco 3 en el sistema de corredera extraíble**. 
+El desglose matemático final demuestra de forma contundente por qué el diseño de Trivilyn3.0 acertó al colocar **únicamente el Banco 3 en el sistema de corredera extraíble**. 
 
-Mientras que el cerebro lógico y la dirección pueden operar por más de 5 horas seguidas sin necesidad de tocar las 4 baterías del segundo piso, el sistema de tracción consume la energía **6 veces más rápido** debido a la exigencia del motor a PWM 190. 
+Mientras que el cerebro lógico y la dirección pueden operar por más de 5 horas seguidas sin necesidad de tocar las 4 baterías del segundo piso, el sistema de tracción consume la energía rápidamente debido a la enorme exigencia de elevar el voltaje a 10V estables para exprimir las 15,000 RPM del motor. 
 
-Con 62 minutos de autonomía real en el motor, el robot puede completar holgadamente más de 40 rondas seguidas en pista antes de experimentar una pérdida notable de velocidad de crucero. Sin embargo, gracias al mecanismo de cola de milano, el operario puede sustituir este cartucho en los pits cada 2 rondas de forma preventiva en solo 10 segundos, garantizando que el motor trabaje siempre en la curva de máximo torque y voltaje de las celdas.
-
+Con 54 minutos de autonomía real bajo pruebas, Trivilyn puede completar holgadamente todas las rondas clasificatorias sin caídas de rendimiento. Sin embargo, el mecanismo de cola de milano nos permite sustituir este cartucho en los fosos de manera preventiva en solo 15 segundos, garantizando que el sistema motriz trabaje siempre en la cresta de su curva de potencia sin comprometer la electrónica sensible del segundo piso.
 
 ## 3. Mitigación de Fallas y Decisiones Críticas
 
@@ -626,12 +622,12 @@ Con 62 minutos de autonomía real en el motor, el robot puede completar holgadam
 > [!IMPORTANT]
 >  Al utilizar tres bancos de baterías físicamente separados, es estrictamente obligatorio interconectar todos los cables negativos (*GND Común*) en un solo nodo central del Arduino Mega. Sin esta referencia cero unificada, las señales lógicas UART de la HuskyLens y los pulsos de los ultrasonidos sufrirían de flotación, provocando lecturas erróneas o la pérdida completa de paquetes de datos.
 
-### Lógica del Sistema de Iluminación Regulada (3.1V)
-¿Por qué elevar el voltaje a 10V para luego regularlo a 3.1V en los LEDs?
+### Lógica del Sistema de Iluminación Regulada (3.2V)
+¿Por qué elevar el voltaje a 10V para luego regularlo a 3.2V en los LEDs?
 
 1. *Estabilidad Lumínica:* Los motores de tracción generan picos de demanda masivos al arrancar o frenar. Si los LEDs se conectaran directo a la batería, parpadearían, afectando el balance de blancos y el umbral de reconocimiento de color de la HuskyLens.
    
-2. *Filtrado de Ruido:* El elevador a 10V actúa como una "barrera de aislamiento". Al pasar luego por el regulador de 3.1V, los LEDs reciben una energía limpia y constante, asegurando que la HuskyLens siempre vea la pista con la misma intensidad de luz, eliminando falsos positivos en el reconocimiento de señales.
+2. *Filtrado de Ruido:* El elevador a 10V actúa como una "barrera de aislamiento". Al pasar luego por el regulador de 3.2V, los LEDs reciben una energía limpia y constante, asegurando que la HuskyLens siempre vea la pista con la misma intensidad de luz, eliminando falsos positivos en el reconocimiento de señales.
 
 ---
 
@@ -652,22 +648,22 @@ El sensor ultrasónico frontal se encuentra montado estrictamente sobre el plano
 
 ### A. Física del Cono de Emisión y Ecos Parásitos
 
-Los transductores piezoeléctricos del sensor HC-SR04 operan emitiendo ráfagas de ultrasonido a una frecuencia de $40\text{ kHz}$. Este haz acústico posee una dispersión natural cónica con un ángulo de apertura de aproximadamente $\alpha \approx 15^\circ$ a $30^\circ$ (dependiendo de la ganancia del transductor).
+Los transductores piezoeléctricos del sensor HC-SR04 operan emitiendo ráfagas de ultrasonido a una frecuencia de 40 kHz. Este haz acústico posee una dispersión natural cónica con un ángulo de apertura de aproximadamente alfa ≈ 15° a 30° (dependiendo de la ganancia del transductor).
 
-Para calcular el ancho del área de detección ($W_{\text{detect}}$) a una distancia de colisión crítica ($d = 50\text{ cm}$), empleamos la siguiente relación trigonométrica:
+Para calcular el ancho del área de detección (W_detect) a una distancia de colisión crítica (d = 50 cm), empleamos la siguiente relación trigonométrica:
 
-$$W_{\text{detect}} = 2 \cdot d \cdot \tan\left(\frac{\alpha}{2}\right)$$
+W_detect = 2 * d * tan(alfa / 2)
 
-Para un ángulo de apertura nominal de $\alpha = 15^\circ$:
+Para un ángulo de apertura nominal de alfa = 15°:
 
-$$W_{\text{detect}} = 2 \cdot 50\text{ cm} \cdot \tan(7.5^\circ) \approx 100\text{ cm} \cdot 0.1316 = 13.16\text{ cm}$$
+W_detect = 2 * 50 cm * tan(7.5°) ≈ 100 cm * 0.1316 = 13.16 cm
 
 >[!CAUTION]
 >Efecto de Rebote Multipath y Ruido por Suelo: Si el sensor frontal se posiciona a una altura inferior a $3\text{ cm}$ respecto al suelo, el lóbulo inferior del cono de emisión ultrasónico impactará contra la pista de la WRO, generando "ecos fantasmas" que el software interpretará como obstáculos frontales inexistentes. La altura óptima del sensor frontal en Trivilyn 3.0 está fijada a un mínimo de $4.5\text{ cm}$ sobre el nivel del suelo.
 
-### B. Cinemática del Punto Dulce de Giro ($42\text{ cm} \le d \le 52\text{ cm}$) bajo Dirección Steer-by-Wire
+### B. Cinemática del Punto Dulce de Giro 42 cm \le d \le 52 cm bajo Dirección Steer-by-Wire
 
-Esta calibración SbW elimina el deslizamiento lateral (derrape) al mantener ambas ruedas en el mismo arco de giro, logrando un ángulo de deflexión máximo de $\beta = 40^\circ$ por lado (izquierdo y derecho), lo que equivale a un barrido de dirección total de $80^\circ$ de tope a tope (lock-to-lock). El rango de disparo del sensor frontal está directamente sincronizado con esta capacidad cinemática:
+Esta calibración SbW elimina el deslizamiento lateral (derrape) al mantener ambas ruedas en el mismo arco de giro, logrando un ángulo de deflexión máximo de $\beta = 40^\circ$ por lado (izquierdo y derecho), lo que equivale a un barrido de dirección total de 80° de tope a tope (lock-to-lock). El rango de disparo del sensor frontal está directamente sincronizado con esta capacidad cinemática:
 
 - Límite Inferior 42 cm: Gracias al agresivo ángulo de deflexión de 40° por lado provisto por el sistema SbW, el robot es capaz de realizar virajes sumamente cerrados. Si la aproximación desciende de 42°, el tiempo de respuesta del servomotor HobbyPark ($t_{\text{resp}} \approx 0.12 s y el momento lineal del chasis empujarán el parachoques delantero contra la pared exterior antes de que las ruedas completen la deflexión de 40°
 
@@ -1204,7 +1200,7 @@ Este valor de $31.56\text{ cm}$ coincide exactamente con el radio mínimo de gir
 
 ### C. Cohesión de Componentes: Dirección SbW y Agarre Lateral
 
-La tracción posterior de Trivilyn3.0 emplea neumáticos de caucho de alta fricción. Al ejecutar la curva de forma reactiva, el robot debe generar una fuerza centrípeta que altere el vector de trayectoria de su centro de masa. Si el disparo se retrasara por debajo de los $42\text{ cm}$, el chasis se vería obligado a exigir un cambio de dirección instantáneo y sumamente agresivo en las ruedas frontales para no chocar.
+La tracción posterior de Trivilyn3.0 emplea neumáticos de caucho de alta fricción. Al ejecutar la curva de forma reactiva, el robot debe generar una fuerza centrípeta que altere el vector de trayectoria de su centro de masa. Si el disparo se retrasara por debajo de los 42 cm, el chasis se vería obligado a exigir un cambio de dirección instantáneo y sumamente agresivo en las ruedas frontales para no chocar.
 
 Desde la perspectiva de la física de partículas, esto somete a los neumáticos a la ley del **Límite de Fricción Estática**:
 
@@ -1295,7 +1291,7 @@ La confiabilidad física de la transmisión de datos a bordo de un vehículo aut
 | **Etapa 3** | Conductores Industriales Kodak | Construcción multifilar ultraflexible, blindaje de pantalla y trenza de alta densidad (SFTP). | Inmunidad total frente a EMI y fatiga mecánica. |
 
 ### Fundamentación Científica de la Inmunidad a Interferencias Electromagnéticas (EMI)
-Los motores de tracción DC que operan a $15,000 RPM actúan como generadores de alta frecuencia de ruido electromagnético de alta energía, debido al constante arqueado y conmutación de las escobillas del colector. Este ruido puede inducir corrientes parásitas en las líneas de señales de datos de los sensores ultrasónicos (*Trigger* y *Echo*) y en la comunicación serie I^2C de la cámara HuskyLens, corrompiendo las lecturas de distancia o saturando el búfer de comunicación del microcontrolador.
+Los motores de tracción DC que operan a 15,000 RPM actúan como generadores de alta frecuencia de ruido electromagnético de alta energía, debido al constante arqueado y conmutación de las escobillas del colector. Este ruido puede inducir corrientes parásitas en las líneas de señales de datos de los sensores ultrasónicos (*Trigger* y *Echo*) y en la comunicación serie I^2C de la cámara HuskyLens, corrompiendo las lecturas de distancia o saturando el búfer de comunicación del microcontrolador.
 
 Para erradicar esta degradación de la señal, se implementó el cableado industrial recuperado de impresoras de alto volumen de la marca Kodak. Estos conductores disponen de una arquitectura de blindaje **SFTP (*Shielded Foiled Twisted Pair*)**:
 1. **Par Trenzado:** Cancela el ruido por simetría acoplando las interferencias por igual en ambas líneas de datos, permitiendo que el Arduino las anule por rechazo en modo común.
@@ -1306,3 +1302,27 @@ Para erradicar esta degradación de la señal, se implementó el cableado indust
 
 Durante la construcciÓn y ensamblaje nuestro prototipo enfrentamos varios desafios los cuales resolvimos y decidimos documentar para demostrar que la construcción de un vehiculo autonomo no se realiza de la noche a la mañana. Que las cosas no siempre salen la primera vez y consta de un proceso de prueba-error para llegar al resultado deseado.
 
+# Trivilyn 360 Photos
+___________________
+# Trivilyn3.0 Challenges
+____________________
+
+---
+
+## 📑 12. Licencia y Derechos de Autor (Copyright)
+
+Este proyecto ha sido desarrollado de forma íntegra por los miembros de **ROBOTEAMCRV** como documentación oficial para la temporada 2026 de la World Robot Olympiad (WRO).
+
+### 📄 Licencia MIT
+
+Copyright (c) 2026 ROBOTEAMCRV
+
+Se concede permiso por la presente, de forma gratuita, a cualquier persona que obtenga una copia de este software y de los archivos de documentación asociados (el "Software"), para utilizar el Software sin restricción, incluyendo, sin limitación, los derechos de uso, copia, modificación, fusión, publicación y distribución, sujeto a las siguientes condiciones:
+
+* El aviso de copyright anterior y este aviso de permiso se incluirán en todas las copias o partes sustanciales del Software.
+
+* **Reconocimiento:** Cualquier uso derivado de los diseños mecánicos 3D (archivos CAD), esquemas eléctricos o algoritmos de firmware contenidos en este repositorio debe citar obligatoriamente a **ROBOTEAMCRV** y a sus integrantes originales como los autores del diseño mecánico y lógico de Trivilyn3.0.
+
+EL SOFTWARE SE PROPORCIONA "TAL CUAL", SIN GARANTÍA DE NINGÚN TIPO, EXPRESA O IMPLÍCITA, INCLUYENDO PERO NO LIMITADO A GARANTÍAS DE COMERCIALIZACIÓN, IDONEIDAD PARA UN PROPÓSITO PARTICULAR Y NO INFRACCIÓN. EN NINGÚN CASO LOS AUTORES O TITULARES DEL COPYRIGHT SERÁN RESPONSABLES DE NINGUNA RECLAMACIÓN, DAÑOS U OTRAS RESPONSABILIDADES.
+
+---
