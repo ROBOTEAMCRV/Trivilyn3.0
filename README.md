@@ -71,7 +71,7 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
       
      * [Adaptabilidad Sensorial y Sistema de Correderas de Batería](#Sistema-de-corredera-de-baterias-y-Optimización-Cinemática)
      
-     * [Evolución del Sistema de Interconexión y Blindaje (EMI)](#Evolución-del-Sistema-de-Interconexión-y-Blindaje-de-Señales-(EMI))
+     * [Evolución del Sistema de Interconexión y Blindaje (EMI)](#evolución-del-sistema-de-interconexión-y-blindaje-de-señales-EMI)
      
 9. [Desafíos Técnicos, Limitaciones y Soluciones en el Desarrollo](#Desafíos-Técnicos-Limitaciones-y-Soluciones-en-el-Desarrollo)
   
