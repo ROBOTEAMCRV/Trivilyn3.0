@@ -532,7 +532,13 @@ Este apartado documenta de manera exhaustiva la distribución de energía, el ai
 
 ---
 
-## 1. Topología del Hardware (Percepción y Control)
+## 1. Topología del Hardware y Estándar de Colorimetría Crítica del Cableado
+
+En el diseño avanzado de Trivilyn3.0, el cableado no se considera un mero elemento de interconexión pasiva, sino un subsistema crítico de la arquitectura de potencia y señal. Para mitigar los riesgos de error humano en los fosos (*pits*) bajo situaciones de alta presión, optimizar la mantenibilidad del vehículo y anular los acoplamientos electromagnéticos parásitos, hemos estandarizado de forma estricta la siguiente colorimetría industrial:
+
+
+----
+## 2. Topología del Hardware (Percepción y Control)
 
 El sistema electrónico se divide en tres capas fundamentales: Control Central, Visión Artificial y Telemetría Ultrasónica.
 
@@ -543,7 +549,7 @@ El sistema electrónico se divide en tres capas fundamentales: Control Central, 
 
 ---
 
-## 2. Presupuesto de Potencia (Power Budget) y Distribución Independiente
+## 3. Presupuesto de Potencia (Power Budget) y Distribución Independiente
 
 Para erradicar el problema más crítico en robótica móvil —los reinicios del procesador por caídas de tensión (voltage sags) y el ruido de alta frecuencia en los sensores— el diseño eléctrico de Trivilyn3.0 rechaza los buses comunes y opta por un **aislamiento físico total mediante tres bancos de energía independientes** (6 celdas 18650 en total). 
 
@@ -615,7 +621,7 @@ Mientras que el cerebro lógico y la dirección pueden operar por más de 5 hora
 
 Con 54 minutos de autonomía real bajo pruebas, Trivilyn puede completar holgadamente todas las rondas clasificatorias sin caídas de rendimiento. Sin embargo, el mecanismo de cola de milano nos permite sustituir este cartucho en los fosos de manera preventiva en solo 15 segundos, garantizando que el sistema motriz trabaje siempre en la cresta de su curva de potencia sin comprometer la electrónica sensible del segundo piso.
 
-## 3. Mitigación de Fallas y Decisiones Críticas
+## 4. Mitigación de Fallas y Decisiones Críticas
 
 ### Aislamiento de Tierras (GND)
 
@@ -631,7 +637,7 @@ Con 54 minutos de autonomía real bajo pruebas, Trivilyn puede completar holgada
 
 ---
 
-## 4. Interacción del Sistema (Pensamiento Sistémico)
+## 5. Interacción del Sistema (Pensamiento Sistémico)
 
 El flujo secuencial de potencia y datos durante una maniobra compleja (ej. evasión u obstáculo en el estacionamiento) se ejecuta de la siguiente manera:
 
@@ -1306,23 +1312,5 @@ Durante la construcciÓn y ensamblaje nuestro prototipo enfrentamos varios desaf
 ___________________
 # Trivilyn3.0 Challenges
 ____________________
-
----
-
-## 📑 12. Licencia y Derechos de Autor (Copyright)
-
-Este proyecto ha sido desarrollado de forma íntegra por los miembros de **ROBOTEAMCRV** como documentación oficial para la temporada 2026 de la World Robot Olympiad (WRO).
-
-### 📄 Licencia MIT
-
-Copyright (c) 2026 ROBOTEAMCRV
-
-Se concede permiso por la presente, de forma gratuita, a cualquier persona que obtenga una copia de este software y de los archivos de documentación asociados (el "Software"), para utilizar el Software sin restricción, incluyendo, sin limitación, los derechos de uso, copia, modificación, fusión, publicación y distribución, sujeto a las siguientes condiciones:
-
-* El aviso de copyright anterior y este aviso de permiso se incluirán en todas las copias o partes sustanciales del Software.
-
-* **Reconocimiento:** Cualquier uso derivado de los diseños mecánicos 3D (archivos CAD), esquemas eléctricos o algoritmos de firmware contenidos en este repositorio debe citar obligatoriamente a **ROBOTEAMCRV** y a sus integrantes originales como los autores del diseño mecánico y lógico de Trivilyn3.0.
-
-EL SOFTWARE SE PROPORCIONA "TAL CUAL", SIN GARANTÍA DE NINGÚN TIPO, EXPRESA O IMPLÍCITA, INCLUYENDO PERO NO LIMITADO A GARANTÍAS DE COMERCIALIZACIÓN, IDONEIDAD PARA UN PROPÓSITO PARTICULAR Y NO INFRACCIÓN. EN NINGÚN CASO LOS AUTORES O TITULARES DEL COPYRIGHT SERÁN RESPONSABLES DE NINGUNA RECLAMACIÓN, DAÑOS U OTRAS RESPONSABILIDADES.
 
 ---
