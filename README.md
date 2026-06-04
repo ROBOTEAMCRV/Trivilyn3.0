@@ -198,7 +198,7 @@ Es una extencion de filamento cuya funcion es solucionar que en versiones anteri
 
 La movilidad en la parte delantera: aquí nos referimos al sistema de dirección (control de giros del robot), ruedas frontales y todos los componentes de estos para unirse entre sí.
 
-Para esta parte de Trivilyn 3.0 nos basamos en la plataforma estable de Trivilyn 2025; Para esta temporada 2026 hemos conservado el sistema de dirección por su alta confiabilidad, pero hemos aplicado dos optimizaciones críticas en la respuesta dinámica y la durabilidad de los materiales, las cuales son:
+Para esta parte de Trivilyn3.0 nos basamos en la plataforma estable de Trivilyn 2025; Para esta temporada 2026 hemos conservado el sistema de dirección por su alta confiabilidad, pero hemos aplicado dos optimizaciones críticas en la respuesta dinámica y la durabilidad de los materiales, las cuales son:
 
 1.Principalmente imprimimos los componentes nuevamente en PETG porque es un material mas resistente al desgaste y posibles fracturas que el PLA, sin embargo desde un punto mas profesional estos son las ventajas de utilizar PETG:
 
@@ -209,7 +209,6 @@ Para esta parte de Trivilyn 3.0 nos basamos en la plataforma estable de Trivilyn
 - El PETG es más "tenaz" (ductilidad). Tiene la capacidad de absorber energía deformándose elásticamente antes de romperse. En un choque, una pieza de PETG tiene más probabilidades de flexionarse y volver a su forma, mientras que una de PLA se rompería, dejando al robot fuera de la competencia.
 
 - El PLA es biodegradable y sensible a la humedad (higroscópico), lo que puede degradar sus propiedades mecánicas con el tiempo. El PETG es resistente al agua y a muchos químicos, lo que garantiza que las piezas del robot no se vuelvan quebradizas meses después de haber sido impresas.
-
 
 
 2.Se Realizo un cambio al tubo transversal.Este cambio del del tubo consiste en su material no en sus medidas o formas, decidimos hacerlo de bronce en un torno por las principales ventajas:
@@ -246,13 +245,27 @@ Rodamientos: Doble rodamiento de bolas para reducir la fricción en el eje princ
 
 Ángulo de control: Generalmente 180° o 270° (según la configuración de fábrica, pero es programable).
 
-(Imagen) que el equipo adquirido en Amazon. ¿Por qué no se usan servos convencionales? Esto tiene un motivo, ya que utilizamos versiones más convencionales en prototipos anteriores de nuestro robot. (El porqué de esta decisión y los retos por los que tuvo que pasar el equipo para tomar esta decisión se pueden conseguir más a detalle en el apartado de «Pensamiento sistémico y decisiones de ingeniería: Evolución»).
+<img width="894" height="872" alt="image" src="https://github.com/user-attachments/assets/0a50d7c1-13f1-46e7-8fce-1cee34be54ef" />
+
+Que el equipo adquirido en Amazon. ¿Por qué no se usan servos convencionales? Esto tiene un motivo, ya que utilizamos versiones más convencionales en prototipos anteriores de nuestro robot. (El porqué de esta decisión y los retos por los que tuvo que pasar el equipo para tomar esta decisión se pueden conseguir más a detalle en el apartado de «Pensamiento sistémico y decisiones de ingeniería: [Temporada 2025](#temporada-2025-rexbot20)).
 
 ## Tipo de Direccion y Como funciona
 
 - Este contiene un sistema de dirección (Steer-by-Wire) que cada rueda puede moverse independientemente, aunque están montadas en un eje común (lo cual sugiere una posible adaptación diferencial) Ya que la rueda interior gira ligeramente más que la otra, de modo que el robot se mantiene en el mismo arco sin deslizamiento. (Derrape). 
 
-- Con este sistema de direccion, logramos obtener resultados de que trivilyn logre un giro con angulo de 80 grados(Imagen)
+- Con este sistema de direccion, logramos obtener resultados de que trivilyn logre un giro con angulo de 80 grados(40° por lado)
+
+| Estado de Giro | Registro Fotográfico del Mecanismo | Ángulo de Orientación | Comportamiento Cinemático y Dinámica de Pista |
+| :--- | :---: | :---: | :--- |
+| **Viraje Absoluto a la Izquierda** | ![Giro Izquierda](image_3224bb.jpg) | ~30° a 40° Izquierda | El eje central se desplaza angularmente en sentido horario. Orientación máxima requerida para corregir la trayectoria ante muros perimetrales detectados por el ultrasonido izquierdo o para trazar curvas cerradas. |
+| **Posición Neutra (Línea Recta)** | ![Dirección Neutra](image_322485.jpg) | 0° (Centrado) | El puente se alinea perpendicularmente al chasis central. Estado de mínima fricción y máxima aceleración. El software aplica correcciones milisegunduales basadas en la telemetría de la HuskyLens para mantener el coche en el centro del carril. |
+| **Viraje Absoluto a la Derecha** | ![Giro Derecha](image_322466.jpg) | ~30° a 40° Derecha | El eje central se desplaza angularmente en sentido antihorario. Configuración optimizada para maniobras de evasión rápida de obstáculos o pilares cromáticos y giros a la derecha en las intersecciones oficiales. |
+
+---
+
+>[!TIP]
+> **Calibración del Punto Neutro en el Firmware:**
+> Al inicializar la máquina de estados en el Arduino Mega, el pulso PWM enviado al servo HobbyPark debe ajustarse exactamente al valor de microsegundos que garantice la perpendicularidad perfecta mostrada en el estado neutro. Cualquier desviación física milimétrica en el acople se corrige mediante el software de calibración de compensación para evitar derivas (*drifting*) en tramos rectos.
 
 - siendo así mas ágil para llegar a cumplir sus objetivos, (giros a gran velocidad, sortear objetos de manera optima, salir del estacionamiento en paralelo).
 
@@ -264,7 +277,8 @@ Esta base fue rediseñada varias veces hasta que logramos encontrar el punto don
 
 2.Luego de encajar esta pieza, utilizamos un tipo de abrazadera, que sostiene el buje del eje con forma de cruz extraido de un kit Legoeo EVE3(imagen)
 
-3.Para centrar y estabilizar su eje utilizamos retenes de lego amarillos (imagen)
+3.Para centrar y estabilizar su eje utilizamos retenes de lego amarillos 
+<img width="1200" height="899" alt="image" src="https://github.com/user-attachments/assets/5e4e163a-b2bf-42c3-9c0c-e68d3291c89c" />
 
 Dos por la parte interior y uno por la parte exterior por cada lado. Estos se encargan de sujetar los ejes de las ruedas al sistema de dirección; luego, el diferencial «tubo transversal», ya antes lubricado con vaselina.
 
@@ -1200,7 +1214,7 @@ Al recibir el paquete de datos en el instante en que el sensor frontal estimó o
 
 $$d_{\text{real}} = 42\text{ cm} - 10.44\text{ cm} \approx 31.56\text{ cm}$$
 
-Este valor de $31.56\text{ cm}$ coincide exactamente con el radio mínimo de giro físico del chasis de Trivilyn3.0 cuando las ruedas se desvían a su ángulo máximo de $\beta = 40^\circ$ bajo la cinemática de dirección SbW. Si el umbral del código se programara por debajo de los $42\text{ cm}$, el espacio real remanente sería inferior al límite cinemático de giro del vehículo, derivando en un impacto frontal destructivo directo contra la pared de la WRO.
+Este valor de $31.56\text{ cm}$ coincide exactamente con el radio mínimo de giro físico del chasis de Trivilyn3.0 cuando las ruedas se desvían a su ángulo máximo de $\beta = 40° bajo la cinemática de dirección SbW. Si el umbral del código se programara por debajo de los $42\text{ cm}$, el espacio real remanente sería inferior al límite cinemático de giro del vehículo, derivando en un impacto frontal destructivo directo contra la pared de la WRO.
 
 ---
 
