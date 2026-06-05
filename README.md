@@ -182,7 +182,7 @@ Este motor es el corazón del desplazamiento y uno de los componentes principale
 
 ## Estudio Dinámico: Torque Necesario, Tracción y Distribución de Fuerzas
 
-Para asegurar que el motor de tracción (extrayendo el núcleo de un Turbo Snake) sea capaz de romper la inercia del vehículo a máxima aceleración, evitar el estancamiento térmico (stall) y optimizar el agarre en pista, ROBOTEAMCRV desarrolló un modelo matemático basado en las especificaciones físicas de Trivilyn3.0:
+Para asegurar que el motor de tracción (extrayendo el núcleo de un Turbo Snake) sea capaz de romper la inercia del vehículo a máxima aceleración, evitar el estancamiento térmico (stall) y optimizar el agarre en pista, desarrollamos un modelo matemático basado en las especificaciones físicas de Trivilyn3.0:
 
 * Masa Total del Vehículo: 1250 gramos = 1.25 kg
 * Peso Total: 1.25 kg * 9.81 m/s² ≈ 12.26 Newtons
