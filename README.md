@@ -6,81 +6,87 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
 
 # ÍNDICE
 
-## 📌Tabla de contenido
+## 📌 Tabla de Contenido
 
- 1.[Engineering Document/Trivilyn3.0](#Engineering-Document/Trivilyn30)
 
-2.[MIEMBROS DEL TEAMROBOCRV](#MIEMBROS-DEL-TEAMROBOCRV)
+1. [Engineering Document / Trivilyn 3.0](#engineering-document-trivilyn-30)
 
-   * [Dennis Adrian Silva Riera](#Dennis-Adrian-Silva-Riera)
-   
-   * [Gianni Marcello Martucci Jerez](#Gianni-Marcello-Martucci-Jerez)
-   
-   * [Juan Andres Graterol Teran](#Juan-Andres-Graterol-Teran)
-         
-   * [Tutor](#tutor---luis-eduardo-paredes)
+2. [Miembros de TEAMROBOCRV](#miembros-del-teamrobocrv)
 
-3. [Movilidad y Diseño Mecánico](#Movilidad-y-Diseño-Mecánico)
+   * [Dennis Adrian Silva Riera](#dennis-adrian-silva-riera)
 
-   * [Tracción y Dirección](#Tracción-y-Dirección)
-  
-   * [Movimiento Parte trasera](#¿Como-logramos-que-se-mueva-con-un-solo-motor?)
-  
-   * [Movilidad parte delantera](#Movilidad-parte-delantera)
-  
-   * [Base inferior](#Primer-piso)
-  
-   * [Base central](#Segundo-piso)
-  
-   * [Base superior](#Tercer-piso)
+   * [Gianni Marcello Martucci Jerez](#gianni-marcello-martucci-jerez)
 
-4. [Arquitectura de Potencia y Sensores](#Arquitectura-de-Potencia-y-Sensores)
+   * [Juan Andres Graterol Teran](#juan-andres-graterol-teran)
 
-   * [Percepción-y-Control](#1-topología-del-hardware-percepción-y-control)
-  
-   * [Presupuesto de potencia](#2-presupuesto-de-potencia-power-budget-y-distribución)
-  
-   * [Mitigacion de fallas](#3-mitigación-de-fallas-y-decisiones-críticas)
-  
+   * [Tutor - Luis Eduardo Paredes](#tutor---luis-eduardo-paredes)
 
-6. [Arquitectura Software y Estratrgia](#Arquitectura-Software-y-Estratrgia)
-   
-- [Ronda Abierta](#ronda-abierta)
+3. [Movilidad y Diseño Mecánico](#-movilidad-y-diseño-mecánico)
 
-   * [Resumen del Proyecto](#Resumen-del-Proyecto)
-  
-   * [Arquitectura del Software](#Arquitectura-del-Software-(Máquina-de-Estados-de-Misión))
-  
-   * [Análisis de Rendimiento](#Análisis-de-Rendimiento-Optimización-de-Tiempo-vs-Fiabilidad)
- 
- - [Ronda Cerrada](#ronda-cerrada)
+   * [Tracción y Dirección](#tracción-y-dirección)
 
-8. [Pensamiento sistémico y decisiones de ingeniería](#Pensamiento-Sistémico-y-Decisiones-de-Ingeniería)
+   * [¿Cómo logramos que se mueva con un solo motor?](#como-logramos-que-se-mueva-con-un-solo-motor)
 
-   - [Temporada 2024](#Temporada-2024-Rexbot10)
-  
-   - [Temporada 2025](#Temporada-2025-Rexbot20)
-  
-   - [Temporada 2026](#Temporada-2026-Trivyln30)
-  
-     * [Lógica-de-Interconexión](#lógica-de-interconexión-física-del-chasis-vs-calibración-del-software)
-    
-     * [Inercia Rotacional](#a-la-paradoja-de-la-masa-del-sensor-y-la-inercia-rotacional-I_z)
-    
-     * [Gestión de Fricción, Termodinámica y Compatibilidad Química](#Gestión-de-Fricción-Termodinámica-y-Compatibilidad-Química-de-Materiales)
-      
-     * [Adaptabilidad Sensorial y Sistema de Correderas de Batería](#Sistema-de-corredera-de-baterias-y-Optimización-Cinemática)
+   * [Movilidad Parte Delantera](#movilidad-parte-delantera)
+
+   * [Análisis Cinemático y Estados Dinámicos de la Dirección (SbW)](#43-análisis-cinemático-y-estados-dinámicos-de-la-dirección-sbw)
+
+   * [Estudio Dinámico: Torque Necesario, Tracción y Distribución de Fuerzas](#44-estudio-dinámico-torque-necesario-tracción-y-distribución-de-fuerzas)
+
+   * [Primer Piso (Chasis Inferior y Corredera de Baterías)](#primer-piso)
+
+   * [Segundo Piso (Torque de Sensores y Soporte Híbrido)](#segundo-piso)
+
+4. [Arquitectura de Potencia y Sensores](#5-arquitectura-de-potencia-y-sensores)
+
+   * [Topología del Hardware y Estándar de Colorimetría Crítica del Cableado](#51-topología-del-hardware-y-estándar-de-colorimetría-crítica-del-cableado)
+
+   * [Presupuesto de Potencia (Power Budget) y Distribución Independiente](#52-presupuesto-de-potencia-power-budget-y-distribución-independiente)
+
+   * [Tabla de Componentes del Sistema Electrónico](#53-tabla-de-componentes-del-sistema-electrónico)
+
+   * [Análisis de Rendimiento y Cálculo de Autonomía Real del Vehículo](#54-análisis-de-rendimiento-y-cálculo-de-autonomía-real-del-vehículo)
+
+5. [Arquitectura de Software y Estrategia de Competencia](#arquitectura-software-y-estratrgia)
+
+   * [Ronda Abierta](#ronda-abierta)
+
+     * [Resumen del Proyecto](#resumen-del-proyecto)
+
+     * [Arquitectura del Software (Máquina de Estados de Misión)](#arquitectura-del-software-máquina-de-estados-de-misión)
+
+     * [Análisis de Rendimiento: Optimización de Tiempo vs Fiabilidad](#análisis-de-rendimiento-optimización-de-tiempo-vs-fiabilidad)
+
+   * [Ronda Cerrada](#ronda-cerrada)
      
-     * [Evolución del Sistema de Interconexión y Blindaje (EMI)](#evolución-del-sistema-de-interconexión-y-blindaje-de-señales-EMI)
-     
-9. [Desafíos Técnicos, Limitaciones y Soluciones en el Desarrollo](#Desafíos-Técnicos-Limitaciones-y-Soluciones-en-el-Desarrollo)
-  
-10. [Archivos CAD](#Archivos-CAD)
+6. [Pensamiento Sistémico y Decisiones de Ingeniería](#pensamiento-sistémico-y-decisiones-de-ingeniería)
 
- 11. [Fotos de Trivilyn3.0](#trivilyn-360-photos)
+   * [Temporada 2024 (Rexbot 1.0)](#temporada-2024-rexbot10)
 
- 12. [Videos de Trivilyn3.0](#Trivilyn3.0-Challenges)
+   * [Temporada 2025 (Rexbot 2.0)](#temporada-2025-rexbot20)
 
+   * [Temporada 2026 (Trivilyn 3.0)](#temporada-2026-trivyln30)
+
+     * [Lógica de Interconexión Física del Chasis vs Calibración del Software](#lógica-de-interconexión-física-del-chasis-vs-calibración-del-software)
+
+     * [La Paradoja de la Masa del Sensor y la Inercia Rotacional (Iz)](#a-la-paradoja-de-la-masa-del-sensor-y-la-inercia-rotacional-i_z)
+
+     * [Gestión de Fricción, Termodinámica y Compatibilidad Química de Materiales](#gestión-de-fricción-termodinámica-y-compatibilidad-química-de-materiales)
+
+     * [Sistema de Corredera de Baterías y Optimización Cinemática](#sistema-de-corredera-de-baterias-y-optimización-cinemática)
+
+     * [Evolución del Sistema de Interconexión y Blindaje de Señales (EMI)](#evolución-del-sistema-de-interconexión-y-blindaje-de-señales-emi)
+
+
+7. [Desafíos Técnicos, Limitaciones y Soluciones en el Desarrollo](#desafíos-técnicos-limitaciones-y-soluciones-en-el-desarrollo)
+
+8. [Archivos CAD](#archivos-cad)
+
+
+9. [Fotos de Trivilyn 3.0](#trivilyn-360-photos)
+
+
+10. [Videos de Trivilyn 3.0](#trivilyn30-challenges)
 # MIEMBROS DEL TEAMROBOCRV
 
 ## 👤Dennis Adrian Silva Riera
@@ -174,7 +180,53 @@ y se pueden extraer de distintos tipos de vehículos a control remoto como:
 
 Este motor es el corazón del desplazamiento y uno de los componentes principales para que Trivilyn tenga su desempeño. 
 
-Todo lo mencionado anteriormente se sostiene con una base diseñada en 3D por el equipo. (Recordamos que los diseños como este se encuentran en el apartado de Archivos CAD).
+## Estudio Dinámico: Torque Necesario, Tracción y Distribución de Fuerzas
+
+Para asegurar que el motor de tracción (extrayendo el núcleo de un Turbo Snake) sea capaz de romper la inercia del vehículo a máxima aceleración, evitar el estancamiento térmico (stall) y optimizar el agarre en pista, ROBOTEAMCRV desarrolló un modelo matemático basado en las especificaciones físicas de Trivilyn3.0:
+
+* Masa Total del Vehículo: 1250 gramos = 1.25 kg
+* Peso Total: 1.25 kg * 9.81 m/s² ≈ 12.26 Newtons
+* Radio de las Ruedas Traseras: 43 mm de diámetro / 2 = 21.5 mm = 0.0215 metros
+* Relación de Reducción de la Caja: 78:1 (Caja reductora a medida con ejes de acero)
+
+---
+
+### 1. Cálculo del Torque Estático Mínimo en las Ruedas (Breakout Torque)
+
+El torque mínimo necesario en el eje de las ruedas traseras para vencer la fricción estática del caucho EV3 contra la superficie de la pista (asumiendo un coeficiente de fricción estática conservador mu_s ≈ 0.6) se calcula mediante la relación:
+
+Torque_ruedas = Peso * mu_s * radio
+
+Torque_ruedas = 12.26 N * 0.6 * 0.0215 m ≈ 0.158 Nm = 1.61 kg-cm
+
+* Multiplicación por la Caja Reductora (78:1): Gracias a la impresionante reducción mecánica fabricada por el equipo, el torque que el motor Turbo Snake necesita entregar en su piñón de entrada es extremadamente bajo:
+
+Torque_motor = Torque_ruedas / Relación_Reducción = 1.61 kg-cm / 78 ≈ 0.0206 kg-cm
+
+* Conclusión Mecánica: Operar el motor bajo la línea sobreelevada de 10V estables garantiza que el motor trabaje en la zona de máxima eficiencia de su curva de potencia, logrando aceleraciones explosivas a PWM 190 sin riesgo de sobrecalentamiento en las bobinas o derretimiento del soporte de PETG.
+
+---
+
+### 2. Distribución de Carga y Centro de Masas Estratégico
+
+La distribución del peso de los 1250 gramos se planificó de forma asimétrica pero controlada a través de la arquitectura de pisos, logrando un balance de fuerzas óptimo para un vehículo de tracción trasera (RWD):
+
+               DISTRIBUCIÓN DE FUERZAS E INERCIA (TRIVILYN 3.0)
+               
+      [Tren Delantero]                                   [Tren Trasero]
+     (Dirección SbW/Servo)                             (Tracción/Motor/Batería 3)
+           │                                                  │
+           ▼                                                  ▼
+     35% del Peso (~437.5g)                             65% del Peso (~812.5g)
+  [Baja inercia angular para]                        [Máxima Fuerza Normal (N)]
+   [giros rápidos de 40°]                            [Elimina el derrape / Grip total]
+
+   
+
+* Eje Trasero (65% de la Masa ≈ 812.5g): Al alojar el motor, la caja de engranajes de acero reforzada con teflón y el cartucho de cola de milano en la parte posterior inferior, se maximiza la Fuerza Normal sobre las ruedas de goma de 43mm. A mayor fuerza normal, mayor es la fuerza de tracción máxima utilizable antes de que las ruedas patinen en el arranque.
+* Eje Delantero (35% de la Masa ≈ 437.5g): Al fijar la electrónica y los sensores en el segundo y tercer piso de forma retrasada, el tren delantero queda lo suficientemente ligero como para que el servomotor HobbyPark de 35kg rompa la fricción lateral de forma instantánea, logrando cambiar el ángulo de ataque a 40° por lado en milisegundos sin arrastrar el frente del carro.
+---
+La caja de engranajes mencionada anteriormente se sostiene con una base diseñada en 3D por el equipo. (Recordamos que los diseños como este se encuentran en el apartado de Archivos CAD).
 
 <img width="942" height="621" alt="image" src="https://github.com/user-attachments/assets/ba459d5c-70a8-4925-a69b-d3ea4a817476" />
 
@@ -255,21 +307,24 @@ Que el equipo adquirido en Amazon. ¿Por qué no se usan servos convencionales? 
 
 - Con este sistema de direccion, logramos obtener resultados de que trivilyn logre un giro con angulo de 80 grados(40° por lado)
 
-| Estado de Giro | Registro Fotográfico del Mecanismo | Ángulo de Orientación | Comportamiento Cinemático y Dinámica de Pista |
-| :--- | :---: | :---: | :--- |
-| **Viraje Absoluto a la Izquierda** | ![Giro Izquierda](image_3224bb.jpg) | ~30° a 40° Izquierda | El eje central se desplaza angularmente en sentido horario. Orientación máxima requerida para corregir la trayectoria ante muros perimetrales detectados por el ultrasonido izquierdo o para trazar curvas cerradas. |
-| **Posición Neutra (Línea Recta)** | ![Dirección Neutra](image_322485.jpg) | 0° (Centrado) | El puente se alinea perpendicularmente al chasis central. Estado de mínima fricción y máxima aceleración. El software aplica correcciones milisegunduales basadas en la telemetría de la HuskyLens para mantener el coche en el centro del carril. |
-| **Viraje Absoluto a la Derecha** | ![Giro Derecha](image_322466.jpg) | ~30° a 40° Derecha | El eje central se desplaza angularmente en sentido antihorario. Configuración optimizada para maniobras de evasión rápida de obstáculos o pilares cromáticos y giros a la derecha en las intersecciones oficiales. |
+Para validar el comportamiento mecánico del sistema **Steer-by-Wire (SbW)**, se documentó el puente de dirección en sus tres estados fundamentales. El actuador HobbyPark de 35kg modifica el ángulo de ataque de las ruedas sin juego mecánico visible (*backlash*).
+
+| Registro Fotográfico | Estado de Giro | Ángulo | Descripción de la Dinámica en Pista |
+| :---: | :--- | :---: | :--- |
+| <img src="https://github.com/user-attachments/assets/3996da37-adc2-49ce-8bea-2aadb797fa20" width="250" alt="Giro Izquierda" /> | **Viraje Absoluto a la Izquierda** | ~30° a 40° | El puente se desplaza en sentido horario para correcciones críticas y curvas cerradas. |
+| <img src="https://github.com/user-attachments/assets/c9c211bb-01a7-4c43-8560-b99a818e1f05" width="250" alt="Dirección Neutra" /> | **Posición Neutra (Línea Recta)** | 0° | El puente se alinea de forma perpendicular al chasis. Estado de mínima fricción y máxima aceleración. |
+| <img src="https://github.com/user-attachments/assets/335919bc-559d-4829-b921-131f51ff0fa4" width="250" alt="Giro Derecha" /> | **Viraje Absoluto a la Derecha** | ~30° a 40° | El puente se desplaza en sentido antihorario para evasión rápida de obstáculos y señales. |
 
 ---
 
->[!TIP]
+>[!IMPORTANT]
 > **Calibración del Punto Neutro en el Firmware:**
 > Al inicializar la máquina de estados en el Arduino Mega, el pulso PWM enviado al servo HobbyPark debe ajustarse exactamente al valor de microsegundos que garantice la perpendicularidad perfecta mostrada en el estado neutro. Cualquier desviación física milimétrica en el acople se corrige mediante el software de calibración de compensación para evitar derivas (*drifting*) en tramos rectos.
 
 - siendo así mas ágil para llegar a cumplir sus objetivos, (giros a gran velocidad, sortear objetos de manera optima, salir del estacionamiento en paralelo).
+---
 
-para lograr la adaptación del servo a las ruedas, utilizamos piezas en 3D diseñadas por nosotros, lego y acero, esta consiste en 3 partes principales:
+Para lograr la adaptación del servo a las ruedas, utilizamos piezas en 3D diseñadas por nosotros, lego y acero, esta consiste en 3 partes principales:
 
 1. Encaje de palanca de acero a base en 3D(imagen) 
 
@@ -451,6 +506,8 @@ Se observan refuerzos triangulares (nervios) en los pilares laterales de la base
 Se implementó un refuerzo perimetral de 2 mm x 3mm en los laterales del segundo piso para optimizar la relación resistencia-peso del chasis. Este diseño incrementa la rigidez mecánica de la plataforma, mitigando las vibraciones que podrían afectar la precisión de los sensores. Asimismo, funciona como un sistema de contención para la gestión de cableado y protección contra impactos laterales, garantizando la integridad de los componentes electrónicos en condiciones de alta exigencia dinámica.
 
 <img width="1039" height="667" alt="image" src="https://github.com/user-attachments/assets/657d39a6-d7f9-4340-aa42-89521c47e9d5" />
+
+
 
 Antes de continuar con la explicación de el sistema de regulacion de altura de los sensores,Esta base posee 3 orifios los cuales encajan perfectamente con los 3 pilares de la base inferios de esta manera se fijan entre si, despues a este diseño se le incorporo los sistemas de "Corredera" en la parte frontal y laterales quedando de la siguiente forma:
 
@@ -734,7 +791,7 @@ La cámara HuskyLens se localiza en la sección superior frontal (tercer piso). 
 
 La cámara debe ser capaz de detectar tanto los pilares de color Rojo/Verde (cuya altura típica es de $15\text{ cm}$) como la línea de parqueo Magenta en el suelo. Para calcular la distancia de la zona ciega ($d_{ciega}$) por delante del robot, aplicamos la siguiente fórmula trigonométrica basada en la cotangente:
 
-d_{ciega} = h_{cam} \cdot \cot\left(\theta_{tilt} + \frac{V_{FOV}}{2}\right)
+d_ciega = h_cam * cot(theta_tilt + (V_FOV / 2))
 
 Definición de las variables:
 
@@ -805,7 +862,7 @@ Bloqueo de Estado ( pepe++): Este incremento actúa como un interruptor lógico 
 El sistema procesa la información de una red tri-sensorial ultrasónica mediante dos lógicas principales:
 
 1.Corrección de Trayectoria (Control Bang-Bang): 
-El vehículo monitorea constantemente los vectores laterales ( leftDistancey rightDistance). Ante un umbral crítico de aproximación (< 25$cm), el sistema activa microajustes de dirección . Estos son pulsos de corrección de 25 ms en ángulos específicos (73°/115°) que rectifican el rumbo sin inducir oscilaciones incontrolables ( efecto zig-zag ), manteniendo el centro de masa alineado con el carril. 
+El vehículo monitorea constantemente los vectores laterales ( leftDistancey rightDistance). Ante un umbral crítico de aproximación (< 25cm), el sistema activa microajustes de dirección . Estos son pulsos de corrección de 25 ms en ángulos específicos (73°/115°) que rectifican el rumbo sin inducir oscilaciones incontrolables ( efecto zig-zag ), manteniendo el centro de masa alineado con el carril. 
 
 2.Cinemática de Viraje (Gestión de Esquinas): 
 La maniobra de giro se dispara cuando el sensor frontal detecta un rango de colisión inminente entre 42 cm y 52 cm.
