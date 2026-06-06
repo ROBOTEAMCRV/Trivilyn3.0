@@ -1268,7 +1268,7 @@ El punto de disparo de nuestros sensores no se eligió al azar; es el resultado 
 
 ---
 
-## A. La Paradoja de la Masa del Sensor y la Inercia Rotacional ($I_z$)
+## A. La Paradoja de la Masa del Sensor y la Inercia Rotacional (I_z)
 
 Para optimizar el software, la tentación inicial fue colocar el sensor ultrasónico en un parachoques muy alargado. Sin embargo, la física gobierna este comportamiento mediante la ley de la Inercia Rotacional ($I_z = \sum m_i \cdot r_i^2$). 
 
