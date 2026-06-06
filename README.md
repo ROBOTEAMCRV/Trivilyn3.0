@@ -69,15 +69,15 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
 
    * [Temporada 2026 (Trivilyn 3.0)](#temporada-2026-trivyln30)
      
-     * [La Paradoja de la Masa del Sensor](#a-la-paradoja-de-la-masa-del-sensor-y-la-inercia-rotacional-iz)
+ * [La Paradoja de la Masa del Sensor](#a-la-paradoja-de-la-masa-del-sensor-y-la-inercia-rotacional-iz)
 
-     * [Gestión de Fricción](#gestión-de-fricción-termodinámica-y-compatibilidad-química-de-materiales)
+     * [Gestión de Fricción](#2-gestión-de-fricción-termodinámica-y-compatibilidad-química-de-materiales)
 
-     * [Adaptabilidad Sensorial](#adaptabilidad-sensorial-ante-el-entorno-de-la-pista)
+     * [Adaptabilidad Sensorial](#3-adaptabilidad-sensorial-ante-el-entorno-de-la-pista)
 
-     * [Sistema de Corredera de Baterías](#sistema-de-corredera-de-baterías-y-optimización-cinemática)
+     * [Sistema de Corredera de Baterías](#4-sistema-de-corredera-de-baterías-y-optimización-cinemática)
 
-     * [Evolución del Sistema de Interconexión](#evolución-del-sistema-de-interconexión-y-blindaje-de-señales-emi)
+     * [Evolución del Sistema de Interconexión](#5-evolución-del-sistema-de-interconexión-y-blindaje-de-señales-emi)
        
 8. [Desafíos Técnicos, Limitaciones y Soluciones en el Desarrollo](#desafíos-técnicos-limitaciones-y-soluciones-en-el-desarrollo)
 
