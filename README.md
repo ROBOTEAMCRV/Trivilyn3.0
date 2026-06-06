@@ -68,18 +68,17 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
    * [Temporada 2025 (Rexbot 2.0)](#temporada-2025-rexbot20)
 
    * [Temporada 2026 (Trivilyn 3.0)](#temporada-2026-trivyln30)
-
-     * [Lógica de Interconexión Física del Chasis vs Calibración del Software](#lógica-de-interconexión-física-del-chasis-vs-calibración-del-software)
-
+     
      * [La Paradoja de la Masa del Sensor](#a-la-paradoja-de-la-masa-del-sensor-y-la-inercia-rotacional-iz)
 
      * [Gestión de Fricción](#gestión-de-fricción-termodinámica-y-compatibilidad-química-de-materiales)
 
-     * [Sistema de Corredera de Baterías](#sistema-de-corredera-de-baterias-y-optimización-cinemática)
+     * [Adaptabilidad Sensorial](#adaptabilidad-sensorial-ante-el-entorno-de-la-pista)
+
+     * [Sistema de Corredera de Baterías](#sistema-de-corredera-de-baterías-y-optimización-cinemática)
 
      * [Evolución del Sistema de Interconexión](#evolución-del-sistema-de-interconexión-y-blindaje-de-señales-emi)
-
-
+       
 8. [Desafíos Técnicos, Limitaciones y Soluciones en el Desarrollo](#desafíos-técnicos-limitaciones-y-soluciones-en-el-desarrollo)
 
 9. [Archivos CAD](#archivos-cad)
