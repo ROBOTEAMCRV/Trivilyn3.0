@@ -1,4 +1,5 @@
 # Engineering Document/Trivilyn3.0 
+
 Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros ingenieros temporada 2026 WRO. En el que el equipo combina sus conocimientos y destreza en la robótica(Mecánica, Electrónica, programación y automatización)  para la elaboración de (Trivilyn) y lograr el máximo desempeño en la categoría.
 
 <img width="1280" height="518" alt="image" src="https://github.com/user-attachments/assets/348aa223-d3f9-4a99-beae-81b8cf399c66" />
@@ -20,8 +21,12 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
    * [Juan Andres Graterol Teran](#juan-andres-graterol-teran)
 
    * [Tutor - Luis Eduardo Paredes](#tutor---luis-eduardo-paredes)
+  
+   * [Trivi](#Trivilyn3.0)
 
-3. [Movilidad y Diseño Mecánico](#-movilidad-y-diseño-mecánico)
+3. [Fotos de Trivilyn 3.0](#trivilyn-360-photos)
+
+4. [Movilidad y Diseño Mecánico](#-movilidad-y-diseño-mecánico)
 
    * [Tracción y Dirección](#tracción-y-dirección)
 
@@ -37,7 +42,7 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
 
    * [Segundo Piso (Torque de Sensores y Soporte Híbrido)](#segundo-piso)
 
-4. [Arquitectura de Potencia y Sensores](#5-arquitectura-de-potencia-y-sensores)
+5. [Arquitectura de Potencia y Sensores](#5-arquitectura-de-potencia-y-sensores)
 
    * [Topología del Hardware y Estándar de Colorimetría Crítica del Cableado](#51-topología-del-hardware-y-estándar-de-colorimetría-crítica-del-cableado)
 
@@ -47,7 +52,7 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
 
    * [Análisis de Rendimiento y Cálculo de Autonomía Real del Vehículo](#54-análisis-de-rendimiento-y-cálculo-de-autonomía-real-del-vehículo)
 
-5. [Arquitectura de Software y Estrategia de Competencia](#arquitectura-software-y-estratrgia)
+6. [Arquitectura de Software y Estrategia de Competencia](#arquitectura-software-y-estratrgia)
 
    * [Ronda Abierta](#ronda-abierta)
 
@@ -59,7 +64,7 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
 
    * [Ronda Cerrada](#ronda-cerrada)
      
-6. [Pensamiento Sistémico y Decisiones de Ingeniería](#pensamiento-sistémico-y-decisiones-de-ingeniería)
+7. [Pensamiento Sistémico y Decisiones de Ingeniería](#pensamiento-sistémico-y-decisiones-de-ingeniería)
 
    * [Temporada 2024 (Rexbot 1.0)](#temporada-2024-rexbot10)
 
@@ -78,15 +83,10 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
      * [Evolución del Sistema de Interconexión y Blindaje de Señales (EMI)](#evolución-del-sistema-de-interconexión-y-blindaje-de-señales-emi)
 
 
-7. [Desafíos Técnicos, Limitaciones y Soluciones en el Desarrollo](#desafíos-técnicos-limitaciones-y-soluciones-en-el-desarrollo)
+8. [Desafíos Técnicos, Limitaciones y Soluciones en el Desarrollo](#desafíos-técnicos-limitaciones-y-soluciones-en-el-desarrollo)
 
-8. [Archivos CAD](#archivos-cad)
-
-
-9. [Fotos de Trivilyn 3.0](#trivilyn-360-photos)
-
-
-10. [Videos de Trivilyn 3.0](#trivilyn30-challenges)
+9. [Archivos CAD](#archivos-cad)
+    
 # MIEMBROS DEL TEAMROBOCRV
 
 ## 👤Dennis Adrian Silva Riera
@@ -129,6 +129,37 @@ Apoyo Logístico: Colabora en la preparación de las pistas de prueba, recolecci
 ### Rol: Orientar al equipo en la planificación del proyecto y el cumplimiento de los plazos de entrega.
 
 <img width="400" height="600" alt="image" src="https://github.com/user-attachments/assets/12b81259-f88b-43d7-be25-c19f183fe3eb" />
+
+ ##  👤Trivilyn3.0 
+
+ ### Rol: Vehículo Autónomo de Competición - Plataforma Oficial 2026.
+
+<img width="810" height="885" alt="image" src="https://github.com/user-attachments/assets/b6bfbca7-b9b6-4e8b-a535-d11c9ce3f4d7" />
+    
+  * **Estatura y Peso:** Estructura modular optimizada en tres niveles con una masa total controlada de 1250 gramos.
+    
+  * **Habilidades de Percepción:** Visión artificial acelerada por IA con HuskyLens para reconocimiento colorimétrico y una red unificada de sensores ultrasónicos HC-SR04 para mapeo perimetral en tiempo real.
+    
+  * **Capacidad Motriz:** Dirección de alta agilidad basada en un sistema Steer-by-Wire (SbW) acoplado a un servo HobbyPark de 35 kg con giros de 40°, impulsado por un motor DC de alta revolución con caja reductora personalizada.
+    
+  * **Dieta Energética:** Sistema de alimentación triple e independiente basado en celdas 18650.
+
+
+# Trivilyn 360 Photos
+
+Para evidenciar la simetría, la distribución modular en tres niveles y el acabado de la manufactura aditiva del vehículo, se presenta la galería oficial en un formato de matriz técnica:
+
+| 📸 Perfil de Inspección | 🖼️ Registro Visual (Render / Captura) |
+| :--- | :--- |
+| **Vista Superior**<br>• Permite evaluar la distribución de los componentes en el segundo piso y la alineación central. | <img width="400" alt="Perfil Superior" src="https://github.com/user-attachments/assets/5ea353f3-4b35-4c3e-9bb6-72a543cf638f" /> |
+| **Vista Lateral Derecha**<br>• Muestra el despeje sobre el suelo (ground clearance) y el acople del tren motriz. | <img width="400" alt="Perfil Derecho" src="https://github.com/user-attachments/assets/5c40a96a-0570-45fe-94e5-adccd0af3df8" /> |
+| **Vista Lateral Izquierda**<br>• Expone el acceso al sistema perimetral de alimentación y cableado lógico. | <img width="400" alt="Perfil Izquierdo" src="https://github.com/user-attachments/assets/cbf40dd8-de2d-4060-8c28-fb0e8f4901fa" /> |
+| **Vista Frontal**<br>• Muestra la orientación de la HuskyLens, el soporte de sensores y los LEDs de contraste. | <img width="400" alt="Perfil Delantero" src="https://github.com/user-attachments/assets/d7749a1f-4eab-4707-9e4a-3e9ab4a34e1b" /> |
+| **Vista Trasera**<br>• Evidencia el anclaje del motor principal y la salida estructurada de las líneas de potencia. | <img width="400" alt="Perfil Trasero" src="https://github.com/user-attachments/assets/659f38c5-4fa7-4f97-a464-c7725a822623" /> |
+| **Vista Inferior (Chasis)**<br>• Expone la geometría del primer piso y el área libre para evitar la fricción con la pista. | <img width="400" alt="Perfil Inferior" src="https://github.com/user-attachments/assets/4d58e3ae-8c33-4a9e-904c-3e7a4e68819d" /> |
+
+
+---
 
 
 # 🔩 Movilidad y Diseño Mecánico
@@ -1036,11 +1067,18 @@ A PWM 180, los motores de 15,000 RPM generan vibraciones de alta frecuencia que 
 
 Efecto: Esto genera lecturas "fantasmales" o ecos falsos. Aunque nuestro filtro distance > 1elimina los ceros, la vibración puede causar variaciones de ±2 cm en la lectura, suficientes para disparar una corrección lateral innecesaria en un pasillo tan estrecho como el de 40 cm.
 
-
-     
  ## Conclusión: 
  
 - Trivilyn 3.0 ha pasado de ser un diseño reactivo simple a un sistema autónomo capaz de analizar su entorno, corregir su trayectoria milimétricamente y tomar decisiones lógicas basadas en la historia de la misión. La combinación de una estructura mecánica robusta y un software resistente nos permite afrontar la competencia con un alto grado de confianza.
+
+## Ensayos Cinemáticos y Navegación Continua.
+
+- [Reto abierto Antihorario](https://youtu.be/W1Fzfe-SBlg?si=Vv0s_NBfPZ1VnEKG)
+
+
+
+
+
 
 # Ronda cerrada 
 
@@ -1407,9 +1445,4 @@ Para erradicar esta degradación de la señal, se implementó el cableado indust
 
 Durante la construcciÓn y ensamblaje nuestro prototipo enfrentamos varios desafios los cuales resolvimos y decidimos documentar para demostrar que la construcción de un vehiculo autonomo no se realiza de la noche a la mañana. Que las cosas no siempre salen la primera vez y consta de un proceso de prueba-error para llegar al resultado deseado.
 
-# Trivilyn 360 Photos
-___________________
-# Trivilyn3.0 Challenges
-____________________
 
----
