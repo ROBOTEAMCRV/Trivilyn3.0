@@ -51,9 +51,9 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
 
 6. [Arquitectura de Software y Estrategia de Competencia](#arquitectura-software-y-estratrgia)
 
-   * [Ronda Abierta](#ronda-abierta)
+   * [Resumen del Proyecto](#resumen-del-proyecto)
 
-     * [Resumen del Proyecto](#resumen-del-proyecto)
+   * [Ronda Abierta](#ronda-abierta)
 
      * [Arquitectura del Software (Máquina de Estados de Misión)](#arquitectura-del-software-máquina-de-estados-de-misión)
 
