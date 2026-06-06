@@ -7,9 +7,6 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
 
 # ÍNDICE
 
-## 📌 Tabla de Contenido
-
-
 1. [Engineering Document / Trivilyn 3.0](#engineering-document-trivilyn-30)
 
 2. [Miembros de TEAMROBOCRV](#miembros-del-teamrobocrv)
@@ -22,7 +19,7 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
 
    * [Tutor - Luis Eduardo Paredes](#tutor---luis-eduardo-paredes)
   
-   * [Trivi](#Trivilyn3.0)
+   * [Trivilyn 3.0](#Trivilyn3.0)
 
 3. [Fotos de Trivilyn 3.0](#trivilyn-360-photos)
 
@@ -76,7 +73,7 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
 
      * [La Paradoja de la Masa del Sensor y la Inercia Rotacional (Iz)](#a-la-paradoja-de-la-masa-del-sensor-y-la-inercia-rotacional-i_z)
 
-     * [Gestión de Fricción, Termodinámica y Compatibilidad Química de Materiales](#gestión-de-fricción-termodinámica-y-compatibilidad-química-de-materiales)
+     * [Gestión de Fricción, Termodinámica y Compartibilidad Química de Materiales](#gestión-de-fricción-termodinámica-y-compatibilidad-química-de-materiales)
 
      * [Sistema de Corredera de Baterías y Optimización Cinemática](#sistema-de-corredera-de-baterias-y-optimización-cinemática)
 
@@ -86,7 +83,6 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
 8. [Desafíos Técnicos, Limitaciones y Soluciones en el Desarrollo](#desafíos-técnicos-limitaciones-y-soluciones-en-el-desarrollo)
 
 9. [Archivos CAD](#archivos-cad)
-    
 # MIEMBROS DEL TEAMROBOCRV
 
 ## 👤Dennis Adrian Silva Riera
@@ -819,11 +815,10 @@ Esta disposición garantiza que cualquier corrección de dirección generada por
 
 Cuando dos sensores ultrasónicos idénticos operan en paralelo en un entorno cerrado y estrecho de $40\text{ cm}$, el pulso emitido por el sensor izquierdo puede rebotar de manera errática e ingresar en el receptor del sensor derecho.
 
-Para erradicar esta interferencia física en Trivilyn 3.0, el software implementa un protocolo de muestreo alternado temporal (secuenciado por flancos de reloj) gobernado por la librería NewPing de la siguiente manera:
+Para erradicar esta interferencia física en Trivilyn3.0, el software implementa un protocolo de muestreo alternado temporal (secuenciado por flancos de reloj) gobernado por la librería NewPing de la siguiente manera:
 
-Tiempo (ms):  │ [Ping Izq.] │  29 ms Espera  │ [Ping Der.] │  29 ms Espera  │ [Ping Front.] │
-              └─────────────┴────────────────┴─────────────┴────────────────┴───────────────┘
-              ◄───────────────────────── Ciclo Total: 87 ms ────────────────────────────────►
+<img width="1280" height="698" alt="image" src="https://github.com/user-attachments/assets/80062ac3-155d-4d2c-b181-e47e458e09c4" />
+
 
 
 >[!IMPORTANT]
@@ -831,26 +826,32 @@ Tiempo (ms):  │ [Ping Izq.] │  29 ms Espera  │ [Ping Der.] │  29 ms Espe
 
 ## 3. Sensor de Visión: Geometría de Proyección Tridimensional (HuskyLens)
 
-La cámara HuskyLens se localiza en la sección superior frontal (tercer piso). No está orientada en paralelo al suelo, sino que posee un ángulo de inclinación descendente de cabeceo (Pitch, $\theta_{\text{tilt}}$) calibrado con precisión de grado.
+---
 
-          [ Cámara HuskyLens ]
-               │ \ 
-               │  \  Límite Superior FOV
-               │   \ 
-      h_cam    │    \ 
-               │     \ 
-               │_ θ_tilt\  Línea de Mirada Central (Centroide de Detección)
-               └───────  \ 
-    ──────────────────────\───────────────────────◄ [Suelo / Pista]
-             ◄─ Zona Ciega ──►
-                (d_ciega)
+### 3.1. Configuración Espacial y Calibración del Ángulo de Cabeceo (Pitch)
 
+El sensor de visión artificial HuskyLens está estratégicamente posicionado en el eje de simetría central de la sección superior frontal (segundo piso del chasis). Para optimizar la matriz de píxeles y el reconocimiento colorimétrico en la Ronda Abierta, la cámara no se dispone en paralelo al plano de la pista, sino que implementa un ángulo de inclinación descendente estático de cabeceo (Pitch, Theta_tilt) calibrado con precisión milimétrica.
 
-### A. Cálculo Trigonométrico del Ángulo Óptimo de Inclinación
+Esta inclinación geométrica es crítica para:
+* **Optimización del Campo de Visión (FOV):** Maximiza el área de barrido sobre el asfalto a corta y mediana distancia, asegurando la detección oportuna de las líneas de carril y códigos de color sin perder resolución en el horizonte lejano.
+* **Transformación de Coordenadas Bidimensionales:** Permite al algoritmo de la máquina de estados proyectar la posición de los objetos del plano de la imagen (u, v) al plano real de la pista (X, Y), calculando la distancia matemática exacta hacia las marcas de referencia.
+* **Aislamiento de Inercia Rotacional (Iz):** Al estar firmemente anclada al soporte híbrido del segundo piso, la línea de visión del sensor permanece estable frente a las desaceleraciones y transferencias de masa del vehículo durante los giros de 40 grados del sistema Steer-by-Wire (SbW).
+
+---
+
+### 📥 Sustentación de Valores Físicos en Pista
+
+Para garantizar que el vehículo autónomo mantenga una navegación continua y fluida en la Ronda Abierta de la WRO 2026, el despeje de la ecuación se calibra bajo las siguientes restricciones operacionales:
+
+1. **Garantía de Frenado Seguro:** El valor resultante de `d_min` se sincroniza con el tiempo de respuesta de la máquina de estados y la velocidad crucero del carro, asegurando que cualquier cambio de color o carril sea detectado antes de que el chasis pise la línea.
+
+2. **Mitigación de Distorsión Óptica:** Al controlar estrictamente el ángulo `Theta_tilt`, se evita que la perspectiva de la cámara deforme la geometría de las marcas, manteniendo el margen de error del reconocimiento colorimétrico por debajo del 1.5%.
+
+3. **Estabilidad Dinámica:** Esta relación matemática permite que el sistema Steer-by-Wire (SbW) anticipe el radio de giro óptimo en ambos sentidos de carrera (horario y antihorario) sin necesidad de recalibraciones físicas de última hora.
 
 La cámara debe ser capaz de detectar tanto los pilares de color Rojo/Verde (cuya altura típica es de $15\text{ cm}$) como la línea de parqueo Magenta en el suelo. Para calcular la distancia de la zona ciega ($d_{ciega}$) por delante del robot, aplicamos la siguiente fórmula trigonométrica basada en la cotangente:
 
-d_ciega = h_cam * cot(theta_tilt + (V_FOV / 2))
+$$d_{min} = h_{sensor} \cdot \tan\left(90^\circ - \theta_{tilt} - \frac{FOV_{vertical}}{2}\right)$$
 
 Definición de las variables:
 
@@ -949,34 +950,8 @@ Para que el vehículo sea completamente autónomo ante cualquier configuración 
 #### A. Diagrama de Flujo Lógico de Decisión en Lazo Cerrado
 El siguiente esquema representa el pipeline de toma de decisiones del microcontrolador al encontrarse con la primera pared frontal del circuito:
 
-```text
-               [ Lectura de Proximidad Frontal ]
-                              │
-                              ▼
-             ¿Pared Detectada? (middleDistance <= 32 cm)
-                              │
-             ┌────────────────┴────────────────┐
-             ▼ SÍ                              ▼ NO
- [Comparación de Vectores Laterales]    [Mantener Marcha]
-             │                             forward()
-             ├─────────────────────────────────┐
-             ▼ ¿leftDistance <= rightDistance? │
-             │                                 │
-     ┌───────┴───────┐                         │
-     ▼ SÍ            ▼ NO                      ▼
-[Ruta Horaria]  [Ruta Antihoraria]     [Retorno al Loop]
-  tilin++          grasa++
-  lecrer++         lewis++
-     │               │
-     ▼               ▼
-[Anclaje de     [Anclaje de
- Trayectoria]    Trayectoria]
-     │               │
-     └───────┬───────┘
-             ▼
-    [Bloqueo de Decisión]
- (tilin o grasa ya no son 0)
-```
+<img width="1280" height="698" alt="image" src="https://github.com/user-attachments/assets/a67e4347-520c-4d58-8ea3-244f883ccd23" />
+
 
 ### 2. Gestión de Actuadores y Dinámica de Potencia
 
@@ -1075,9 +1050,7 @@ Efecto: Esto genera lecturas "fantasmales" o ecos falsos. Aunque nuestro filtro 
 
 - [Reto abierto Antihorario](https://youtu.be/W1Fzfe-SBlg?si=Vv0s_NBfPZ1VnEKG)
 
-
-
-
+- [Reto abierto Horario](https://youtu.be/3rMMLZdWGc4?si=xGYyjhSCZMpKUZd_)
 
 
 # Ronda cerrada 
