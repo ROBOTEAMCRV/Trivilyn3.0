@@ -305,9 +305,11 @@ La movilidad en la parte delantera: aquí nos referimos al sistema de dirección
 
 Para esta parte de Trivilyn3.0 nos basamos en la plataforma estable de Trivilyn 2025; Para esta temporada 2026 hemos conservado el sistema de dirección por su alta confiabilidad, pero hemos aplicado dos optimizaciones críticas en la respuesta dinámica y la durabilidad de los materiales, las cuales son:
 
-1.Principalmente imprimimos los componentes nuevamente en PETG porque es un material mas resistente al desgaste y posibles fracturas que el PLA, sin embargo desde un punto mas profesional estos son las ventajas de utilizar PETG:
+1.Principalmente imprimimos los componentes nuevamente en PETG porque es un material mas resistente al desgaste y posibles fracturas que el PLA.
 
-- El PETG (Polietileno Tereftalato Glicol) es químicamente más estable.
+El **PETG (Tereftalato de Polietileno Glicol)** es un copoliéster termoplástico ampliamente utilizado en la manufactura aditiva (impresión 3D) de componentes robóticos estructurales y de alta resistencia. A diferencia del PLA convencional, el PETG destaca por su excelente balance entre tenacidad, flexibilidad y resistencia química, lo que lo convierte en el polímero ideal para soportar los esfuerzos dinámicos y las vibraciones mecánicas dentro del chasis del vehículo autónomo.
+
+### ¿Por qué PETG?
 
 - Durante la competencia, los motores DC y los drivers de potencia generan calor. El PLA puede empezar a ablandarse o deformarse si está cerca de una fuente de calor constante o si el robot se deja bajo el sol/luces intensas del evento. El PETG mantiene su integridad estructural.
 
@@ -316,7 +318,7 @@ Para esta parte de Trivilyn3.0 nos basamos en la plataforma estable de Trivilyn 
 - El PLA es biodegradable y sensible a la humedad (higroscópico), lo que puede degradar sus propiedades mecánicas con el tiempo. El PETG es resistente al agua y a muchos químicos, lo que garantiza que las piezas del robot no se vuelvan quebradizas meses después de haber sido impresas.
 
 
-2.Se Realizo un cambio al tubo transversal.Este cambio del del tubo consiste en su material no en sus medidas o formas, decidimos hacerlo de bronce en un torno por las principales ventajas:
+2.Se Realizo un cambio al tubo transversal.Este cambio del del tubo consiste en su material no en sus medidas o forma, decidimos hacerlo de bronce en un torno por las principales ventajas:
 
 - En la version anterior el tubo era de plastico.El plástico contra plástico genera mucha fricción y calor, lo que provoca que los ejes de LEGO se desgasten ("se limen") con el tiempo, perdiendo su forma de cruz.
 
@@ -368,6 +370,12 @@ Para validar el comportamiento mecánico del sistema **Steer-by-Wire (SbW)**, se
 | <img src="https://github.com/user-attachments/assets/c9c211bb-01a7-4c43-8560-b99a818e1f05" width="250" alt="Dirección Neutra" /> | **Posición Neutra (Línea Recta)** | 0° | El puente se alinea de forma perpendicular al chasis. Estado de mínima fricción y máxima aceleración. |
 | <img src="https://github.com/user-attachments/assets/335919bc-559d-4829-b921-131f51ff0fa4" width="250" alt="Giro Derecha" /> | **Viraje Absoluto a la Derecha** | ~30° a 40° | El puente se desplaza en sentido antihorario para evasión rápida de obstáculos y señales. |
 
+### 🛠️ Justificación Técnica del Sistema SbW
+
+1. **Optimización del Radio de Giro Real:** El rango extendido de 40° por lado permite que el robot complete maniobras de evasión y estacionamiento en espacios confinados, solucionando de raíz las limitaciones de agilidad geométrica presentes en los antiguos prototipos de la serie Rexbot.
+2. **Mitigación del Desgaste y Derrape:** Al forzar mecánicamente la divergencia de las ruedas durante el viraje (Ackermann), se reduce la fricción parásita de las llantas contra la superficie de rodadura, optimizando el consumo del Power Budget y garantizando un avance fluido.
+3. **Control Predictivo y Calibración:** Al no depender de varillajes mecánicos complejos expuestos a holguras físicas, las desviaciones milimétricas de la dirección se corrigen directamente mediante software de control en milisegundos, asegurando un comportamiento idéntico tanto en sentido horario como antihorario de la carrera.
+
 ---
 
 >[!IMPORTANT]
@@ -375,20 +383,26 @@ Para validar el comportamiento mecánico del sistema **Steer-by-Wire (SbW)**, se
 > Al inicializar la máquina de estados en el Arduino Mega, el pulso PWM enviado al servo HobbyPark debe ajustarse exactamente al valor de microsegundos que garantice la perpendicularidad perfecta mostrada en el estado neutro. Cualquier desviación física milimétrica en el acople se corrige mediante el software de calibración de compensación para evitar derivas (*drifting*) en tramos rectos.
 
 - siendo así mas ágil para llegar a cumplir sus objetivos, (giros a gran velocidad, sortear objetos de manera optima, salir del estacionamiento en paralelo).
+
+
 ---
 
 Para lograr la adaptación del servo a las ruedas, utilizamos piezas en 3D diseñadas por nosotros, lego y acero, esta consiste en 3 partes principales:
 
-1. Encaje de palanca de acero a base en 3D(imagen) 
+1. Encaje de palanca de acero a base en 3D
 
+   
 Esta base fue rediseñada varias veces hasta que logramos encontrar el punto donde no se deformara por el peso y, también, para que encajara perfectamente la pieza de hierro a presión y evitar todo el juego posible (imprecisión de los componentes).
 
-2.Luego de encajar esta pieza, utilizamos un tipo de abrazadera, que sostiene el buje del eje con forma de cruz extraido de un kit Legoeo EVE3(imagen)
+2.Luego de encajar esta pieza, utilizamos un tipo de abrazadera, que sostiene el buje del eje con forma de cruz extraido de un kit Legoeo EVE3
+
 
 3.Para centrar y estabilizar su eje utilizamos retenes de lego amarillos 
 <img width="1200" height="899" alt="image" src="https://github.com/user-attachments/assets/5e4e163a-b2bf-42c3-9c0c-e68d3291c89c" />
 
 Dos por la parte interior y uno por la parte exterior por cada lado. Estos se encargan de sujetar los ejes de las ruedas al sistema de dirección; luego, el diferencial «tubo transversal», ya antes lubricado con vaselina.
+
+# 🏗️ Arquitectura Modular: Desglose Estructural por Pisos
 
 # Primer piso
 
@@ -548,7 +562,7 @@ Esta disposición mantiene el primer piso completamente libre de bucles de cable
 # Segundo piso
 
 Para el segundo piso de Trivilyn 3.0, el diseño tuvo una reestructuración, siendo la más notoria su tamaño: su anchura aumentó de 90 mm a 100 mm, mantuvo sus 181.50 mm de largo y su altura aumentó de 5 mm a 38 mm en el momento en que se implementó el sistema para regular la altura de los sensores.
-<img width="904" height="664" alt="image" src="https://github.com/user-attachments/assets/f934e917-c560-4c97-a5e7-f0c92a428258" />
+<img width="1060" height="664" alt="image" src="https://github.com/user-attachments/assets/f934e917-c560-4c97-a5e7-f0c92a428258" />
 
 <img width="1066" height="640" alt="image" src="https://github.com/user-attachments/assets/b309783a-532b-4e0a-9540-0df9a5505ec8" />
 
