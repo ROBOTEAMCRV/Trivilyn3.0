@@ -71,11 +71,11 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
 
      * [Lógica de Interconexión Física del Chasis vs Calibración del Software](#lógica-de-interconexión-física-del-chasis-vs-calibración-del-software)
 
-     * [La Paradoja de la Masa del Sensor y la Inercia Rotacional (Iz)](#a-la-paradoja-de-la-masa-del-sensor-y-la-inercia-rotacional-i_z)
+     * [La Paradoja de la Masa del Sensor y la Inercia Rotacional (Iz)](#a-la-paradoja-de-la-masa-del-sensor-y-la-inercia-rotacional-iz)
 
      * [Gestión de Fricción, Termodinámica y Compartibilidad Química de Materiales](#gestión-de-fricción-termodinámica-y-compatibilidad-química-de-materiales)
 
-     * [Sistema de Corredera de Baterías y Optimización Cinemática](#sistema-de-corredera-de-baterias-y-optimización-cinemática)
+     * [Sistema de Corredera de Baterías y Optimización Cinemática](#Sistema-de-Corredera-de-Baterías-y-Optimización-Cinemática)
 
      * [Evolución del Sistema de Interconexión y Blindaje de Señales (EMI)](#evolución-del-sistema-de-interconexión-y-blindaje-de-señales-emi)
 
