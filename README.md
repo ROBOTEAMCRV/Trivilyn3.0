@@ -19,7 +19,7 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
 
    * [Tutor - Luis Eduardo Paredes](#tutor---luis-eduardo-paredes)
   
-   * [Trivilyn 3.0](#Trivilyn3.0)
+   * [Trivilyn 3.0](#trivilyn30)
 
 3. [Fotos de Trivilyn 3.0](#trivilyn-360-photos)
 
