@@ -63,21 +63,21 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
      
 7. [Pensamiento Sistémico y Decisiones de Ingeniería](#pensamiento-sistémico-y-decisiones-de-ingeniería)
 
-   * [Temporada 2024 (Rexbot 1.0)](#temporada-2024-rexbot10)
+   - [Temporada 2024 (Rexbot 1.0)](#temporada-2024-rexbot10)
 
-   * [Temporada 2025 (Rexbot 2.0)](#temporada-2025-rexbot20)
+   - [Temporada 2025 (Rexbot 2.0)](#temporada-2025-rexbot20)
 
-   * [Temporada 2026 (Trivilyn 3.0)](#temporada-2026-trivyln30)
+   - [Temporada 2026 (Trivilyn 3.0)](#temporada-2026-trivyln30)
      
- * [La Paradoja de la Masa del Sensor](#a-la-paradoja-de-la-masa-del-sensor-y-la-inercia-rotacional-iz)
+   * [La Paradoja de la Masa del Sensor](#a-la-paradoja-de-la-masa-del-sensor-y-la-inercia-rotacional-iz)
 
-     * [Gestión de Fricción](#2-gestión-de-fricción-termodinámica-y-compatibilidad-química-de-materiales)
+   * [Gestión de Fricción](#2-gestión-de-fricción-termodinámica-y-compatibilidad-química-de-materiales)
 
-     * [Adaptabilidad Sensorial](#3-adaptabilidad-sensorial-ante-el-entorno-de-la-pista)
+   * [Adaptabilidad Sensorial](#3-adaptabilidad-sensorial-ante-el-entorno-de-la-pista)
 
-     * [Sistema de Corredera de Baterías](#4-sistema-de-corredera-de-baterías-y-optimización-cinemática)
+   * [Sistema de Corredera de Baterías](#4-sistema-de-corredera-de-baterías-y-optimización-cinemática)
 
-     * [Evolución del Sistema de Interconexión](#5-evolución-del-sistema-de-interconexión-y-blindaje-de-señales-emi)
+   * [Evolución del Sistema de Interconexión](#5-evolución-del-sistema-de-interconexión-y-blindaje-de-señales-emi)
        
 8. [Desafíos Técnicos, Limitaciones y Soluciones en el Desarrollo](#desafíos-técnicos-limitaciones-y-soluciones-en-el-desarrollo)
 
