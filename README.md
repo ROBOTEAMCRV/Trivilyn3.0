@@ -75,7 +75,7 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
 
      * [Gestión de Fricción](#gestión-de-fricción-termodinámica-y-compatibilidad-química-de-materiales)
 
-     * [Sistema de Corredera de Baterías](#Sistema-de-Corredera-de-Baterías-y-Optimización-Cinemática)
+     * [Sistema de Corredera de Baterías](#sistema-de-corredera-de-baterias-y-optimización-cinemática)
 
      * [Evolución del Sistema de Interconexión](#evolución-del-sistema-de-interconexión-y-blindaje-de-señales-emi)
 
