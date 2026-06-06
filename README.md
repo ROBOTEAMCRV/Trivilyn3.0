@@ -133,6 +133,19 @@ Apoyo Logístico: Colabora en la preparación de las pistas de prueba, recolecci
 
 # 🔩 Movilidad y Diseño Mecánico
 
+La arquitectura mecánica de Trivilyn3.0 representa la evolución definitiva del equipo hacia la optimización estructural y la eficiencia dinámica en la World Robot Olympiad (WRO) 2026. Tras analizar las limitaciones de agilidad, exceso de dimensiones y holguras mecánicas presentes en las plataformas previas Rexbot 1.25 y Rexbot 1.5, adoptamos un enfoque de diseño disruptivo basado en la premisa "Adaptarse para ganar".
+
+---
+
+
+El chasis de Trivilyn3.0 ha sido desarrollado desde cero utilizando un sistema híbrido de manufactura aditiva con polímeros avanzados (PETG y PLA), configurado en una estructura modular de tres niveles que optimiza al máximo el espacio y el centro de masa del vehículo. Cada pieza ha sido calculada para absorber las vibraciones mecánicas de la alta competencia, garantizando la rigidez necesaria para que los algoritmos de visión artificial operen con total precisión.
+
+---
+
+
+Este capítulo desglosa los principios físicos, cinemáticos y de distribución de fuerzas que gobiernan la movilidad de Trivilyn3.0, demostrando cómo se logra un control milimétrico del vehículo mediante un sistema de dirección Steer-by-Wire (SbW), una caja reductora a medida de alta eficiencia y una gestión inteligente del peso.
+
+
 ## Tracción y Dirección:
 
 - La tracción del prototipo esta constituido por 4 ruedas de goma extraídas de un kit de lego EV3, estas tienen como medida del neumático es de 43mm de diámetro exterior y su respectiva llanta(rin) 29mm.
@@ -175,7 +188,20 @@ Aclaramos que estos motores se extrajeron de un turbo snake
 
 y se pueden extraer de distintos tipos de vehículos a control remoto como:
 
+* **Vehículos Acrobáticos Tipo "Stunt" o Doble Cara (Genéricos de Amazon/AliExpress):** Diseñados para maniobras de alto impacto y giros de 360 grados. Sus motores internos poseen un torque de arranque elevado, ideal para romper la inercia inicial en prototipos que superan la línea de los 1000 gramos de masa.
 
+
+---
+
+* **Modelos de Competición Escala Mini 4WD (Tipo Tamiya):** Estos kits emplean motores ultra estandarizados (como la serie Mabuchi 130). Destacan por su ligereza, imanes de alta calidad y un régimen de revoluciones por minuto masivo, lo que facilita su acoplamiento directo en cajas reductoras diseñadas a medida.
+
+---
+
+* **Automóviles de Fricción de Escala Mayor (Tipo Maisto o Similares):** Aunque carecen de electrónica de radiofrecuencia, los mecanismos internos de estos vehículos albergan conjuntos de engranajes y motores de inercia pesados. Son una excelente fuente de componentes mecánicos y bobinados de alta durabilidad para resistir la fatiga por uso continuo.
+
+---
+
+* **Vehículos de Radio Control Semiprofesionales (Escala 1:24 o 1:16):** Modelos comerciales que, al sufrir fallos en sus placas lógicas principales, dejan intactos motores de las series 130 o 180. Estos componentes ofrecen una estabilidad térmica superior y un consumo de corriente optimizado bajo cargas de trabajo constantes.
 
 
 Este motor es el corazón del desplazamiento y uno de los componentes principales para que Trivilyn tenga su desempeño. 
@@ -221,7 +247,7 @@ La distribución del peso de los 1250 gramos se planificó de forma asimétrica 
   [Baja inercia angular para]                        [Máxima Fuerza Normal (N)]
    [giros rápidos de 40°]                            [Elimina el derrape / Grip total]
 
-   
+   <img width="1080" height="810" alt="image" src="https://github.com/user-attachments/assets/fb2b0b93-4538-4a43-9931-fc3f5ad4f808" />
 
 * Eje Trasero (65% de la Masa ≈ 812.5g): Al alojar el motor, la caja de engranajes de acero reforzada con teflón y el cartucho de cola de milano en la parte posterior inferior, se maximiza la Fuerza Normal sobre las ruedas de goma de 43mm. A mayor fuerza normal, mayor es la fuerza de tracción máxima utilizable antes de que las ruedas patinen en el arranque.
 * Eje Delantero (35% de la Masa ≈ 437.5g): Al fijar la electrónica y los sensores en el segundo y tercer piso de forma retrasada, el tren delantero queda lo suficientemente ligero como para que el servomotor HobbyPark de 35kg rompa la fricción lateral de forma instantánea, logrando cambiar el ángulo de ataque a 40° por lado en milisegundos sin arrastrar el frente del carro.
@@ -601,6 +627,8 @@ La cara frontal externa (el plano inclinado estilo Trophy Truck ) integra una ex
 
 Este apartado documenta de manera exhaustiva la distribución de energía, el aislamiento de ruido eléctrico y la configuración del sistema de sensores de Trivilyn3.0. El diseño ha sido calculado para garantizar la estabilidad del procesamiento de visión artificial y la respuesta inmediata de los actuadores bajo condiciones críticas de competencia.
 
+<img width="627" height="720" alt="image" src="https://github.com/user-attachments/assets/8bce33b1-e27e-4b23-8107-16ee9a2bd6ae" />
+
 ---
 
 ## 1. Topología del Hardware y Estándar de Colorimetría Crítica del Cableado
@@ -848,14 +876,14 @@ El software se basa en un modelo de Control Reactivo gestionado por una Máquina
 ### A. Fase de Inicialización y Calibración Estática
 Para garantizar un arranque reproducible, se implementó una rutina de configuración única controlada por la variable de estado pepe(inicializada en 0).
 
+> [!NOTE] 
+> El uso de nombres no convencionales para las variables ( pepe, grasa, tilin,lecler,lewis) es un legado de las fases de prototipado de 2024. Lo que inició como una dinámica de equipo para mitigar la fatiga en el laboratorio, se ha mantenido como un estándar de identidad en nuestro código, simbolizando la evolución histórica del proyecto.
+
 Alineación del Tren Delantero: Mediante la instrucción myservo.write(75), el sistema establece un ángulo absoluto de dirección. A diferencia de un motor de tracción, el servomotor permite fijar una posición angular exacta, eliminando desviaciones en el vector de salida.
 
 Gestión de Inercia: Integramos un delay()estratégico para permitir la transición del estado de reposo al movimiento cinematográfico, estabilizando el voltaje del sistema antes de iniciar la lectura de sensores.
 
 Bloqueo de Estado ( pepe++): Este incremento actúa como un interruptor lógico irreversible. Al cambiar el valor de la variable, el flujo del programa garantiza que la secuencia de salida no se reejecute, cediendo el control total a la lógica autónoma.
-
-> [!NOTE] 
-> El uso de nombres no convencionales para las variables ( pepe, grasa, tilin,lecler,lewis) es un legado de las fases de prototipado de 2024. Lo que inició como una dinámica de equipo para mitigar la fatiga en el laboratorio, se ha mantenido como un estándar de identidad en nuestro código, simbolizando la evolución histórica del proyecto.
 
 ### B. Algoritmo de Navegación y Evasión Dinámica
 
