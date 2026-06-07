@@ -79,7 +79,7 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
        
 8. [Desafíos Técnicos, Limitaciones y Soluciones en el Desarrollo](#desafíos-técnicos-limitaciones-y-soluciones-en-el-desarrollo)
 
-9. [Archivos CAD](./cad/)
+9. [Archivos CAD](./Archivos%20CAD/)
    
 # MIEMBROS DE TEAMROBOTICACRV
 
