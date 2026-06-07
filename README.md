@@ -55,9 +55,9 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
 
    * [Ronda Abierta](#ronda-abierta)
 
-     * [Arquitectura del Software (Máquina de Estados de Misión)](#arquitectura-del-software-máquina-de-estados-de-misión)
+     * [Arquitectura del Software)](#arquitectura-del-software-máquina-de-estados-de-misión)
 
-     * [Análisis de Rendimiento: Optimización de Tiempo vs Fiabilidad](#análisis-de-rendimiento-optimización-de-tiempo-vs-fiabilidad)
+     * [Análisis de Rendimiento](#análisis-de-rendimiento-optimización-de-tiempo-vs-fiabilidad)
 
    * [Ronda Cerrada](#ronda-cerrada)
      
