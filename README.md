@@ -7,7 +7,7 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
 
 # ÍNDICE
 
-1. [Engineering Document / Trivilyn 3.0](#engineering-document-trivilyn-30)
+1. [Engineering Document](#engineering-documenttrivilyn30)
 
 2. [Miembros de TEAMROBOTICACRV](#miembros-de-teamroboticacrv)
 
@@ -25,37 +25,35 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
 
 4. [Movilidad y Diseño Mecánico](#-movilidad-y-diseño-mecánico)
 
-   * [Tracción y Dirección](#tracción-y-dirección)
+   * [Tracción](#tracción)
+  
+   * [Calculo de Transmición](#cálculo-analítico-de-la-relación-de-transmisión)
+   
+   * [Estudio Dinámico: Torque Necesario, Tracción y Distribución de Fuerzas](#estudio-dinámico-torque-necesario-tracción-y-distribución-de-fuerzas)
+  
+   *  [Dirección](#dirección)
+  
+   * [Base Inferior](#primer-piso) 
 
-   * [¿Cómo logramos que se mueva con un solo motor?](#como-logramos-que-se-mueva-con-un-solo-motor)
+   * [Base Cetral](#segundo-piso)
 
-   * [Movilidad Parte Delantera](#movilidad-parte-delantera)
+   * [Base Superior](#tercer-piso)
+   
+5.[Arquitectura de Potencia y Sensores](#-arquitectura-de-potencia-y-sensores)
 
-   * [Análisis Cinemático y Estados Dinámicos de la Dirección (SbW)](#43-análisis-cinemático-y-estados-dinámicos-de-la-dirección-sbw)
+   * [Subsistema Electrónico](#1-subsistema-electrónico)
 
-   * [Estudio Dinámico: Torque Necesario, Tracción y Distribución de Fuerzas](#44-estudio-dinámico-torque-necesario-tracción-y-distribución-de-fuerzas)
+   * [Distribución Geométrica y Calibración de Sensores](#-distribución-geométrica-y-calibración-de-sensores)
 
-   * [Primer Piso (Chasis Inferior y Corredera de Baterías)](#primer-piso)
-
-   * [Segundo Piso (Torque de Sensores y Soporte Híbrido)](#segundo-piso)
-
-5. [Arquitectura de Potencia y Sensores](#5-arquitectura-de-potencia-y-sensores)
-
-   * [Topología del Hardware y Estándar de Colorimetría Crítica del Cableado](#51-topología-del-hardware-y-estándar-de-colorimetría-crítica-del-cableado)
-
-   * [Presupuesto de Potencia (Power Budget) y Distribución Independiente](#52-presupuesto-de-potencia-power-budget-y-distribución-independiente)
-
-   * [Tabla de Componentes del Sistema Electrónico](#53-tabla-de-componentes-del-sistema-electrónico)
-
-   * [Análisis de Rendimiento y Cálculo de Autonomía Real del Vehículo](#54-análisis-de-rendimiento-y-cálculo-de-autonomía-real-del-vehículo)
+   * [Sustentación de Valores Físicos en Pista](#-sustentación-de-valores-físicos-en-pista)
 
 6. [Arquitectura de Software y Estrategia de Competencia](#arquitectura-software-y-estratrgia)
 
-   * [Resumen del Proyecto](#Resumen-del-Proyecto)
+   * [Resumen del Proyecto](#-resumen-del-proyecto)
 
    * [Ronda Abierta](#ronda-abierta)
 
-     * [Arquitectura del Software)](#arquitectura-del-software-máquina-de-estados-de-misión)
+     * <a href="#maquina-estados"> Arquitectura del Software </a>
 
      * [Análisis de Rendimiento](#análisis-de-rendimiento-optimización-de-tiempo-vs-fiabilidad)
 
@@ -63,13 +61,13 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
      
 7. [Pensamiento Sistémico y Decisiones de Ingeniería](#pensamiento-sistémico-y-decisiones-de-ingeniería)
 
-   - [Temporada 2024 (Rexbot 1.0)](#temporada-2024-rexbot10)
+ - [Temporada 2024 (Rexbot 1.0)](#temporada-2024-rexbot10)
 
-   - [Temporada 2025 (Rexbot 2.0)](#temporada-2025-rexbot20)
+ - [Temporada 2025 (Rexbot 2.0)](#temporada-2025-rexbot20)
 
-   - [Temporada 2026 (Trivilyn 3.0)](#temporada-2026-trivyln30)
+ - [Temporada 2026 Trivilyn3.0](#temporada-2026-trivilyn30)
      
-   * [La Paradoja de la Masa del Sensor](#a-la-paradoja-de-la-masa-del-sensor-y-la-inercia-rotacional-iz)
+   * [ Paradoja de la Masa del Sensor y la Inercia Rotacional)](#a-la-paradoja-de-la-masa-del-sensor-y-la-inercia-rotacional-i_z)
 
    * [Gestión de Fricción](#2-gestión-de-fricción-termodinámica-y-compatibilidad-química-de-materiales)
 
@@ -81,9 +79,9 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
        
 8. [Desafíos Técnicos, Limitaciones y Soluciones en el Desarrollo](#desafíos-técnicos-limitaciones-y-soluciones-en-el-desarrollo)
 
-9. [Archivos CAD](#archivos-cad)
+9. [Archivos CAD](./cad/)
    
- # MIEMBROS DE TEAMROBOTICA
+# MIEMBROS DE TEAMROBOTICACRV
 
 ## 👤Dennis Adrian Silva Riera
 
@@ -173,7 +171,7 @@ El chasis de Trivilyn3.0 ha sido desarrollado desde cero utilizando un sistema h
 Este capítulo desglosa los principios físicos, cinemáticos y de distribución de fuerzas que gobiernan la movilidad de Trivilyn3.0, demostrando cómo se logra un control milimétrico del vehículo mediante un sistema de dirección Steer-by-Wire (SbW), una caja reductora a medida de alta eficiencia y una gestión inteligente del peso.
 
 
-## Tracción y Dirección:
+## Tracción:
 
 - La tracción del prototipo esta constituido por 4 ruedas de goma extraídas de un kit de lego EV3, estas tienen como medida del neumático es de 43mm de diámetro exterior y su respectiva llanta(rin) 29mm.
 
@@ -232,6 +230,55 @@ y se pueden extraer de distintos tipos de vehículos a control remoto como:
 
 
 Este motor es el corazón del desplazamiento y uno de los componentes principales para que Trivilyn tenga su desempeño. 
+
+Análisis Cinematómico y Dinámico del Tren de Engranajes (Caja Reductora 78:1)
+
+Para vencer la inercia del chasis impreso en PETG y maximizar el torque en el eje motriz trasero, Trivilyn 3.0 implementa una caja reductora de eje compuesto de tres etapas con trenes de engranajes de dientes rectos. El sistema utiliza una configuración de piñones con conteos de dientes específicos de **8, 30, 5, 26, 5 y 20 dientes** para lograr una optimización del momento torsor.
+
+### Cálculo Analítico de la Relación de Transmisión
+
+La relación de reducción total se calcula multiplicando las relaciones de transmisión individuales de cada una de las tres etapas de engranajes en cascada:
+
+* **Etapa 1 (Piñón del Motor a Engranaje Intermedio 1):** Con un piñón conductor de 8 dientes y un engranaje conducido de 30 dientes:
+  **R1 = 30 / 8 = 3.75**
+  *La velocidad angular se reduce 3.75 veces, incrementando el torque en la misma proporción.*
+
+* **Etapa 2 (Piñón Intermedio 2 a Engranaje Intermedio 3):** Con un piñón conductor coaxial de 5 dientes y un engranaje conducido de 26 dientes:
+  **R2 = 26 / 5 = 5.2**
+  *La velocidad remanente de la primera etapa sufre una reducción adicional de 5.2 veces.*
+
+* **Etapa 3 (Piñón Intermedio 4 a Engranaje del Eje Diferencial):** Con un piñón conductor de 5 dientes y un engranaje conducido final de 20 dientes:
+  **R3 = 20 / 5 = 4.0**
+  *La última etapa reduce el vector de velocidad 4 veces más antes de transferir la energía a las ruedas.*
+
+* **Cálculo de Reducción Total (R_total):**
+  **R_total = R1 x R2 x R3 = 3.75 x 5.2 x 4.0 = 78**
+
+Esto establece una **Relación de Reducción Nominal de 78:1**. Por cada 78 rotaciones completas del eje del motor de alta velocidad (15,000 RPM), el eje motriz de las ruedas de caucho de 43 mm ejecuta una sola revolución, transformando la velocidad angular en fuerza de tracción neta en pista.
+
+---
+
+### 2. Análisis de Rendimiento Dinámico: Velocidad vs. Torque Real
+
+Para proyectar el rendimiento real del prototipo en pista, se evalúa el efecto del tren de reducción sobre los vectores cinemáticos de salida. No obstante, el cálculo real debe considerar el **coeficiente de eficiencia mecánica (Eficiencia Global)**, el cual modela las pérdidas de energía por fricción parásita, calor por rozamiento y desalineaciones menores en el chasis.
+
+| Parámetro Cinematómico | Efecto Físico de la Reducción | Ecuación Estructural Teórica |
+| :--- | :--- | :--- |
+| **Velocidad Angular (n_salida)** | **Disminuye de forma lineal** 78 veces respecto a la velocidad de entrada del motor. | **n_salida = n_entrada / 78** |
+| **Torque Neto (M_salida)** | **Aumenta de forma proporcional** 78 veces, multiplicado por la eficiencia de transmisión. | **M_salida = M_entrada x 78 x Eficiencia** |
+
+*Donde:*
+* **n_entrada:** Velocidad del motor Turbo Snake en vacío (aproximadamente 15,000 RPM).
+* **M_entrada:** Torque nominal instantáneo generado por el eje del motor.
+* **Eficiencia Global del Tren:** Estimada analíticamente en un **85%** (0.85) para engranajes rectos de tres etapas acoplados sobre bujes de bronce, absorbiendo las pérdidas por fricción termodinámica.
+
+---
+
+### 3. Justificación Mecánica de la Configuración 78:1
+
+> [!NOTE]
+> **El Compromiso Velocidad/Fuerza (Trade-off):**
+> Un motor que opera directamente a 15,000 RPM patina instantáneamente en las curvas debido a la falta de torque estático, quemando el puente H por sobrecorriente. La reducción de 78:1 reduce la velocidad en el eje de la rueda a unas manejables e hiperestables **192 RPM bajo carga máxima**, dotando a Trivilyn 3.0 de la fuerza necesaria para mantener la aceleración constante en las curvas cerradas y garantizando que las ruedas de 43 mm mantengan el agarre mecánico (grip) sin pérdidas por derrape lateral.
 
 ## Estudio Dinámico: Torque Necesario, Tracción y Distribución de Fuerzas
 
@@ -299,7 +346,7 @@ Es una extencion de filamento cuya funcion es solucionar que en versiones anteri
 
 - Esto hace que la pieza sea mucho más resistente a la flexión. En un robot de competencia, los motores y el movimiento generan vibraciones; la vena asegura que el soporte se mantenga rígido y no "oscile", lo cual terminaría quebrando el PETG.
 
-## Movilidad parte delantera: 
+## Dirección: 
 
 La movilidad en la parte delantera: aquí nos referimos al sistema de dirección (control de giros del robot), ruedas frontales y todos los componentes de estos para unirse entre sí.
 
@@ -672,13 +719,96 @@ Este apartado documenta de manera exhaustiva la distribución de energía, el ai
 
 ---
 
-## 1. Topología del Hardware y Estándar de Colorimetría Crítica del Cableado
+
+## 1. Subsistema Electrónico
+
+La selección de la plataforma electrónica y el sistema de alimentación de **Trivilyn 3.0** responde a criterios estrictos de robustez industrial, tolerancia a ruidos electromagnéticos (EMI), gestión eficiente del *Power Budget* y velocidad de procesamiento síncrono. A continuación, se desglosa el análisis técnico detallado, la justificación de ingeniería y las observaciones críticas de cada componente integrado en el bus de potencia y datos:
+
+---
+
+### 1.1 Unidad de Procesamiento Central: Arduino Mega 2560 (ATmega2560)
+<img width="747" height="370" alt="image" src="https://github.com/user-attachments/assets/129cf89f-161e-4113-b4e4-155771fb7835" />
+
+* **Descripción Técnica:** Microcontrolador de 8 bits basado en la arquitectura RISC AVR. Opera a una frecuencia de reloj de 16 MHz, cuenta con 256 KB de memoria Flash, 8 KB de SRAM, 4 KB de EEPROM y 4 puertos UART independientes por hardware (`Serial0` a `Serial3`).
+* **Justificación de uso:** La complejidad algorítmica de la Ronda Cerrada y la Ronda Abierta exige la ejecución paralela de tareas de telemetría, control cinemático y decodificación de datos ópticos. La implementación del Arduino Mega 2560 es fundamental debido a sus periféricos nativos:
+  * **Puertos UART Dedicados por Hardware:** A diferencia de chips menores como el ATmega328P (Arduino Uno), que se ven obligados a emular puertos serie mediante software (`SoftwareSerial`) —lo cual bloquea las interrupciones del sistema y ralentiza el ciclo de reloj—, el Mega posee buses independientes. Esto nos permite mapear la cámara inteligente HuskyLens en el bus de alta velocidad `Serial1` (9600 baudios) de forma dedicada, mientras mantenemos la línea `Serial0` limpia para la transmisión de telemetría y diagnóstico a 115200 baudios hacia la interfaz de control en los *pits*, eliminando cualquier tipo de latencia en el bucle principal (`loop()`).
+  * **Capacidad de Expansión I/O y Temporizadores:** El chasis requiere temporizadores de hardware independientes para modular las señales PWM del driver de los motores y los pulsos del servomotor Coreless, evitando conflictos de registros concurrentes con los pines de interrupción de la matriz ultrasónica.
+
+> [!TIP]
+> **Optimización de Memoria:** Al compilar el firmware para el ATmega2560, se hace un uso extensivo de la macro `F()` en todos los comandos `Serial.println(F("..."))`. Esto fuerza al compilador a almacenar las cadenas de texto estáticas de la telemetría directamente en la memoria Flash (256 KB) en lugar de saturar la memoria SRAM (8 KB), garantizando la estabilidad del puntero del programa durante ejecuciones prolongadas.
+
+---
+
+### 1.2 Sensor de Percepción Artificial: HuskyLens AI Camera
+<img width="689" height="230" alt="image" src="https://github.com/user-attachments/assets/03099237-a20d-437a-9c90-f220e3a858e1" />
+
+* **Descripción Técnica:** Cámara inteligente de visión artificial equipada con el procesador Kendryte K210 (arquitectura RISC-V de doble núcleo de 64 bits con FPU y un acelerador de redes neuronales KPU integrado para procesamiento convolucional).
+* **Justificación de uso:** Resolver la evasión de pilares de color en pasillos confinados requiere procesar matrices densas de píxeles a frecuencias superiores a los 30 cuadros por segundo (FPS). Ejecutar esta carga matemática directamente en el procesador principal del robot causaría un desbordamiento inmediato de la memoria RAM y un colapso en el control de tracción:
+  * **Procesamiento en el Borde (Edge AI):** La HuskyLens actúa como un coprocesador independiente. Ejecuta de forma autónoma el pipeline de segmentación cromática, análisis geométrico y emparejamiento de firmas de color. Una vez procesada la imagen, reduce toda la carga visual a un paquete simplificado de coordenadas y dimensiones de bloques (`xCenter`, `yCenter`, `height`) que se envía al Arduino Mega en formato de pocos bytes, liberando ciclos críticos de CPU.
+  * **Inmunidad Cromática y Flexibilidad Estructural:** Gracias a la capacidad de registrar múltiples IDs para una misma firma (IDs 1, 2, 3 para bloques rojos / IDs 5, 6 para bloques verdes), el software compensa las variaciones en el balance de blancos, la degradación de la luz artificial en el recinto y las sombras físicas generadas por el propio carro, garantizando que el umbral proxémico (`result.height > 90`) se dispare exactamente a la distancia planificada.
+
+> [!IMPORTANT]
+> **Consistencia del Protocolo:** En el menú interno de la HuskyLens, el protocolo de comunicación debe estar configurado estrictamente en **Serial 9600** de forma manual. El modo de detección automática (*Auto-Detect*) introduce retardos parásitos de sincronización en el arranque que pueden hacer fallar la subrutina `huskylens.begin()`, congelando la inicialización del robot.
+
+---
+
+### 1.3 Matriz de Navegación Periférica: Sensores Ultrasónicos HC-SR04
+<img width="830" height="473" alt="image" src="https://github.com/user-attachments/assets/09f9270d-5997-43a4-8419-0a0a0f5e190a" />
+
+* **Descripción Técnica:** Transductores piezoeléctricos de proximidad que operan mediante la emisión y recepción de ráfagas de ondas mecánicas de alta frecuencia (40 kHz). Poseen un rango de detección analítico de 2 cm a 400 cm con una resolución de 3 mm y un ángulo de apertura cónico de 15°.
+* **Justificación de uso:** Aunque la visión artificial resuelve la clasificación de los obstáculos, la cámara posee un campo de visión (FOV) angular limitado que genera zonas ciegas inmediatamente delante y a los flancos del parachoques frontal. La matriz tri-sensorial (Izquierdo, Centro, Derecho) cubre geométricamente estas deficiencias:
+  * **Lazo de Control Reactivo de Seguridad:** Los sensores ultrasónicos operan como la última línea de defensa física del vehículo. En los pasillos aleatorios de 40 cm de la WRO, las colisiones ocurren en fracciones de segundo. Si la cámara experimenta latencia, el sensor central (`middleDistance`) interrumpe el flujo óptico al registrar distancias críticas de `1 cm a 3 cm`, obligando al chasis a entrar en las subrutinas de escape inmediato.
+  * **Estabilización de Centrado por Software:** Al conectarse en paralelo mediante la librería optimizada `NewPing`, el firmware calcula de forma matemática el error de posicionamiento lateral respecto a las paredes laterales sin bloquear el microcontrolador. Esto permite ejecutar microajustes proporcionales rápidos de `30 ms` en el servo de dirección, extinguiendo el error acumulado antes de que el carro se desvíe y golpee los muros de contención.
+
+> [!CAUTION]
+> **Aislamiento Acústico por Vibración:** A frecuencias de motor elevadas (PWM > 150), los armónicos mecánicos se transmiten a través del chasis de PETG e inducen lecturas falsas en las cápsulas receptoras del HC-SR04. Es obligatorio instalar empaques de fricción flexibles o soportes amortiguados en las bases impresas de los sensores para desacoplar físicamente el transductor de la estructura del chasis.
+
+---
+
+### 1.4 Actuador de Dirección: Servomotor HobbyPark 35 kg (Coreless Digital)
+<img width="350" height="350" alt="image" src="https://github.com/user-attachments/assets/6598b323-92e6-47f2-b0f7-e96b0bd68659" />
+
+* **Descripción Técnica:** Servomotor digital de alto rendimiento equipado con piñonería interna de acero inoxidable y aleaciones metálicas, motor interno de tecnología *Coreless* (sin núcleo) para una aceleración angular ultra rápida y doble rodamiento de bolas en el eje principal. Entrega un par de torsión máximo de hasta 35 kg-cm a un voltaje de alimentación de 7.4V.
+* **Justificación de uso:** La arquitectura estructural de Trivilyn 3.0 distribuye componentes pesados en dos niveles, elevando la carga vertical y el momento de inercia sobre el eje delantero. Las ruedas de caucho de 43 mm generan una resistencia friccional estática considerable sobre la superficie de la pista:
+  * **Supresión Absoluta de la Deflexión y Holgura (Drifting):** El uso de servomotores estándar de plástico (como los de 9g) o metálicos de gama baja (15 kg) introduce un juego mecánico o histéresis en el varillaje de dirección debido a la flexión de sus componentes internos bajo carga. Esto provocaría que el carro se desvíe de forma aleatoria en las rectas. Los 35 kg-cm de torque bloquean rígidamente la posición del tren delantero, asegurando que el ángulo absoluto neutro (`centro = 94°`) se mantenga perfecto.
+  * **Velocidad de Respuesta Dinámica:** El motor *Coreless* carece de la masa de un rotor de hierro convencional, lo que reduce su inercia rotacional interna. Esto permite que el servo alcance su deflexión máxima de forma casi instantánea, un factor crítico para ejecutar con éxito los microajustes laterales de 30 ms y los giros de escape cerrados en curvas de pasillos de 40 cm.
+
+> [!NOTE]
+> **Alineación por Software:** Debido al enorme torque del actuador, cualquier desalineación geométrica en el varillaje de dirección forzará al servo a consumir corriente de forma continua en reposo. El punto neutro real se fijó matemáticamente en el firmware a `94°` (`centro`), absorbiendo mecánicamente las tolerancias milimétricas del ensamblaje del puente delantero sin estresar el motor.
+
+---
+
+### 1.5 Etapa de Potencia y Tracción: Driver L298N (Puente H Doble)
+<img width="850" height="600" alt="image" src="https://github.com/user-attachments/assets/9c6837ce-75a8-4913-ad2f-8942f42c5d77" />
+
+* **Descripción Técnica:** Controlador de motores de alta potencia integrado basado en la arquitectura de transistores bipolares de unión (BJT). Soporta corrientes de operación continuas de hasta 2A por canal (con picos de 3A), voltaje lógico de 5V y un bus de potencia capaz de manejar hasta 46V, incorporando a nivel de circuito diodos de conmutación rápida para la supresión de fuerzas contraelectromotrices (picos inductivos).
+* **Justificación de uso:** El motor de tracción principal Turbo Snake opera a regímenes de hasta 15,000 RPM con una caja reductora de relación 78:1, lo que exige un control preciso del ciclo de trabajo del voltaje para modular la aceleración y absorber las transiciones bruscas de marcha atrás:
+  * **Modulación Lineal de la Curva de Velocidad (PWM):** El L298N traduce de forma limpia las instrucciones de ciclo de trabajo enviadas desde el Arduino Mega a través del pin `ENA`. Esto permite al robot sostener un perfil de velocidad crucero controlado (`carSpeed = 50`) en las rectas para estabilizar las lecturas ultrasónicas y, al mismo tiempo, inyectar potencia máxima instantánea (`PWM 180`) en las subrutinas de viraje cerrado para vencer la fuerza centrífuga.
+  * **Resistencia a Inversiones Dinámicas de Carga:** En la Ronda Cerrada, al detectar un bloqueo frontal, el software conmuta instantáneamente de la función `forward()` a la función `back()`. Esta transición genera corrientes inversas masivas causadas por el motor cuando actúa momentáneamente como un generador eléctrico. El robusto encapsulado del L298N y sus diodos de protección disipan esta energía en forma de calor sin quemar las salidas lógicas del microcontrolador.
+
+> [!CAUTION]
+> **Gestión Térmica Colectiva:** Debido a las conmutaciones agresivas PWM y las reversas instantáneas ejecutadas para escapar de los muros, el integrado L298N opera cerca de su límite térmico. Es mandatorio mantener libre de obstrucciones el disipador de aluminio negro de fábrica y situarlo en una zona del chasis con flujo de aire directo para evitar cortes por protección térmica interna (*thermal shutdown*).
+
+---
+
+### 1.6 Sistema de Almacenamiento de Energía: Celdas de Ion de Litio 18650 
+<img width="900" height="900" alt="image" src="https://github.com/user-attachments/assets/74ad6fd1-5339-46d6-8e2c-350f0f616a41" />
+
+* **Descripción Técnica:** Banco de baterías compuesto por celdas cilíndricas recargables de química de Ion de Litio (Li-ion) formato 18650, conectadas en una configuración de dos celdas en serie (2S) para entregar un voltaje nominal de 7.4V y un voltaje de carga pico de 8.4V, caracterizadas por una alta densidad energética y una tasa de descarga sostenida de alta corriente.
+* **Justificación de uso:** Los sistemas reactivos robóticos de alta velocidad sufren un fenómeno crítico denominado "marrón de voltaje" (*voltage brownout*). Cuando el servomotor de 35 kg ejecuta un movimiento brusco al mismo tiempo que el motor de tracción demanda torque máximo para un rebase, el consumo de corriente se eleva instantáneamente a varios amperios.
+  * **Prevención de Reseteos por Caída de Tensión Parásita:** Las baterías convencionales (como las alcalinas o las de NiMH) poseen una resistencia interna elevada. Ante demandas pico de corriente, su voltaje cae drásticamente por debajo del umbral mínimo de operación (5V), lo que provocaría el reinicio parásito del Arduino Mega o la pérdida de sincronía del bus serie de la HuskyLens en plena carrera. Las celdas de alta descarga 18650 poseen una resistencia interna extremadamente baja. Esto les permite bombear ráfagas masivas de corriente de forma instantánea manteniendo la curva de voltaje completamente plana y estable.
+  * **Relación Peso-Potencia en Chasis Impresos (PETG):** El formato de celdas 18650 ofrece una densidad de energía superior, empaquetando la autonomía y potencia necesarias para completar las 3 vueltas reglamentarias a máxima velocidad dentro de un volumen cilíndricos compacto y ligero. Esto reduce la masa inercial total del vehículo y evita sobrecargar mecánicamente el segundo piso del chasis.
+
+> [!IMPORTANT]
+> **Masa de Tierra Común:** Al alimentar el tren motriz y el servo directamente desde el pack 18650 (7.4V) y el circuito lógico desde el regulador de Arduino, es estrictamente crítico unificar la masa (`GND`) de la batería con la de la placa de control. La ausencia de una referencia de tierra común introduce ruido flotante en las líneas de control del servo y corrompe los pulsos lógicos del puente H.
+
+## 2. Topología del Hardware y Estándar de Colorimetría Crítica del Cableado
 
 En el diseño avanzado de Trivilyn3.0, el cableado no se considera un mero elemento de interconexión pasiva, sino un subsistema crítico de la arquitectura de potencia y señal. Para mitigar los riesgos de error humano en los fosos (*pits*) bajo situaciones de alta presión, optimizar la mantenibilidad del vehículo y anular los acoplamientos electromagnéticos parásitos, hemos estandarizado de forma estricta la siguiente colorimetría industrial:
 
 
 ----
-## 2. Topología del Hardware (Percepción y Control)
+## 3. Topología del Hardware (Percepción y Control)
 
 El sistema electrónico se divide en tres capas fundamentales: Control Central, Visión Artificial y Telemetría Ultrasónica.
 
@@ -689,7 +819,7 @@ El sistema electrónico se divide en tres capas fundamentales: Control Central, 
 
 ---
 
-## 3. Presupuesto de Potencia (Power Budget) y Distribución Independiente
+## 4. Presupuesto de Potencia (Power Budget) y Distribución Independiente
 
 Para erradicar el problema más crítico en robótica móvil —los reinicios del procesador por caídas de tensión (voltage sags) y el ruido de alta frecuencia en los sensores— el diseño eléctrico de Trivilyn3.0 rechaza los buses comunes y opta por un **aislamiento físico total mediante tres bancos de energía independientes** (6 celdas 18650 en total). 
 
@@ -761,7 +891,7 @@ Mientras que el cerebro lógico y la dirección pueden operar por más de 5 hora
 
 Con 54 minutos de autonomía real bajo pruebas, Trivilyn puede completar holgadamente todas las rondas clasificatorias sin caídas de rendimiento. Sin embargo, el mecanismo de cola de milano nos permite sustituir este cartucho en los fosos de manera preventiva en solo 15 segundos, garantizando que el sistema motriz trabaje siempre en la cresta de su curva de potencia sin comprometer la electrónica sensible del segundo piso.
 
-## 4. Mitigación de Fallas y Decisiones Críticas
+## 5. Mitigación de Fallas y Decisiones Críticas
 
 ### Aislamiento de Tierras (GND)
 
@@ -777,7 +907,7 @@ Con 54 minutos de autonomía real bajo pruebas, Trivilyn puede completar holgada
 
 ---
 
-## 5. Interacción del Sistema (Pensamiento Sistémico)
+## 6. Interacción del Sistema (Pensamiento Sistémico)
 
 El flujo secuencial de potencia y datos durante una maniobra compleja (ej. evasión u obstáculo en el estacionamiento) se ejecuta de la siguiente manera:
 
@@ -838,11 +968,13 @@ Para erradicar esta interferencia física en Trivilyn3.0, el software implementa
 >[!IMPORTANT]
 >Aislamiento Acústico del Soporte: El PETG de las piezas de la corredera puede propagar vibraciones mecánicas directamente del chasis al sensor en forma de "ruido de conducción sólida". Hemos diseñado paredes de acoplamiento de friction de 2 mm que rodean el cuerpo del transductor, actuando como un filtro mecánico pasivo que disipa las vibraciones por encima de los 20 kHz.
 
-## 3. Sensor de Visión: Geometría de Proyección Tridimensional (HuskyLens)
+##  Sensor de Visión: Geometría de Proyección Tridimensional (HuskyLens)
+
+
 
 ---
 
-### 3.1. Configuración Espacial y Calibración del Ángulo de Cabeceo (Pitch)
+### Configuración Espacial y Calibración del Ángulo de Cabeceo (Pitch)
 
 El sensor de visión artificial HuskyLens está estratégicamente posicionado en el eje de simetría central de la sección superior frontal (segundo piso del chasis). Para optimizar la matriz de píxeles y el reconocimiento colorimétrico en la Ronda Abierta, la cámara no se dispone en paralelo al plano de la pista, sino que implementa un ángulo de inclinación descendente estático de cabeceo (Pitch, Theta_tilt) calibrado con precisión milimétrica.
 
@@ -853,7 +985,7 @@ Esta inclinación geométrica es crítica para:
 
 ---
 
-### 📥 Sustentación de Valores Físicos en Pista
+## 📥 Sustentación de Valores Físicos en Pista
 
 Para garantizar que el vehículo autónomo mantenga una navegación continua y fluida en la Ronda Abierta de la WRO 2026, el despeje de la ecuación se calibra bajo las siguientes restricciones operacionales:
 
@@ -897,7 +1029,7 @@ Este ángulo óptimo de inclinación de $22^\circ$ reduce la zona ciega a tan so
 >[!CAUTION]
 >Error por Reflexión Lumínica (Glint): Un ángulo de inclinación demasiado agresivo ($\theta_{\text{tilt}} > 35^\circ$) expone el sensor óptico a reflejos directos de las luminarias del recinto del evento sobre la pista brillante. Esto altera drásticamente los valores de saturación y tono de la imagen, provocando falsos negativos de detección (o confundiendo el Magenta del parqueo con Rojo). El valor de $22^\circ$ ha demostrado ser el umbral de mayor robustez bajo iluminación artificial variable.
 
-## 4. El Sistema de Correderas de Precisión: Adaptabilidad en Pista
+## Sistema de Correderas de Precisión: Adaptabilidad en Pista
 
 La gran lección de la temporada pasada fue la necesidad de ajustar físicamente la altura de lectura de los sensores. Las irregularidades del terreno de competencia y los desniveles milimétricos en el material de las paredes de la WRO exigen un ajuste ágil.
 
@@ -914,7 +1046,7 @@ Este documento detalla el funcionamiento lógico y la estrategia de control del 
 
 # Ronda Abierta
 
-## ⚙️ Arquitectura del Software (Máquina de Estados de Misión)
+## ⚙️ Arquitectura del Software (Máquina de Estados de Misión) <a id="maquina-estados"></a>
 
 El software se basa en un modelo de Control Reactivo gestionado por una Máquina de Estados Finitos (FSM) jerárquica. Este modelo permite coordinar tanto el control dinámico del vehículo como la lógica de misión
 (conteo de vueltas y estacionamiento).
@@ -1255,24 +1387,7 @@ Su tracción se basa en un eje tipo cruz (inspirado en los kits de LEGO) fabrica
 <img width="540" height="600" alt="image" src="https://github.com/user-attachments/assets/af8053d1-77d3-4b1d-8618-e3ee2fdb3cc5" />
 <img width="540" height="600" alt="image" src="https://github.com/user-attachments/assets/e3f04edd-f908-440c-adf8-31eedef2714c" />
 
-## ¿Cómo funciona la "fuerza" de Trivilyn 3.0? (Sistema de Engranajes)
 
-Tomando como base una configuración de tres etapas con los engranajes de 8, 30, 5, 26, 5 y 20 dientes, el cálculo se desglosa de la siguiente manera: 
-
-- La primera etapa reduce la velocidad del motor 3.75 veces.
-
-- La segunda etapa toma esa velocidad ya reducida y la vuelve a reducir 5.2 veces más.
-
-- La tercera etapa toma eso y lo reduce 4 veces más.
-
-- La cuenta final es: 3.75 x 5.2 x 4 = 78:1
- 
- Esto significa que la relación de reducción es 78:1. 
- 
- 3. Análisis de Rendimiento Para obtener datos reales de salida, debemos considerar el efecto de esta reducción en la velocidad y el par motor (torque):
-
- Parámetro Efecto de la Reducción Fórmula Teórica Velocidad (RPM)Disminuye 78 veces n salida =78/nEntrada Torque (Nm) Aumenta 78 veces* salida =M entrada 78 η 
- 
  Comenzamos con el segundo piso: 
  
  Está alberga lo que son el sistema de energía (baterías, elevadores y reguladores de voltaje) y sensores ultrasónicos, tiene una forma rectangular con esquinas ovaladas(imagen), Se distribuye de la siguiente manera: 
