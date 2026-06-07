@@ -9,7 +9,7 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
 
 1. [Engineering Document / Trivilyn 3.0](#engineering-document-trivilyn-30)
 
-2. [Miembros de TEAMROBOCRV](#miembros-del-teamrobocrv)
+2. [Miembros de TEAMROBOTICACRV](#miembros-de-teamroboticacrv)
 
    * [Dennis Adrian Silva Riera](#dennis-adrian-silva-riera)
 
@@ -82,7 +82,8 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
 8. [Desafíos Técnicos, Limitaciones y Soluciones en el Desarrollo](#desafíos-técnicos-limitaciones-y-soluciones-en-el-desarrollo)
 
 9. [Archivos CAD](#archivos-cad)
-# MIEMBROS DEL TEAMROBOCRV
+   
+ # MIEMBROS DE TEAMROBOTICA
 
 ## 👤Dennis Adrian Silva Riera
 
@@ -1068,7 +1069,98 @@ Efecto: Esto genera lecturas "fantasmales" o ecos falsos. Aunque nuestro filtro 
 
 # Ronda cerrada 
 
-## 
+El firmware de la Ronda Cerrada de **Trivilyn 3.0** está diseñado bajo un paradigma de **Control Reactivo Híbrido** de ejecución síncrona en un microcontrolador ATmega2560 (Arduino Mega). El sistema unifica la telemetría probabilística de una matriz de tres sensores ultrasónicos HC-SR04 y el procesamiento de visión computacional en tiempo real de la cámara inteligente HuskyLens para la toma de decisiones críticas en milisegundos.
+
+---
+
+### A. Fase de Inicialización y Calibración del Vector de Ataque
+
+Para asegurar un comportamiento cinemático simétrico desde el primer milisegundo de la carrera, el firmware ejecuta una rutina de arranque único. En esta etapa, las variables críticas del sistema se estructuran bajo métricas de rendimiento dinámico, abstrayendo los identificadores de desarrollo hacia funciones formales de ingeniería:
+
+* **Calibración de Punto Neutro Coaxial (`centro`):** Mediante la instrucción `myservo.write(80)`, el tren delantero ejecuta un pulso de orientación inicial, seguido por un ajuste a `94°`. Este desfase calibrado absorbe las tolerancias físicas del puente de dirección impreso en PETG y suprime la deriva lateral (*drifting*).
+* **Control de Tracción Principal (`carSpeed`):** Modulación por Ancho de Pulsos (PWM) balanceada entre estabilidad en rectas (`PWM 50`) y par de fuerza incremental en curvas o bloques de color (`PWM 70`).
+* **Secuencia de Escape Inicial y Bloqueo (`pepe`):** Variable de control inicializada en `0`. Al arrancar, el robot ejecuta un avance rectilíneo retrasando la activación de los lazos de interrupción por `1000 ms` mediante `forward()`. Esto estabiliza el voltaje del sistema y evita falsos positivos ópticos. Acto seguido, el incremento `pepe++` actúa como un interruptor lógico irreversible (*single-shot*) que transfiere el control a la FSM de exploración activa.
+* **Registro de Fin de Carrera:** Cuando este mismo contador acumulativo supera el umbral crítico de evasiones (`pepe > 12`), el firmware interpreta la culminación de las 3 vueltas, ejecuta una subrutina de frenado dinámico y detiene el tren motriz por completo de forma reglamentaria.
+* **Filtros de Histéresis Temporal (`winnie` / `winnieV`):** Retardos temporales dinámicos (`delay(220)`) aplicados tras la detección de bloques de color para evitar que los rebotes ópticos (*chatter*) reanuden la búsqueda antes de que el chasis complete físicamente la maniobra de rebase.
+
+---
+
+### B. Lazo de Telemetría Ultrasónica y Evasión Periférica (Matriz Tri-Sensorial)
+
+El vehículo procesa el entorno mediante tres transductores HC-SR04 gestionados por la librería de alta eficiencia `NewPing`. Esta configuración evita los bloqueos críticos del procesador (asociados al uso de `pulseIn`) y computa distancias simultáneas para resolver el centrado dinámico dentro del pasillo confinado de 40 cm.
+
+---
+
+### 1. Lógica de Evasión Crítica Frontal
+
+- El sistema de navegación de proximidad utiliza la librería optimizada `NewPing` para gestionar tres transductores ultrasónicos en una configuración de triple flanco (Izquierdo, Central, Derecho). Esta matriz computa distancias simultáneas para evitar colisiones contra los muros de la pista:
+
+La maniobra de emergencia se dispara cuando el sensor frontal (`middleDistance`) registra una barrera inminente en el rango de `1 cm a 3 cm`. El microcontrolador suspende el procesamiento de imágenes y evalúa de forma binaria los flancos laterales:
+* **Si `leftDistance <= rightDistance`:** Se asume proximidad crítica al muro izquierdo. Se activan las banderas de bloqueo interno (`tilin++`, `lecrer++`) y se ejecuta la subrutina `derecha()`, la cual invierte el sentido de tracción (`back()`) y deflexiona el servo a `70°` para pivotar el frente.
+* **Si `leftDistance > rightDistance`:** Se detecta proximidad al muro derecho. Se activan las banderas de flanco opuesto (`grasa++`, `lewis++`) y se gatilla la subrutina `izquierda()`, aplicando una reversa con deflexión angular de `125°` para liberar el chasis de la colisión.
+
+#### 2. Lazo Cerrado de Microajustes Proporcionales Laterales
+Para evitar que el robot golpee los muros en los tramos rectos de los pasillos aleatorios, el firmware monitorea continuamente los flancos laterales en un rango de seguridad de `40 cm`:
+* **Proximidad Izquierda (`leftDistance <= 40 cm`):** El servo aplica de forma instantánea un ángulo de ataque de `105°` hacia la derecha durante `30 ms` antes de retornar al punto neutro (`centroH`).
+* **Proximidad Derecha (`rightDistance <= 40 cm`):** El servo desvía la dirección a `75°` hacia la izquierda durante `30 ms` antes de restablecer el rumbo neutro (`centroA`).
+Este algoritmo actúa como un corrector de rumbo continuo que estabiliza el avance del robot sin inducir inercias parásitas.
+
+ A continuación se detallan las justificaciones técnicas por las cuales el equipo implementóNewPing :
+
+- Eliminación del Bloqueo del Procesador ( Código sin bloqueo )
+La función nativa de Arduino pulseIn()es bloqueadora . Cuando se ejecuta, el microcontrolador detiene por completo el hilo del programa principal esperando a que el pin de Echo cambie de estado.
+
+Si un obstáculo está lejos o el pulso se pierde (eco nulo), pulseIn()puede congelar el procesador hasta por 1 segundo (por su tiempo de espera por defecto).
+
+A una velocidad de carrera donde el motor Turbo Snake gira a 15.000 RPM, un retraso de incluso 50 ms significa que el robot avanza a ciegas varios centímetros, provocando una colisión ineludible.
+
+Solución de NewPing: Utiliza interrupciones de hardware y temporizadores internos altamente optimizados que permiten realizar el muestreo en un esquema no bloqueante . El procesador solicita la lectura y puede continuar ejecutando la lógica de la cámara HuskyLens o los movimientos del servo mientras el hardware calcula el eco.
+
+- Gestión Eficiente de Múltiples Sensores en Paralelo
+Trivilyn 3.0 utiliza una matriz trisensorial (Izquierdo, Centro, Derecho). Leer tres sensores de forma secuencial con el método clásico multiplica el tiempo de retraso por tres.
+
+NewPingestá diseñado específicamente para gestionar arreglos de múltiples sensores mediante un método de programación síncrona por intervalos. Permite intercalar los pulsos acústicos (ajustados en el firmware a delay(50)) evitando el asincronismo o solapamiento acústico (que el eco del sensor izquierdo sea recibido incorrectamente por el sensor central) sin comprometer el ciclo de reloj del ATmega2560.
+
+- Filtrado Integrado de Datos Erráticos ( Filtrado Digital )
+Los sensores de ultrasonido HC-SR04 sufren constantemente de ruido acústico debido a las vibraciones mecánicas del chasis a PWM 180 y las reflexiones parásitas en las esquinas de la WRO.
+
+El método clásico requiere que el programador desarrolle manualmente bucles y promedios matemáticos, lo que satura la memoria dinámica.
+
+Solución de NewPing: Cuenta con la función optimizada sonar.ping_median(votos), la cual realiza múltiples lecturas consecutivas a nivel de registros de hardware, descarta los valores atípicos (picos de ruido) y devuelve la mediana estadística del rango real. Esto proporciona una telemetría limpia y estabiliza los microajustes del servo de dirección.
+
+- Control del Fenómeno de "Eco Nulo" y Retorno Cero
+Cuando un pulso ultrasónico choca contra una superficie inclinada o un material que absorbe el sonido (como ciertos plásticos o acrílicos de la pista), el eco nunca regresa al receptor.
+
+Con el código nativo, esto genera lecturas erráticas o tiempos de espera máximos destructivos.
+
+Solución de NewPing: Si el pulso supera la distancia máxima configurada ( MAX_DISTANCE 400), la librería aborta inmediatamente la espera y devuelve un valor de 0 cm. Esto permitió al equipo diseñar el filtro condicional estricto if (middleDistance <= 3 && middleDistance > 1)para ignorar estos ceros lógicos (ecos nulos) y evitar que el robot ejecute volantazos o correcciones fantasma ante pasillos completamente vacíos.
+
+---
+
+El robot ignora los bloques lejanos y solo activa las rutinas de rebase cuando el objeto ingresa al área de influencia crítica, evaluando su posición respecto al eje central de la pantalla (`xOrigin = 188`).
+
+### Matriz de Decisiones Ópticas Basada en Firmas de Color:
+
+| ID Registrado | Clasificación Óptica | Ubicación en Pantalla | Subrutina Ejecutada | Dinámica del Rebase en Pista |
+| :---: | :--- | :--- | :---: | :--- |
+| **ID 1, 2, 3** | Pilar Rojo | `xOrigin >= 188` (Derecha) | `rojoderecha()` | Deflexiona a `130°` (izq), acelera a `PWM 70` por `700ms`, contragira a `63°` por `1250ms` para evadir por fuera y recupera el centro. |
+| **ID 1, 2, 3** | Pilar Rojo | `xOrigin < 188` (Izquierda) | `rojoizquierda()` | Deflexiona a `125°` (izq), modula velocidad por `500ms`, contragira a `65°` por `970ms` para esquivar el bloque por el flanco interno. |
+| **ID 5, 6** | Pilar Verde | `xOrigin <= 135` (Izquierda) | `verdeizquierda()` | Deflexiona a `60°` (der absoluta), sostiene el avance por `700ms`, contragira a `133°` por `1350ms` para equilibrar y estabiliza a `centro`. |
+| **ID 5, 6** | Pilar Verde | `xOrigin > 130` (Derecha) | `verdederecha()` | Deflexiona a `70°` (der), desplaza el chasis por `500ms`, contragira a `130°` por `620ms` y cierra la maniobra de rebase limpio. |
+
+>[Nota]
+> Las firmas de color duplican múltiples IDs (IDs 1, 2, 3 para Rojo / IDs 5, 6 para Verde) en el algoritmo para dar soporte continuo a los bloques aprendidos bajo diferentes condiciones de luz artificial y degradaciones cromáticas en el recinto de la competencia.*
+
+---
+
+### D. Protocolo de Fin de Carrera y Parada de Seguridad
+
+La conclusión de la Ronda Cerrada se gestiona de manera automatizada mediante la variable acumulativa de ciclos de evasión (`pepe`). Al cumplirse la condición condicional `if (pepe > 12)`, que representa de forma estadística la culminación de las 3 vueltas reglamentarias del circuito:
+* El firmware ejecuta un avance lineal residual de posicionamiento.
+* Desenergiza los canales del puente H L298N aplicando un estado de baja impedancia absoluta mediante la función `stop()`.
+* Detiene el reloj del microcontrolador de forma indefinida mediante un bloqueo secuencial (`delay(1000000000)`), asegurando que el robot permanezca estático dentro del cuadrante de meta y evitando penalizaciones por desborde de pista.
+
+---
 
 # Pensamiento Sistémico y Decisiones de Ingeniería 
 
