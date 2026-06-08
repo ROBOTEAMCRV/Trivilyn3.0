@@ -52,12 +52,16 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
    * [Resumen del Proyecto](#-resumen-del-proyecto)
 
    * [Ronda Abierta](#ronda-abierta)
+  
+     * [Diagrama de Flujo](#-diagrama-de-flujo-open-challenge)
 
      * <a href="#maquina-estados"> Arquitectura del Software </a>
 
      * [Análisis de Rendimiento](#análisis-de-rendimiento-optimización-de-tiempo-vs-fiabilidad)
 
    * [Ronda Cerrada](#ronda-cerrada)
+  
+     * [Diagrama de Flujo](#-diagrama-de-flujo-closed-challenge)
      
 7. [Pensamiento Sistémico y Decisiones de Ingeniería](#pensamiento-sistémico-y-decisiones-de-ingeniería)
 
@@ -1040,14 +1044,24 @@ La gran lección de la temporada pasada fue la necesidad de ajustar físicamente
 
 ## 📄 Resumen del Proyecto
 
-Este documento detalla el funcionamiento lógico y la estrategia de control del vehículo autónomo diseñado para la categoría Future Engineers de la World Robot Olympiad (WRO). El sistema está programado para enfrentar dos desafíos críticos en una pista de 3 metros x 3 metros:
+Este documento técnico detalla la arquitectura lógica, el modelado algorítmico y la estrategia de control dinámico del vehículo autónomo **Trivilyn 3.0**, desarrollado por nosotros (TEAMROBOTICACRV) para competir en la categoría *Future Engineers* de la *World Robot Olympiad (WRO)*. El sistema de software y hardware ha sido diseñado y optimizado para resolver con máxima eficiencia dos escenarios de alta complejidad en una pista confinada de 3 × 3 metros:
 
-- Ronda Abierta: Navegación en un entorno variable con pasillos estrechos (hasta 40 cm), conteo de esquinas y estacionamiento final tras completar tres vueltas.
-
-- Ronda Cerrada: Navegación autónoma y evasión de obstáculos aleatorios diferenciados por color (Rojo/Verde) mediante visión artificial en tiempo real con el sensor HuskyLens . El vehículo implementa un sistema de control en lazo cerrado ( closed-loop ) que integra rutinas de autocentrado constante, rectificación de trayectoria física ante colisiones y una lógica de fin de carrera gobernada por la detección precisa de un marcador Magenta.
+* **Ronda Abierta (Navegación Estocástica por Ecosonación):** Ejecución de navegación autónoma en un entorno variable con restricciones de paso críticas (pasillos estrechos de hasta 40 cm). El control se basa exclusivamente en una matriz ultrasónica periférica de alta frecuencia para el mapeo tridimensional de distancia, el conteo automatizado de esquinas y la ejecución de una maniobra de estacionamiento de precisión tras completar de forma exitosa las tres vueltas reglamentarias.
+* **Ronda Cerrada (Navegación Dinámica con Visión Artificial):** Gestión de navegación libre y evasión proactiva de obstáculos aleatorios diferenciados cromáticamente (Rojo/Verde), procesados en tiempo real mediante el sensor de visión computacional HuskyLens. El vehículo implementa un sistema de control en lazo cerrado (*closed-loop*) que integra filtros digitales para el autocentrado constante, algoritmos de rectificación cinemática ante colisiones estructurales y una lógica de fin de carrera gobernada por la segmentación y detección precisa de un marcador de color Magenta.
 
 # Ronda Abierta
 
+## 📊 Diagrama de flujo Open challenge
+
+La **Ronda Abierta** de **Trivilyn 3.0** está gobernada por un sistema de navegación autónoma basado exclusivamente en el análisis de variables físicas y volumétricas mediante la **matriz ultrasónica periférica**. Al operar sin asistencia óptica, el vehículo autónomo se enfrenta al reto de cartografiar el entorno en tiempo real basándose únicamente en el tiempo de vuelo (ToF) de las ondas mecánicas de alta frecuencia emitidas por sus sensores.
+
+El software desarrollado por el equipo para esta ronda implementa un algoritmo de barrido estocástico continuo. El microcontrolador interroga de forma secuencial a cada sensor ultrasónico para triangular la posición de las paredes de la pista. La lógica de control procesa estas lecturas milimétricas y calcula instantáneamente el diferencial de potencia en los motores. Esto permite que el robot esquive las paredes manteniendo la velocidad de crucero máxima permitida por el chasis, evitando colisiones ciegas y compensando la inercia rotacional sin desviarse del vector de ataque general.
+
+A continuación, se detalla la arquitectura algorítmica y el diagrama de flujo que gobierna el comportamiento, las rutinas de muestreo ultrasónico y los criterios de evasión del prototipo durante la ejecución de la ronda abierta:
+
+<img width="906" height="752" alt="image" src="https://github.com/user-attachments/assets/f2a88623-6a1f-42c0-80fa-0eabb43b0d0b" />
+
+  ---
 ## ⚙️ Arquitectura del Software (Máquina de Estados de Misión) <a id="maquina-estados"></a>
 
 El software se basa en un modelo de Control Reactivo gestionado por una Máquina de Estados Finitos (FSM) jerárquica. Este modelo permite coordinar tanto el control dinámico del vehículo como la lógica de misión
@@ -1206,6 +1220,17 @@ Efecto: Esto genera lecturas "fantasmales" o ecos falsos. Aunque nuestro filtro 
 El firmware de la Ronda Cerrada de **Trivilyn 3.0** está diseñado bajo un paradigma de **Control Reactivo Híbrido** de ejecución síncrona en un microcontrolador ATmega2560 (Arduino Mega). El sistema unifica la telemetría probabilística de una matriz de tres sensores ultrasónicos HC-SR04 y el procesamiento de visión computacional en tiempo real de la cámara inteligente HuskyLens para la toma de decisiones críticas en milisegundos.
 
 ---
+
+## 📊 Diagrama de flujo closed challenge
+
+Para garantizar la repetibilidad de los resultados, la estabilidad en pista y una toma de decisiones eficiente en milisegundos, la lógica de control de **Trivilyn 3.0** se estructuró formalmente bajo el modelo de una **Máquina de Estados Finitos (FSM)**. Esta arquitectura de software fragmenta el comportamiento dinámico del vehículo autónomo en estados discretos, mutuamente excluyentes y gobernados por transiciones estrictas. Las condiciones de transición dependen directamente del flujo continuo de datos provenientes del vector sensorial (HuskyLens y matriz ultrasónica).
+
+La implementación de este modelo conceptual no solo previene bloqueos en el hilo principal de ejecución del microcontrolador, sino que optimiza los ciclos de reloj al jerarquizar los procesos. De este modo, los algoritmos de evasión de emergencia tienen prioridad absoluta sobre las tareas secundarias de telemetría y navegación de crucero. 
+
+A continuación, se presenta el mapa analítico y el diagrama de flujo detallado que gobierna la sincronización, los bucles de control y los criterios de decisión que determinan el comportamiento autónomo del prototipo en tiempo real:
+
+<img width="1185" height="896" alt="image" src="https://github.com/user-attachments/assets/47361b28-2b61-4326-98ea-6a762af9a9ea" />
+
 
 ### A. Fase de Inicialización y Calibración del Vector de Ataque
 
