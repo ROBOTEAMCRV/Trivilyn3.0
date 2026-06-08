@@ -80,6 +80,8 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
 8. [Desafíos Técnicos, Limitaciones y Soluciones en el Desarrollo](#desafíos-técnicos-limitaciones-y-soluciones-en-el-desarrollo)
 
 9. [Archivos CAD](./Archivos%20CAD/)
+
+10. [Videos](./Videos/)
    
 # MIEMBROS DE TEAMROBOTICACRV
 
@@ -1219,7 +1221,7 @@ Para asegurar un comportamiento cinemático simétrico desde el primer milisegun
 
 ### B. Lazo de Telemetría Ultrasónica y Evasión Periférica (Matriz Tri-Sensorial)
 
-El vehículo procesa el entorno mediante tres transductores HC-SR04 gestionados por la librería de alta eficiencia `NewPing`. Esta configuración evita los bloqueos críticos del procesador (asociados al uso de `pulseIn`) y computa distancias simultáneas para resolver el centrado dinámico dentro del pasillo confinado de 40 cm.
+El vehículo procesa el entorno mediante tres transductores HC-SR04 gestionados por la librería de alta eficiencia `NewPing`. Esta configuración evita los bloqueos críticos del procesador (asociados al uso de `pulseIn`) y computa distancias simultáneas para resolver el centrado dinámico dentro del pasillo de 100 cm.
 
 ---
 
@@ -1271,7 +1273,7 @@ Solución de NewPing: Si el pulso supera la distancia máxima configurada ( MAX_
 
 El robot ignora los bloques lejanos y solo activa las rutinas de rebase cuando el objeto ingresa al área de influencia crítica, evaluando su posición respecto al eje central de la pantalla (`xOrigin = 188`).
 
-### Matriz de Decisiones Ópticas Basada en Firmas de Color:
+### C. Matriz de Decisiones Ópticas Basada en Firmas de Color:
 
 | ID Registrado | Clasificación Óptica | Ubicación en Pantalla | Subrutina Ejecutada | Dinámica del Rebase en Pista |
 | :---: | :--- | :--- | :---: | :--- |
@@ -1637,5 +1639,25 @@ Para erradicar esta degradación de la señal, se implementó el cableado indust
 # Desafíos Técnicos, Limitaciones y Soluciones en el Desarrollo
 
 Durante la construcciÓn y ensamblaje nuestro prototipo enfrentamos varios desafios los cuales resolvimos y decidimos documentar para demostrar que la construcción de un vehiculo autonomo no se realiza de la noche a la mañana. Que las cosas no siempre salen la primera vez y consta de un proceso de prueba-error para llegar al resultado deseado.
+
+## 1. Desafío en Manufactura Aditiva: Inestabilidad Térmica y Obstrucción de Boquilla (Clogging) en la Ender 3
+
+### Descripción del Problema
+Durante la fase inicial de reestructuración del chasis y las bases de soporte de **Trivilyn 3.0**, nos enfrentamos a fallas críticas repetitivas en el proceso de manufactura aditiva (impresión 3D). Al intentar fabricar los componentes de gran volumen, específicamente la **base del segundo piso** (encargada de albergar la electrónica principal y el sistema de control), la impresora (Ender 3) sufrió múltiples fallas a mitad del proceso de impresión. El síntoma principal fue la **obstrucción de la boquilla (clogging)**, lo que provocó subextrusión severa, pérdida de adherencia entre capas y la pérdida total de la pieza en tres ocasiones consecutivas. Esto se tradujo en una pérdida significativa de tiempo de desarrollo, filamento y un retraso en el ensamblaje estructural del vehículo.
+
+<img width="960" height="504" alt="image" src="https://github.com/user-attachments/assets/f37584d0-071f-4a84-8045-8aefe2339da3" />
+
+
+### Justificación e Identificación de Cusas Raíz
+Al analizar los fallos en caliente, identificamos que el problema no era un defecto del diseño CAD, sino una combinación de factores térmicos y mecánicos en el ecosistema de la impresora:
+1. **Fatiga Térmica (Heat Creep):** El calor del bloque calentador se transfería hacia la zona fría del *hotend* debido a la alta demanda de horas continuas de impresión necesarias para una pieza estructural de ese tamaño, ablandando el filamento antes de tiempo y generando un tapón molecular.
+2. **Restricción en el flujo de extrusión:** Residuos microparticulados atrapados en la boquilla estándar de 0.4 mm generaban un aumento en la contrapresión del motor extrusor.
+
+### Soluciones Técnicas Implementadas
+Para erradicar este cuello de botella en la manufactura y garantizar la repetibilidad y dureza de las piezas finales de **Trivilyn 3.0**, aplicamos las siguientes acciones correctivas:
+* **Mantenimiento Mayor e Intervención Mecánica:** Realizamos un desarme completo del *hotend*, aplicando el método del *Cold Pull* (tirón en frío) para purgar impurezas internas y asegurar que el tubo de teflón (PTFE) estuviera perfectamente asentado y cortado a 90 grados contra la boquilla para evitar espacios vacíos.
+* **Calibración y Optimización de Retracciones:** Redujimos la distancia de retracción en el laminador (Slicer) para evitar que el filamento caliente subiera de forma repetida a la zona fría, disminuyendo drásticamente la probabilidad de atasco.
+* **Optimización de Parámetros de Extrusión:** Ajustamos la relación velocidad/temperatura, aumentando ligeramente la temperatura de extrusión en las primeras capas para mejorar la fluidez y garantizar una base ultra sólida para el segundo piso.
+
 
 
