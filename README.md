@@ -40,6 +40,8 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
    * [Base Cetral](#segundo-piso)
 
    * [Base Superior](#tercer-piso)
+  
+   * [Impresion 3D](#manufactura)
    
 5.[Arquitectura de Potencia y Sensores](#-arquitectura-de-potencia-y-sensores)
 
@@ -740,8 +742,96 @@ La cara frontal externa (el plano inclinado estilo Trophy Truck ) integra una ex
  Más allá del valor estético, reglamentario y de identidad de equipo para la WRO, este relieve altera básicamente la superficie plana de la pieza. Las letras extruídas actúan como un patrón de micronervaduras de refuerzo 
  y rompen la continuidad de la cara plana, incrementando significativamente la resistencia a la torsión de la sección frontal del polímero. Si el robot sufre una colisión directa a alta velocidad, este alivio distribuye las líneas de estrés mecánico a lo largo de la tipografía, evitando que el plástico se agriete o se fracture el frente de la cabina.
 
- 
- 
+ ---
+
+ <a name="manufactura"></a>
+ # 🖨️ Ingeniería de Manufactura Aditiva: Optimización de Parámetros y Calibración en Impresión 3D (FDM)
+
+La totalidad de los componentes estructurales de **Trivilyn 3.0** —desde el chasis basal inferior que soporta las cargas dinámicas de la transmisión, pasando por las plataformas intermedias con rieles de dirección en cola de milano, hasta la cabina monolítica poligonal superior— fueron fabricados mediante la tecnología de **Modelado por Deposición Fundida (FDM)**. 
+
+En la robótica móvil de alta competencia, el desarrollo mecánico no concluye al exportar un volumen desde el entorno CAD; la traducción dimensional de un sólido idealizado en la computadora a una pieza física sujeta a vibraciones armónicas, aceleraciones estocásticas e impactos transitorios en boxes depende estrictamente de la estrategia de manufactura. Para este proyecto, el equipo no empleó perfiles genéricos de impresión, sino que desarrolló una matriz de laminación ultra-detallada que manipula la microestructura interna del polímero para optimizar la relación resistencia-peso.
+
+---
+
+### 💻 Ecosistema de Desarrollo y Cadena de Herramientas Digitales (Toolchain)
+
+El flujo de trabajo implementado para materializar los componentes mecánicos del vehículo autónomo se estructuró dividiendo de forma estricta el modelado geométrico y el procesamiento numérico de trayectorias a través de las siguientes herramientas:
+
+#### 1. Diseño Geométrico y Modelado Paramétrico: Tinkercad
+Para la concepción conceptual, el dimensionamiento volumétrico y el cálculo de operaciones booleanas complejas (adición de sólidos y sustracción de vacíos ciegos), se seleccionó [Autodesk Tinkercad](https://www.tinkercad.com/).
+
+<img width="1154" height="598" alt="image" src="https://github.com/user-attachments/assets/b5f1cbba-8876-40ce-9861-741b7c3db349" />
+
+> [!NOTE]
+> **Compensación Geométrica por Contracción Polimérica**
+> Al enfriarse desde su punto de fusión a 240 grados Celsius hasta la temperatura ambiente del taller, el PETG experimenta una contracción volumétrica lineal nominal de entre el 0.2% y el 0.5%. Al diseñar los alojamientos cilíndricos para los rodamientos de bolas de la dirección y los encajes para los transductores de los sensores ultrasónicos en Tinkercad, el equipo aplicó de manera preventiva una tolerancia de holgura radial de +0.15 mm a +0.20 mm. Esto garantizó un ajuste por interferencia (*press-fit*) perfecto a nivel mecánico, eliminando la necesidad de realizar mecanizados manuales posteriores con limas o brocas que pudieran inducir microfisuras en la estructura impresa.
+
+* **Justificación de su Elección:** A pesar de contar con una interfaz gráfica orientada a la accesibilidad visual, el motor analítico subyacente de Tinkercad maneja las coordenadas espaciales y los ensambles vectoriales con un margen de error geométrico nulo en su entorno en la nube. Esta arquitectura permitió al equipo realizar modificaciones de emergencia y rediseños rápidos directamente en los talleres de prueba sin depender de la capacidad de procesamiento de hardware local o de prolongados tiempos de renderizado de mallas de alta densidad. La plataforma garantizó una exportación limpia de archivos en formato de malla poligonal neutra (`.STL`).
+
+#### 2. Procesamiento Numérico y Generación de Código G: Ultimaker Cura
+Para la transformación de los volúmenes vectoriales tridimensionales en un conjunto de instrucciones cinemáticas (trayectorias lineales, arcos de extrusión, velocidades y perfiles térmicos) interpretables por la placa de control de la impresora 3D, se empleó [Ultimaker Cura](https://ultimaker.com/software/ultimaker-cura/).
+
+<img width="1440" height="859" alt="image" src="https://github.com/user-attachments/assets/d71ba234-2f2e-4319-97ff-0d86b6f9821f" />
+
+> [!TIP]
+> **Gestión de Costuras Estructurales (Z-Seam Alignment)**
+> Configura de forma explícita la costura Z en modo "Alineado" (*Aligned*) o "En la esquina más de mayor ángulo" (*User Specified / Sharpest Corner*) dentro de Ultimaker Cura. Si dejas la costura en modo "Aleatorio", los puntos de inicio y fin de cada viaje periférico actuarán como micro-concentradores de esfuerzo estructural distribuidos de manera caótica por toda la pieza, debilitando severamente la resistencia general del componente ante impactos mecánicos directos.
+
+* **Justificación de su Elección:** Ultimaker Cura destaca por su motor de segmentación (*slicing engine*) avanzado de código abierto. Esta herramienta otorgó al equipo el control absoluto sobre variables microscópicas del proceso, tales como la compensación del flujo del filamento en paredes delgadas, la velocidad periférica interna y externa segmentada, la gestión de la aceleración del cabezal (*jerk control*) y la ubicación estratégica de la costura de inicio de capa (*Z-Seam*), factores determinantes para garantizar la repetibilidad dimensional del chasis.
+
+#### Alternativas de Software Evaluadas y Descartadas
+
+* **Autodesk Fusion 360 / SolidWorks (Frente a Tinkercad):** Aunque estos entornos de software paramétrico de grado industrial ofrecen un control avanzado basado en restricciones numéricas y árboles de operaciones extensos, su uso fue descartado debido a los prolongados tiempos de configuración inicial requeridos para validar modificaciones menores bajo presión competitiva. Tinkercad demostró que una topología limpia basada en la combinación matemática exacta de primitivas sólidas bien calculadas arroja un resultado físicamente idéntico en el laminador, acelerando el ciclo de prototipado rápido en un 300%.
+* **PrusaSlicer / OrcaSlicer (Frente a Ultimaker Cura):** A pesar de que estas plataformas competidoras cuentan con algoritmos modernos para la compensación de vibraciones en impresoras de cinemática CoreXY (*Input Shaping*), Ultimaker Cura ofreció un desempeño significativamente superior y más estable en la gestión del comportamiento reológico del filamento PETG. Específicamente, Cura demostró un control más eficiente en los algoritmos de retracción del extrusor y en la dosificación térmica en voladizos, disminuyendo la aparición de hilos parásitos (*stringing*) y maximizando la cohesión entre capas adyacentes.
+
+---
+
+###  Matriz de Configuración del Laminador (Slicing Profiles)
+
+Para combatir de raíz el fenómeno de la **anisotropía** estructural —la debilidad intrínseca de los objetos impresos en 3D donde la fuerza de unión intermolecular en el plano vertical (Eje Z) es considerablemente inferior a la resistencia de los planos horizontales continuos (Ejes X y Y)—, el equipo tomó la decisión estratégica de **unificar la microestructura interna de todo el vehículo utilizando exclusivamente el patrón Giroide (Gyroid)**, variando únicamente las densidades y espesores de pared según el nivel de carga mecánica de cada sección:
+
+| Componente Estructural del Vehículo | Espesor de Pared (Perímetros) | Densidad de Relleno (Infill %) | Patrón de Relleno Unificado | Velocidad de Extrusión (mm/s) | Justificación Mecánica y Reológica |
+| :--- | :---: | :---: | :---: | :---: | :--- |
+| **Primer Piso / Chasis Basal Inferior** | 5 Perímetros | 40% | Giroide (Gyroid) | 45 mm/s | Soporta y absorbe los esfuerzos mecánicos torsionales inducidos por el motor de tracción y el torque de las uniones roscadas M4. Previene el pandeo flexor causado por el peso muerto de las celdas de iones de litio 18650. |
+| **Soportes de Dirección / Rieles** | 4 Perímetros | 50% | Giroide (Gyroid) | 40 mm/s | Rigidez tridimensional y balance elástico en las guías en cola de milano para anular por completo las holguras mecánicas parásitas (*backlash*) en el sistema Ackermann / SbW. |
+| **Tercer Piso / Cabina Monolítica** | 4 Perímetros | 15% | Giroide (Gyroid) | 60 mm/s | Estructura ultraligera pero volumétricamente estable. Minimiza el peso suspendido superior en el eje Z, reduciendo de forma drástica el centro de masa y evitando el vuelco (*rolling*). |
+
+---
+
+### 🔬 Análisis Mecánico del Paradigma de Relleno Giroide Unificado
+
+La decisión de implementar el patrón de relleno Giroide de forma ubicua en toda la arquitectura de **Trivilyn 3.0** responde a un análisis de resistencia de materiales avanzado, descartando por completo los patrones tradicionales como el rectilíneo, de rejilla o de panal de abeja (*honeycomb*).
+
+#### 1. Distribución Vectorial Isotrópica Estricta
+El Giroide es una superficie mínima triplemente periódica. Geométricamente, se define como una estructura ondulatoria tridimensional infinitamente conectada que carece de líneas rectas o planos de simetría planos. En el laminador, esto significa que la impresora jamás traza una línea recta que cree un plano de clivaje o de debilidad interna. Al recibir los impactos de la pista o el torque del servomotor de 35 kg, las ondas mecánicas de choque no se concentran en un único punto, sino que se dispersan uniformemente a través de los ejes X, Y y Z. Al unificar todo el chasis bajo este patrón, logramos que el robot se comporte físicamente como un bloque cuasi-isotrópico, minimizando los riesgos de fractura catastrófica.
+
+#### 2. Disipación Dinámica de Resonancia Acústica y Vibraciones
+El motor de tracción trasera opera a rangos elevados de revoluciones por minuto, lo que introduce vibraciones armónicas de alta frecuencia a través del chasis. Los rellenos lineales clásicos (como el *Grid*) actúan como cajas de resonancia rígidas que transmiten e incluso amplifican estas ondas, perturbando las lecturas de los sensores ultrasónicos y el eje óptico de la HuskyLens. La naturaleza curva y sinuosa del Giroide actúa como un filtro mecánico natural de absorción: las microvibraciones se mitigan al verse obligadas a viajar por trayectorias curvas continuas, aislando acústica y mecánicamente la electrónica de control.
+
+#### 3. Ventilación Interna y Disipación Térmica Eficiente
+A diferencia de los rellenos de cuadrícula que aíslan el aire en celdas completamente selladas y estancas, el Giroide es una estructura de canales abiertos interconectados. Durante las carreras de alta velocidad, los componentes eléctricos (especialmente el puente H de tracción y las baterías) generan calor por efecto Joule que se transfiere al chasis. El diseño abierto del Giroide permite que el aire caliente circule de forma interna a través de las paredes huecas de la estructura, funcionando como un radiador pasivo que previene la acumulación de calor extremo y protege los puntos de deformación térmica del PETG.
+
+> [!WARNING]
+> **Control Absoluto de la Humedad (Propiedad Higroscópica)**
+> El PETG es un material altamente higroscópico, lo que significa que absorbe activamente la humedad relativa del aire. Si imprimes con un filamento que ha estado expuesto al ambiente húmedo del taller por más de 48 horas, el agua atrapada en el núcleo del polímero se evaporará violentamente dentro del bloque térmico del extrusor a 240 grados Celsius. Esto genera microburbujas de vapor internas, causa un flujo inconsistente (*sputtering*) y debilita la adhesión intermolecular entre capas hasta en un 60%, volviendo las piezas sumamente quebradizas. Es de carácter obligatorio pre-secar el filamento y almacenarlo en cajas herméticas con desecante (*dryboxes*) antes de fabricar las piezas definitivas de la competencia.
+
+---
+
+### ⚙️ Calibración en Taller y Ajustes en Máquina
+
+La puesta a punto de la maquinaria de impresión fue tan crítica como el software de laminación. Pequeñas desviaciones en la primera capa o fuerzas mecánicas sobre las plataformas de impresión comprometen la precisión del ensamble.
+
+> [!NOTE]
+> **Calibración de la Altura de la Primera Capa (First Layer Squish)**
+> La distancia física entre la boquilla y la cama de impresión durante el ciclo inicial debe calibrarse con precisión milimétrica utilizando un calibrador de espesores metálico (gajes) o una hoja de papel estándar. Una primera capa excesivamente aplastada provocará una expansión lateral indeseada conocida mecánicamente como "pie de elefante" (*elephant's foot*), deformando las dimensiones críticas de acoplamiento basales del primer piso. Por el contrario, una capa muy despegada provocará la pérdida total de la adherencia y el desprendimiento de la pieza a mitad de la impresión debido a las fuerzas de palanca ejercidas por el cabezal móvil en los patrones de relleno rápidos.
+
+> [!TIP]
+> **Optimización de la Ventilación de Capa (Thermal Fusion)**
+> Si notas que las piezas impresas en PETG se parten con extrema facilidad al aplicarles fuerza manual en el eje Z, reduce el flujo del ventilador de capa a un rango máximo de 15% a 20%, o apágalo por completo tras la tercera capa. El PETG requiere enfriarse de manera sumamente lenta; si el flujo de aire del ventilador es exceso, solidificará el plástico antes de que este pueda fundirse íntimamente a nivel térmico con la capa inferior, destruyendo la cohesión estructural.
+
+> [!WARNING]
+> **Riesgo de Fractura de Camas de Vidrio o PEI**
+> Debido a las excelentes propiedades de adhesión química del PETG modificado con glicol, este tiende a enlazarse con tanta fuerza a las superficies de vidrio desnudo o láminas de PEI liso que, al enfriarse y contraerse, puede arrancar pedazos microscópicos del sustrato de la cama de la impresora. Aplica siempre una fina capa de pegamento en barra o laca protectora sobre la superficie antes de iniciar; en este proceso, dicho material no actúa como un agente adherente, sino como una barrera de separación indispensable para poder desmontar la pieza de forma segura sin destruir la cama de impresión.
   
  # ⚡ Arquitectura de Potencia y Sensores
 
@@ -759,7 +849,8 @@ La selección de la plataforma electrónica y el sistema de alimentación de **T
 ---
 
 ### 1.1 Unidad de Procesamiento Central: Arduino Mega 2560 (ATmega2560)
-<img width="747" height="370" alt="image" src="https://github.com/user-attachments/assets/129cf89f-161e-4113-b4e4-155771fb7835" />
+<img width="700" height="600" alt="image" src="https://github.com/user-attachments/assets/6892030a-2f80-44c1-be4b-37b0a8efab14" />
+
 
 * **Descripción Técnica:** Microcontrolador de 8 bits basado en la arquitectura RISC AVR. Opera a una frecuencia de reloj de 16 MHz, cuenta con 256 KB de memoria Flash, 8 KB de SRAM, 4 KB de EEPROM y 4 puertos UART independientes por hardware (`Serial0` a `Serial3`).
 * **Justificación de uso:** La complejidad algorítmica de la Ronda Cerrada y la Ronda Abierta exige la ejecución paralela de tareas de telemetría, control cinemático y decodificación de datos ópticos. La implementación del Arduino Mega 2560 es fundamental debido a sus periféricos nativos:
@@ -772,7 +863,7 @@ La selección de la plataforma electrónica y el sistema de alimentación de **T
 ---
 
 ### 1.2 Sensor de Percepción Artificial: HuskyLens AI Camera
-<img width="689" height="230" alt="image" src="https://github.com/user-attachments/assets/03099237-a20d-437a-9c90-f220e3a858e1" />
+<img width="700" height="400" alt="image" src="https://github.com/user-attachments/assets/03099237-a20d-437a-9c90-f220e3a858e1" />
 
 * **Descripción Técnica:** Cámara inteligente de visión artificial equipada con el procesador Kendryte K210 (arquitectura RISC-V de doble núcleo de 64 bits con FPU y un acelerador de redes neuronales KPU integrado para procesamiento convolucional).
 * **Justificación de uso:** Resolver la evasión de pilares de color en pasillos confinados requiere procesar matrices densas de píxeles a frecuencias superiores a los 30 cuadros por segundo (FPS). Ejecutar esta carga matemática directamente en el procesador principal del robot causaría un desbordamiento inmediato de la memoria RAM y un colapso en el control de tracción:
@@ -785,7 +876,7 @@ La selección de la plataforma electrónica y el sistema de alimentación de **T
 ---
 
 ### 1.3 Matriz de Navegación Periférica: Sensores Ultrasónicos HC-SR04
-<img width="830" height="473" alt="image" src="https://github.com/user-attachments/assets/09f9270d-5997-43a4-8419-0a0a0f5e190a" />
+<img width="700" height="600" alt="image" src="https://github.com/user-attachments/assets/09f9270d-5997-43a4-8419-0a0a0f5e190a" />
 
 * **Descripción Técnica:** Transductores piezoeléctricos de proximidad que operan mediante la emisión y recepción de ráfagas de ondas mecánicas de alta frecuencia (40 kHz). Poseen un rango de detección analítico de 2 cm a 400 cm con una resolución de 3 mm y un ángulo de apertura cónico de 15°.
 * **Justificación de uso:** Aunque la visión artificial resuelve la clasificación de los obstáculos, la cámara posee un campo de visión (FOV) angular limitado que genera zonas ciegas inmediatamente delante y a los flancos del parachoques frontal. La matriz tri-sensorial (Izquierdo, Centro, Derecho) cubre geométricamente estas deficiencias:
@@ -798,7 +889,7 @@ La selección de la plataforma electrónica y el sistema de alimentación de **T
 ---
 
 ### 1.4 Actuador de Dirección: Servomotor HobbyPark 35 kg (Coreless Digital)
-<img width="350" height="350" alt="image" src="https://github.com/user-attachments/assets/6598b323-92e6-47f2-b0f7-e96b0bd68659" />
+<img width="700" height="600" alt="image" src="https://github.com/user-attachments/assets/6598b323-92e6-47f2-b0f7-e96b0bd68659" />
 
 * **Descripción Técnica:** Servomotor digital de alto rendimiento equipado con piñonería interna de acero inoxidable y aleaciones metálicas, motor interno de tecnología *Coreless* (sin núcleo) para una aceleración angular ultra rápida y doble rodamiento de bolas en el eje principal. Entrega un par de torsión máximo de hasta 35 kg-cm a un voltaje de alimentación de 7.4V.
 * **Justificación de uso:** La arquitectura estructural de Trivilyn 3.0 distribuye componentes pesados en dos niveles, elevando la carga vertical y el momento de inercia sobre el eje delantero. Las ruedas de caucho de 43 mm generan una resistencia friccional estática considerable sobre la superficie de la pista:
@@ -811,7 +902,7 @@ La selección de la plataforma electrónica y el sistema de alimentación de **T
 ---
 
 ### 1.5 Etapa de Potencia y Tracción: Driver L298N (Puente H Doble)
-<img width="850" height="600" alt="image" src="https://github.com/user-attachments/assets/9c6837ce-75a8-4913-ad2f-8942f42c5d77" />
+<img width="700" height="600" alt="image" src="https://github.com/user-attachments/assets/9c6837ce-75a8-4913-ad2f-8942f42c5d77" />
 
 * **Descripción Técnica:** Controlador de motores de alta potencia integrado basado en la arquitectura de transistores bipolares de unión (BJT). Soporta corrientes de operación continuas de hasta 2A por canal (con picos de 3A), voltaje lógico de 5V y un bus de potencia capaz de manejar hasta 46V, incorporando a nivel de circuito diodos de conmutación rápida para la supresión de fuerzas contraelectromotrices (picos inductivos).
 * **Justificación de uso:** El motor de tracción principal Turbo Snake opera a regímenes de hasta 15,000 RPM con una caja reductora de relación 78:1, lo que exige un control preciso del ciclo de trabajo del voltaje para modular la aceleración y absorber las transiciones bruscas de marcha atrás:
@@ -824,7 +915,7 @@ La selección de la plataforma electrónica y el sistema de alimentación de **T
 ---
 
 ### 1.6 Sistema de Almacenamiento de Energía: Celdas de Ion de Litio 18650 
-<img width="900" height="900" alt="image" src="https://github.com/user-attachments/assets/74ad6fd1-5339-46d6-8e2c-350f0f616a41" />
+<img width="700" height="600" alt="image" src="https://github.com/user-attachments/assets/74ad6fd1-5339-46d6-8e2c-350f0f616a41" />
 
 * **Descripción Técnica:** Banco de baterías compuesto por celdas cilíndricas recargables de química de Ion de Litio (Li-ion) formato 18650, conectadas en una configuración de dos celdas en serie (2S) para entregar un voltaje nominal de 7.4V y un voltaje de carga pico de 8.4V, caracterizadas por una alta densidad energética y una tasa de descarga sostenida de alta corriente.
 * **Justificación de uso:** Los sistemas reactivos robóticos de alta velocidad sufren un fenómeno crítico denominado "marrón de voltaje" (*voltage brownout*). Cuando el servomotor de 35 kg ejecuta un movimiento brusco al mismo tiempo que el motor de tracción demanda torque máximo para un rebase, el consumo de corriente se eleva instantáneamente a varios amperios.
@@ -833,6 +924,26 @@ La selección de la plataforma electrónica y el sistema de alimentación de **T
 
 > [!IMPORTANT]
 > **Masa de Tierra Común:** Al alimentar el tren motriz y el servo directamente desde el pack 18650 (7.4V) y el circuito lógico desde el regulador de Arduino, es estrictamente crítico unificar la masa (`GND`) de la batería con la de la placa de control. La ausencia de una referencia de tierra común introduce ruido flotante en las líneas de control del servo y corrompe los pulsos lógicos del puente H.
+
+### 1.7 Módulo Elevador de Voltaje Conmutado: Convertidor Boost DC-DC XL6009 con Display Digital
+
+<img width="700" height="600" alt="image" src="https://github.com/user-attachments/assets/c56daca6-f634-421f-a131-f252abcac0c8" />
+
+
+* **Descripción Técnica:** Convertidor elevador de voltaje de corriente continua a corriente continua (Step-Up Boost Converter) basado en el circuito integrado regulador conmutado de alta frecuencia XL6009. El módulo incorpora un disipador térmico de aluminio anodizado de perfil alto para optimizar la transferencia térmica pasiva, un potenciómetro helicoidal de precisión de múltiples vueltas para el ajuste fino del umbral de salida, y un voltímetro digital con display de siete segmentos y tres dígitos LED para el monitoreo en tiempo real de los niveles de tensión de entrada y salida mediante conmutación por pulsador integrado.
+* **Justificación de uso:** En la arquitectura eléctrica de **Trivilyn 3.0**, la necesidad de maximizar la velocidad final del motor de tracción trasera y garantizar un torque constante en los actuadores dinámicos exige una etapa de potencia capaz de superar las limitaciones físicas de voltaje del pack de celdas 18650.
+  * **Maximización de la Curva de Velocidad y Torque del Tren Motriz:** Al operar con un pack de baterías 2S (7.4V nominales), el voltaje útil decae progresivamente a medida que las celdas se descargan. Al interponer este convertidor Boost, el equipo logra inyectar al tren de potencia un voltaje regulado y elevado de forma constante (ej. 12V). Esto permite que el motor de tracción trasera gire a sus revoluciones por minuto (RPM) máximas de diseño durante toda la carrera, garantizando una aceleración lineal idéntica en la primera y en la última vuelta, independientemente del estado de carga interna de las celdas.
+  * **Eficiencia de Conmutación a Alta Frecuencia (400 kHz):** A diferencia de los convertidores elevadores de generaciones anteriores (como el LM2577 que opera a 52 kHz), el circuito integrado XL6009 trabaja a una frecuencia de conmutación interna fija de 400 kHz. Esta altísima frecuencia permite el uso de inductores y capacitores de filtrado mucho más compactos en la placa, logrando eficiencias de conversión de hasta el 94%. Esto traduce la energía de la batería en potencia mecánica pura para el chasis en lugar de desperdiciarla en forma de calor residual dentro del habitáculo.
+  * **Telemetría Visual Rápida en Boxes:** El voltímetro digital integrado permite al equipo técnico realizar diagnósticos eléctricos rápidos directamente en los boxes de la competencia sin necesidad de conectar un multímetro externo. Con solo presionar el pulsador de conmutación del display, se puede verificar instantáneamente si el voltaje de salida elevado se mantiene estable bajo carga o validar la caída de tensión de entrada para determinar el momento exacto en que se debe reemplazar el pack de baterías.
+
+> [!IMPORTANT]
+> **Condición de Operación Elevadora (Vin < Vout):**
+> Al tratarse de una topología estrictamente Boost (elevadora), el voltaje configurado en la salida mediante el potenciómetro de precisión debe ser siempre superior al voltaje de entrada entregado por las baterías 18650. Intentar operar el módulo con una configuración de salida inferior o igual al voltaje de entrada provocará que la corriente fluya directamente a través del diodo de potencia integrado sin regulación alguna, anulando el control cinemático, sobrecalentando el circuito y arriesgando una falla catastrófica inmediata por sobretensión en los componentes conectados.
+
+> [!TIP]
+> **Gestión Térmica en Picos de Alta Demanda de Corriente:**
+> El XL6009 es capaz de manejar corrientes de conmutación de hasta 4A. No obstante, al elevar el voltaje, la corriente demandada a la entrada aumenta proporcionalmente. Al diseñar el plano de soporte o compartimento del segundo piso en Tinkercad se previó una ventana de ventilación o rejilla pasiva directamente sobre el componente. Esto aprovecha el flujo de aire generado por el movimiento dinámico del vehículo para mantener la unión del semiconductor por debajo de los 50 °C, previniendo que el módulo active su protección interna por sobretemperatura térmica (*Thermal Shutdown*) en las rectas de máxima aceleración.
+
 
 ## 2. Topología del Hardware y Estándar de Colorimetría Crítica del Cableado
 
