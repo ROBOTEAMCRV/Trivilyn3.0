@@ -99,7 +99,7 @@ Para agilizar la evaluación de los diferentes componentes del proyecto, puedes 
 * [Planos y Circuitos (Schematics)](./Schematics/)
   *Acceso directo a la ingeniería electrónica del robot, incluyendo los diagramas de bloques, mapeo de pines (Pinout) y la red de distribución de potencia.*
 
-* [Código Fuente (Src)](./src/)
+* [Código Fuente (Src)](./Src/)
   *Firmware del vehículo autónomo, algoritmos Failsafe de filtrado y control de la máquina de estados.*
 
 * [Galería de Identidad (Team-Photos)](./Team-Photos/)
@@ -110,7 +110,9 @@ Para agilizar la evaluación de los diferentes componentes del proyecto, puedes 
 
 * [Desafíos en Pista (Videos)](./Videos/)
   *Registro audiovisual oficial de Trivilyn 3.0 ejecutando con éxito los desafíos de la competencia, demostrando en tiempo real la evasión de obstáculos y la estabilidad de los algoritmos de control.*
-  ---
+
+   ---
+  
 # MIEMBROS DE TEAMROBOTICACRV
 
 ## 👤Dennis Adrian Silva Riera
