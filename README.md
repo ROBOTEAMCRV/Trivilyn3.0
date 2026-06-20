@@ -7,6 +7,8 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
 
 # ÍNDICE
 
+## 📌Tabla de Contenido
+
 1. [Engineering Document](#engineering-documenttrivilyn30)
 
 2. [Miembros de TEAMROBOTICACRV](#miembros-de-teamroboticacrv)
@@ -83,10 +85,32 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
        
 8. [Desafíos Técnicos, Limitaciones y Soluciones en el Desarrollo](#desafíos-técnicos-limitaciones-y-soluciones-en-el-desarrollo)
 
-9. [Archivos CAD](./Archivos%20CAD/)
 
-10. [Videos](./Videos/)
-   
+    ## 📂 Estructura del Repositorio (Repository Directory Map)
+
+Para agilizar la evaluación de los diferentes componentes del proyecto, puedes acceder directamente a los recursos y subcarpetas principales a través de los siguientes accesos directos:
+
+* [Modelos Tridimensionales (Archivos CAD)](./Archivos%20CAD/)
+  *Anclaje al repositorio central con los planos vectoriales nativos y archivos laminados segregados por pisos.*
+
+* [Manual de Ensamblaje (Assembly Manual)](./Assembly_Manual/)
+  *Guía paso a paso con esquemas mecánicos para la construcción y calibración del chasis modular.*
+
+* [Planos y Circuitos (Schematics)](./Schematics/)
+  *Acceso directo a la ingeniería electrónica del robot, incluyendo los diagramas de bloques, mapeo de pines (Pinout) y la red de distribución de potencia.*
+
+* [Código Fuente (Src)](./src/)
+  *Firmware del vehículo autónomo, algoritmos Failsafe de filtrado y control de la máquina de estados.*
+
+* [Galería de Identidad (Team-Photos)](./Team-Photos/)
+  *Registro fotográfico oficial del equipo, fases de codiseño en el laboratorio y preparación.*
+
+* [Renderizado Interactivo (Trivilyn 360)](./Trivilyn_360/)
+  *Modelos tridimensionales optimizados para visualización periférica completa y verificación geométrica.*
+
+* [Desafíos en Pista (Videos)](./Videos/)
+  *Registro audiovisual oficial de Trivilyn 3.0 ejecutando con éxito los desafíos de la competencia, demostrando en tiempo real la evasión de obstáculos y la estabilidad de los algoritmos de control.*
+  ---
 # MIEMBROS DE TEAMROBOTICACRV
 
 ## 👤Dennis Adrian Silva Riera
