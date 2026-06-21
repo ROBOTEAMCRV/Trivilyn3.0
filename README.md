@@ -66,7 +66,7 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
    * [Ronda Cerrada](#ronda-cerrada)
   
      * [Diagrama de Flujo](#-diagrama-de-flujo-closed-challenge)
-     
+    
 7. [Pensamiento Sistémico y Decisiones de Ingeniería](#pensamiento-sistémico-y-decisiones-de-ingeniería)
 
  - [Temporada 2024 (Rexbot 1.0)](#temporada-2024-rexbot10)
@@ -862,20 +862,8 @@ La selección de la plataforma electrónica y el sistema de alimentación de **T
 
 ---
 
-### 1.2 Sensor de Percepción Artificial: HuskyLens AI Camera
-<img width="700" height="400" alt="image" src="https://github.com/user-attachments/assets/03099237-a20d-437a-9c90-f220e3a858e1" />
 
-* **Descripción Técnica:** Cámara inteligente de visión artificial equipada con el procesador Kendryte K210 (arquitectura RISC-V de doble núcleo de 64 bits con FPU y un acelerador de redes neuronales KPU integrado para procesamiento convolucional).
-* **Justificación de uso:** Resolver la evasión de pilares de color en pasillos confinados requiere procesar matrices densas de píxeles a frecuencias superiores a los 30 cuadros por segundo (FPS). Ejecutar esta carga matemática directamente en el procesador principal del robot causaría un desbordamiento inmediato de la memoria RAM y un colapso en el control de tracción:
-  * **Procesamiento en el Borde (Edge AI):** La HuskyLens actúa como un coprocesador independiente. Ejecuta de forma autónoma el pipeline de segmentación cromática, análisis geométrico y emparejamiento de firmas de color. Una vez procesada la imagen, reduce toda la carga visual a un paquete simplificado de coordenadas y dimensiones de bloques (`xCenter`, `yCenter`, `height`) que se envía al Arduino Mega en formato de pocos bytes, liberando ciclos críticos de CPU.
-  * **Inmunidad Cromática y Flexibilidad Estructural:** Gracias a la capacidad de registrar múltiples IDs para una misma firma (IDs 1, 2, 3 para bloques rojos / IDs 5, 6 para bloques verdes), el software compensa las variaciones en el balance de blancos, la degradación de la luz artificial en el recinto y las sombras físicas generadas por el propio carro, garantizando que el umbral proxémico (`result.height > 90`) se dispare exactamente a la distancia planificada.
-
-> [!IMPORTANT]
-> **Consistencia del Protocolo:** En el menú interno de la HuskyLens, el protocolo de comunicación debe estar configurado estrictamente en **Serial 9600** de forma manual. El modo de detección automática (*Auto-Detect*) introduce retardos parásitos de sincronización en el arranque que pueden hacer fallar la subrutina `huskylens.begin()`, congelando la inicialización del robot.
-
----
-
-### 1.3 Matriz de Navegación Periférica: Sensores Ultrasónicos HC-SR04
+### 1.2 Matriz de Navegación Periférica: Sensores Ultrasónicos HC-SR04
 <img width="700" height="600" alt="image" src="https://github.com/user-attachments/assets/09f9270d-5997-43a4-8419-0a0a0f5e190a" />
 
 * **Descripción Técnica:** Transductores piezoeléctricos de proximidad que operan mediante la emisión y recepción de ráfagas de ondas mecánicas de alta frecuencia (40 kHz). Poseen un rango de detección analítico de 2 cm a 400 cm con una resolución de 3 mm y un ángulo de apertura cónico de 15°.
@@ -888,7 +876,7 @@ La selección de la plataforma electrónica y el sistema de alimentación de **T
 
 ---
 
-### 1.4 Actuador de Dirección: Servomotor HobbyPark 35 kg (Coreless Digital)
+### 1.3 Actuador de Dirección: Servomotor HobbyPark 35 kg (Coreless Digital)
 <img width="700" height="600" alt="image" src="https://github.com/user-attachments/assets/6598b323-92e6-47f2-b0f7-e96b0bd68659" />
 
 * **Descripción Técnica:** Servomotor digital de alto rendimiento equipado con piñonería interna de acero inoxidable y aleaciones metálicas, motor interno de tecnología *Coreless* (sin núcleo) para una aceleración angular ultra rápida y doble rodamiento de bolas en el eje principal. Entrega un par de torsión máximo de hasta 35 kg-cm a un voltaje de alimentación de 7.4V.
@@ -901,7 +889,7 @@ La selección de la plataforma electrónica y el sistema de alimentación de **T
 
 ---
 
-### 1.5 Etapa de Potencia y Tracción: Driver L298N (Puente H Doble)
+### 1.4 Etapa de Potencia y Tracción: Driver L298N (Puente H Doble)
 <img width="700" height="600" alt="image" src="https://github.com/user-attachments/assets/9c6837ce-75a8-4913-ad2f-8942f42c5d77" />
 
 * **Descripción Técnica:** Controlador de motores de alta potencia integrado basado en la arquitectura de transistores bipolares de unión (BJT). Soporta corrientes de operación continuas de hasta 2A por canal (con picos de 3A), voltaje lógico de 5V y un bus de potencia capaz de manejar hasta 46V, incorporando a nivel de circuito diodos de conmutación rápida para la supresión de fuerzas contraelectromotrices (picos inductivos).
@@ -914,7 +902,7 @@ La selección de la plataforma electrónica y el sistema de alimentación de **T
 
 ---
 
-### 1.6 Sistema de Almacenamiento de Energía: Celdas de Ion de Litio 18650 
+### 1.5 Sistema de Almacenamiento de Energía: Celdas de Ion de Litio 18650 
 <img width="700" height="600" alt="image" src="https://github.com/user-attachments/assets/74ad6fd1-5339-46d6-8e2c-350f0f616a41" />
 
 * **Descripción Técnica:** Banco de baterías compuesto por celdas cilíndricas recargables de química de Ion de Litio (Li-ion) formato 18650, conectadas en una configuración de dos celdas en serie (2S) para entregar un voltaje nominal de 7.4V y un voltaje de carga pico de 8.4V, caracterizadas por una alta densidad energética y una tasa de descarga sostenida de alta corriente.
@@ -925,7 +913,7 @@ La selección de la plataforma electrónica y el sistema de alimentación de **T
 > [!IMPORTANT]
 > **Masa de Tierra Común:** Al alimentar el tren motriz y el servo directamente desde el pack 18650 (7.4V) y el circuito lógico desde el regulador de Arduino, es estrictamente crítico unificar la masa (`GND`) de la batería con la de la placa de control. La ausencia de una referencia de tierra común introduce ruido flotante en las líneas de control del servo y corrompe los pulsos lógicos del puente H.
 
-### 1.7 Módulo Elevador de Voltaje Conmutado: Convertidor Boost DC-DC XL6009 con Display Digital
+### 1.6 Módulo Elevador de Voltaje Conmutado: Convertidor Boost DC-DC XL6009 con Display Digital
 
 <img width="700" height="600" alt="image" src="https://github.com/user-attachments/assets/c56daca6-f634-421f-a131-f252abcac0c8" />
 
@@ -943,6 +931,19 @@ La selección de la plataforma electrónica y el sistema de alimentación de **T
 > [!TIP]
 > **Gestión Térmica en Picos de Alta Demanda de Corriente:**
 > El XL6009 es capaz de manejar corrientes de conmutación de hasta 4A. No obstante, al elevar el voltaje, la corriente demandada a la entrada aumenta proporcionalmente. Al diseñar el plano de soporte o compartimento del segundo piso en Tinkercad se previó una ventana de ventilación o rejilla pasiva directamente sobre el componente. Esto aprovecha el flujo de aire generado por el movimiento dinámico del vehículo para mantener la unión del semiconductor por debajo de los 50 °C, previniendo que el módulo active su protección interna por sobretemperatura térmica (*Thermal Shutdown*) en las rectas de máxima aceleración.
+
+### 1.7 Sensor de Percepción Artificial: HuskyLens AI Camera
+<img width="700" height="400" alt="image" src="https://github.com/user-attachments/assets/03099237-a20d-437a-9c90-f220e3a858e1" />
+
+* **Descripción Técnica:** Cámara inteligente de visión artificial equipada con el procesador Kendryte K210 (arquitectura RISC-V de doble núcleo de 64 bits con FPU y un acelerador de redes neuronales KPU integrado para procesamiento convolucional).
+* **Justificación de uso:** Resolver la evasión de pilares de color en pasillos confinados requiere procesar matrices densas de píxeles a frecuencias superiores a los 30 cuadros por segundo (FPS). Ejecutar esta carga matemática directamente en el procesador principal del robot causaría un desbordamiento inmediato de la memoria RAM y un colapso en el control de tracción:
+  * **Procesamiento en el Borde (Edge AI):** La HuskyLens actúa como un coprocesador independiente. Ejecuta de forma autónoma el pipeline de segmentación cromática, análisis geométrico y emparejamiento de firmas de color. Una vez procesada la imagen, reduce toda la carga visual a un paquete simplificado de coordenadas y dimensiones de bloques (`xCenter`, `yCenter`, `height`) que se envía al Arduino Mega en formato de pocos bytes, liberando ciclos críticos de CPU.
+  * **Inmunidad Cromática y Flexibilidad Estructural:** Gracias a la capacidad de registrar múltiples IDs para una misma firma (IDs 1, 2, 3 para bloques rojos / IDs 5, 6 para bloques verdes), el software compensa las variaciones en el balance de blancos, la degradación de la luz artificial en el recinto y las sombras físicas generadas por el propio carro, garantizando que el umbral proxémico (`result.height > 90`) se dispare exactamente a la distancia planificada.
+
+> [!IMPORTANT]
+> **Consistencia del Protocolo:** En el menú interno de la HuskyLens, el protocolo de comunicación debe estar configurado estrictamente en **Serial 9600** de forma manual. El modo de detección automática (*Auto-Detect*) introduce retardos parásitos de sincronización en el arranque que pueden hacer fallar la subrutina `huskylens.begin()`, congelando la inicialización del robot.
+
+---
 
 
 ## 2. Topología del Hardware y Estándar de Colorimetría Crítica del Cableado
@@ -1057,7 +1058,7 @@ El flujo secuencial de potencia y datos durante una maniobra compleja (ej. evasi
 1. *Fase de Percepción:* Los 3 sensores HC-SR04 miden distancias de los bloques laterales a 5V estables. Simultáneamente, la HuskyLens procesa la pista y envía las coordenadas por el puerto serie Serial1 (TX/RX) del Mega.
 2. *Fase de Procesamiento:* El Arduino Mega procesa las lecturas de proximidad y los datos de visión artificial de manera paralela gracias al ancho de banda libre de la conexión UART.
 
-## 📡 Distribución Geométrica y Calibración de Sensores
+# 📡 Distribución Geométrica y Calibración de Sensores
 
 Este capítulo detalla la fundamentación matemática, física y de diseño mecánico detrás de la disposición espacial de la red de sensores de Trivilyn3.0. La correcta ubicación geométrica del hardware de percepción es tan crítica como la optimización de los algoritmos de control; una desalineación de milímetros o de pocos grados en los vectores de lectura puede degradar por completo la fiabilidad del vehículo a altas velocidades.
 
@@ -1078,13 +1079,13 @@ Para un ángulo de apertura nominal de alfa = 15°:
 W_detect = 2 * 50 cm * tan(7.5°) ≈ 100 cm * 0.1316 = 13.16 cm
 
 >[!CAUTION]
->Efecto de Rebote Multipath y Ruido por Suelo: Si el sensor frontal se posiciona a una altura inferior a $3\text{ cm}$ respecto al suelo, el lóbulo inferior del cono de emisión ultrasónico impactará contra la pista de la WRO, generando "ecos fantasmas" que el software interpretará como obstáculos frontales inexistentes. La altura óptima del sensor frontal en Trivilyn 3.0 está fijada a un mínimo de $4.5\text{ cm}$ sobre el nivel del suelo.
+>Efecto de Rebote Multipath y Ruido por Suelo: Si el sensor frontal se posiciona a una altura inferior a 3 cm respecto al suelo, el lóbulo inferior del cono de emisión ultrasónico impactará contra la pista de la WRO, generando "ecos fantasmas" que el software interpretará como obstáculos frontales inexistentes. La altura óptima del sensor frontal en Trivilyn 3.0 está fijada a un mínimo de 4.5 cm sobre el nivel del suelo.
 
-### B. Cinemática del Punto Dulce de Giro 42 cm \le d \le 52 cm bajo Dirección Steer-by-Wire
+### B. Cinemática del Punto Dulce de Giro 42 cm a 52 cm bajo Dirección Steer-by-Wire
 
-Esta calibración SbW elimina el deslizamiento lateral (derrape) al mantener ambas ruedas en el mismo arco de giro, logrando un ángulo de deflexión máximo de $\beta = 40^\circ$ por lado (izquierdo y derecho), lo que equivale a un barrido de dirección total de 80° de tope a tope (lock-to-lock). El rango de disparo del sensor frontal está directamente sincronizado con esta capacidad cinemática:
+Esta calibración SbW elimina el deslizamiento lateral (derrape) al mantener ambas ruedas en el mismo arco de giro, logrando un ángulo de deflexión máximo de $\beta = 40° por lado (izquierdo y derecho), lo que equivale a un barrido de dirección total de 80° de tope a tope (lock-to-lock). El rango de disparo del sensor frontal está directamente sincronizado con esta capacidad cinemática:
 
-- Límite Inferior 42 cm: Gracias al agresivo ángulo de deflexión de 40° por lado provisto por el sistema SbW, el robot es capaz de realizar virajes sumamente cerrados. Si la aproximación desciende de 42°, el tiempo de respuesta del servomotor HobbyPark ($t_{\text{resp}} \approx 0.12 s y el momento lineal del chasis empujarán el parachoques delantero contra la pared exterior antes de que las ruedas completen la deflexión de 40°
+- Límite Inferior 42 cm: Gracias al agresivo ángulo de deflexión de 40° por lado provisto por el sistema SbW, el robot es capaz de realizar virajes sumamente cerrados. Si la aproximación desciende de 42°, el tiempo de respuesta del servomotor HobbyPark (t resp approx 0.12 s) y el momento lineal del chasis empujarán el parachoques delantero contra la pared exterior antes de que las ruedas completen la deflexión de 40°
 
 - Límite Superior 52 cm): Iniciar el giro SbW de 40° de forma anticipada (lecturas frontales superiores a 52° cerrará demasiado rápido el radio de giro del chasis. Esto provocará que la rueda trasera interna "muerda" o choque directamente contra la esquina o vértice interno del muro.
 
@@ -1114,9 +1115,42 @@ Para erradicar esta interferencia física en Trivilyn3.0, el software implementa
 ##  Sensor de Visión: Geometría de Proyección Tridimensional (HuskyLens)
 
 
+### Protocolo de Calibración de Firmas de ID y Machine Learning (HuskyLens)
+
+El algoritmo de aprendizaje por ID del sensor cognitivo requiere una calibración lumínica y geométrica rigurosa antes de cada puesta en pista. Esto es estrictamente necesario para anular los falsos positivos e interferencias inducidas por los reflejos de las luces del recinto de competencia sobre la lona:
+
+#### 1. Compensación de Exposición y Bloqueo Lumínico (AE / AWB Lock)
+Con el vehículo situado de forma estática en la línea de salida bajo las condiciones de luz reales del evento, se ingresa al menú de configuración avanzada de la HuskyLens. Se desactiva el balance de blancos automático (*Auto White Balance*) y se ejecuta un bloqueo de exposición (*Algorithm Exposure Lock*). 
+
+> [!IMPORTANT]
+> **Inmunidad Lumínica en Competencia**
+> Este paso fija los umbrales del espacio de color analizados por la KPU, evitando que el sensor confunda sombras parásitas de los jueces o reflejos del piso con las líneas de la pista o los bloques de color del desafío.
 
 ---
 
+#### 2. Entrenamiento de Firmas de Identificación (ID Learning Supervisado)
+Se sitúa el vehículo apuntando fijamente al objeto o trayectoria objetivo. Utilizando los postes frontales calibrados mecánicamente en Tinkercad (diseñados para otorgar el ángulo óptimo de visión picada), se centra el cuadro de delimitación (*bounding box*) en la pantalla de la cámara. Se mantiene presionado el botón de aprendizaje (*Learn Button*) del sensor mientras se varía sutilmente el ángulo y la distancia del coche respecto al objeto.
+
+> [!NOTE]
+> **Efecto de la Distancia Focal y Umbral del Cuadro**
+> El tamaño del cuadro guardado actúa como una referencia de escala. El entrenamiento óptimo debe realizarse a una distancia focal intermedia (entre 20 cm y 40 cm del parachoques frontal) para asegurar que el escalado de la matriz sea simétrico y no parpadee cuando el coche ruede lejos del objetivo.
+
+> [!TIP]
+> **Uso del Botón de Guardado Manual de Parámetros**
+> Una vez finalizada la calibración perfecta en la pista oficial, navega al menú y selecciona *Save to SD Card*. Esto evita tener que repetir todo el proceso de aprendizaje supervisado en boxes si el coche experimenta una desconexión por cambio de baterías 18650.
+
+---
+
+#### 3. Validación del Filtro de Datos por Firmware
+Se verifica en la interfaz de telemetría que el sensor mantenga el rastreo continuo mostrando el cuadro de ID en color verde permanente. A nivel de software en el Arduino Mega 2560, se ejecuta una rutina de filtrado que restringe las peticiones del bus I2C únicamente a los fotogramas donde la función `huskyLens.isLearned()` y la coincidencia del ID entrenado sean verdaderas.
+
+> [!WARNING]
+> **Saturación del Procesador RISC-V por Multi-ID Habilitado**
+> Nunca dejes activos múltiples algoritmos en la cámara al mismo tiempo (como *Color Recognition* y *Object Tracking* a la vez). Procesar múltiples pipelines desploma la tasa de refresco de 30 FPS a menos de 10 FPS, lo que incrementa críticamente el tiempo de reacción del control PID y causa colisiones por calcular las curvas tarde.
+
+> [!IMPORTANT]
+> **Previene el Ruido Flotante en el Bus I2C**
+> La HuskyLens consume picos de hasta 320mA. Es mandatorio que las líneas de datos del bus I2C utilicen resistencias de pull-up externas de 4.7kΩ conectadas a una fuente de alimentación limpia y regulada (como la salida de tu electrónica de potencia), garantizando una transmisión de datos puramente síncrona libre de tramas corruptas.
 ### Configuración Espacial y Calibración del Ángulo de Cabeceo (Pitch)
 
 El sensor de visión artificial HuskyLens está estratégicamente posicionado en el eje de simetría central de la sección superior frontal (segundo piso del chasis). Para optimizar la matriz de píxeles y el reconocimiento colorimétrico en la Ronda Abierta, la cámara no se dispone en paralelo al plano de la pista, sino que implementa un ángulo de inclinación descendente estático de cabeceo (Pitch, Theta_tilt) calibrado con precisión milimétrica.
@@ -1130,47 +1164,43 @@ Esta inclinación geométrica es crítica para:
 
 ## 📥 Sustentación de Valores Físicos en Pista
 
-Para garantizar que el vehículo autónomo mantenga una navegación continua y fluida en la Ronda Abierta de la WRO 2026, el despeje de la ecuación se calibra bajo las siguientes restricciones operacionales:
+Para garantizar que el vehículo autónomo mantenga una navegación continua y fluida en la Ronda Cerrada de la WRO 2026, el despeje de la ecuación se calibra bajo las siguientes restricciones operacionales:
 
-1. **Garantía de Frenado Seguro:** El valor resultante de `d_min` se sincroniza con el tiempo de respuesta de la máquina de estados y la velocidad crucero del carro, asegurando que cualquier cambio de color o carril sea detectado antes de que el chasis pise la línea.
+1. **Garantía de Frenado Seguro:** El valor resultante de d_min se sincroniza con el tiempo de respuesta de la máquina de estados y la velocidad crucero del carro, asegurando que cualquier cambio de color o carril sea detectado antes de que el chasis pise la línea.
 
-2. **Mitigación de Distorsión Óptica:** Al controlar estrictamente el ángulo `Theta_tilt`, se evita que la perspectiva de la cámara deforme la geometría de las marcas, manteniendo el margen de error del reconocimiento colorimétrico por debajo del 1.5%.
+2. **Mitigación de Distorsión Óptica:** Al controlar estrictamente el ángulo Theta_tilt, se evita que la perspectiva de la cámara deforme la geometría de las marcas, manteniendo el margen de error del reconocimiento colorimétrico por debajo del 1.5%.
 
 3. **Estabilidad Dinámica:** Esta relación matemática permite que el sistema Steer-by-Wire (SbW) anticipe el radio de giro óptimo en ambos sentidos de carrera (horario y antihorario) sin necesidad de recalibraciones físicas de última hora.
 
-La cámara debe ser capaz de detectar tanto los pilares de color Rojo/Verde (cuya altura típica es de $15\text{ cm}$) como la línea de parqueo Magenta en el suelo. Para calcular la distancia de la zona ciega ($d_{ciega}$) por delante del robot, aplicamos la siguiente fórmula trigonométrica basada en la cotangente:
+La cámara debe ser capaz de detectar los pilares de color Rojo y Verde (cuya altura típica es de 15 cm) para ejecutar las maniobras evasivas. Para calcular la distancia de la zona ciega (d_ciega) por delante del robot, aplicamos la siguiente fórmula trigonométrica basada en la cotangente:
 
-$$d_{min} = h_{sensor} \cdot \tan\left(90^\circ - \theta_{tilt} - \frac{FOV_{vertical}}{2}\right)$$
+$$\text{d\_min} = \text{h\_sensor} \cdot \tan\left(90^\circ - \theta_{\text{tilt}} - \frac{\text{FOV}_{\text{vertical}}}{2}\right)$$
 
 Definición de las variables:
 
-$h_{cam} = 12.5\text{ cm}$ (Altura de la lente de la cámara en el tercer piso).
+* **h_cam = 20.0 cm** (Altura real de la lente de la cámara desde el suelo en el tercer piso del chasis).
+* **V_FOV = 48°** (Campo de visión vertical nominal de la HuskyLens).
+* **θ_tilt = 22°** (Ángulo de inclinación o cabeceo descendente configurado en la cámara).
 
-$V_{FOV} = 48^\circ$ (Campo de visión vertical de la HuskyLens).
+#### 🧮 Cálculo paso a paso en limpio:
 
-$\theta_{tilt} = 22^\circ$ (Ángulo de inclinación o cabeceo descendente de la cámara).
-
-Cálculo paso a paso en limpio:
-
-Sumamos el ángulo de inclinación y la mitad del campo de visión vertical de la cámara:
-
+1. Sumamos el ángulo de inclinación y la mitad del campo de visión vertical de la cámara:
 
 $$22^\circ + \frac{48^\circ}{2} = 22^\circ + 24^\circ = 46^\circ$$
 
-Calculamos la cotangente de ese ángulo acumulado ($46^\circ$):
-
+2. Calculamos la cotangente de ese ángulo acumulado (46°):
 
 $$\cot(46^\circ) \approx 0.9657$$
 
-Multiplicamos el resultado anterior por la altura física de la cámara ($12.5\text{ cm}$):
+3. Multiplicamos el resultado geométrico anterior por la nueva altura física de la cámara (20.0 cm):
 
+$$\text{d\_ciega} \approx 20.0\text{ cm} \cdot 0.9657 \approx 19.31\text{ cm}$$
 
-$$d_{ciega} \approx 12.5\text{ cm} \cdot 0.9657 \approx 12.07\text{ cm}$$
-
-Este ángulo óptimo de inclinación de $22^\circ$ reduce la zona ciega a tan solo $12.07\text{ cm}$ por delante de la carrocería. Esto garantiza que cuando el robot se aproxime a un pilar, la HuskyLens nunca lo pierda de vista antes de que el tren de dirección Steer-by-Wire inicie de forma autónoma la maniobra evasiva.
+Este ángulo óptimo de inclinación de 22° combinado con la elevación estructural del tercer piso sitúa la zona ciega a tan solo 19.31 cm por delante de la carrocería. Esto garantiza que cuando el robot se aproxime a un pilar de color en la Ronda Cerrada, la HuskyLens mantenga el tracking continuo del ID asignado por Machine Learning el tiempo suficiente para que el tren de dirección Steer-by-Wire inicie de forma autónoma la maniobra de evasión.
 
 >[!CAUTION]
->Error por Reflexión Lumínica (Glint): Un ángulo de inclinación demasiado agresivo ($\theta_{\text{tilt}} > 35^\circ$) expone el sensor óptico a reflejos directos de las luminarias del recinto del evento sobre la pista brillante. Esto altera drásticamente los valores de saturación y tono de la imagen, provocando falsos negativos de detección (o confundiendo el Magenta del parqueo con Rojo). El valor de $22^\circ$ ha demostrado ser el umbral de mayor robustez bajo iluminación artificial variable.
+> **Error por Reflexión Lumínica (Glint)**
+> Un ángulo de inclinación demasiado agresivo (θ_tilt > 35°) expone el sensor óptico a reflejos directos de las luminarias del recinto del evento sobre la pista brillante. Esto altera drásticamente los valores de saturación y tono de la imagen, provocando falsos negativos de detección en los bloques de color. El valor de 22° ha demostrado ser el umbral de mayor robustez bajo iluminación artificial variable en competencia.
 
 ## Sistema de Correderas de Precisión: Adaptabilidad en Pista
 
@@ -1457,6 +1487,10 @@ La conclusión de la Ronda Cerrada se gestiona de manera automatizada mediante l
 * Detiene el reloj del microcontrolador de forma indefinida mediante un bloqueo secuencial (`delay(1000000000)`), asegurando que el robot permanezca estático dentro del cuadrante de meta y evitando penalizaciones por desborde de pista.
 
 ---
+
+## Ensayos Cinemáticos y Navegación Continua.
+
+- [Closed Challenge](https://youtu.be/hMEwIUEK_SI?si=5NZFc5rS4aASXCg7)
 
 # Pensamiento Sistémico y Decisiones de Ingeniería 
 
