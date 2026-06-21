@@ -12,3 +12,15 @@ El siguiente diagrama detalla la topología de la red, los flujos de corriente, 
 
 
 <img width="1144" height="928" alt="image" src="https://github.com/user-attachments/assets/6191b76f-1e5f-484f-ba82-71315e71cbad" />
+
+### III. Derechos de Autor, Licencia y Atribución de Ingeniería Eléctrica
+
+El diseño conceptual, el ruteado de pistas, la arquitectura de filtrado EMI y el diagrama esquemático original de **Trivilyn 3.0** presentados en este repositorio son de propiedad intelectual exclusiva del equipo **TeamCRV Venezuela © 2026**.
+
+Este hardware se distribuye bajo los términos de la licencia internacional **CERN Open Hardware Licence Version 2 - Strongly Reciprocal (CERN-OHL-S-2.0)** y **Creative Commons Atribución-NoComercial-CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)**.
+* **Cláusula Anticlón de Competencia (WRO):** Queda estrictamente prohibida la reproducción total o parcial de esta arquitectura de potencia por parte de escuderías o equipos rivales dentro del circuito competitivo de la World Robot Olympiad (WRO) sin la debida citación y autorización por escrito de los autores principales. El uso no autorizado o el plagio directo del ruteado y los sistemas de supresión de ruido en la fase de inspección técnica será reportado directamente al cuerpo de jueces e inspectores bajo los estatutos de ética del código de conducta oficial de la WRO.
+
+* **Diseño y Maquetación de Hardware:** 
+  * **Ingeniería Eléctrica y Ruteado:** TeamCRV Venezuela (Dennis / Escudería Rexbot / Trivilyn Series).
+  * **Herramienta de Captura Esquemática:** Autodesk Tinkercad / Fritzing Profesional Hardware Tools.
+ 
