@@ -1189,7 +1189,7 @@ Esta inclinación geométrica es crítica para:
 
 Para garantizar que el vehículo autónomo mantenga una navegación continua y fluida en la Ronda Cerrada de la WRO 2026, el despeje de la ecuación se calibra bajo las siguientes restricciones operacionales:
 
-1. **Garantía de Frenado Seguro:** El valor resultante de d_min se sincroniza con el tiempo de respuesta de la máquina de estados y la velocidad crucero del carro, asegurando que cualquier cambio de color o carril sea detectado antes de que el chasis pise la línea.
+1. **Garantía de Frenado Seguro:** El valor resultante de d_ciega se sincroniza con el tiempo de respuesta de la máquina de estados y la velocidad crucero del carro, asegurando que cualquier cambio de color o carril sea detectado antes de que el chasis pise la línea.
 
 2. **Mitigación de Distorsión Óptica:** Al controlar estrictamente el ángulo Theta_tilt, se evita que la perspectiva de la cámara deforme la geometría de las marcas, manteniendo el margen de error del reconocimiento colorimétrico por debajo del 1.5%.
 
@@ -1197,7 +1197,7 @@ Para garantizar que el vehículo autónomo mantenga una navegación continua y f
 
 La cámara debe ser capaz de detectar los pilares de color Rojo y Verde (cuya altura típica es de 15 cm) para ejecutar las maniobras evasivas. Para calcular la distancia de la zona ciega (d_ciega) por delante del robot, aplicamos la siguiente fórmula trigonométrica basada en la cotangente:
 
-$$\text{d\_min} = \text{h\_sensor} \cdot \tan\left(90^\circ - \theta_{\text{tilt}} - \frac{\text{FOV}_{\text{vertical}}}{2}\right)$$
+   d_ciega = h_cam * tan(90° - θ_tilt - (V_FOV / 2))
 
 Definición de las variables:
 
@@ -1208,19 +1208,18 @@ Definición de las variables:
 #### 🧮 Cálculo paso a paso en limpio:
 
 1. Sumamos el ángulo de inclinación y la mitad del campo de visión vertical de la cámara:
+   
+   22° + (48° / 2) = 22° + 24° = 46°
 
-$$22^\circ + \frac{48^\circ}{2} = 22^\circ + 24^\circ = 46^\circ$$
+2. Calculamos la cotangente (o la tangente del ángulo complementario) de ese ángulo acumulado (46°):
+   
+   tan(90° - 46°) = tan(44°) ≈ 0.9657
 
-2. Calculamos la cotangente de ese ángulo acumulado (46°):
-
-$$\cot(46^\circ) \approx 0.9657$$
-
-3. Multiplicamos el resultado geométrico anterior por la nueva altura física de la cámara (20.0 cm):
-
-$$\text{d\_ciega} \approx 20.0\text{ cm} \cdot 0.9657 \approx 19.31\text{ cm}$$
+3. Multiplicamos el resultado geométrico anterior por la altura física de la cámara (20.0 cm):
+   
+   d_ciega ≈ 20.0 cm * 0.9657 ≈ 19.31 cm
 
 Este ángulo óptimo de inclinación de 22° combinado con la elevación estructural del tercer piso sitúa la zona ciega a tan solo 19.31 cm por delante de la carrocería. Esto garantiza que cuando el robot se aproxime a un pilar de color en la Ronda Cerrada, la HuskyLens mantenga el tracking continuo del ID asignado por Machine Learning el tiempo suficiente para que el tren de dirección Steer-by-Wire inicie de forma autónoma la maniobra de evasión.
-
 >[!CAUTION]
 > **Error por Reflexión Lumínica (Glint)**
 > Un ángulo de inclinación demasiado agresivo (θ_tilt > 35°) expone el sensor óptico a reflejos directos de las luminarias del recinto del evento sobre la pista brillante. Esto altera drásticamente los valores de saturación y tono de la imagen, provocando falsos negativos de detección en los bloques de color. El valor de 22° ha demostrado ser el umbral de mayor robustez bajo iluminación artificial variable en competencia.
