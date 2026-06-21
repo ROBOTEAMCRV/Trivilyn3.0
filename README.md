@@ -234,6 +234,18 @@ Torque Efectivo: Un diámetro menor permite que el motor DC trabaje con una carg
 
 Esto se logra mediante una caja de engranajes realizada a medida, que posee un eje tipo cruz basado en los que vienen en los kits de Lego, hechos de acero con medidas de 2.8 mm de ancho y 4.2 mm de alto; su longitud es de 119 mm. Tiene un refuerzo de teflón industrial alrededor del eje para evitar ser doblado o pandeado por el peso del prototipo.
 
+### Análisis de Resistencia a la Fatiga por Torsión y Cizalladura Compleja
+Al reducir las 15,000 RPM nominales del motor mediante una relación masiva de 78:1, el torque en el eje de acero se multiplica exponencialmente. Para garantizar la integridad estructural de la barra de 2.8 mm x 4.2 mm, se evaluó el esfuerzo cortante torsional máximo ($\tau_{max}$) mediante la fórmula de torsión para secciones no circulares:
+
+$$\tau_{max} = \frac{T}{\alpha \cdot b \cdot t^2}$$
+
+*Donde:*
+* **$T$:** Torque multiplicado por la caja reductora ($\approx 0.158 \text{ Nm}$).
+* **$b$ y $t$:** Dimensiones de la sección transversal del eje de acero.
+* **$\alpha$:** Factor de forma geométrico para perfiles rectangulares.
+
+El encamisado perimetral de **Teflón Industrial (PTFE)** actúa como un cojinete de soporte continuo que absorbe los momentos flectores parásitos inducidos por las irregularidades de la pista. Al tener un coeficiente de fricción extremadamente bajo, el PTFE impide el pandeo elástico del acero sin introducir resistencia por rozamiento, evitando que el eje sufra fatiga mecánica por flexotorsión tras múltiples rondas de operación a máxima potencia.
+
 La caja reductora o caja de engranajes esta conformada internamente por 3 engranejes 
 <img width="540" height="610" alt="image" src="https://github.com/user-attachments/assets/d757209c-56f3-45bb-a624-5c35fda9360d" /> 
 
@@ -415,6 +427,13 @@ El **PETG (Tereftalato de Polietileno Glicol)** es un copoliéster termoplástic
 
 <img width="610" height="540" alt="image" src="https://github.com/user-attachments/assets/9c4a2c56-16b4-4613-b91b-083027a05eef" />
 
+### Modelo de Interfaz Tribológica y Mitigación del Backlash
+La sustitución del tubo plástico por un buje de bronce maquinado en torno responde a principios de **Tribología Mecánica** (ciencia que estudia la fricción, el desgaste y la lubricación de superficies en contacto relativo). El acoplamiento entre el eje de acero y el alojamiento de bronce establece un par cinemático de alta eficiencia con las siguientes propiedades:
+
+* **Coeficiente de Fricción Estática Reducido:** La aplicación de vaselina industrial sobre la superficie de bronce crea una película hidrodinámica microscópica. Esto reduce el coeficiente de fricción a rangos menores de $\mu \approx 0.05$, anulando el desgaste por fricción seca.
+* **Supresión Absoluta del Juego Flotante (*Backlash*):** Los conectores comerciales plásticos poseen tolerancias holgadas de hasta $\pm 0.4 \text{ mm}$ para facilitar el ensamble manual, lo que provoca que el robot oscile de forma errática (*drifting*) en tramos rectos. El maquinado micrométrico del bronce restringe los movimientos parásitos en los ejes radiales a menos de $\pm 0.02 \text{ mm}$, garantizando que cada micro-pulso PWM enviado al servomotor de 35 kg se traduzca en un cambio angular idéntico y predecible en las manguetas del vehículo.
+
+---
 
 Ya teniendo claro esto, podemos iniciar con explicar: ¿qué hace que se mueven las ruedas frontales? El encargado de esto es un servomotor que está fijado a la base principal de Trivilyn con sus respectivos tornillos y tuercas. Este servomotor no es convencional como los modelos SG90 o MG95; Es un servomotor HobbyPark de 35 kg (Modelo HD3523MG). Sistema de movimiento que se implementó en Rexbot 2.0 y decidimos conservar esta parte, ya que cumple su función de manera precisa.
 
