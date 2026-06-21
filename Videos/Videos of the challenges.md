@@ -45,3 +45,26 @@
     </td>
   </tr>
 </table>
+
+### Phase 3: Obstacle Challenge (Closed Run)
+
+**Status:** 🟡 Testing / Development Run
+
+<table>
+  <tr>
+    <td>
+      <!-- YouTube Thumbnail for Video 3 -->
+      <a href="https://youtu.be/hMEwIUEK_SI?si=dR58bk0HDl-zTd81">
+        <img src="https://img.youtube.com/vi/hMEwIUEK_SI/maxresdefault.jpg" alt="Phase 3: Obstacle Challenge" width="500">
+      </a>
+      <br>
+      <!-- Bottom Buttons -->
+      <a href="https://youtu.be/hMEwIUEK_SI?si=dR58bk0HDl-zTd81" style="text-decoration: none;">
+        <span style="background-color: #4A4A4A; color: white; padding: 5px 10px; font-weight: bold; font-family: monospace; font-size: 12px; border-radius: 2px;">▶ PLAY VIDEO</span>
+      </a>
+      <a href="https://youtu.be/hMEwIUEK_SI?si=dR58bk0HDl-zTd81" style="text-decoration: none;">
+        <span style="background-color: #D35400; color: white; padding: 5px 10px; font-weight: bold; font-family: sans-serif; font-size: 12px; border-radius: 2px; margin-left: -4px;">OFFICIAL VIDEO</span>
+      </a>
+    </td>
+  </tr>
+</table>
