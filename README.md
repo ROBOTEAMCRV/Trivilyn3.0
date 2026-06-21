@@ -67,6 +67,10 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
   
      * [Diagrama de Flujo](#-diagrama-de-flujo-closed-challenge)
     
+     * [Mitigación de Fallas y Casos Extremos](#fallas-edgecases)
+    
+     * [Analisis de Rendimiento](#analisis-de-rendimiento-en-el-desafío-cerrado)
+    
 7. [Pensamiento Sistémico y Decisiones de Ingeniería](#pensamiento-sistémico-y-decisiones-de-ingeniería)
 
  - [Temporada 2024 (Rexbot 1.0)](#temporada-2024-rexbot10)
@@ -1341,17 +1345,17 @@ En el desarrollo de Trivilyn 3.0 , el enfoque principal fue la navegación en Ce
 
 - Prueba de Consistencia (Lenta)	40 seg	100%	Navegación conservadora, correcciones suaves
 
-  <img width="1221" height="618" alt="image" src="https://github.com/user-attachments/assets/0cc12374-9470-4a28-a08c-0c9216a4e385" />
+<img width="1221" height="618" alt="image" src="https://github.com/user-attachments/assets/0cc12374-9470-4a28-a08c-0c9216a4e385" />
 
 
-- Prueba de Velocidad (Rápida)	25 seg	80%	Agresividad en curvas (PWM 190) y aceleración máxima.
+- Prueba de Velocidad (Rápida)	25 seg	90%	Agresividad en curvas (PWM 190) y aceleración máxima.
 
-  <img width="1231" height="620" alt="image" src="https://github.com/user-attachments/assets/d65d0253-3925-47d5-8445-2d506e6343b8" />
+<img width="1280" height="645" alt="image" src="https://github.com/user-attachments/assets/2219ad44-b972-4635-9cc1-6e1485636d0e" />
 
   
 ###  Justificación Técnica de la Tasa de Error en Alta Velocidad
 
-Pasar de 40 a 25 segundos implica duplicar la velocidad media del vehículo. Según nuestros datos, el descenso del 20% en la confiabilidad se debe a tres factores físicos críticos:
+Pasar de 40 a 25 segundos implica duplicar la velocidad media del vehículo. Según nuestros datos, el descenso del 10% en la confiabilidad se debe a tres factores físicos críticos:
 
 1. Latencia de Muestreo Ultrasónico (Sensor Lag)
    
@@ -1478,6 +1482,23 @@ El robot ignora los bloques lejanos y solo activa las rutinas de rebase cuando e
 > Las firmas de color duplican múltiples IDs (IDs 1, 2, 3 para Rojo / IDs 5, 6 para Verde) en el algoritmo para dar soporte continuo a los bloques aprendidos bajo diferentes condiciones de luz artificial y degradaciones cromáticas en el recinto de la competencia.*
 
 ---
+<a name="fallas-edgecases"></a>
+
+## Sistema de Mitigación de Fallas y Manejo de Casos Extremos (Edge Cases)
+
+En un entorno de competencia de alta velocidad como la Ronda Cerrada de la WRO, las condiciones ideales de laboratorio desaparecen. Para garantizar la resiliencia del vehículo, el firmware implementa una lógica de control orientada a la gestión de fallas y mitigación de escenarios críticos en pista.
+
+---
+
+### 🔋 Caso Extremo : Caída Crítica de Voltaje bajo Torque Máximo (Preservación Lógica)
+* **El Problema:** Al ingresar a una maniobra evasiva cerrada, el servomotor de 35 kg demanda el pico máximo de corriente para mover las ruedas delanteras, coincidiendo con la aceleración del motor trasero para mantener la inercia. Esta alta demanda de corriente puede inducir una caída transitoria en las celdas 18650, arrastrando el voltaje de entrada por debajo del umbral de estabilidad del procesador.
+* **La Solución Electrónica (Búfer Conmutado XL6009):** Gracias al convertidor Boost XL6009 calibrado a alta frecuencia (400 kHz), la caída de tensión en el pack de baterías es absorbida por el módulo elevador. El circuito integrado eleva dinámicamente el voltaje estabilizándolo firmemente en los 12.0V configurados para los actuadores, mientras que sus capacitores electrolíticos de baja resistencia interna (ESR) actúan como un tanque de reserva de energía, manteniendo la línea de alimentación de la lógica del Arduino y la HuskyLens intacta y libre de reseteos parásitos (*voltage brownouts*).
+
+> [!WARNING]
+> **Monitoreo Térmico de Potencia en Tofas de Alta Fricción**
+> Si el pack de celdas 18650 cae por debajo del umbral crítico de descarga segura (3.0V por celda, es decir, 6.0V totales de entrada), la eficiencia del XL6009 disminuye y eleva la corriente de entrada para compensar el voltaje de salida, generando estrés térmico en el disipador. El equipo realiza el cambio preventivo de baterías guiándose por la telemetría del display LED en boxes tan pronto como el indicador marca valores inferiores a 6.4V en vacío.
+
+---
 
 ### D. Protocolo de Fin de Carrera y Parada de Seguridad
 
@@ -1487,6 +1508,10 @@ La conclusión de la Ronda Cerrada se gestiona de manera automatizada mediante l
 * Detiene el reloj del microcontrolador de forma indefinida mediante un bloqueo secuencial (`delay(1000000000)`), asegurando que el robot permanezca estático dentro del cuadrante de meta y evitando penalizaciones por desborde de pista.
 
 ---
+
+## Analisis de Rendimiento en el Desafío Cerrado
+
+
 
 ## Ensayos Cinemáticos y Navegación Continua.
 
