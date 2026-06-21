@@ -95,7 +95,7 @@ Para agilizar la evaluación de los diferentes componentes del proyecto, puedes 
 * [Modelos Tridimensionales (Archivos CAD)](./Archivos%20CAD/)
   *Anclaje al repositorio central con los planos vectoriales nativos y archivos laminados segregados por pisos.*
 
-* [Manual de Ensamblaje (Assembly Manual)](./Assembly_Manual/)
+* [Manual de Ensamblaje (Assembly Manual)](./Assembly%20Manual/)
   *Guía paso a paso con esquemas mecánicos para la construcción y calibración del chasis modular.*
 
 * [Planos y Circuitos (Schematics)](./Schematics/)
@@ -107,7 +107,7 @@ Para agilizar la evaluación de los diferentes componentes del proyecto, puedes 
 * [Galería de Identidad (Team-Photos)](./Team-Photos/)
   *Registro fotográfico oficial del equipo, fases de codiseño en el laboratorio y preparación.*
 
-* [Renderizado Interactivo (Trivilyn 360)](./Trivilyn_360/)
+* [Renderizado Interactivo (Trivilyn 360)](./Trivilyn%20360/)
   *Modelos tridimensionales optimizados para visualización periférica completa y verificación geométrica.*
 
 * [Desafíos en Pista (Videos)](./Videos/)
