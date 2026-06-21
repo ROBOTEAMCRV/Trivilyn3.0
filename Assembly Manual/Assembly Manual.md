@@ -140,5 +140,5 @@ Una vez finalizado, el Trivilyn 3.0 debería verse como una unidad monolítica y
 *   [📖 Documento de Estrategia de Control](./README.md)
 
 ---
-**Documentación generada por ROBOTEAMCRV. Todos los derechos reservados 2026.**
+**Documentación generada por TEAMROBOTICACRV. Todos los derechos reservados 2026.**
   
