@@ -47,6 +47,8 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
 
    * [Subsistema Electrónico](#1-subsistema-electrónico)
 
+   * [Esquemático Eléctrico](#30-documentación-e-ingeniería-del-esquemático-eléctrico)
+
    * [Distribución Geométrica y Calibración de Sensores](#-distribución-geométrica-y-calibración-de-sensores)
 
    * [Sustentación de Valores Físicos en Pista](#-sustentación-de-valores-físicos-en-pista)
@@ -281,7 +283,25 @@ y se pueden extraer de distintos tipos de vehículos a control remoto como:
 
 Este motor es el corazón del desplazamiento y uno de los componentes principales para que Trivilyn tenga su desempeño. 
 
-Análisis Cinematómico y Dinámico del Tren de Engranajes (Caja Reductora 78:1)
+## ¿Por qué elegimos este motor? (Justificación de Boxes)
+
+Para el sistema de tracción de Trivilyn 3.0 decidimos dejar de lado los típicos motores amarillos comerciales con reductoras plásticas integradas. Esos motores son geniales para empezar, pero en el nivel de exigencia de la WRO se quedan cortos en velocidad y tienen demasiado juego mecánico en los piñones. En su lugar, apostamos por un motor de corriente continua (DC) de alta velocidad tipo Mabuchi 130 (el famoso Turbo Snake), que levanta entre 13,000 RPM y 15,000 RPM en vacío. 
+
+Para nosotros, usar un motor tan rápido y pequeño no fue una casualidad, sino una decisión de diseño basada en tres razones clave:
+
+#### 1. Menos peso atrás significa giros más rápidos (Relación Potencia-Masa)
+En la pista, cada gramo cuenta. Si poníamos un motor industrial grande o uno de pasos con reductora metálica pesada en el eje trasero, el robot iba a tener demasiada inercia en la cola, lo que haría que derrapara hacia los lados al intentar esquivar los bloques a alta velocidad. 
+* **Nuestra solución:** El Mabuchi 130 pesa apenas 20 gramos. Al combinar este peso pluma con la caja reductora de tres etapas (78:1) que diseñamos e imprimimos nosotros mismos en PETG, logramos una fuerza de empuje brutal en las ruedas sin penalizar el peso del carro. Así mantenemos el robot completo en unos ágiles 1250 gramos de peso total.
+
+#### 2. Cuidar la batería y evitar el sobrecalentamiento
+Cuando un motor se esfuerza demasiado porque va muy lento o el carro es muy pesado, el consumo de corriente se dispara por las nubes. Esa energía extra se convierte en calor por el famoso efecto Joule, lo que puede derretir los soportes de plástico o quemar el driver.
+* **Trabajar relajados:** Gracias a que nuestra caja reductora multiplica la fuerza 78 veces, el motor hace un esfuerzo mínimo en su propio eje para mover el carro. Al exigirle tan poco torque en el piñón de salida, el motor trabaja en su zona de máxima eficiencia: consume muy poca batería, el puente H trabaja frío y el voltaje de las celdas 18650 se mantiene estable durante todas las rondas de la competencia.
+
+#### 3. Una respuesta al acelerador instantánea (Control por PWM)
+Los motores que ya vienen con reductoras lentas suelen ser muy toscos; tardan en arrancar y cuando les quitas el voltaje se quedan rodando por inercia, lo que hace que el carro se pase de largo en las líneas.
+* **Control milimétrico:** Como el rotor de este motor es pequeñísimo, casi no tiene inercia propia. Esto significa que si el código PID le pide frenar o acelerar, el motor responde en milisegundos. Calibramos el avance del coche a un valor de PWM 190 (que es más o menos el 74.5% de la potencia total). Con esto logramos el equilibrio perfecto: el robot vuela en las rectas, pero tiene un "freno de motor" inmediato cuando el ciclo baja a cero, permitiendo que Trivilyn 3.0 esquive los pilares de color sin perder el control ni una sola vez.
+
+## Análisis Cinematómico y Dinámico del Tren de Engranajes (Caja Reductora 78:1)
 
 Para vencer la inercia del chasis impreso en PETG y maximizar el torque en el eje motriz trasero, Trivilyn 3.0 implementa una caja reductora de eje compuesto de tres etapas con trenes de engranajes de dientes rectos. El sistema utiliza una configuración de piñones con conteos de dientes específicos de **8, 30, 5, 26, 5 y 20 dientes** para lograr una optimización del momento torsor.
 
@@ -860,8 +880,6 @@ La puesta a punto de la maquinaria de impresión fue tan crítica como el softwa
 
 Este apartado documenta de manera exhaustiva la distribución de energía, el aislamiento de ruido eléctrico y la configuración del sistema de sensores de Trivilyn3.0. El diseño ha sido calculado para garantizar la estabilidad del procesamiento de visión artificial y la respuesta inmediata de los actuadores bajo condiciones críticas de competencia.
 
-<img width="627" height="720" alt="image" src="https://github.com/user-attachments/assets/8bce33b1-e27e-4b23-8107-16ee9a2bd6ae" />
-
 ---
 
 
@@ -971,11 +989,96 @@ La selección de la plataforma electrónica y el sistema de alimentación de **T
 
 ## 2. Topología del Hardware y Estándar de Colorimetría Crítica del Cableado
 
-En el diseño avanzado de Trivilyn3.0, el cableado no se considera un mero elemento de interconexión pasiva, sino un subsistema crítico de la arquitectura de potencia y señal. Para mitigar los riesgos de error humano en los fosos (*pits*) bajo situaciones de alta presión, optimizar la mantenibilidad del vehículo y anular los acoplamientos electromagnéticos parásitos, hemos estandarizado de forma estricta la siguiente colorimetría industrial:
+En el diseño avanzado de Trivilyn 3.0, el cableado no se considera un mero elemento de interconexión pasiva, sino un subsistema crítico de la arquitectura de potencia y señal. Para mitigar los riesgos de error humano en los fosos (pits) bajo situaciones de alta presión, optimizar la mantenibilidad del vehículo y anular los acoplamientos electromagnéticos parásitos, hemos estandarizado de forma estricta la siguiente colorimetría industrial:
+
+---
+
+### 🎨 2.1 Código de Colores Estructural del Vehículo
+
+Para garantizar que cualquier diagnóstico en boxes se realice en menos de 30 segundos sin necesidad de usar un multímetro para rastrear líneas o adivinar conexiones, el mapa de cableado en el esquema eléctrico original se rige bajo el siguiente protocolo de codificación visual:
+
+#### Rieles de Potencia y Fuerza Bruta:
+* **🔴 Rojo Puro (Riel de Alimentación VCC):** Lo utilizamos exclusivamente para las líneas de voltaje positivo que salen de las celdas de energía y los rieles de salida alta de los módulos STEP-UP (6.5V y 10V). Al aislar visualmente el color rojo, el equipo sabe con certeza milimétrica qué conductores transportan alta energía.
+* **⚪ Blanco Puro (Puentes en Serie de las Baterías):** Reservado de forma unívoca para los puentes de interconexión en serie entre las celdas de Litio-Ion 18650. Este color nos advierte de forma explícita que la línea maneja el diferencial acumulado total de voltaje antes de entrar a las etapas de conmutación o filtrado.
+* **⚫ Negro Absoluto (Nodo de Tierra Común / GND):** Dedicado de forma unívoca a la red de retorno y masa del robot. Todas las conexiones de tierra del Arduino Mega 2560, del driver L298 y de los módulos de sensado convergen usando este color hacia el punto central de la configuración en estrella (Star Grounding).
+
+#### Buses Lógicos y Red de Datos:
+* **🟡 Amarillo / 🟢 Verde / 🔵 Azul (Canales de Control y Percepción):** Estos tres colores los distribuimos de manera metodológica para segmentar la arquitectura lógica del vehículo y no cruzar cables por accidente:
+  * El **Amarillo** y el **Verde** se asignan a las líneas de datos en cascada de los sensores de pista (HC-5904, HC-3904, HC-2904) y al bus de comunicación serie de la HuskyLens.
+  * El **Azul** lo utilizamos de forma dedicada para los pulsos de control PWM que gobiernan el servomotor de dirección y el ciclo de trabajo del driver L298. Esto evita confusiones catastróficas entre cables de datos y cables de fuerza.
+
+---
+
+### 🔬 2.2 Justificación de Ingeniería y Blindaje de Señal
+
+La implementación de este estándar responde a tres necesidades críticas que nos topamos al diseñar la electrónica para las exigencias de la alta competencia:
+
+#### 1. Diagnóstico de Fallas de Alta Velocidad (Mantenibilidad en Pits)
+Durante la competencia, el tiempo disponible entre rondas es mínimo y los nervios juegan en contra. Si un conector se afloja o un cable se rompe debido a las vibraciones mecánicas del chasis, la estandarización del color permite una sustitución en caliente (*Hot-Swap*) inmediata. El operario del equipo puede reemplazar el tramo dañado guiándose únicamente por el patrón visual, eliminando la posibilidad de conectar una línea de datos directamente a un riel de potencia, lo que destruiría instantáneamente los pines lógicos del Arduino Mega 2560.
+
+#### 2. Mitigación del Acoplamiento Cruzado (Crosstalk) e Interferencia EMI
+Cuando un cable transporta la corriente conmutada que alimenta al motor trasero M1 a través del driver L298, genera un campo magnético pulsante a su alrededor. Si los cables de los sensores de piso o de la cámara HuskyLens corren pegados y sin un orden estricto junto a los cables de potencia, este campo magnético induce un voltaje parásito en las líneas lógicas (fenómeno conocido como *Crosstalk* o diafonía).
+* **Nuestra Estrategia Topológica:** La colorimetría nos permitió diseñar el enrutamiento físico (*wire routing*) separando por canales físicos independientes los manojos de cables negros/rojos (Potencia) de los cables amarillos/verdes/azules (Señales lógicas). Con esto, logramos que el ruido eléctrico radiado por el motor de tracción trasera no deforma los flancos lógicos de las señales digitales, manteniendo la lectura colorimétrica estable y limpia.
+
+#### 3. Reducción de la Resistencia Óhmica Parásita por Calibre AWG
+Asociado al código de colores, el esquemático de Trivilyn 3.0 implementa una diferenciación física en los calibres del cable conductor (Estándar AWG):
+* Para las mallas de potencia y puentes de baterías (Líneas Rojas, Blancas y Negras), utilizamos cable de cobre multifilar de bajo calibre (AWG 22), garantizando una resistencia interna mínima para que la corriente fluya sin caídas de tensión ni sobrecalentamientos en la pista.
+* Para las redes de control y buses de sensado (Líneas Amarillas, Verdes y Azules), empleamos cable calibre AWG 26 o superior, reduciendo el volumen físico del cableado dentro del chasis y optimizando el peso dinámico general del vehículo.
+  
+  ---
+  
+## 3.0 Documentación e Ingeniería del Esquemático Eléctrico
+
+El sistema electrónico de Trivilyn 3.0 se fundamenta en un diseño circuital de topología mixta y modular, desarrollado en la plataforma Fritzing. Su arquitectura separa de forma estricta las redes de potencia analógica de los buses de datos digitales y de sensado, mitigando el ruido electromagnético y garantizando la estabilidad de voltaje en alta competencia.
+
+A continuación, se presenta y analiza detalladamente el plano esquemático oficial del robot:
+
+<img width="1144" height="928" alt="image" src="https://github.com/user-attachments/assets/e8f14544-bcc7-4581-96bb-628cec9963a7" />
 
 
-----
-## 3. Topología del Hardware (Percepción y Control)
+---
+
+## 3.1 Desglose de Bloques Funcionales y Mallas de Corriente
+
+Con base en el documento técnico en la imagen, el circuito se divide en cuatro subsistemas críticos interconectados de forma estratégica:
+
+### 1. Etapa de Regulación Conmutada y Gestión de Potencia (Power Layer)
+El sistema gestiona la energía basal de las baterías empleando una estrategia de elevación dual mediante dos módulos convertidores independientes:
+* **Módulo STEP-UP de 6.5V:** Recibe la alimentación de entrada y la eleva a un voltaje constante de 6.5V. Esta línea alimenta de forma prioritaria al servomotor de dirección a través del pin central de potencia, garantizando un torque de retención óptimo para el mecanismo Steer-by-Wire.
+* **Módulo STEP-UP de 10V:** Trabaja de forma paralela para fijar un riel de potencia de 10V. Esta tensión alimenta directamente las compuertas de fuerza del driver de motor, asegurando que la tracción trasera disponga de la diferencia de potencial necesaria para la velocidad crucero.
+* **Red de Señalización de Estado:** Conectada a la salida del sistema de alimentación, se incorpora una etapa Step-DOWN pasiva que regula el paso de corriente hacia dos diodos emisores de luz indicadores (LED1 y LED2 en color Rojo), proporcionando telemetría visual inmediata sobre el estado de la energización del chasis.
+
+### 2. Núcleo de Procesamiento Central (Arduino Mega 2560 Layer)
+La lógica de control se concentra en una placa controladora basada en la arquitectura del Arduino Mega 2560.
+* **Manejo Extendido de Entradas/Salidas:** Los pines digitales y analógicos del flanco izquierdo y derecho del microcontrolador se encuentran distribuidos metódicamente para evitar el cruce de cables. Las líneas inferiores unifican la referencia de masa a un Nodo de Tierra Común (GND), eliminando bucles de tierra que corrompan los datos.
+* **Líneas de Control PWM:** El microcontrolador direcciona señales de modulación por ancho de pulso desde sus temporizadores internos hacia el servo y el driver del motor, traduciendo las decisiones algorítmicas en movimientos mecánicos precisos.
+
+### 3. Conmutación e Inversión de Giro de Tracción (Driver L298)
+El control dinámico del motor de tracción trasera (M1) se ejecuta mediante la etapa de potencia comandada por el circuito integrado L298.
+* **Control Predictivo:** El chip recibe las señales lógicas provenientes de los pines digitales del Arduino Mega 2560 (mapeados a los pines IN1, IN2 y EN del driver) para determinar el sentido de giro y la aceleración lineal (PWM 190).
+* **Salida Homogénea:** Los pines de salida OUT1 y OUT2 inyectan la corriente de forma simétrica a los terminales de las escobillas del motor M1, garantizando una aceleración lineal predecible por el software de navegación.
+
+### 4. Matriz de Percepción Espacial y Buses de Datos (Sensors Layer)
+El sistema de posicionamiento y lectura de pista se compone de un arreglo redundante de sensores de alta precisión:
+* **Módulos de Sensado HC:** El vehículo incorpora tres bloques sensores independientes identificados en el plano como HC-5904 (Sensor 1), HC-3904 (Sensor 2) y HC-2904 (Sensor 3).
+* **Arquitectura de Conexión en Cascada:** Cada módulo HC se interconecta mediante regletas distribuidoras de pines acopladas a las líneas de alimentación limpia y común. Las salidas lógicas individuales viajan a través de caminos independientes hacia los pines de entrada del microcontrolador, permitiendo un escaneo paralelo del entorno en tiempo real.
+* **Canal Perceptivo HuskyLens:** En el flanco izquierdo del esquemático se detalla el ruteado de los cables de comunicación dedicados para la cámara de visión inteligente artificial HuskyLens, acoplándose de forma directa a los puertos de comunicación serie del microcontrolador para la transmisión instantánea de las coordenadas de los pilares de color de la WRO.
+
+---
+
+## 3.2 Tabla de Asignación de Pines y Distribución de Señal
+
+| Componente Origen | Pin del Componente | Nodo de Destino / MCU | Tipo de Señal | Función Operacional |
+| :--- | :--- | :--- | :--- | :--- |
+| **STEP-UP 6.5V** | Salida +Vo | Servo VCC | Potencia Regulada | Torque constante para dirección |
+| **STEP-UP 10V** | Salida +Vo | L298 VCC / Motores | Potencia Alta | Alimentación de tracción trasera |
+| **Driver L298** | OUT1 / OUT2 | Bornes Motor M1 | Potencia Analógica | Inversión de giro y velocidad del coche |
+| **Arduino Mega 2560** | Pines Digitales | Entradas IN/EN Driver L298 | Salida Digital / PWM | Control de puente H desde algoritmo |
+| **HuskyLens** | Buses de Datos | Puertos Serie MCU | Digital Bidireccional | Envío de IDs de marcas por Machine Learning |
+| **Sensores HC 1, 2 y 3** | Pines de Señal | Pines Digitales de Entrada | Entrada Digital | Mapeo milimétrico de la pista |
+| **Línea Step-DOWN** | Ánodo / Cátodo | LED1 / LED2 (Rojo) | Corriente Limitada | Indicador luminoso de sistema activo |
+
+## 4. Topología del Hardware (Percepción y Control)
 
 El sistema electrónico se divide en tres capas fundamentales: Control Central, Visión Artificial y Telemetría Ultrasónica.
 
@@ -986,7 +1089,7 @@ El sistema electrónico se divide en tres capas fundamentales: Control Central, 
 
 ---
 
-## 4. Presupuesto de Potencia (Power Budget) y Distribución Independiente
+## 5. Presupuesto de Potencia (Power Budget) y Distribución Independiente
 
 Para erradicar el problema más crítico en robótica móvil —los reinicios del procesador por caídas de tensión (voltage sags) y el ruido de alta frecuencia en los sensores— el diseño eléctrico de Trivilyn3.0 rechaza los buses comunes y opta por un **aislamiento físico total mediante tres bancos de energía independientes** (6 celdas 18650 en total). 
 
@@ -1058,7 +1161,7 @@ Mientras que el cerebro lógico y la dirección pueden operar por más de 5 hora
 
 Con 54 minutos de autonomía real bajo pruebas, Trivilyn puede completar holgadamente todas las rondas clasificatorias sin caídas de rendimiento. Sin embargo, el mecanismo de cola de milano nos permite sustituir este cartucho en los fosos de manera preventiva en solo 15 segundos, garantizando que el sistema motriz trabaje siempre en la cresta de su curva de potencia sin comprometer la electrónica sensible del segundo piso.
 
-## 5. Mitigación de Fallas y Decisiones Críticas
+## 6. Mitigación de Fallas y Decisiones Críticas
 
 ### Aislamiento de Tierras (GND)
 
@@ -1074,7 +1177,7 @@ Con 54 minutos de autonomía real bajo pruebas, Trivilyn puede completar holgada
 
 ---
 
-## 6. Interacción del Sistema (Pensamiento Sistémico)
+## 7. Interacción del Sistema (Pensamiento Sistémico)
 
 El flujo secuencial de potencia y datos durante una maniobra compleja (ej. evasión u obstáculo en el estacionamiento) se ejecuta de la siguiente manera:
 
@@ -1733,7 +1836,10 @@ Esta ecuación demuestra que la resistencia de un objeto a cambiar de dirección
 
 ---
 
-### 🧠 Desglose Pedagógico de las Ecuaciones Fundamentales### A. Desglose del Análisis Sistémico de Percepción y Masa
+### 🧠 Desglose Pedagógico de las Ecuaciones Fundamentales
+
+### A. Desglose del Análisis Sistémico de Percepción y Masa
+
 1. **Ubicación del Sensor (Efecto en la Percepción):** Al posicionar los sensores ultrasónicos en el extremo más avanzado del parachoques delantero, se maximiza la *Ventana de Lectura Temprana*. El sensor detecta la pared perimetral con anticipación, otorgando al microcontrolador una ganancia de tiempo crítica para procesar las lecturas antes de iniciar el viraje.
 2. **Distribución de Masas (Efecto en la Dinámica):** Desplazar el hardware de soporte de los sensores hacia el extremo frontal desplaza inevitablemente el *Centro de Masa (CoM)* hacia adelante. Esto incrementa de forma crítica la **Inercia Rotacional ($I_z$)** del vehículo durante virajes rápidos, introduciendo una fuerza de subviraje física (tendencia a seguir recto) y oscilaciones parásitas en las rectas ("efecto péndulo").
 3. **La Solución Lógica (Punto de Disparo Integrado):** Para contrarrestar el subviraje mecánico y aprovechar la ventana de lectura, se calibró por software el **Punto de Disparo a exactamente 42 cm**. Este umbral matemático compensa el retraso dinámico de la dirección *Steer-by-Wire* (SbW) para vencer la inercia del tren delantero, ejecutando la maniobra en el momento óptimo sin colisionar con la pared exterior ni cerrar la trayectoria antes de tiempo.
@@ -1897,6 +2003,4 @@ Para erradicar este cuello de botella en la manufactura y garantizar la repetibi
 * **Mantenimiento Mayor e Intervención Mecánica:** Realizamos un desarme completo del *hotend*, aplicando el método del *Cold Pull* (tirón en frío) para purgar impurezas internas y asegurar que el tubo de teflón (PTFE) estuviera perfectamente asentado y cortado a 90 grados contra la boquilla para evitar espacios vacíos.
 * **Calibración y Optimización de Retracciones:** Redujimos la distancia de retracción en el laminador (Slicer) para evitar que el filamento caliente subiera de forma repetida a la zona fría, disminuyendo drásticamente la probabilidad de atasco.
 * **Optimización de Parámetros de Extrusión:** Ajustamos la relación velocidad/temperatura, aumentando ligeramente la temperatura de extrusión en las primeras capas para mejorar la fluidez y garantizar una base ultra sólida para el segundo piso.
-
-
 
