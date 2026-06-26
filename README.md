@@ -62,6 +62,8 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
      * [Diagrama de Flujo](#-diagrama-de-flujo-open-challenge)
 
      * <a href="#maquina-estados"> Arquitectura del Software </a>
+  
+     * [Proceso de Pruebas/Ajustes](#d-bitácora-de-pruebas-y-lógica-del-código-open-challenge-reto-abierto)
 
      * [Análisis de Rendimiento](#análisis-de-rendimiento-optimización-de-tiempo-vs-fiabilidad)
 
@@ -1446,6 +1448,54 @@ Filtro distance > 1: Esta instrucción filtra las lecturas de 0 cm que genera la
 | tilin / groso | Banderas de Sentido | Bloqueo lógico del sentido de la pista (Horario/Antihorario). |
 | lewis / lecrer | Contadores de Rendimiento | Registro interno de maniobras ejecutadas por flanco. |
 | middleDistance | Vector frontal | Disparador de subrutinas de giro (Umbral 32 cm). |
+
+## D. Bitácora de Pruebas y Lógica del Código: "Open Challenge" (Reto Abierto)
+
+El rendimiento de Trivilyn 3.0 en la pista de velocidad pura (sin obstáculos) no salió a la primera. Fue un proceso de prueba y error directo en el taller para ajustar el comportamiento del chasis impreso en PETG con el peso de los tres bancos de baterías y los tiempos de reacción del código.
+
+---
+
+### D.1 Desarmando las Funciones de Control (Steer-by-Wire)
+
+Para mover el coche de forma automática, creamos funciones sencillas encargadas de activar los motores y la dirección electrónica:
+
+* **`forward()` (Acelerar en Recta):** Activa el Driver L298 mandando corriente al motor trasero. Aprovechamos esta función para que imprima constantemente la distancia del sensor central por el monitor serie de Arduino. Así, si el carro falla, podemos ver el último dato registrado desde la computadora antes del choque.
+* **`freno()` (Frio Seco por Contracorriente):** En lugar de apagar el motor y dejar que el carro ruede por inercia (`stop()`), esta función mete un pulso invertido (`analogWrite(ENA, 50)` cambiando los pines `IN1` e `IN2`). Esto amarra magnéticamente el motor trasero y clava el coche en el sitio justo antes de entrar a las curvas.
+* **`izquierda()` y `derecha()` (Giro por Tiempos en Boxes):** Como nuestro sistema *Steer-by-Wire* no tiene un mecanismo físico que regrese las llantas al centro por sí solo, tuvimos que programar la maniobra completa:
+  1. Manda el servo a un ángulo agresivo (`60°` para izquierda, `140°` para derecha).
+  2. Sube la fuerza del motor trasero a `carSpeedCurvas = 90` para que la cola del carro empuje con fuerza en la curva.
+  3. Mantiene el carro girando durante unos milisegundos exactos calibrados a mano (`680ms` para la izquierda y `465ms` para la derecha). El giro a la izquierda necesita más tiempo por la distribución del peso del chasis.
+  4. Regresa el servo obligatoriamente a sus centros calibrados (`centroA` y `centroH`). Estos centros varían un poco (`98°` y `96°`) para compensar el juego mecánico y la holgura de los engranajes delanteros.
+
+---
+
+### D.2 Pruebas en Pista 1: Ajuste de la Dirección Electrónica
+
+* **El Problema en el Taller:** Al no usar dirección tradicional, el servomotor HobbyPark de 35kg maneja las llantas de forma directa. En las primeras pruebas a fondo, el servo giraba tan rápido y tan brusco que las llantas delanteras se trancaban contra las paredes del chasis de PETG o hacían que el coche diera un trompo por exceso de giro.
+* **La Solución en el Código:** Montamos el carro en el banco de trabajo y limitamos por software el recorrido del servo a un máximo de 28 grados para que nunca golpee la estructura. Además, metimos una lógica de suavizado: cuando el carro va rápido en línea recta, el Arduino reduce la sensibilidad del servo para que no pegue volantazos violentos que desestabilicen la marcha.
+
+---
+
+### D.3 Pruebas en Pista 2: Evitar Apagones y Conteo de Vueltas
+
+Para que el carro no se confunda con los rebotes de las ondas de los sensores, usamos un sistema de banderas que actúan como interruptores (`pepe`, `tilin`, `grasa`, `lewis`, `lecrer`):
+
+* **La Salida Limpia (`pepe == 0`):** Al arrancar, el coche ejecuta un movimiento obligatorio. Gira un poco el servo a `75°` durante `1175ms` para acomodarse solo en el carril, centra las ruedas y se lanza a correr sumando el primer punto a la variable `pepe`. Esto nos asegura que el coche empiece siempre igual, sin importar si lo pusimos un poco torcido en la línea de salida.
+* **El Problema de los Reinicios:** Cuando subíamos la velocidad en las rectas a `carSpeed = 65` y a `90` en las curvas, el motor Turbo Snake le exigía tanta corriente al Driver L298 que el Arduino Mega se congelaba o se reiniciaba a mitad de camino.
+* **La Solución Eléctrica:** Conectamos el osciloscopio y descubrimos el ruido eléctrico que regresaba del motor a la placa. Por eso separamos la energía en tres bancos independientes (Sección 5) usando Step-Ups para aislar el motor a 10V y el servo a 6.5V. Para rematar, soldamos condensadores de 100nF en los terminales del motor para apagar las chispas internas y le pusimos un disipador de aluminio con pasta térmica al L298. La temperatura bajó de 50°C a 32°C y el Arduino no se volvió a apagar.
+* **Frenado Automático en Meta (`pepe > 12`):** La variable `pepe` cuenta cuántas esquinas o correcciones ha hecho el carro. Al superar las 12 marcas (que garantizan las 3 vueltas completas), el carro se centra, avanza por `1600ms` para cruzar la línea con velocidad, se apaga con un `stop()` y se bloquea con un retraso infinito (`delay(1000000000)`). Así evitamos que el carro siga de largo y se estrelle contra las paredes del evento tras terminar.
+
+---
+
+### D.4 Pruebas en Pista 3: Filtro de Paredes y Amortiguador Virtual
+
+El coche decide cuándo doblar midiendo las distancias con los tres sensores ultrasónicos **HC-SR04** usando la librería `NewPing`:
+
+```cpp
+middleDistance = sonar.ping_cm();
+leftDistance = lsonar.ping_cm();
+rightDistance = Rsonar.ping_cm();
+```
 
 ## Estrategia de Competición y Gestión de Riesgos
 
