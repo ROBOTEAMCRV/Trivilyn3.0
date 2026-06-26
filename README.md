@@ -1,6 +1,6 @@
 # Engineering Document/Trivilyn3.0 
 
-Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros ingenieros temporada 2026 WRO. En el que el equipo combina sus conocimientos y destreza en la robótica(Mecánica, Electrónica, programación y automatización)  para la elaboración de (Trivilyn) y lograr el máximo desempeño en la categoría.
+Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros ingenieros temporada 2026 WRO. En el que el equipo combina sus conocimientos y destrezas en la robótica(Mecánica, Electrónica, programación y automatización)  para la elaboración de (Trivilyn) y lograr el máximo desempeño en la categoría.
 
 <img width="1280" height="518" alt="image" src="https://github.com/user-attachments/assets/348aa223-d3f9-4a99-beae-81b8cf399c66" />
 
@@ -508,21 +508,20 @@ Para validar el comportamiento mecánico del sistema **Steer-by-Wire (SbW)**, se
 
 - siendo así mas ágil para llegar a cumplir sus objetivos, (giros a gran velocidad, sortear objetos de manera optima, salir del estacionamiento en paralelo).
 
-
 ---
 
 Para lograr la adaptación del servo a las ruedas, utilizamos piezas en 3D diseñadas por nosotros, lego y acero, esta consiste en 3 partes principales:
 
 1. Encaje de palanca de acero a base en 3D
 
-   
 Esta base fue rediseñada varias veces hasta que logramos encontrar el punto donde no se deformara por el peso y, también, para que encajara perfectamente la pieza de hierro a presión y evitar todo el juego posible (imprecisión de los componentes).
 
 2.Luego de encajar esta pieza, utilizamos un tipo de abrazadera, que sostiene el buje del eje con forma de cruz extraido de un kit Legoeo EVE3
 
 
 3.Para centrar y estabilizar su eje utilizamos retenes de lego amarillos 
-<img width="1200" height="899" alt="image" src="https://github.com/user-attachments/assets/5e4e163a-b2bf-42c3-9c0c-e68d3291c89c" />
+
+<img width="1000" height="600" alt="image" src="https://github.com/user-attachments/assets/5e4e163a-b2bf-42c3-9c0c-e68d3291c89c" />
 
 Dos por la parte interior y uno por la parte exterior por cada lado. Estos se encargan de sujetar los ejes de las ruedas al sistema de dirección; luego, el diferencial «tubo transversal», ya antes lubricado con vaselina.
 
@@ -989,11 +988,11 @@ La selección de la plataforma electrónica y el sistema de alimentación de **T
 
 ## 2. Topología del Hardware y Estándar de Colorimetría Crítica del Cableado
 
-En el diseño avanzado de Trivilyn 3.0, el cableado no se considera un mero elemento de interconexión pasiva, sino un subsistema crítico de la arquitectura de potencia y señal. Para mitigar los riesgos de error humano en los fosos (pits) bajo situaciones de alta presión, optimizar la mantenibilidad del vehículo y anular los acoplamientos electromagnéticos parásitos, hemos estandarizado de forma estricta la siguiente colorimetría industrial:
+En el diseño de Trivilyn 3.0, el cableado no se considera un mero elemento de interconexión pasiva, sino un subsistema crítico de la arquitectura de potencia y señal. Para mitigar los riesgos de error humano en los fosos (pits) bajo situaciones de alta presión, optimizar la mantenibilidad del vehículo y anular los acoplamientos electromagnéticos parásitos, hemos estandarizado de forma estricta la siguiente colorimetría industrial:
 
 ---
 
-### 🎨 2.1 Código de Colores Estructural del Vehículo
+### 2.1 Código de Colores Estructural del Vehículo
 
 Para garantizar que cualquier diagnóstico en boxes se realice en menos de 30 segundos sin necesidad de usar un multímetro para rastrear líneas o adivinar conexiones, el mapa de cableado en el esquema eléctrico original se rige bajo el siguiente protocolo de codificación visual:
 
@@ -1004,17 +1003,17 @@ Para garantizar que cualquier diagnóstico en boxes se realice en menos de 30 se
 
 #### Buses Lógicos y Red de Datos:
 * **🟡 Amarillo / 🟢 Verde / 🔵 Azul (Canales de Control y Percepción):** Estos tres colores los distribuimos de manera metodológica para segmentar la arquitectura lógica del vehículo y no cruzar cables por accidente:
-  * El **Amarillo** y el **Verde** se asignan a las líneas de datos en cascada de los sensores de pista (HC-5904, HC-3904, HC-2904) y al bus de comunicación serie de la HuskyLens.
+  * El **Amarillo** y el **Verde** se asignan a las líneas de datos (Echo y Trigger) de los sensores ultrasónicos **HC-SR04** colocados en la pista y al bus de comunicación serie de la HuskyLens.
   * El **Azul** lo utilizamos de forma dedicada para los pulsos de control PWM que gobiernan el servomotor de dirección y el ciclo de trabajo del driver L298. Esto evita confusiones catastróficas entre cables de datos y cables de fuerza.
 
 ---
 
 ### 🔬 2.2 Justificación de Ingeniería y Blindaje de Señal
 
-La implementación de este estándar responde a tres necesidades críticas que nos topamos al diseñar la electrónica para las exigencias de la alta competencia:
+La implementación de este estándar responde a tres necesidades que nos topamos al diseñar la electrónica para las exigencias de la alta competencia:
 
 #### 1. Diagnóstico de Fallas de Alta Velocidad (Mantenibilidad en Pits)
-Durante la competencia, el tiempo disponible entre rondas es mínimo y los nervios juegan en contra. Si un conector se afloja o un cable se rompe debido a las vibraciones mecánicas del chasis, la estandarización del color permite una sustitución en caliente (*Hot-Swap*) inmediata. El operario del equipo puede reemplazar el tramo dañado guiándose únicamente por el patrón visual, eliminando la posibilidad de conectar una línea de datos directamente a un riel de potencia, lo que destruiría instantáneamente los pines lógicos del Arduino Mega 2560.
+Durante la competencia, el tiempo disponible entre rondas es mínimo y los nervios juegan en contra. Si un conector se afloja o un cable se rompe debido a las vibraciones mecánicas del chasis, la estandarización del color permite una sustitución en caliente. Permitiendonos reemplazar el tramo dañado guiándonos únicamente por el patrón visual, eliminando la posibilidad de conectar una línea de datos directamente a un riel de potencia, lo que destruiría instantáneamente los pines lógicos del Arduino Mega 2560.
 
 #### 2. Mitigación del Acoplamiento Cruzado (Crosstalk) e Interferencia EMI
 Cuando un cable transporta la corriente conmutada que alimenta al motor trasero M1 a través del driver L298, genera un campo magnético pulsante a su alrededor. Si los cables de los sensores de piso o de la cámara HuskyLens corren pegados y sin un orden estricto junto a los cables de potencia, este campo magnético induce un voltaje parásito en las líneas lógicas (fenómeno conocido como *Crosstalk* o diafonía).
@@ -1055,7 +1054,7 @@ La lógica de control se concentra en una placa controladora basada en la arquit
 
 ### 3. Conmutación e Inversión de Giro de Tracción (Driver L298)
 El control dinámico del motor de tracción trasera (M1) se ejecuta mediante la etapa de potencia comandada por el circuito integrado L298.
-* **Control Predictivo:** El chip recibe las señales lógicas provenientes de los pines digitales del Arduino Mega 2560 (mapeados a los pines IN1, IN2 y EN del driver) para determinar el sentido de giro y la aceleración lineal (PWM 190).
+* **Control Predictivo:** El chip recibe las señales lógicas provenientes de los pines digitales del Arduino Mega 2560 (mapeados a los pines IN1, IN2 y EN del driver) para determinar el sentido de giro y la aceleración lineal.
 * **Salida Homogénea:** Los pines de salida OUT1 y OUT2 inyectan la corriente de forma simétrica a los terminales de las escobillas del motor M1, garantizando una aceleración lineal predecible por el software de navegación.
 
 ### 4. Matriz de Percepción Espacial y Buses de Datos (Sensors Layer)
@@ -1080,14 +1079,24 @@ El sistema de posicionamiento y lectura de pista se compone de un arreglo redund
 
 ## 4. Topología del Hardware (Percepción y Control)
 
-El sistema electrónico se divide en tres capas fundamentales: Control Central, Visión Artificial y Telemetría Ultrasónica.
+Para que Trivilyn 3.0 responda en milisegundos en la pista, dividimos el cerebro y los sentidos del coche en tres capas que trabajan en paralelo: Control Central, Visión Artificial y Telemetría Ultrasónica. 
 
-* *Microcontrolador Central:* Arduino Mega 2560. Elegido por su alta disponibilidad de pines, múltiples puertos serie por hardware y memoria extendida para gestionar las instrucciones lógicas de navegación.
-* *Coprosamiento de Visión:* Cámara inteligente *HuskyLens*.
-    * Protocolo de Comunicación: Conectada mediante interfaz *UART (Puertos dedicados TX/RX)* del Arduino Mega. Esta conexión por hardware garantiza una transmisión de datos de telemetría bidireccional limpia, de alta velocidad y libre de las colisiones de bus comunes en entornos I2C satura-dos.
-* *Matriz de Proximidad (Trifocal):* 3 Sensores Ultrasónicos *HC-SR04* posicionados estratégicamente (Izquierda, Centro, Derecha) para generar un mapa perimetral de obstáculos en tiempo real.
+Al separar las tareas de esta manera, evitamos que el procesador se sature calculando distancias mientras intenta procesar las imágenes de los carriles.
 
 ---
+
+### 4.1 Capa de Control Central: Arduino Mega 2560
+Elegimos la placa Arduino Mega 2560 no por una decisión al azar, sino porque las exigencias de este prototipo agotaron rápidamente los recursos de controladores más pequeños como el Nano o el Uno. 
+* **Gestión de Recursos:** Necesitábamos un mapa de pines lo suficientemente amplio para controlar el driver de potencia L298, el servomotor de la dirección, los tres ultrasónicos y la cámara, sin recurrir a multiplexores que añaden retraso físico (*lag*). 
+* **Puertos Dedicados:** Sus múltiples temporizadores internos (*timers*) por hardware nos permiten inyectar una señal PWM limpia al servo y al motor trasero, asegurando que el carro mantenga su velocidad de crucero constante incluso cuando los sensores están interrumpiendo el flujo principal del código para reportar lecturas.
+
+### 4.2 Coprocesamiento de Visión: Cámara Inteligente HuskyLens
+El rastreo de las líneas lógicas de la pista no podíamos dejárselo enteramente al microcontrolador principal. Por eso, delegamos todo el procesamiento de las imágenes directamente en los algoritmos internos de la HuskyLens.
+* **Protocolo de Comunicación:** Conectamos la cámara mediante la interfaz UART (usando los puertos serie físicos TX/RX del Arduino Mega). En las primeras pruebas en el taller, intentamos usar el bus I2C clásico, pero notamos que cuando el motor generaba ruido eléctrico o el bus se saturaba de paquetes, el carro experimentaba pequeños tirones o pérdida de fotogramas. Al migrar a una conexión UART directa por hardware, logramos un canal dedicado, de altísima velocidad y completamente inmune a las colisiones de datos, enviando las coordenadas de los bloques de color al instante.
+
+### 4.3 Matriz de Proximidad (Trifocal): 3 Sensores Ultrasónicos HC-SR04
+La lectura perimetral del vehículo se apoya en tres sensores ultrasónicos HC-SR04 distribuidos estratégicamente en la defensa delantera (orientados hacia la izquierda, el centro y la derecha). 
+* **Mapeo en Tiempo Real:** Esta disposición trifocal crea un abanico de escaneo que solapa las ondas de sonido. Si el carro se aproxima en diagonal a una pared o a un pilar, el sensor central trabaja en conjunto con los laterales para calcular no solo la distancia hacia el obstáculo, sino también el ángulo de incidencia. Esto le da al algoritmo Ackermann la información necesaria para corregir la trayectoria del servo de dirección con suavidad antes de que ocurra una colisión física en la pista.
 
 ## 5. Presupuesto de Potencia (Power Budget) y Distribución Independiente
 
@@ -1103,7 +1112,7 @@ Esta arquitectura separa de forma redundante las cargas lógicas de las inductiv
 | **Línea 2: Actuación de Dirección** | 2x 18650 en Paralelo | 3.7V - 4.2V | *Elevador de Voltaje (Step-Up)* a **6.5V Constantes** | Dedicado exclusivamente al servomotor HobbyPark de 35kg de la dirección SbW. La configuración en paralelo duplica la capacidad de corriente disponible. El Step-Up garantiza un torque de salida idéntico y preciso, incluso si las celdas empiezan a descargarse. Alojado de forma fija en el segundo piso. |
 | **Línea 3: Sistema de Tracción e Iluminación** | 2x 18650 en Serie | 7.4V - 8.4V | *Step-Up (10V)* + *Step-Down Secuencial (3.2V)* | **Este es el único banco alojado en la corredera inferior en cola de milano**. Alimenta el motor DC a través de un módulo Step-Up de alta potencia regulado a 10V fijos hacia el Driver MOSFET para maximizar la velocidad (PWM 190). Adicionalmente, de la salida de 10V se deriva un regulador Step-Down secundario a 3.2V dedicado en exclusiva a la red de LEDs, protegiéndolos de sobrevoltajes. |
 
----
+--- 
 
 ### 📊 Tabla de Consumo Nominal y Pico de Componentes
 
@@ -1184,7 +1193,7 @@ El flujo secuencial de potencia y datos durante una maniobra compleja (ej. evasi
 1. *Fase de Percepción:* Los 3 sensores HC-SR04 miden distancias de los bloques laterales a 5V estables. Simultáneamente, la HuskyLens procesa la pista y envía las coordenadas por el puerto serie Serial1 (TX/RX) del Mega.
 2. *Fase de Procesamiento:* El Arduino Mega procesa las lecturas de proximidad y los datos de visión artificial de manera paralela gracias al ancho de banda libre de la conexión UART.
 
-# 📡 Distribución Geométrica y Calibración de Sensores
+# Distribución Geométrica y Calibración de Sensores
 
 Este capítulo detalla la fundamentación matemática, física y de diseño mecánico detrás de la disposición espacial de la red de sensores de Trivilyn3.0. La correcta ubicación geométrica del hardware de percepción es tan crítica como la optimización de los algoritmos de control; una desalineación de milímetros o de pocos grados en los vectores de lectura puede degradar por completo la fiabilidad del vehículo a altas velocidades.
 
@@ -1308,7 +1317,7 @@ Definición de las variables:
 * **V_FOV = 48°** (Campo de visión vertical nominal de la HuskyLens).
 * **θ_tilt = 22°** (Ángulo de inclinación o cabeceo descendente configurado en la cámara).
 
-#### 🧮 Cálculo paso a paso en limpio:
+#### Cálculo paso a paso en limpio:
 
 1. Sumamos el ángulo de inclinación y la mitad del campo de visión vertical de la cámara:
    
@@ -2003,4 +2012,3 @@ Para erradicar este cuello de botella en la manufactura y garantizar la repetibi
 * **Mantenimiento Mayor e Intervención Mecánica:** Realizamos un desarme completo del *hotend*, aplicando el método del *Cold Pull* (tirón en frío) para purgar impurezas internas y asegurar que el tubo de teflón (PTFE) estuviera perfectamente asentado y cortado a 90 grados contra la boquilla para evitar espacios vacíos.
 * **Calibración y Optimización de Retracciones:** Redujimos la distancia de retracción en el laminador (Slicer) para evitar que el filamento caliente subiera de forma repetida a la zona fría, disminuyendo drásticamente la probabilidad de atasco.
 * **Optimización de Parámetros de Extrusión:** Ajustamos la relación velocidad/temperatura, aumentando ligeramente la temperatura de extrusión en las primeras capas para mejorar la fluidez y garantizar una base ultra sólida para el segundo piso.
-
