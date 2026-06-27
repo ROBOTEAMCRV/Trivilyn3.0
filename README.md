@@ -49,7 +49,7 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
 
    * [Esquemático Eléctrico](#30-documentación-e-ingeniería-del-esquemático-eléctrico)
 
-   * [Distribución Geométrica y Calibración de Sensores](#-distribución-geométrica-y-calibración-de-sensores)
+   * [Distribución Geométrica y Calibración de Sensores](#distribución-geométrica-y-calibración-de-sensores)
 
    * [Sustentación de Valores Físicos en Pista](#-sustentación-de-valores-físicos-en-pista)
 
@@ -137,6 +137,27 @@ Gestión Digital: Administra el repositorio de GitHub y organiza toda la documen
 
 <img width="400" height="600" alt="image" src="https://github.com/user-attachments/assets/140671eb-8c9f-4bf1-bf3d-6eb409680a4d" />
 
+## Historial de competición:
+
+* **UVM 2023:** 
+  * Quedé **Campeón** en la competencia de Sigue Líneas en la Universidad Valle del Momboy.
+  * Recibí un reconocimiento por participar en el reto de Recolector de Obstáculos en ese mismo evento.
+
+* **Temporada WRO 2024 (Con el equipo FVH):**
+  * Obtuve el **1er lugar** en la competencia Estadal en la categoría de Innovación Junior.
+  * **2do lugar** en el Regional de Los Andes.
+  * **3er lugar** en el Regional WRO de la UCAB.
+  * Cerre el año quedando en el **6to lugar** en la Final Nacional de la WRO 2024.
+
+* **Olimpiadas Regionales Carabobo (ORC Valencia 2025):**
+  * Competí con el equipo **TEAMROBOCRV** en el desafío de Sigue Líneas Creativas.
+
+* **WRO Futuros Ingenieros 2025 (Con el equipo TEAMROBOCRV):**
+  * Corrimos en las regionales de Caracas (Simón Bolívar) logrando el pase a la final.
+  * En la **Final Nacional de la WRO 2025 nos montamos en el podio logrando el 3er Lugar de Venezuela**.
+
+---
+
 ## 👤Gianni Marcello Martucci Jerez
 
 ### Rol: Programador y Desarrollador de Lógica de Navegación.
@@ -147,6 +168,33 @@ Arquitectura del Código: Organiza la estructura del programa para que sea efici
 
 <img width="400" height="600" alt="image" src="https://github.com/user-attachments/assets/1bcc44ed-ea78-4fa7-93d5-581ea6aad23a" />
 
+## Historial de competicion:
+
+Este proyecto cuenta con la experiencia acumulada en boxes, quema de componentes en taller y la presión de haber representado al país en torneos internacionales. Este es el historial real en pista:
+
+* **FIRST Competition 2022:**
+  * Ganador del premio individual **The Best Roboticist 2022** en su debut en competencias grandes.
+
+* **UVM 2023:** 
+  * Quedé **Campeón** en la competencia de Sigue Líneas en la Universidad Valle del Momboy.
+  * Recibi reconocimiento especial por el diseño en el reto de Recolector de Obstáculos.
+
+* **Proyecto Asistente Farmacéutico:**
+  * Ganamos el **1er lugar** en la competencia Estadal de Innovación y clasificamos para el Regional de Los Andes.
+
+* **Temporada WRO 2024 (Con el equipo TEAMROBOCRV - Futuros Ingenieros):**
+  * Pasamos de las eliminatorias regionales de Mérida y la UCAB.
+  * En la **Final Nacional ganamos el Subcampeonato (2do lugar)** de Venezuela y el pase directo al mundial.
+  * **Mundial WRO Turquía 2024:** Viajó a representar al país y logramos el **Puesto 48 del Mundo** en la categoría (Future Engineers).
+
+* **Olimpiadas Regionales Carabobo (ORC Valencia 2025):**
+  * Compitió en la categoría de Sigue Líneas Creativo con el equipo **TEAMROBOCRV**.
+
+* **WRO Futuros Ingenieros 2025 (Con el equipo TEAMROBOCRV):**
+  * Clasificamos en la Regional Simón Bolívar de Caracas.
+  * En la **Final Nacional 2025 nos montamos otra vez en el podio logrando el 3er Lugar de Venezuela**.
+
+---
 
 ## 👤Juan Andres Graterol Teran
 
@@ -158,7 +206,23 @@ Apoyo Logístico: Colabora en la preparación de las pistas de prueba, recolecci
 
 <img width="400" height="600" alt="image" src="https://github.com/user-attachments/assets/51b3d7c0-b54a-4267-ae77-e930a64322b0" />
 
+## Historial de competición:
 
+* **UVM 2023:** 
+  * Formó parte del equipo **Campeón** en la competencia de Sigue Líneas en la Universidad Valle del Momboy.
+  * Recibió reconocimiento por su participación en el reto de Recolector de Obstáculos en el mismo evento.
+
+* **Proyecto Asistente Farmacéutico:**
+  * Ganador del **1er lugar** en la competencia Estadal de Innovación, logrando la clasificación y participación en el Regional de Los Andes.
+
+* **Olimpiadas Regionales Carabobo (ORC Valencia 2025):**
+  * Compitió con el equipo **TEAMROBOCRV** en el desafío de Sigue Líneas Creativas, trabajando directamente en las pruebas de agarre y estabilidad de chasis con dirección electrónica.
+
+* **WRO Futuros Ingenieros 2025 (Con el equipo TEAMROBOCRV):**
+  * Clasificó en la Regional Simón Bolívar en Caracas, peleando los mejores tiempos de la eliminatoria.
+  * En la **Final Nacional de la WRO 2025 nos subimos al podio logrando el 3er Lugar de Venezuela** en la categoría.
+
+---
 
 ## 👤Tutor - Luis Eduardo Paredes
 
@@ -197,18 +261,15 @@ Para evidenciar la simetría, la distribución modular en tres niveles y el acab
 
 ---
 
-
 # 🔩 Movilidad y Diseño Mecánico
 
 La arquitectura mecánica de Trivilyn3.0 representa la evolución definitiva del equipo hacia la optimización estructural y la eficiencia dinámica en la World Robot Olympiad (WRO) 2026. Tras analizar las limitaciones de agilidad, exceso de dimensiones y holguras mecánicas presentes en las plataformas previas Rexbot 1.25 y Rexbot 1.5, adoptamos un enfoque de diseño disruptivo basado en la premisa "Adaptarse para ganar".
 
 ---
 
-
 El chasis de Trivilyn3.0 ha sido desarrollado desde cero utilizando un sistema híbrido de manufactura aditiva con polímeros avanzados (PETG y PLA), configurado en una estructura modular de tres niveles que optimiza al máximo el espacio y el centro de masa del vehículo. Cada pieza ha sido calculada para absorber las vibraciones mecánicas de la alta competencia, garantizando la rigidez necesaria para que los algoritmos de visión artificial operen con total precisión.
 
 ---
-
 
 Este capítulo desglosa los principios físicos, cinemáticos y de distribución de fuerzas que gobiernan la movilidad de Trivilyn3.0, demostrando cómo se logra un control milimétrico del vehículo mediante un sistema de dirección Steer-by-Wire (SbW), una caja reductora a medida de alta eficiencia y una gestión inteligente del peso.
 
@@ -1010,7 +1071,7 @@ Para garantizar que cualquier diagnóstico en boxes se realice en menos de 30 se
 
 ---
 
-### 🔬 2.2 Justificación de Ingeniería y Blindaje de Señal
+### 2.2 Justificación de Ingeniería y Blindaje de Señal
 
 La implementación de este estándar responde a tres necesidades que nos topamos al diseñar la electrónica para las exigencias de la alta competencia:
 
@@ -1662,6 +1723,33 @@ El robot ignora los bloques lejanos y solo activa las rutinas de rebase cuando e
 > Las firmas de color duplican múltiples IDs (IDs 1, 2, 3 para Rojo / IDs 5, 6 para Verde) en el algoritmo para dar soporte continuo a los bloques aprendidos bajo diferentes condiciones de luz artificial y degradaciones cromáticas en el recinto de la competencia.*
 
 ---
+## Proceso de Pruebas y Ajustes: "Closed Challenge" (Ronda Cerrada con Obstáculos)
+
+Correr con los pilares rojos y verdes metidos en la pista cambió por completo las métricas del taller. En la Ronda Abierta solo nos importaba la velocidad fluida, pero aquí tuvimos que buscar un equilibrio entre el procesamiento de la HuskyLens, los tiempos de reacción del servo y la distancia que dejábamos respecto a los muros al salir de cada esquive.
+
+Las pruebas las dividimos en tres métricas reales para validar si las correcciones en el taller funcionaban:
+
+---
+
+### 1. Distancia de Seguridad en Rebase (Evitar el "Toque" del Obstáculo)
+Mide el espacio libre que queda entre el chasis de PETG y el pilar en el momento exacto en que el carro le pasa por el lado. 
+* **El Problema en Pista:** En los primeros intentos, configuramos los giros con ángulos de servo muy suaves. El carro detectaba el bloque, pero por la inercia pasaba raspando el pilar o tumbándolo con la rueda trasera (la cola del carro le pegaba al obstáculo).
+* **El Ajuste en Boxes:** Tuvimos que recortar los tiempos de reacción en el código y meter contra-volanteo agresivo (cambiar rápido de un ángulo como `60°` a `133°`). Con esto logramos una métrica de distancia de seguridad constante de entre **8 cm y 12 cm** al pasarle por el lado a los bloques, asegurando que el carro libre el obstáculo limpio sin tocarlo.
+
+### 2. Tiempo de Reconocimiento y Filtro de Falsos Positivos
+Mide qué tan rápido procesa la HuskyLens las firmas de color y qué tan cerca tiene que estar el carro para activar el giro.
+* **El Problema en Pista:** Si dejábamos que la cámara disparara la maniobra apenas veía un color a lo lejos, el carro se confundía con los reflejos de las luces del techo en la lona o con los pilares del otro lado de la pista, dando volantazos de la nada en medio de las rectas.
+* **El Ajuste en Boxes:** Usamos el alto del bloque en píxeles (`result.height`) como un sensor de proximidad virtual. Calibramos en boxes que el carro ignorara el pilar hasta que midiera más de **90px para el rojo** y **70px para el verde**. Así aseguramos que el robot reaccione justo a la distancia correcta (unos 30-40 cm antes de chocar) sin importar el brillo del recinto.
+
+### 3. Histéresis de Recuperación Posterior al Esquive (`winnie` / `winnieV`)
+Mide los milisegundos que necesita el carro para estabilizarse en línea recta justo después de terminar la coreografía de escape de un pilar, antes de poder leer el siguiente obstáculo.
+* **El Problema en Pista:** Al salir de esquivar un bloque a PWM 70 (`carSpeedColor`), la cámara detectaba inmediatamente el fondo de la pista o el mismo pilar que acababa de pasar, intentando encadenar otra maniobra de la nada. Esto hacía que el coche culebreara y se fuera directo contra el muro lateral.
+* **El Ajuste en Boxes:** Metimos retardos muertos controlados por las variables `winnie = 220` (rojo) y `winnieV = 100` (verde) al final de cada función de giro. Ese tiempo en milisegundos congela la lectura de la cámara lo suficiente para que los sensores ultrasónicos laterales (`leftDistance` y `rightDistance`) tomen el control con ráfagas de **30ms** y centren el carro en el carril antes de buscar el próximo pilar.
+
+---
+
+> **Métrica Final de Validación:** Al empezar las pruebas de la ronda cerrada, la tasa de efectividad era menor al 10% (el carro tumbaba 6 de cada 10 pilares o se estrellaba con la pared al salir del rebase). Ajustando los tiempos de retardo de las variables `winnie`, cerrando el filtro de altura de píxeles y activando el escudo ultrasónico lateral a menos de **40 cm**, logramos subir la efectividad al **60% de rondas limpias** en el taller.
+
 <a name="fallas-edgecases"></a>
 
 ## Sistema de Mitigación de Fallas y Manejo de Casos Extremos (Edge Cases)
