@@ -71,6 +71,8 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
   
      * [Diagrama de Flujo](#-diagrama-de-flujo-closed-challenge)
     
+     * [Proceso de Pruebas/Ajustes](#proceso-de-pruebas-y-ajustes-closed-challenge-ronda-cerrada-con-obstáculos)
+    
      * [Mitigación de Fallas y Casos Extremos](#fallas-edgecases)
     
      * [Analisis de Rendimiento](#analisis-de-rendimiento-en-el-desafío-cerrado)
@@ -1400,6 +1402,30 @@ Este ángulo óptimo de inclinación de 22° combinado con la elevación estruct
 >[!CAUTION]
 > **Error por Reflexión Lumínica (Glint)**
 > Un ángulo de inclinación demasiado agresivo (θ_tilt > 35°) expone el sensor óptico a reflejos directos de las luminarias del recinto del evento sobre la pista brillante. Esto altera drásticamente los valores de saturación y tono de la imagen, provocando falsos negativos de detección en los bloques de color. El valor de 22° ha demostrado ser el umbral de mayor robustez bajo iluminación artificial variable en competencia.
+
+## Distribución de Sensores Justificada por la Geometría de la Pista
+
+La colocación de la matriz de sensores en Trivilyn 3.0 no se hizo al ojo. Cada componente se ubicó calculando las dimensiones reales de los carriles de competencia y los puntos ciegos que se generan al cruzar el coche con el sistema *Steer-by-Wire*.
+
+---
+
+### a. Matriz Ultrasónica Tri-Sensorial (Frontal y Flancos)
+
+La pista cuenta con carriles de circulación y paredes perimetrales. Diseñamos la defensa delantera para ubicar los tres sensores HC-SR04 cubriendo tres necesidades geométricas críticas:
+
+* **Sensor Central (`middleDistance`):** Colocado exactamente en el eje de simetría central del carro, para realizar la deteccion de las paredes y realizar la funcion de giro.
+* **Sensores Laterales Izquierdo y Derecho (`leftDistance` / `rightDistance`):** No los pusimos mirando recto hacia adelante, sino desplazados hacia los flancos. Su ubicación está calculada para mantener el coche centrado en las rectas: si el carro se acerca a menos de **40 cm** de cualquiera de los muros, el código tiene el espacio físico suficiente para meter un pulso de corrección de **30ms** en el servo y estabilizar el chasis antes de que la carrocería raspe la pared.
+<img width="810" height="431" alt="image" src="https://github.com/user-attachments/assets/076160d5-3302-4162-b8d2-f19805535273" />
+
+---
+
+### b. Altura e Inclinación de la HuskyLens (Visión de Campo)
+
+Para esquivar los pilares en la Ronda Cerrada sin dar bandazos, la cámara necesita ver el bloque completo y calcular su posición horizontal antes de que el carro inicie el giro. La ubicación en el segundo piso del chasis responde a dos factores geométricos:
+
+* **Punto de Corte de Decisión Lateral:** Al mapear la pantalla en 320 píxeles, la posición física centradita de la cámara nos permite usar los umbrales del código (`188` para el rojo y `130-135` para el verde). Si el pilar se encuentra a la derecha o izquierda de estas marcas, el carro sabe exactamente hacia dónde maniobrar para librar el obstáculo.
+* **El Límite de la Zona Ciega:** Debido a la altura del montaje y el ángulo de inclinación de la HuskyLens, calculamos geométricamente que el carro pierde de vista la base del pilar cuando se acerca demasiado. Para solucionar este límite físico, calibramos el tamaño del bloque en píxeles (`result.height > 90` para rojo y `> 70` para verde). Esto fuerza al carro a disparar las funciones de rebase (`rojoderecha()`, `verdeizquierda()`, etc.) justo **antes** de entrar en la zona ciega del suelo, asegurando que el coche ya esté ejecutando la coreografía de curvas cuando el obstáculo desaparezca de la pantalla.
+
 
 ## Sistema de Correderas de Precisión: Adaptabilidad en Pista
 
