@@ -1328,6 +1328,7 @@ Con el vehículo situado de forma estática en la línea de salida bajo las cond
 
 #### 2. Entrenamiento de Firmas de Identificación (ID Learning Supervisado)
 Se sitúa el vehículo apuntando fijamente al objeto o trayectoria objetivo. Utilizando los postes frontales calibrados mecánicamente en Tinkercad (diseñados para otorgar el ángulo óptimo de visión picada), se centra el cuadro de delimitación (*bounding box*) en la pantalla de la cámara. Se mantiene presionado el botón de aprendizaje (*Learn Button*) del sensor mientras se varía sutilmente el ángulo y la distancia del coche respecto al objeto.
+<img width="391" height="385" alt="image" src="https://github.com/user-attachments/assets/a22a257c-2ce1-492a-9bd7-089f320e3fc8" />
 
 > [!NOTE]
 > **Efecto de la Distancia Focal y Umbral del Cuadro**
@@ -1362,7 +1363,7 @@ Esta inclinación geométrica es crítica para:
 
 ## 📥 Sustentación de Valores Físicos en Pista
 
-Para garantizar que el vehículo autónomo mantenga una navegación continua y fluida en la Ronda Cerrada de la WRO 2026, el despeje de la ecuación se calibra bajo las siguientes restricciones operacionales:
+Para garantizar que Trivilyn mantenga una navegación continua y fluida en la Ronda Cerrada, el despeje de la ecuación se calibra bajo las siguientes restricciones operacionales:
 
 1. **Garantía de Frenado Seguro:** El valor resultante de d_ciega se sincroniza con el tiempo de respuesta de la máquina de estados y la velocidad crucero del carro, asegurando que cualquier cambio de color o carril sea detectado antes de que el chasis pise la línea.
 
@@ -1372,8 +1373,8 @@ Para garantizar que el vehículo autónomo mantenga una navegación continua y f
 
 La cámara debe ser capaz de detectar los pilares de color Rojo y Verde (cuya altura típica es de 15 cm) para ejecutar las maniobras evasivas. Para calcular la distancia de la zona ciega (d_ciega) por delante del robot, aplicamos la siguiente fórmula trigonométrica basada en la cotangente:
 
-   d_ciega = h_cam * tan(90° - θ_tilt - (V_FOV / 2))
-
+ $$Distancia\ Ciega = Altura\ de\ la\ Cámara \times \tan(90^\circ - \alpha_{inclinación} - \frac{FOV_{vertical}}{2})$$
+ 
 Definición de las variables:
 
 * **h_cam = 20.0 cm** (Altura real de la lente de la cámara desde el suelo en el tercer piso del chasis).
@@ -1393,6 +1394,7 @@ Definición de las variables:
 3. Multiplicamos el resultado geométrico anterior por la altura física de la cámara (20.0 cm):
    
    d_ciega ≈ 20.0 cm * 0.9657 ≈ 19.31 cm
+<img width="700" height="1180" alt="image" src="https://github.com/user-attachments/assets/3daa16ce-d4c6-462f-bb24-591322791ea0" />
 
 Este ángulo óptimo de inclinación de 22° combinado con la elevación estructural del tercer piso sitúa la zona ciega a tan solo 19.31 cm por delante de la carrocería. Esto garantiza que cuando el robot se aproxime a un pilar de color en la Ronda Cerrada, la HuskyLens mantenga el tracking continuo del ID asignado por Machine Learning el tiempo suficiente para que el tren de dirección Steer-by-Wire inicie de forma autónoma la maniobra de evasión.
 >[!CAUTION]
@@ -1402,7 +1404,6 @@ Este ángulo óptimo de inclinación de 22° combinado con la elevación estruct
 ## Sistema de Correderas de Precisión: Adaptabilidad en Pista
 
 La gran lección de la temporada pasada fue la necesidad de ajustar físicamente la altura de lectura de los sensores. Las irregularidades del terreno de competencia y los desniveles milimétricos en el material de las paredes de la WRO exigen un ajuste ágil.
-
 
 # Arquitectura Software y Estratrgia
 
@@ -1533,7 +1534,7 @@ Para mover el coche de forma automática, creamos funciones sencillas encargadas
 ### D.2 Pruebas en Pista 1: Ajuste de la Dirección Electrónica
 
 * **El Problema en el Taller:** Al no usar dirección tradicional, el servomotor HobbyPark de 35kg maneja las llantas de forma directa. En las primeras pruebas a fondo, el servo giraba tan rápido y tan brusco que las llantas delanteras se trancaban contra las paredes del chasis de PETG o hacían que el coche diera un trompo por exceso de giro.
-* **La Solución en el Código:** Montamos el carro en el banco de trabajo y limitamos por software el recorrido del servo a un máximo de 28 grados para que nunca golpee la estructura. Además, metimos una lógica de suavizado: cuando el carro va rápido en línea recta, el Arduino reduce la sensibilidad del servo para que no pegue volantazos violentos que desestabilicen la marcha.
+* **La Solución en el Código:** Colocamos a Trivilyn en el banco de trabajo y limitamos por software el recorrido del servo a un máximo de 28 grados para que nunca golpee la estructura. Además, incorporamos una lógica de suavizado: cuando el carro va rápido en línea recta, el Arduino reduce la sensibilidad del servo para que no pegue volantazos violentos que desestabilicen la marcha.
 
 ---
 
