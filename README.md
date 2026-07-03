@@ -85,15 +85,15 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
 
  - [Temporada 2026 Trivilyn3.0](#temporada-2026-trivilyn30)
      
-   * [ Paradoja de la Masa del Sensor y la Inercia Rotacional)](#a-la-paradoja-de-la-masa-del-sensor-y-la-inercia-rotacional-i_z)
+   * [ Paradoja de la Masa del Sensor y la Inercia Rotacional)](#2-la-paradoja-de-la-masa-del-sensor-y-la-inercia-rotacional-i_z)
 
-   * [Gestión de Fricción](#2-gestión-de-fricción-termodinámica-y-compatibilidad-química-de-materiales)
+   * [Gestión de Fricción](#3-gestión-de-fricción-termodinámica-y-compatibilidad-química-de-materiales)
 
-   * [Adaptabilidad Sensorial](#3-adaptabilidad-sensorial-ante-el-entorno-de-la-pista)
+   * [Adaptabilidad Sensorial](#4-adaptabilidad-sensorial-ante-el-entorno-de-la-pista)
 
-   * [Sistema de Corredera de Baterías](#4-sistema-de-corredera-de-baterías-y-optimización-cinemática)
+   * [Sistema de Corredera de Baterías](#5-sistema-de-corredera-de-baterías-y-optimización-cinemática)
 
-   * [Evolución del Sistema de Interconexión](#5-evolución-del-sistema-de-interconexión-y-blindaje-de-señales-emi)
+   * [Evolución del Sistema de Interconexión](#6-evolución-del-sistema-de-interconexión-y-blindaje-de-señales-emi)
        
 8. [Desafíos Técnicos, Limitaciones y Soluciones en el Desarrollo](#desafíos-técnicos-limitaciones-y-soluciones-en-el-desarrollo)
 
@@ -238,14 +238,15 @@ Apoyo Logístico: Colabora en la preparación de las pistas de prueba, recolecci
 
 <img width="810" height="885" alt="image" src="https://github.com/user-attachments/assets/b6bfbca7-b9b6-4e8b-a535-d11c9ce3f4d7" />
     
-  * **Estatura y Peso:** Estructura modular optimizada en tres niveles con una masa total controlada de 1250 gramos.
+  * **Estatura y Peso:** Estructura modular optimizada en tres niveles con una masa total controlada de 1150 gramos.
     
   * **Habilidades de Percepción:** Visión artificial acelerada por IA con HuskyLens para reconocimiento colorimétrico y una red unificada de sensores ultrasónicos HC-SR04 para mapeo perimetral en tiempo real.
     
   * **Capacidad Motriz:** Dirección de alta agilidad basada en un sistema Steer-by-Wire (SbW) acoplado a un servo HobbyPark de 35 kg con giros de 40°, impulsado por un motor DC de alta revolución con caja reductora personalizada.
     
   * **Dieta Energética:** Sistema de alimentación triple e independiente basado en celdas 18650.
-
+> [!NOTE]
+> **Nota de Evolución y Origen del Nombre:** Es importante aclarar que la nomenclatura **Trivilyn 3.0** representa la tercera generación de nuestra plataforma de competencia, siendo la evolución tecnológica directa de los prototipos anteriores **Rexbot 1.0** y **Rexbot 2.0** (no existen versiones 1.0 o 2.0 bajo el nombre de Trivilyn). El cambio de nombre y el término "Trivilyn" fue acuñado formalmente como un homenaje al apodo de cariño con el que nuestro tutor se refiere al equipo.
 
 # Trivilyn 360 Photos
 
@@ -417,50 +418,54 @@ Para proyectar el rendimiento real del prototipo en pista, se evalúa el efecto 
 
 ## Estudio Dinámico: Torque Necesario, Tracción y Distribución de Fuerzas
 
-Para asegurar que el motor de tracción (extrayendo el núcleo de un Turbo Snake) sea capaz de romper la inercia del vehículo a máxima aceleración, evitar el estancamiento térmico (stall) y optimizar el agarre en pista, desarrollamos un modelo matemático basado en las especificaciones físicas de Trivilyn3.0:
+Para asegurar que el motor de tracción (extrayendo el núcleo de un Turbo Snake) sea capaz de romper la inercia del vehículo a máxima aceleración, evitar el estancamiento térmico (stall) y optimizar el agarre en pista, desarrollamos un modelo matemático basado en las especificaciones físicas reales de **Trivilyn 3.0**:
 
-* Masa Total del Vehículo: 1250 gramos = 1.25 kg
-* Peso Total: 1.25 kg * 9.81 m/s² ≈ 12.26 Newtons
-* Radio de las Ruedas Traseras: 43 mm de diámetro / 2 = 21.5 mm = 0.0215 metros
-* Relación de Reducción de la Caja: 78:1 (Caja reductora a medida con ejes de acero)
+* **Masa Total del Vehículo:** 1150 gramos = 1.15 kg
+* **Peso Total:** 1.15 kg * 9.81 m/s² ≈ 11.28 Newtons
+* **Radio de las Ruedas Traseras:** Diámetro de 43 mm / 2 = 21.5 mm = 0.0215 metros
+* **Relación de Reducción de la Caja:** 78:1 (Caja reductora a medida con ejes de acero)
 
 ---
 
 ### 1. Cálculo del Torque Estático Mínimo en las Ruedas (Breakout Torque)
 
-El torque mínimo necesario en el eje de las ruedas traseras para vencer la fricción estática del caucho EV3 contra la superficie de la pista (asumiendo un coeficiente de fricción estática conservador mu_s ≈ 0.6) se calcula mediante la relación:
+El torque mínimo necesario en el eje de las ruedas traseras para vencer la fricción estática del caucho contra la superficie de la pista (asumiendo un coeficiente de fricción estática conservador mu_s ≈ 0.6) se calcula mediante la relación:
 
 Torque_ruedas = Peso * mu_s * radio
 
-Torque_ruedas = 12.26 N * 0.6 * 0.0215 m ≈ 0.158 Nm = 1.61 kg-cm
+Torque_ruedas = 11.28 N * 0.6 * 0.0215 m ≈ 0.1455 Nm = 1.484 kg-cm
 
-* Multiplicación por la Caja Reductora (78:1): Gracias a la impresionante reducción mecánica fabricada por el equipo, el torque que el motor Turbo Snake necesita entregar en su piñón de entrada es extremadamente bajo:
+* **Multiplicación por la Caja Reductora (78:1):** Gracias a la reducción mecánica fabricada por el equipo, el torque que el motor Turbo Snake necesita entregar en su piñón de entrada es extremadamente bajo:
 
-Torque_motor = Torque_ruedas / Relación_Reducción = 1.61 kg-cm / 78 ≈ 0.0206 kg-cm
+Torque_motor = Torque_ruedas / Relación_Reducción = 1.484 kg-cm / 78 ≈ 0.0190 kg-cm
 
-* Conclusión Mecánica: Operar el motor bajo la línea sobreelevada de 10V estables garantiza que el motor trabaje en la zona de máxima eficiencia de su curva de potencia, logrando aceleraciones explosivas a PWM 190 sin riesgo de sobrecalentamiento en las bobinas o derretimiento del soporte de PETG.
+* **Conclusión Mecánica:** Operar el motor bajo la línea sobreelevada de 10V estables garantiza que trabaje en la zona de máxima eficiencia de su curva de potencia, logrando aceleraciones explosivas a PWM 190 sin riesgo de sobrecalentamiento en las bobinas o deformación térmica del soporte de PETG.
 
 ---
 
 ### 2. Distribución de Carga y Centro de Masas Estratégico
 
-La distribución del peso de los 1250 gramos se planificó de forma asimétrica pero controlada a través de la arquitectura de pisos, logrando un balance de fuerzas óptimo para un vehículo de tracción trasera (RWD):
+La distribución del peso de los 1150 gramos se planificó de forma asimétrica pero controlada a través de la arquitectura de pisos, logrando un balance de fuerzas óptimo para un vehículo de tracción trasera (RWD):
 
+```text
                DISTRIBUCIÓN DE FUERZAS E INERCIA (TRIVILYN 3.0)
                
-      [Tren Delantero]                                   [Tren Trasero]
-     (Dirección SbW/Servo)                             (Tracción/Motor/Batería 3)
-           │                                                  │
-           ▼                                                  ▼
-     35% del Peso (~437.5g)                             65% del Peso (~812.5g)
-  [Baja inercia angular para]                        [Máxima Fuerza Normal (N)]
-   [giros rápidos de 40°]                            [Elimina el derrape / Grip total]
+      [Tren Delantero]                                  [Tren Trasero]
+    (Dirección SbW/Servo)                         (Tracción/Motor/Baterías)
+           │                                                 │
+           ▼                                                 ▼
+     35% del Peso (~402.5g)                            65% del Peso (~747.5g)
+  [Baja inercia angular para]                       [Máxima Fuerza Normal (N)]
+    [giros rápidos de 40°]                       [Elimina el derrape / Grip total]
+```
 
-   <img width="1080" height="810" alt="image" src="https://github.com/user-attachments/assets/fb2b0b93-4538-4a43-9931-fc3f5ad4f808" />
+ <img width="1080" height="810" alt="image" src="https://github.com/user-attachments/assets/fb2b0b93-4538-4a43-9931-fc3f5ad4f808" />
 
-* Eje Trasero (65% de la Masa ≈ 812.5g): Al alojar el motor, la caja de engranajes de acero reforzada con teflón y el cartucho de cola de milano en la parte posterior inferior, se maximiza la Fuerza Normal sobre las ruedas de goma de 43mm. A mayor fuerza normal, mayor es la fuerza de tracción máxima utilizable antes de que las ruedas patinen en el arranque.
-* Eje Delantero (35% de la Masa ≈ 437.5g): Al fijar la electrónica y los sensores en el segundo y tercer piso de forma retrasada, el tren delantero queda lo suficientemente ligero como para que el servomotor HobbyPark de 35kg rompa la fricción lateral de forma instantánea, logrando cambiar el ángulo de ataque a 40° por lado en milisegundos sin arrastrar el frente del carro.
----
+* **Eje Trasero (65% de la Masa ≈ 747.5g):** Al alojar el motor, la caja de engranajes y el cartucho de cola de milano en la parte posterior inferior, se maximiza la Fuerza Normal sobre las ruedas de goma. A mayor fuerza normal, mayor es la fuerza de tracción máxima utilizable antes de que las ruedas patinen en el arranque.
+* **Eje Delantero (35% de la Masa ≈ 402.5g):** Al fijar la electrónica y los sensores en el segundo y tercer piso de forma retrasada, el tren delantero queda lo suficientemente ligero como para que el servomotor de 35 kg rompa la fricción lateral de forma instantánea, logrando cambiar el ángulo de ataque a 40° por lado en milisegundos sin arrastrar el frente del carro.
+  
+  ---
+  
 La caja de engranajes mencionada anteriormente se sostiene con una base diseñada en 3D por el equipo. (Recordamos que los diseños como este se encuentran en el apartado de Archivos CAD).
 
 <img width="942" height="621" alt="image" src="https://github.com/user-attachments/assets/ba459d5c-70a8-4925-a69b-d3ea4a817476" />
@@ -1973,26 +1978,26 @@ Es importante destacar que, según los datos que recopilamos, la magnitud de est
 
 El pensamiento sistémico define que un vehículo autónomo de alto rendimiento no es simplemente una colección de motores, sensores y algoritmos aislados, sino un sistema cerrado interconectado. Cada modificación física altera la dinámica del software, la compatibilidad química de las interfaces mecánicas y la robustez de las señales ante perturbaciones del entorno de la WRO.
 
-## Lógica de Interconexión: Física del Chasis vs. Calibración del Software
+## 1.Lógica de Interconexión: Física del Chasis vs. Calibración del Software
 
 El punto de disparo de nuestros sensores no se eligió al azar; es el resultado de un análisis sistémico que interconecta la distribución física de los componentes con la respuesta dinámica del vehículo. El siguiente análisis describe esta dependencia fundamental.
 
 ### Desglose del Análisis Sistémico
 
-1. **Ubicación del Sensor (Efecto en la Percepción):**
+a. **Ubicación del Sensor (Efecto en la Percepción):**
    Al posicionar los sensores ultrasónicos en la parte más avanzada del parachoques delantero, maximizamos la *Ventana de Lectura*. El sensor detecta la pared con anticipación, lo que otorga al microcontrolador una "ganancia de tiempo" crítica para procesar los datos antes de ejecutar el giro.
 
-2. **Distribución de Masas (Efecto en la Dinámica):**
+b. **Distribución de Masas (Efecto en la Dinámica):**
    Llevar los sensores y soportes tan adelante provoca que el *Centro de Masa (CoM)* se desplace hacia el eje frontal. Esto altera la *Inercia Rotacional* del robot durante los virajes bruscos, introduciendo una tendencia al subviraje (el coche tiende a seguir recto) y desviaciones en la trayectoria ideal de salida.
 
-3. **La Solución Lógica (Punto de Disparo Integrado):**
+c. **La Solución Lógica (Punto de Disparo Integrado):**
    Para contrarrestar el subviraje físico provocado por la distribución de masas, y aprovechando la ganancia de tiempo de la ventana de lectura, calibramos el *Punto de Disparo por software a exactos 42 cm*. 
    
    Este umbral de 42 cm compensa perfectamente el tiempo que tarda la dirección *Steer-by-Wire* (SbW) en vencer la inercia del tren delantero, asegurando que el robot inicie la subrutina de giro en el momento óptimo sin colisionar con la pared exterior ni cerrarse antes de tiempo.
 
 ---
 
-## A. La Paradoja de la Masa del Sensor y la Inercia Rotacional (I_z)
+## 2. La Paradoja de la Masa del Sensor y la Inercia Rotacional (I_z)
 
 Para optimizar el software, la tentación inicial fue colocar el sensor ultrasónico en un parachoques muy alargado. Sin embargo, la física gobierna este comportamiento mediante la ley de la Inercia Rotacional ($I_z = \sum m_i \cdot r_i^2$). 
 
@@ -2012,7 +2017,7 @@ Esta ecuación demuestra que la resistencia de un objeto a cambiar de dirección
 
 ### 🧠 Desglose Pedagógico de las Ecuaciones Fundamentales
 
-### A. Desglose del Análisis Sistémico de Percepción y Masa
+### a. Desglose del Análisis Sistémico de Percepción y Masa
 
 1. **Ubicación del Sensor (Efecto en la Percepción):** Al posicionar los sensores ultrasónicos en el extremo más avanzado del parachoques delantero, se maximiza la *Ventana de Lectura Temprana*. El sensor detecta la pared perimetral con anticipación, otorgando al microcontrolador una ganancia de tiempo crítica para procesar las lecturas antes de iniciar el viraje.
 2. **Distribución de Masas (Efecto en la Dinámica):** Desplazar el hardware de soporte de los sensores hacia el extremo frontal desplaza inevitablemente el *Centro de Masa (CoM)* hacia adelante. Esto incrementa de forma crítica la **Inercia Rotacional ($I_z$)** del vehículo durante virajes rápidos, introduciendo una fuerza de subviraje física (tendencia a seguir recto) y oscilaciones parásitas en las rectas ("efecto péndulo").
@@ -2020,7 +2025,7 @@ Esta ecuación demuestra que la resistencia de un objeto a cambiar de dirección
 
 ---
 
-### B. Análisis Dinámico y Temporal del Sistema Ultrasónico
+### b. Análisis Dinámico y Temporal del Sistema Ultrasónico
 
 #### 1. El Factor Multiplicador en el Tiempo de Vuelo ($2 \cdot d$)
 En la ecuación del eco ultrasónico:
@@ -2055,7 +2060,7 @@ Este valor de $31.56\text{ cm}$ coincide exactamente con el radio mínimo de gir
 
 ---
 
-### C. Cohesión de Componentes: Dirección SbW y Agarre Lateral
+### 5. Cohesión de Componentes: Dirección SbW y Agarre Lateral
 
 La tracción posterior de Trivilyn3.0 emplea neumáticos de caucho de alta fricción. Al ejecutar la curva de forma reactiva, el robot debe generar una fuerza centrípeta que altere el vector de trayectoria de su centro de masa. Si el disparo se retrasara por debajo de los 42 cm, el chasis se vería obligado a exigir un cambio de dirección instantáneo y sumamente agresivo en las ruedas frontales para no chocar.
 
@@ -2073,11 +2078,11 @@ Al derrapar, el coeficiente de fricción cae drásticamente. Las llantas frontal
 
 ---
 
-## 2. Gestión de Fricción, Termodinámica y Compatibilidad Química de Materiales
+## 3. Gestión de Fricción, Termodinámica y Compatibilidad Química de Materiales
 
 La lubricación y la protección contra el desgaste en Trivilyn3.0 no son actividades secundarias de mantenimiento, sino variables críticas de la física interna de la transmisión y la suspensión del robot.
 
-### A. Compatibilidad Química y Prevención del ESC (Environmental Stress Cracking)
+### a. Compatibilidad Química y Prevención del ESC (Environmental Stress Cracking)
 Durante el desarrollo de prototipos previos (Rexbot 1.25), el uso de grasas industriales multiusos y aceites líquidos minerales para lubricar la transmisión provocó fallas mecánicas catastróficas por fracturas súbitas en los soportes y dientes de engranajes impresos en PLA y PETG.
 
 El análisis científico reveló que los aceites minerales y las grasas de base petroquímica actúan como agentes de **agrietamiento bajo esfuerzo ambiental (Environmental Stress Cracking - ESC)**. Estos compuestos químicos penetran en los micro-huecos intercapas inherentes al proceso de impresión FDM. Al estar sometidos a cargas mecánicas continuas, el lubricante mineral debilita las fuerzas de *Van der Waals* entre las cadenas del polímero, promoviendo la propagación microscópica de grietas intercapas hasta la fractura súbita de la pieza.
@@ -2087,7 +2092,7 @@ Para solucionar este fallo de manera sistémica en Trivilyn3.0, se implementó e
 * **Viscosidad y Resistencia Centrífuga:** A diferencia de los aceites finos de baja densidad que son expulsados de los engranajes por efecto de la fuerza centrífuga a altas revoluciones, la consistencia pastosa de la vaselina provee una película lubricante de alta viscosidad estática que permanece adherida a los dientes de los piñones.
 * **Termodinámica a Altas RPM (15,000 RPM):** El motor DC extraído del vehículo *Turbo Snake* opera en un rango extremo de 13,000 a 15,000 RPM. Esta alta rotación en el piñón de ataque de bronce genera una gran fricción y elevación localizada de la temperatura. La vaselina neutra forma una barrera térmica que disipa el calor por rozamiento, evitando que la temperatura del eje metálico alcance el punto de **transición vítrea del PETG (approx 75° a 80°, lo que ablandaría el alojamiento del motor y desalinearía los engranajes destruyendo la transmisión.
 
-### B. Estabilidad Dinámica del Tren Delantero (Tubo Transversal)
+### b. Estabilidad Dinámica del Tren Delantero (Tubo Transversal)
 En el sistema de suspensión y dirección delantero, la vaselina neutra se aplica en el interior del tubo transversal de bronce. El bronce posee propiedades naturales autolubricantes debido a su bajo coeficiente de fricción estática ($\mu_s$). 
 
 Al engrasar la interfaz entre el eje de acero interno y la camisa de bronce con vaselina, se elimina la fricción mecánica residual. Si este eje experimentara micro-atascamientos por fricción seca, el impacto sistémico destruiría la lógica de control del robot:
@@ -2101,7 +2106,7 @@ Al engrasar la interfaz entre el eje de acero interno y la camisa de bronce con 
 
 ---
 
-## 3. Adaptabilidad Sensorial ante el Entorno de la Pista
+## 4. Adaptabilidad Sensorial ante el Entorno de la Pista
 
 El pensamiento sistémico comprende que el robot no interactúa en un vacío, sino en una simbiosis directa con la pista física. Una de las lecciones de ingeniería más valiosas adquiridas en la Final Nacional de la WRO 2025 con el prototipo Rexbot 2.0 fue el fallo de lecturas ultrasónicas debido a las variaciones estructurales de los muros.
 
@@ -2110,17 +2115,17 @@ El pensamiento sistémico comprende que el robot no interactúa en un vacío, si
 
 ---
 
-## 4. Sistema de Corredera de Baterías y Optimización Cinemática
+## 5. Sistema de Corredera de Baterías y Optimización Cinemática
  
 La integración de un sistema de alojamiento modular en corredera (mecanismo de riel guía tipo macho-hembra impreso en 3D) para el banco de baterías principal de dos celdas 18650 responde a una estrategia de diseño sistémico. Este enfoque resuelve simultáneamente restricciones de empaquetamiento volumétrico, eficiencia en la gestión de tiempos en fosos y la estabilidad dinámica del vehículo.
 
-### 1. Optimización Volumétrica y Reducción del Perfil Vertical
+### a. Optimización Volumétrica y Reducción del Perfil Vertical
 En el diseño de vehículos autónomos a escala para la WRO, la gestión del espacio tridimensional es un factor crítico. La implementación del cartucho deslizable horizontal en la sección inferior del chasis elimina la necesidad de un despeje vertical para la extracción de las celdas. Si el acceso a las baterías fuese superior o vertical, la arquitectura de la carrocería requeriría elevar el segundo nivel (placa de control y distribución lógica) un mínimo de $50\text{ mm}$ adicionales para permitir el vector de extracción manual. Al desplazar este plano de forma lateral, se compacta el perfil vertical de Trivilyn3.0, garantizando el cumplimiento holgado de las normativas de dimensiones máximas de la competencia sin sacrificar área útil para los sensores superiores.
   
-### 2. Eficiencia Operacional en Entornos de Competición (Gestión de Rondas)
+### b. Eficiencia Operacional en Entornos de Competición (Gestión de Rondas)
 El diseño de hardware para competencia debe contemplar la mantenibilidad bajo condiciones de alta presión temporal. El sistema de corredera actúa como un método de sustitución rápida (*Quick-Change*) que mitiga el riesgo de error humano. Al permitir el intercambio periférico del bloque de energía, se evita por completo la manipulación, desconexión o desensamblaje de los componentes lógicos, el cableado con blindaje SFTP o el soporte del microcontrolador Arduino Mega. Esto reduce el tiempo de permanencia en los pits para recargar a un intervalo menor a 10 segundos, manteniendo la integridad del hardware intacta entre los intentos de la ronda.
   
-### 3. Análisis Dinámico: Desplazamiento del Centro de Masa y Estabilidad Cinemática
+### c. Análisis Dinámico: Desplazamiento del Centro de Masa y Estabilidad Cinemática
 Desde la perspectiva de la dinámica vehicular, el banco de baterías 18650 representa uno de los vectores de masa más significativos del conjunto total del robot (aproximadamente el $25\%$ del peso neto). Ubicar mecánicamente este componente en el plano más bajo del chasis optimiza el comportamiento cinemático de Trivilyn3.0 en dos aspectos fundamentales:
 * **Reducción del Momento de Vuelco:** Al minimizar la altura del centro de gravedad (h_{CG}), se reduce directamente el brazo de palanca cizallante generado por la fuerza centrífuga cuando el vehículo ejecuta virajes de alta velocidad a un régimen de PWM 190. Esto mitiga el momento de vuelco transversal, manteniendo el chasis firmemente paralelo al plano de la pista.
 * **Estabilización del Vector de Carga (Grip Neumático):** La concentración de la masa en la zona inferior e interaxil (entre ambos ejes) distribuye de manera uniforme la fuerza normal sobre los neumáticos de caucho de 43 mm. Al suprimir la transferencia de carga transitoria excesiva hacia las ruedas exteriores durante las curvas, se contrarresta el efecto de subviraje (*understeer*) y el deslizamiento por deriva lateral, asegurando que la trayectoria calculada por el algoritmo de control reactivo se traduzca fielmente en el desplazamiento físico sobre el pasillo.
@@ -2135,7 +2140,7 @@ La adopción de la geometría en cola de milano para la fijación del banco de p
 
 ---
 
-## 5. Evolución del Sistema de Interconexión y Blindaje de Señales (EMI)
+## 6. Evolución del Sistema de Interconexión y Blindaje de Señales (EMI)
 
 La confiabilidad física de la transmisión de datos a bordo de un vehículo autónomo de alta velocidad es un factor crítico. Para mitigar los falsos contactos eléctricos inducidos por las vibraciones y el ruido electromagnético, el equipo transitó por tres fases de evolución en su cableado:
 
