@@ -83,7 +83,7 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
 
  - [Temporada 2025 (Rexbot 2.0)](#temporada-2025-rexbot20)
 
- - [Temporada 2026 Trivilyn3.0](#temporada-2026-trivilyn30)
+ - [Temporada 2026 (Trivilyn3.0)](#temporada-2026-trivilyn30)
      
    * [ Paradoja de la Masa del Sensor y la Inercia Rotacional)](#2-la-paradoja-de-la-masa-del-sensor-y-la-inercia-rotacional-i_z)
 
@@ -94,6 +94,8 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
    * [Sistema de Corredera de Baterías](#5-sistema-de-corredera-de-baterías-y-optimización-cinemática)
 
    * [Evolución del Sistema de Interconexión](#6-evolución-del-sistema-de-interconexión-y-blindaje-de-señales-emi)
+  
+  - [Trivilyn3.1/Post regional](#trivilyn31)
        
 8. [Desafíos Técnicos, Limitaciones y Soluciones en el Desarrollo](#desafíos-técnicos-limitaciones-y-soluciones-en-el-desarrollo)
 
@@ -266,16 +268,11 @@ Para evidenciar la simetría, la distribución modular en tres niveles y el acab
 
 # 🔩 Movilidad y Diseño Mecánico
 
-La arquitectura mecánica de Trivilyn3.0 representa la evolución definitiva del equipo hacia la optimización estructural y la eficiencia dinámica en la World Robot Olympiad (WRO) 2026. Tras analizar las limitaciones de agilidad, exceso de dimensiones y holguras mecánicas presentes en las plataformas previas Rexbot 1.25 y Rexbot 1.5, adoptamos un enfoque de diseño disruptivo basado en la premisa "Adaptarse para ganar".
-
----
-
 El chasis de Trivilyn3.0 ha sido desarrollado desde cero utilizando un sistema híbrido de manufactura aditiva con polímeros avanzados (PETG y PLA), configurado en una estructura modular de tres niveles que optimiza al máximo el espacio y el centro de masa del vehículo. Cada pieza ha sido calculada para absorber las vibraciones mecánicas de la alta competencia, garantizando la rigidez necesaria para que los algoritmos de visión artificial operen con total precisión.
 
 ---
 
 Este capítulo desglosa los principios físicos, cinemáticos y de distribución de fuerzas que gobiernan la movilidad de Trivilyn3.0, demostrando cómo se logra un control milimétrico del vehículo mediante un sistema de dirección Steer-by-Wire (SbW), una caja reductora a medida de alta eficiencia y una gestión inteligente del peso.
-
 
 ## Tracción:
 
@@ -958,21 +955,23 @@ La selección de la plataforma electrónica y el sistema de alimentación de **T
 
 ---
 
-### 1.1 Unidad de Procesamiento Central: Arduino Mega 2560 (ATmega2560)
-<img width="700" height="600" alt="image" src="https://github.com/user-attachments/assets/6892030a-2f80-44c1-be4b-37b0a8efab14" />
+### 1.1 Unidad de Procesamiento Central: ESP32 (Dual-Core Xtensa LX6)
 
+<img width="700" height="700" alt="image" src="https://github.com/user-attachments/assets/2f2391b1-f34f-4b28-ac4a-10a5c1950386" />
 
-* **Descripción Técnica:** Microcontrolador de 8 bits basado en la arquitectura RISC AVR. Opera a una frecuencia de reloj de 16 MHz, cuenta con 256 KB de memoria Flash, 8 KB de SRAM, 4 KB de EEPROM y 4 puertos UART independientes por hardware (`Serial0` a `Serial3`).
-* **Justificación de uso:** La complejidad algorítmica de la Ronda Cerrada y la Ronda Abierta exige la ejecución paralela de tareas de telemetría, control cinemático y decodificación de datos ópticos. La implementación del Arduino Mega 2560 es fundamental debido a sus periféricos nativos:
-  * **Puertos UART Dedicados por Hardware:** A diferencia de chips menores como el ATmega328P (Arduino Uno), que se ven obligados a emular puertos serie mediante software (`SoftwareSerial`) —lo cual bloquea las interrupciones del sistema y ralentiza el ciclo de reloj—, el Mega posee buses independientes. Esto nos permite mapear la cámara inteligente HuskyLens en el bus de alta velocidad `Serial1` (9600 baudios) de forma dedicada, mientras mantenemos la línea `Serial0` limpia para la transmisión de telemetría y diagnóstico a 115200 baudios hacia la interfaz de control en los *pits*, eliminando cualquier tipo de latencia en el bucle principal (`loop()`).
-  * **Capacidad de Expansión I/O y Temporizadores:** El chasis requiere temporizadores de hardware independientes para modular las señales PWM del driver de los motores y los pulsos del servomotor Coreless, evitando conflictos de registros concurrentes con los pines de interrupción de la matriz ultrasónica.
+* **Descripción Técnica:** Microcontrolador de 32 bits basado en arquitectura Xtensa LX6 de doble núcleo (dual-core), operando a una frecuencia de reloj de hasta 240 MHz. Cuenta con 520 KB de SRAM, 4 MB de memoria Flash externa (vía SPI), conectividad WiFi/Bluetooth integrada, y 3 controladores UART por hardware, además de buses I2C y SPI dedicados con soporte multi-instancia. La placa implementada es una ESP32 DevKit de 38 pines (módulo ESP32-WROOM-32), con chip puente USB-Serial CP2102 y conector USB tipo C para programación y alimentación.
+
+* **Justificación de uso:** La migración del ATmega2560 al ESP32 responde a la necesidad de escalar la arquitectura de control ante el aumento de sensores concurrentes (HuskyLens y la matriz de sensores ultrasónicos HC-SR04). Los periféricos nativos del ESP32 resuelven cuellos de botella que el AVR de 8 bits no podía sostener:
+
+  * **Procesamiento Dual-Core (FreeRTOS):** A diferencia del Mega 2560, que ejecuta todas las tareas en un único hilo dentro de `loop()`, el ESP32 permite distribuir la carga entre sus dos núcleos mediante FreeRTOS. Esto posibilita anclar la lectura del bus I2C (HuskyLens) al Core 1, mientras el Core 0 gestiona la lógica de control cinemático, la generación de PWM y la telemetría, eliminando el riesgo de que un sensor bloqueante degrade el tiempo de respuesta del bucle de control.
+  * **Bus I2C de Alta Velocidad:** HuskyLens opera sobre el bus I2C (Wire) en lugar de requerir un puerto UART dedicado como en la arquitectura anterior. Esto simplifica el cableado y libera el único UART físico disponible (`Serial0`) para telemetría y depuración a 115200 baudios a través de la interfaz USB nativa, sin necesidad de emulación por software.
+  * **Canales LEDC (PWM por Hardware):** El periférico LEDC del ESP32 provee hasta 16 canales de PWM independientes con resolución configurable (hasta 16 bits), reemplazando la necesidad de compartir temporizadores entre el driver de motores y el servomotor de dirección, un conflicto de registros que limitaba la resolución angular en el diseño anterior basado en AVR.
+  * **Margen de Cómputo Disponible:** La mayor frecuencia de reloj y el conjunto de instrucciones de 32 bits del ESP32 dejan un margen considerable de procesamiento libre respecto al ATmega2560, lo cual habilita futuras ampliaciones del sistema de percepción sin comprometer la latencia del bucle principal.
 
 > [!TIP]
-> **Optimización de Memoria:** Al compilar el firmware para el ATmega2560, se hace un uso extensivo de la macro `F()` en todos los comandos `Serial.println(F("..."))`. Esto fuerza al compilador a almacenar las cadenas de texto estáticas de la telemetría directamente en la memoria Flash (256 KB) en lugar de saturar la memoria SRAM (8 KB), garantizando la estabilidad del puntero del programa durante ejecuciones prolongadas.
-
----
-
-
+> **Gestión de Memoria No Volátil:** A diferencia del EEPROM dedicado del ATmega2560, el ESP32 no posee EEPROM física; en su lugar, se emplea la librería `Preferences.h` (basada en NVS - *Non-Volatile Storage*) para persistir parámetros de calibración entre reinicios, aprovechando una partición reservada de la memoria Flash externa.
+ ---
+ 
 ### 1.2 Matriz de Navegación Periférica: Sensores Ultrasónicos HC-SR04
 <img width="700" height="600" alt="image" src="https://github.com/user-attachments/assets/09f9270d-5997-43a4-8419-0a0a0f5e190a" />
 
@@ -2159,6 +2158,9 @@ Para erradicar esta degradación de la señal, se implementó el cableado indust
 1. **Par Trenzado:** Cancela el ruido por simetría acoplando las interferencias por igual en ambas líneas de datos, permitiendo que el Arduino las anule por rechazo en modo común.
 2. **Lámina de Aluminio (Foil):** Bloquea de forma perimetral las interferencias electromagnéticas de alta frecuencia radiadas por las chispas internas del motor DC.
 3. **Malla de Cobre Trenzada:** Absorbe y deriva a la masa común del chasis las corrientes de baja frecuencia provocadas por el par torsor del servomotor de la dirección SbW, blindando la red tri-sensorial de Trivilyn3.0 y asegurando datos puros en alta velocidad.
+
+# Trivilyn3.1
+
 
 # Desafíos Técnicos, Limitaciones y Soluciones en el Desarrollo
 
