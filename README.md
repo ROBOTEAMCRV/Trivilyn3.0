@@ -259,7 +259,7 @@ Para evidenciar la simetría, la distribución modular en tres niveles y el acab
 | **Vista Superior**<br>• Permite evaluar la distribución de los componentes en el segundo piso y la alineación central. | <img width="400" alt="Perfil Superior" src="https://github.com/user-attachments/assets/5ea353f3-4b35-4c3e-9bb6-72a543cf638f" /> |
 | **Vista Lateral Derecha**<br>• Muestra el despeje sobre el suelo (ground clearance) y el acople del tren motriz. | <img width="400" alt="Perfil Derecho" src="https://github.com/user-attachments/assets/5c40a96a-0570-45fe-94e5-adccd0af3df8" /> |
 | **Vista Lateral Izquierda**<br>• Expone el acceso al sistema perimetral de alimentación y cableado lógico. | <img width="400" alt="Perfil Izquierdo" src="https://github.com/user-attachments/assets/cbf40dd8-de2d-4060-8c28-fb0e8f4901fa" /> |
-| **Vista Frontal**<br>• Muestra la orientación de la HuskyLens, el soporte de sensores y los LEDs de contraste. | <img width="400" alt="Perfil Delantero" src="https://github.com/user-attachments/assets/d7749a1f-4eab-4707-9e4a-3e9ab4a34e1b" /> |
+| **Vista Frontal**<br>• Muestra la orientación de la HuskyLens, el soporte de sensores y los LEDs de contraste. | <img width="400" alt="Perfil Delante" src="https://github.com/user-attachments/assets/d7749a1f-4eab-4707-9e4a-3e9ab4a34e1b" /> |
 | **Vista Trasera**<br>• Evidencia el anclaje del motor principal y la salida estructurada de las líneas de potencia. | <img width="400" alt="Perfil Trasero" src="https://github.com/user-attachments/assets/659f38c5-4fa7-4f97-a464-c7725a822623" /> |
 | **Vista Inferior (Chasis)**<br>• Expone la geometría del primer piso y el área libre para evitar la fricción con la pista. | <img width="400" alt="Perfil Inferior" src="https://github.com/user-attachments/assets/4d58e3ae-8c33-4a9e-904c-3e7a4e68819d" /> |
 
@@ -1054,8 +1054,33 @@ La selección de la plataforma electrónica y el sistema de alimentación de **T
 
 ---
 
+### 1.8 Etapa de Regulación Conmutada de Lógica: Módulo Buck LM2596 (Step-Down)
+<img width="565" height="353" alt="image" src="https://github.com/user-attachments/assets/b02e2f62-059e-4299-8d28-22cbbd621865" />
 
-## 2. Topología del Hardware y Estándar de Colorimetría Crítica del Cableado
+* **Descripción Técnica:** Regulación de tensión conmutada de alta eficiencia basada en el circuito integrado monolítico LM2596S-ADJ. Opera a una frecuencia de conmutación interna fija de 150 kHz, aceptando voltajes de entrada en el rango de 4.5V a 40V DC para transformarlos en una salida regulada de 1.23V a 37V con corrientes continuas de hasta 2A (con pico máximo de 3A mediante disipación activa/pasiva) y un rendimiento típico superior al 85% - 90%.
+* **Justificación de uso:** La transición del sistema hacia la plataforma ESP32 demanda un riel de energía limpio e inmune al ruido electromagnético y a las caídas de tensión (*voltage sags*):
+  * **Alimentación Estable de la Lógica (5.0V Constantes):** El módulo reduce la tensión variable del Banco 1 (7.4V - 8.4V de las dos celdas Li-ion 18650 en serie) a un riel fijo de **5.0V DC**. Esta salida alimenta directamente el pin VIN/5V de la tarjeta de desarrollo del ESP32, permitiendo que su regulador interno LDO trabaje con un margen térmico óptimo sin sobrecalentarse al reducir voltajes mayores.
+  * **Suministro Multisensorial Inmune al Ruido:** A través de esta línea limpia de 5V se distribuye corriente a la cámara de visión artificial HuskyLens, a la red tri-sensorial HC-SR04 y al sensor de Tiempo de Vuelo matricial **VL53L5CX** (absorbiendo holgadamente sus picos de consumo de ~215 mA sin fluctuaciones).
+  * **Aislamiento de Cargas Inductivas:** Al alimentar la lógica desde una etapa Buck independiente del circuito de tracción, se evita que los picos de corriente demandados por el motor de propulsión de 10V causen reinicios imprevistos (*brownout resets*) en el procesador dual-core del ESP32 o pérdida de paquetes en el bus I2C/UART.
+
+> [!CAUTION]
+> **Ajuste Previo de Tensión y Calibración:** Antes de conectar el pin VIN del ESP32 o las líneas VCC de los sensores lógicos, se debe calibrar el potenciómetro multivueltas de precisión del módulo LM2596 con un multímetro hasta fijar exactamente **5.00V DC** de salida. Exceder este umbral o inyectar voltajes sin regular puede dañar de forma irreversible los transceptores de la placa ESP32 y los módulos de percepción sensibles a 3.3V/5V.
+
+### 1.9 Sensor de Tiempo de Vuelo (ToF) Matricial: VL53L5CX (8x8 Zonas)
+
+<img width="894" height="546" alt="image" src="https://github.com/user-attachments/assets/36ff50a0-0e22-414b-a09c-cc8e7d056cdf" />
+
+* **Descripción Técnica:** Sensor de medición de distancia multizona de alta resolución basado en la tecnología de Tiempo de Vuelo (Time-of-Flight - ToF) de 4ª generación con emisor láser invisible VCSEL de 940 nm. Incorpora un arreglo de fotodiodos SPAD capaz de procesar un campo de visión (FoV) diagonal de 63° dividido en una matriz de hasta 8x8 zonas independientes (64 lecturas simultáneas). Opera sobre interfaz de comunicación I2C (de hasta 1 MHz) con un rango de alcance de hasta 400 cm, demandando un consumo de 100 mA en régimen estándar con picos de ~215 mA en escaneo activo.
+* **Justificación de uso:** La integración del VL53L5CX eleva la capacidad de percepción de Trivilyn 3.0 al resolver las limitaciones de los sensores ultrasónicos y ópticos tradicionales:
+  * **Mapeo Espacial Tridimensional (Profundidad 3D):** A diferencia de los sensores ultrasónicos que devuelven un único valor de distancia promediado por rebote acústico, la matriz de 64 zonas del VL53L5CX genera un mapa de profundidad en tiempo real. Esto le permite al algoritmo detectar no solo la presencia de un pilar de la WRO, sino también su perfil, inclinación y posición relativa dentro del carril.
+  * **Inmunidad al Color y la Reflectividad:** Al medir directamente el tiempo que tardan los fotones del haz láser en ir y regresar, el sensor es totalmente inmune al color de la superficie, la iluminación ambiental de la pista o los acabados brillantes que suelen confundir a las cámaras de visión o sensores IR analógicos.
+  * **Compatibilidad Nativa I2C con ESP32 (3.3V):** La línea de datos opera de forma nativa a niveles lógicos de 3.3V, conectándose directamente al bus I2C secundario del ESP32. Esto permite que uno de los núcleos procese los arrays de datos en paralelo a 240 MHz sin saturar la CPU ni requerir adaptadores de nivel lógico externos.
+
+> [!IMPORTANT]
+> **Gestión de Ancho de Banda I2C y Protección Óptica:** La transmisión continua de matrices de 8x8 zonas exige un flujo constante de memoria en el ESP32. Se debe inicializar la velocidad del bus I2C a **400 kHz (Fast Mode) o 1 MHz (Fast Mode Plus)** para evitar cuellos de botella en la máquina de estados. Asimismo, la cubierta protectora del sensor debe mantenerse completamente libre de polvo, grasa o huellas para prevenir la refracción interna del haz láser y lecturas de distancia erróneas (*ranging loss*).
+---
+
+## 2. Topología del Hardware y Estándar de Colorimetría del Cableado
 
 En el diseño de Trivilyn 3.0, el cableado no se considera un mero elemento de interconexión pasiva, sino un subsistema crítico de la arquitectura de potencia y señal. Para mitigar los riesgos de error humano en los fosos (pits) bajo situaciones de alta presión, optimizar la mantenibilidad del vehículo y anular los acoplamientos electromagnéticos parásitos, hemos estandarizado de forma estricta la siguiente colorimetría industrial:
 
@@ -1068,12 +1093,12 @@ Para garantizar que cualquier diagnóstico en boxes se realice en menos de 30 se
 #### Rieles de Potencia y Fuerza Bruta:
 * **🔴 Rojo Puro (Riel de Alimentación VCC):** Lo utilizamos exclusivamente para las líneas de voltaje positivo que salen de las celdas de energía y los rieles de salida alta de los módulos STEP-UP (6.5V y 10V). Al aislar visualmente el color rojo, el equipo sabe con certeza milimétrica qué conductores transportan alta energía.
 * **⚪ Blanco Puro (Puentes en Serie de las Baterías):** Reservado de forma unívoca para los puentes de interconexión en serie entre las celdas de Litio-Ion 18650. Este color nos advierte de forma explícita que la línea maneja el diferencial acumulado total de voltaje antes de entrar a las etapas de conmutación o filtrado.
-* **⚫ Negro Absoluto (Nodo de Tierra Común / GND):** Dedicado de forma unívoca a la red de retorno y masa del robot. Todas las conexiones de tierra del Arduino Mega 2560, del driver L298 y de los módulos de sensado convergen usando este color hacia el punto central de la configuración en estrella (Star Grounding).
+* **⚫ Negro Absoluto (Nodo de Tierra Común / GND):** Dedicado de forma unívoca a la red de retorno y masa del robot. Todas las conexiones de tierra del ESP32, del driver L298 y de los módulos de sensado convergen usando este color hacia el punto central de la configuración en estrella (Star Grounding).
 
 #### Buses Lógicos y Red de Datos:
 * **🟡 Amarillo / 🟢 Verde / 🔵 Azul (Canales de Control y Percepción):** Estos tres colores los distribuimos de manera metodológica para segmentar la arquitectura lógica del vehículo y no cruzar cables por accidente:
-  * El **Amarillo** y el **Verde** se asignan a las líneas de datos (Echo y Trigger) de los sensores ultrasónicos **HC-SR04** colocados en la pista y al bus de comunicación serie de la HuskyLens.
-  * El **Azul** lo utilizamos de forma dedicada para los pulsos de control PWM que gobiernan el servomotor de dirección y el ciclo de trabajo del driver L298. Esto evita confusiones catastróficas entre cables de datos y cables de fuerza.
+  * El **Amarillo** y el **Verde** se asignan a las líneas de datos (Echo y Trigger) de los sensores ultrasónicos **HC-SR04** colocados en la pista y al bus de comunicación UART/I2C de la HuskyLens.
+  * El **Azul** lo utilizamos de forma dedicada para los pulsos de control PWM (canales LEDC del ESP32) que gobiernan el servomotor de dirección y el ciclo de trabajo del driver L298. Esto evita confusiones catastróficas entre cables de datos y cables de fuerza.
 
 ---
 
@@ -1082,55 +1107,56 @@ Para garantizar que cualquier diagnóstico en boxes se realice en menos de 30 se
 La implementación de este estándar responde a tres necesidades que nos topamos al diseñar la electrónica para las exigencias de la alta competencia:
 
 #### 1. Diagnóstico de Fallas de Alta Velocidad (Mantenibilidad en Pits)
-Durante la competencia, el tiempo disponible entre rondas es mínimo y los nervios juegan en contra. Si un conector se afloja o un cable se rompe debido a las vibraciones mecánicas del chasis, la estandarización del color permite una sustitución en caliente. Permitiendonos reemplazar el tramo dañado guiándonos únicamente por el patrón visual, eliminando la posibilidad de conectar una línea de datos directamente a un riel de potencia, lo que destruiría instantáneamente los pines lógicos del Arduino Mega 2560.
+Durante la competencia, el tiempo disponible entre rondas es mínimo y los nervios juegan en contra. Si un conector se afloja o un cable se rompe debido a las vibraciones mecánicas del chasis, la estandarización del color permite una sustitución en caliente. Esto nos permite reemplazar el tramo dañado guiándonos únicamente por el patrón visual, eliminando la posibilidad de conectar una línea de datos o potencia alta directamente a un pin de entrada del ESP32, lo que destruiría instantáneamente sus GPIOs sensibles a 3.3V.
 
 #### 2. Mitigación del Acoplamiento Cruzado (Crosstalk) e Interferencia EMI
 Cuando un cable transporta la corriente conmutada que alimenta al motor trasero M1 a través del driver L298, genera un campo magnético pulsante a su alrededor. Si los cables de los sensores de piso o de la cámara HuskyLens corren pegados y sin un orden estricto junto a los cables de potencia, este campo magnético induce un voltaje parásito en las líneas lógicas (fenómeno conocido como *Crosstalk* o diafonía).
-* **Nuestra Estrategia Topológica:** La colorimetría nos permitió diseñar el enrutamiento físico (*wire routing*) separando por canales físicos independientes los manojos de cables negros/rojos (Potencia) de los cables amarillos/verdes/azules (Señales lógicas). Con esto, logramos que el ruido eléctrico radiado por el motor de tracción trasera no deforma los flancos lógicos de las señales digitales, manteniendo la lectura colorimétrica estable y limpia.
+* **Nuestra Estrategia Topológica:** La colorimetría nos permitió diseñar el enrutamiento físico (*wire routing*) separando por canales físicos independientes los manojos de cables negros/rojos (Potencia) de los cables amarillos/verdes/azules (Señales lógicas). Con esto, logramos que el ruido eléctrico radiado por el motor de tracción trasera no deforme los flancos lógicos de las señales digitales de 3.3V.
 
 #### 3. Reducción de la Resistencia Óhmica Parásita por Calibre AWG
 Asociado al código de colores, el esquemático de Trivilyn 3.0 implementa una diferenciación física en los calibres del cable conductor (Estándar AWG):
 * Para las mallas de potencia y puentes de baterías (Líneas Rojas, Blancas y Negras), utilizamos cable de cobre multifilar de bajo calibre (AWG 22), garantizando una resistencia interna mínima para que la corriente fluya sin caídas de tensión ni sobrecalentamientos en la pista.
 * Para las redes de control y buses de sensado (Líneas Amarillas, Verdes y Azules), empleamos cable calibre AWG 26 o superior, reduciendo el volumen físico del cableado dentro del chasis y optimizando el peso dinámico general del vehículo.
-  
-  ---
-  
+
+---
+
 ## 3.0 Documentación e Ingeniería del Esquemático Eléctrico
 
-El sistema electrónico de Trivilyn 3.0 se fundamenta en un diseño circuital de topología mixta y modular, desarrollado en la plataforma Fritzing. Su arquitectura separa de forma estricta las redes de potencia analógica de los buses de datos digitales y de sensado, mitigando el ruido electromagnético y garantizando la estabilidad de voltaje en alta competencia.
+El sistema electrónico de Trivilyn 3.0 se fundamenta en un diseño circuital de topología mixta y modular. Su arquitectura separa de forma estricta las redes de potencia analógica de los buses de datos digitales y de sensado, mitigando el ruido electromagnético y garantizando la estabilidad de voltaje en alta competencia.
 
 A continuación, se presenta y analiza detalladamente el plano esquemático oficial del robot:
 
 <img width="1144" height="928" alt="image" src="https://github.com/user-attachments/assets/e8f14544-bcc7-4581-96bb-628cec9963a7" />
 
-
 ---
 
 ## 3.1 Desglose de Bloques Funcionales y Mallas de Corriente
 
-Con base en el documento técnico en la imagen, el circuito se divide en cuatro subsistemas críticos interconectados de forma estratégica:
+Con base en la arquitectura del vehículo, el circuito se divide en cuatro subsistemas críticos interconectados de forma estratégica:
 
 ### 1. Etapa de Regulación Conmutada y Gestión de Potencia (Power Layer)
-El sistema gestiona la energía basal de las baterías empleando una estrategia de elevación dual mediante dos módulos convertidores independientes:
-* **Módulo STEP-UP de 6.5V:** Recibe la alimentación de entrada y la eleva a un voltaje constante de 6.5V. Esta línea alimenta de forma prioritaria al servomotor de dirección a través del pin central de potencia, garantizando un torque de retención óptimo para el mecanismo Steer-by-Wire.
-* **Módulo STEP-UP de 10V:** Trabaja de forma paralela para fijar un riel de potencia de 10V. Esta tensión alimenta directamente las compuertas de fuerza del driver de motor, asegurando que la tracción trasera disponga de la diferencia de potencial necesaria para la velocidad crucero.
-* **Red de Señalización de Estado:** Conectada a la salida del sistema de alimentación, se incorpora una etapa Step-DOWN pasiva que regula el paso de corriente hacia dos diodos emisores de luz indicadores (LED1 y LED2 en color Rojo), proporcionando telemetría visual inmediata sobre el estado de la energización del chasis.
+El sistema gestiona la energía basal de las baterías empleando una estrategia de regulación y elevación multirriel:
+* **Módulo Step-Down LM2596 (Buck Converter):** Recibe la tensión nominal (7.4V - 8.4V) de las dos celdas en serie y la reduce a **5.0V regulados de alta eficiencia**. Este riel limpio se inyecta directamente al pin VIN/5V de la placa de desarrollo del ESP32 y distribuye energía a los periféricos de sensado.
+* **Módulo STEP-UP de 6.5V:** Eleva la alimentación del banco dedicado a un voltaje constante de 6.5V. Esta línea alimenta prioritariamente al servomotor de dirección, garantizando un torque de retención óptimo para el mecanismo Steer-by-Wire.
+* **Módulo STEP-UP de 10V:** Trabaja de forma paralela para fijar un riel de potencia de 10V para el driver de tracción trasera (L298), asegurando la diferencia de potencial necesaria para alcanzar velocidad crucero.
+* **Red de Señalización de Estado:** Conectada a la salida del sistema de alimentación, se incorpora una etapa Step-Down pasiva que regula el paso de corriente hacia dos diodos emisores de luz (LED1 y LED2 en color Rojo) para telemetría visual sobre el estado de energización del chasis.
 
-### 2. Núcleo de Procesamiento Central (Arduino Mega 2560 Layer)
-La lógica de control se concentra en una placa controladora basada en la arquitectura del Arduino Mega 2560.
-* **Manejo Extendido de Entradas/Salidas:** Los pines digitales y analógicos del flanco izquierdo y derecho del microcontrolador se encuentran distribuidos metódicamente para evitar el cruce de cables. Las líneas inferiores unifican la referencia de masa a un Nodo de Tierra Común (GND), eliminando bucles de tierra que corrompan los datos.
-* **Líneas de Control PWM:** El microcontrolador direcciona señales de modulación por ancho de pulso desde sus temporizadores internos hacia el servo y el driver del motor, traduciendo las decisiones algorítmicas en movimientos mecánicos precisos.
+### 2. Núcleo de Procesamiento Central (ESP32 Layer)
+La lógica de control de alto rendimiento se concentra en el SoC ESP32 (lógica de 3.3V).
+* **Gestión Eficiente de Pines (GPIOs):** Los pines del microcontrolador están mapeados para optimizar el procesamiento dual-core y evitar cruces de señales. Todas las mallas de tierra convergen en un Nodo de Tierra Común (GND), previniendo bucles que puedan corromper las lecturas digitales a 3.3V.
+* **Generación de Hardware PWM (LEDC):** El ESP32 utiliza sus canales periféricos LEDC dedicados para emitir señales de modulación por ancho de pulso hacia el servomotor y el driver L298, traduciendo las decisiones algorítmicas en movimientos de alta precisión.
 
 ### 3. Conmutación e Inversión de Giro de Tracción (Driver L298)
-El control dinámico del motor de tracción trasera (M1) se ejecuta mediante la etapa de potencia comandada por el circuito integrado L298.
-* **Control Predictivo:** El chip recibe las señales lógicas provenientes de los pines digitales del Arduino Mega 2560 (mapeados a los pines IN1, IN2 y EN del driver) para determinar el sentido de giro y la aceleración lineal.
-* **Salida Homogénea:** Los pines de salida OUT1 y OUT2 inyectan la corriente de forma simétrica a los terminales de las escobillas del motor M1, garantizando una aceleración lineal predecible por el software de navegación.
+El control dinámico del motor de tracción trasera (M1) se ejecuta mediante la etapa de potencia comandada por el driver L298.
+* **Control Predictivo:** Recibe las señales lógicas provenientes de los GPIOs de 3.3V del ESP32 (mapeados a IN1, IN2 y EN) para determinar el sentido de giro y la aceleración lineal.
+* **Salida Homogénea:** Los pines de salida OUT1 y OUT2 inyectan la corriente de forma simétrica a los terminales del motor M1, garantizando una respuesta lineal y predecible.
 
 ### 4. Matriz de Percepción Espacial y Buses de Datos (Sensors Layer)
-El sistema de posicionamiento y lectura de pista se compone de un arreglo redundante de sensores de alta precisión:
-* **Módulos de Sensado HC:** El vehículo incorpora tres bloques sensores independientes identificados en el plano como HC-5904 (Sensor 1), HC-3904 (Sensor 2) y HC-2904 (Sensor 3).
-* **Arquitectura de Conexión en Cascada:** Cada módulo HC se interconecta mediante regletas distribuidoras de pines acopladas a las líneas de alimentación limpia y común. Las salidas lógicas individuales viajan a través de caminos independientes hacia los pines de entrada del microcontrolador, permitiendo un escaneo paralelo del entorno en tiempo real.
-* **Canal Perceptivo HuskyLens:** En el flanco izquierdo del esquemático se detalla el ruteado de los cables de comunicación dedicados para la cámara de visión inteligente artificial HuskyLens, acoplándose de forma directa a los puertos de comunicación serie del microcontrolador para la transmisión instantánea de las coordenadas de los pilares de color de la WRO.
+El sistema de posicionamiento y lectura de pista se compone de un arreglo redundante de sensores:
+* **Módulos de Sensado HC:** El vehículo incorpora tres sensores ultrasónicos independientes (HC-SR04).
+* **Matriz ToF Multizona (VL53L5CX):** Sensor de distancia por Tiempo de Vuelo (ToF) matricial de 8x8 zonas, encargado de medir perfiles tridimensionales de obstáculos con alta resolución temporal.
+* **Arquitectura de Conexión y Alimentación:** Los módulos ultrasónicos y el sensor ToF VL53L5CX se alimentan desde la línea limpia de 5V/3.3V proveniente de la etapa del regulador LM2596. Sus líneas de datos (Echo/Trigger e I2C) se conectan directamente al ESP32 con la debida protección lógica.
+* **Canal Perceptivo HuskyLens:** Cámara de visión artificial acoplada de forma directa a uno de los puertos UART por hardware del ESP32 para la transmisión instantánea de las coordenadas de los pilares de color de la WRO.
 
 ---
 
@@ -1138,38 +1164,44 @@ El sistema de posicionamiento y lectura de pista se compone de un arreglo redund
 
 | Componente Origen | Pin del Componente | Nodo de Destino / MCU | Tipo de Señal | Función Operacional |
 | :--- | :--- | :--- | :--- | :--- |
-| **STEP-UP 6.5V** | Salida +Vo | Servo VCC | Potencia Regulada | Torque constante para dirección |
+| **Módulo LM2596 (Buck)** | Salida OUT+ (5V) | ESP32 Pin 5V / VIN | Potencia Regulada | Alimentación principal del SoC, sensores y línea lógica |
+| **STEP-UP 6.5V** | Salida +Vo | Servo VCC | Potencia Regulada | Torque constante para dirección SbW |
 | **STEP-UP 10V** | Salida +Vo | L298 VCC / Motores | Potencia Alta | Alimentación de tracción trasera |
 | **Driver L298** | OUT1 / OUT2 | Bornes Motor M1 | Potencia Analógica | Inversión de giro y velocidad del coche |
-| **Arduino Mega 2560** | Pines Digitales | Entradas IN/EN Driver L298 | Salida Digital / PWM | Control de puente H desde algoritmo |
-| **HuskyLens** | Buses de Datos | Puertos Serie MCU | Digital Bidireccional | Envío de IDs de marcas por Machine Learning |
-| **Sensores HC 1, 2 y 3** | Pines de Señal | Pines Digitales de Entrada | Entrada Digital | Mapeo milimétrico de la pista |
+| **ESP32** | GPIOs (PWM LEDC) | Entradas IN/EN Driver L298 | Salida Digital / PWM (3.3V) | Control de puente H desde algoritmo |
+| **HuskyLens** | Buses de Datos (TX/RX) | Puertos UART ESP32 | Digital Bidireccional | Envío de IDs de marcas por Machine Learning |
+| **Sensores HC 1, 2 y 3** | Pines de Señal (Echo/Trig) | GPIOs ESP32 (Entradas) | Entrada Digital | Mapeo milimétrico de la pista |
+| **Sensor ToF VL53L5CX** | Bus I2C (SDA/SCL) | GPIOs I2C ESP32 | Digital I2C (3.3V) | Mapeo matricial 8x8 de distancia por Tiempo de Vuelo |
 | **Línea Step-DOWN** | Ánodo / Cátodo | LED1 / LED2 (Rojo) | Corriente Limitada | Indicador luminoso de sistema activo |
-
-## 4. Topología del Hardware (Percepción y Control)
-
-Para que Trivilyn 3.0 responda en milisegundos en la pista, dividimos el cerebro y los sentidos del coche en tres capas que trabajan en paralelo: Control Central, Visión Artificial y Telemetría Ultrasónica. 
-
-Al separar las tareas de esta manera, evitamos que el procesador se sature calculando distancias mientras intenta procesar las imágenes de los carriles.
 
 ---
 
-### 4.1 Capa de Control Central: Arduino Mega 2560
-Elegimos la placa Arduino Mega 2560 no por una decisión al azar, sino porque las exigencias de este prototipo agotaron rápidamente los recursos de controladores más pequeños como el Nano o el Uno. 
-* **Gestión de Recursos:** Necesitábamos un mapa de pines lo suficientemente amplio para controlar el driver de potencia L298, el servomotor de la dirección, los tres ultrasónicos y la cámara, sin recurrir a multiplexores que añaden retraso físico (*lag*). 
-* **Puertos Dedicados:** Sus múltiples temporizadores internos (*timers*) por hardware nos permiten inyectar una señal PWM limpia al servo y al motor trasero, asegurando que el carro mantenga su velocidad de crucero constante incluso cuando los sensores están interrumpiendo el flujo principal del código para reportar lecturas.
+## 4. Topología del Hardware (Percepción y Control)
+
+Para que Trivilyn 3.0 responda en milisegundos en la pista, dividimos el cerebro y los sentidos del coche en tres capas que trabajan en paralelo: Control Central, Visión Artificial y Telemetría Ultrasónica/ToF. 
+
+Al separar las tareas de esta manera, evitamos que el procesador se sature calculando distancias mientras procesa las imágenes de los carriles.
+
+---
+
+### 4.1 Capa de Control Central: SoC ESP32
+Elegimos la plataforma ESP32 para sustituir arquitecturas tradicionales de 8 bits debido a las altas exigencias computacionales de Trivilyn 3.0.
+* **Procesamiento Dual-Core y Frecuencia:** Cuenta con un procesador Xtensa® LX6 de doble núcleo a 240 MHz, lo que permite separar las tareas en hilos independientes: un núcleo se dedica exclusivamente al filtrado de datos de sensores y control dinámico, mientras el segundo gestiona las comunicaciones en tiempo real.
+* **Canales PWM Hardware (LEDC):** Genera señales PWM precisas mediante temporizadores por hardware dedicados para comandar el servomotor de dirección y el driver L298, garantizando un control de velocidad y ángulo suave sin lag provocado por interrupciones.
 
 ### 4.2 Coprocesamiento de Visión: Cámara Inteligente HuskyLens
-El rastreo de las líneas lógicas de la pista no podíamos dejárselo enteramente al microcontrolador principal. Por eso, delegamos todo el procesamiento de las imágenes directamente en los algoritmos internos de la HuskyLens.
-* **Protocolo de Comunicación:** Conectamos la cámara mediante la interfaz UART (usando los puertos serie físicos TX/RX del Arduino Mega). En las primeras pruebas en el taller, intentamos usar el bus I2C clásico, pero notamos que cuando el motor generaba ruido eléctrico o el bus se saturaba de paquetes, el carro experimentaba pequeños tirones o pérdida de fotogramas. Al migrar a una conexión UART directa por hardware, logramos un canal dedicado, de altísima velocidad y completamente inmune a las colisiones de datos, enviando las coordenadas de los bloques de color al instante.
+El rastreo de las líneas lógicas de la pista se delega enteramente a los algoritmos internos de procesamiento de la HuskyLens.
+* **Protocolo de Comunicación:** Conectamos la cámara mediante la interfaz UART acoplada directamente a los puertos serie físicos (Hardware Serial TX/RX) del ESP32. Al migrar a un canal serie dedicado por hardware, logramos un bus de altísima velocidad inmune a las colisiones de datos y ruido electromagnético de los motores, transmitiendo las coordenadas de los bloques de color al instante.
 
-### 4.3 Matriz de Proximidad (Trifocal): 3 Sensores Ultrasónicos HC-SR04
-La lectura perimetral del vehículo se apoya en tres sensores ultrasónicos HC-SR04 distribuidos estratégicamente en la defensa delantera (orientados hacia la izquierda, el centro y la derecha). 
-* **Mapeo en Tiempo Real:** Esta disposición trifocal crea un abanico de escaneo que solapa las ondas de sonido. Si el carro se aproxima en diagonal a una pared o a un pilar, el sensor central trabaja en conjunto con los laterales para calcular no solo la distancia hacia el obstáculo, sino también el ángulo de incidencia. Esto le da al algoritmo Ackermann la información necesaria para corregir la trayectoria del servo de dirección con suavidad antes de que ocurra una colisión física en la pista.
+### 4.3 Matriz de Proximidad (Trifocal) y Sensor Matricial ToF VL53L5CX
+La lectura perimetral del vehículo se apoya en tres sensores ultrasónicos HC-SR04 distribuidos estratégicamente en la defensa delantera más un sensor de tiempo de vuelo matricial VL53L5CX.
+* **Mapeo en Tiempo Real y Ranging 3D:** La disposición trifocal ultrasónica crea un abanico de escaneo perimetral, mientras que el **VL53L5CX** aporta una matriz de 8x8 zonas de medición láser ToF. Esto permite detectar inclinaciones o pequeños relieves en pista que los ultrasónicos no registran, dando al algoritmo la información necesaria para corregir la trayectoria del servo de dirección con suavidad antes de una colisión.
+
+---
 
 ## 5. Presupuesto de Potencia (Power Budget) y Distribución Independiente
 
-Para erradicar el problema más crítico en robótica móvil —los reinicios del procesador por caídas de tensión (voltage sags) y el ruido de alta frecuencia en los sensores— el diseño eléctrico de Trivilyn3.0 rechaza los buses comunes y opta por un **aislamiento físico total mediante tres bancos de energía independientes** (6 celdas 18650 en total). 
+Para erradicar los reinicios del procesador por caídas de tensión (*voltage sags*) y el ruido de alta frecuencia en los sensores, el diseño eléctrico de Trivilyn 3.0 rechaza los buses comunes y opta por un **aislamiento físico mediante tres bancos de energía independientes** (6 celdas 18650 en total). 
 
 Esta arquitectura separa de forma redundante las cargas lógicas de las inductivas, aplicando además una estrategia de distribución de masas donde solo el banco de tracción utiliza el sistema de extracción rápida por corredera.
 
@@ -1177,91 +1209,96 @@ Esta arquitectura separa de forma redundante las cargas lógicas de las inductiv
 
 | Subsistema Alimentado | Configuración de Baterías | Voltaje Nominal | Regulación / Modulación | Propósito y Ventaja de Ingeniería |
 | :--- | :---: | :---: | :---: | :--- |
-| **Línea 1: Lógica y Percepción** | 2x 18650 en Serie | 7.4V - 8.4V | Voltaje Directo de Batería (Línea Limpia) | Alimenta directamente al Arduino Mega a través de su pin de entrada regulada. El bus interno distribuye los 5V puros a la cámara HuskyLens y los 3 sensores HC-SR04. Al ser una línea dedicada sin motores acoplados, la HuskyLens procese imágenes en alta velocidad sin caídas de telemetría por ruido. Las celdas están fijas en el segundo piso. |
-| **Línea 2: Actuación de Dirección** | 2x 18650 en Paralelo | 3.7V - 4.2V | *Elevador de Voltaje (Step-Up)* a **6.5V Constantes** | Dedicado exclusivamente al servomotor HobbyPark de 35kg de la dirección SbW. La configuración en paralelo duplica la capacidad de corriente disponible. El Step-Up garantiza un torque de salida idéntico y preciso, incluso si las celdas empiezan a descargarse. Alojado de forma fija en el segundo piso. |
-| **Línea 3: Sistema de Tracción e Iluminación** | 2x 18650 en Serie | 7.4V - 8.4V | *Step-Up (10V)* + *Step-Down Secuencial (3.2V)* | **Este es el único banco alojado en la corredera inferior en cola de milano**. Alimenta el motor DC a través de un módulo Step-Up de alta potencia regulado a 10V fijos hacia el Driver MOSFET para maximizar la velocidad (PWM 190). Adicionalmente, de la salida de 10V se deriva un regulador Step-Down secundario a 3.2V dedicado en exclusiva a la red de LEDs, protegiéndolos de sobrevoltajes. |
+| **Línea 1: Lógica y Percepción** | 2x 18650 en Serie | 7.4V - 8.4V | **Regulador Buck LM2596 a 5.0V Constantes** | Alimenta el pin 5V/VIN del ESP32 con una línea limpia y regulada. El riel de 5V alimenta los sensores HC-SR04, la cámara HuskyLens y el sensor ToF matricial **VL53L5CX** (cuyo consumo pico de ~215mA es absorbido holgadamente por el LM2596). Al estar aislada de la carga inductiva de los motores, el procesador y los sensores operan sin reinicios por caída de voltaje. Celdas fijas en el segundo piso. |
+| **Línea 2: Actuación de Dirección** | 2x 18650 en Paralelo | 3.7V - 4.2V | *Elevador de Voltaje (Step-Up)* a **6.5V Constantes** | Dedicado exclusivamente al servomotor HobbyPark de 35kg de la dirección SbW. La configuración en paralelo duplica la capacidad de corriente disponible. El Step-Up garantiza un torque de salida constante incluso durante la descarga de las celdas. Alojado de forma fija en el segundo piso. |
+| **Línea 3: Sistema de Tracción e Iluminación** | 2x 18650 en Serie | 7.4V - 8.4V | *Step-Up (10V)* + *Step-Down Secuencial (3.2V)* | **Alojado en la corredera inferior en cola de milano para extracción rápida**. Alimenta el motor DC a través de un módulo Step-Up de alta potencia regulado a 10V fijos hacia el Driver L298. De la salida de 10V se deriva un regulador Step-Down secundario a 3.2V dedicado a la red de LEDs indicadores. |
 
---- 
+---
 
 ### 📊 Tabla de Consumo Nominal y Pico de Componentes
 
-El presupuesto de cargas eléctricas se calculó modelando el peor escenario dinámico coincidente en pista, incorporando las etapas de elevación y reducción de voltaje reales del sistema:
+El presupuesto de cargas eléctricas se calculó modelando el peor escenario dinámico coincidente en pista, incorporando las etapas de regulación (Buck) y elevación de voltaje reales del sistema:
 
 | Componente | Voltaje de Operación | Consumo en Reposo (Idle) | Consumo en Carga Máxima (Peak) | Banco de Alimentación | Impacto Sistémico en la Misión |
 | :--- | :---: | :---: | :---: | :---: | :--- |
-| **Microcontrolador Arduino Mega 2560** | 7.4V (Vbat) | 50 mA | 80 mA | Banco 1 (Lógica Directo) | Cerebro lógico; procesa la máquina de estados y las lecturas analógicas/digitales. |
-| **Cámara de Visión HuskyLens** | 5V | 220 mA | 380 mA | Banco 1 (Vía Bus 5V Arduino) | Algoritmos de IA para detección de señales de tráfico y pilares cromáticos. |
-| **3x Sensores Ultrasónicos HC-SR04** | 5V | 45 mA (15 mA c/u) | 60 mA (20 mA c/u) | Banco 1 (Vía Bus 5V Arduino) | Red tri-sensorial para evasión de muros perimetrales mediante multiplexación temporal. |
+| **SoC ESP32 (Placa de Desarrollo)** | 5V (vía Buck LM2596) | 80 mA | 240 mA (Wi-Fi/Dual Core activo) | Banco 1 (Regulado a 5V) | Cerebro lógico central; procesa la máquina de estados, algoritmo Ackermann y buses de comunicación. |
+| **Cámara de Visión HuskyLens** | 5V | 220 mA | 380 mA | Banco 1 (Bus 5V de Percepción) | Algoritmos de IA para detección de señales de tráfico y pilares cromáticos. |
+| **Sensor ToF Matricial VL53L5CX** | 5V / 3.3V | 100 mA | 215 mA | Banco 1 (Bus 5V/3.3V de Percepción) | Mapeo 3D matricial (8x8 zonas) por tiempo de vuelo para detección precisa de obstáculos. |
+| **3x Sensores Ultrasónicos HC-SR04** | 5V | 45 mA (15 mA c/u) | 60 mA (20 mA c/u) | Banco 1 (Bus 5V de Percepción) | Red tri-sensorial para evasión de muros perimetrales mediante multiplexación temporal. |
 | **Servomotor de Dirección HobbyPark (35kg)** | 6.5V | 100 mA | 2,500 mA (Stall) | Banco 2 (Dirección vía Step-Up) | Actuador de la cinemática Steer-by-Wire (SbW); alta demanda de corriente en virajes bruscos. |
-| **Motor de Tracción DC (Turbo Snake)** | 10V | 300 mA | 4,500 mA (Stall) | Banco 3 (Tracción vía Step-Up) | Sistema de propulsión posterior a más de 15,000 RPM. Operar a 10V fijos maximiza el torque continuo en aceleración (PWM 190). |
+| **Motor de Tracción DC (Turbo Snake)** | 10V | 300 mA | 4,500 mA (Stall) | Banco 3 (Tracción vía Step-Up) | Sistema de propulsión posterior a más de 15,000 RPM (L298). Operar a 10V fijos maximiza el torque continuo. |
 | **Circuito de Iluminación (2x LEDs)** | 3.2V | 20 mA | 40 mA | Banco 3 (Vía Step-Down de 10V) | Iluminación de contraste para optimizar el umbral de detección de la HuskyLens en pista. |
 
 ---
 
 > [!NOTE]
-> **Auditoría de Capacidad de las Baterías y Mitigación de Riesgos en Fosos**
-> Las celdas 18650 utilizadas en el sistema de dirección presentaban una etiqueta comercial de 8,800 mAh. Tras realizar un análisis basado en la densidad energética límite del litio y las dimensiones de la celda, el equipo de ROBOTEAMCRV determinó que este valor es nominal/falso (típico en el mercado de consumo masivo).
+> **Auditoría de Capacidad de Baterías y Mitigación de Riesgos en Pits**
+> Las celdas 18650 utilizadas en el sistema de dirección presentaban una etiqueta comercial engañosa de 8,800 mAh. Tras un análisis de densidad energética, el equipo de ROBOTEAMCRV determinó una capacidad real efectiva de **2,200 a 2,500 mAh** por celda.
 > 
-> * **Mitigación y Factor de Seguridad:** Para el diseño seguro de Trivilyn3.0, estimamos una capacidad real de **2,200 a 2,500 mAh** por celda. Al conectar el Banco 2 en paralelo, la capacidad real efectiva se eleva a un rango de 4,400 a 5,000 mAh, asegurando corriente de sobra para el servo de 35kg. 
-> * **Estrategia de Distribución de Masas por Pisos:** Para optimizar la estabilidad dinámica del vehículo, se decidió fijar las **4 celdas correspondientes a la Lógica (Banco 1) y a la Dirección (Banco 2) en la estructura del segundo piso**. Dado que estos subsistemas consumen menos potencia y no requieren recambios de emergencia, se priorizó su fijación estructural. Por el contrario, el Banco 3 (Tracción e Iluminación) opera bajo el régimen severo del Step-Up a 10V absorbiendo picos masivos de corriente. Por ello, justificamos mecánicamente colocar **únicamente estas 2 baterías en el cartucho de cola de milano del primer piso**. Esto nos permite realizar el recambio rápido (*Quick-Change*) del sistema motriz en menos de 10 segundos sin alterar el torque de la dirección ni desestabilizar el voltaje de los sensores fijos ubicados en el piso superior.
+> * **Mitigación y Factor de Seguridad:** Para el Banco 2 (conectado en paralelo), la capacidad real efectiva se establece entre 4,400 y 5,000 mAh, garantizando reserva de corriente suficiente para el servo de 35kg.
+> * **Estrategia de Distribución de Masas por Pisos:** Para optimizar el centro de gravedad, se fijaron las **4 celdas de Lógica (Banco 1) y Dirección (Banco 2) en el segundo piso**. Al ser líneas de consumo estable, no requieren reemplazos de emergencia. Por el contrario, el **Banco 3 (Tracción e Iluminación)** opera bajo el régimen severo del Step-Up a 10V absorbiendo picos masivos de corriente. Por ello, se montó **únicamente este banco en el cartucho de cola de milano del primer piso**, permitiendo un recambio rápido (*Quick-Change*) en boxes en menos de 10 segundos sin descalibrar los sensores ni la electrónica del segundo piso.
 
 ---
 
 ## 📈 Análisis de Rendimiento y Cálculo de Autonomía Real del Vehículo
 
-Para validar la viabilidad operativa de Trivilyn3.0 en condiciones de competencia extrema, el equipo desarrolló un modelo matemático de descarga basado en la capacidad real auditada de nuestras celdas 18650 (2,500 mAh por celda). Al tener tres bancos de energía independientes, calculamos la autonomía teórica y real de cada subsistema de forma aislada para identificar el eslabón más débil de la cadena energética.
+Para validar la viabilidad operativa de Trivilyn 3.0 en competencia, se desarrolló un modelo matemático de descarga basado en la capacidad real auditada de las celdas (2,500 mAh por celda) en cada uno de los tres bancos independientes.
 
-#### 1. Banco 1: Lógica y Percepción (2 celdas en Serie = 7.4V / 2,500 mAh)
-Este banco alimenta al Arduino Mega de forma directa, el cual distribuye a la HuskyLens y los 3 ultrasonidos.
-* Consumo promedio constante: 50 mA (Arduino) + 300 mA (HuskyLens promedio) + 45 mA (Sensores) = 395 mA (0.395 Amperios).
-* Cálculo de Autonomía Teórica: Capacidad (2,500 mAh) / Consumo (395 mA) = 6.32 horas.
-* Al no tener pérdidas por reguladores conmutados externos en esta línea, la autonomía neta estimada se mantiene firme en **5.8 horas de autonomía continua.**
+#### 1. Banco 1: Lógica y Percepción (2 celdas en Serie = 7.4V - 8.4V reguladas a 5.0V vía LM2596)
+Este banco alimenta al módulo Step-Down LM2596, el cual provee 5V constantes e inmunes al ruido electromagnético para el SoC ESP32, la HuskyLens, los 3 sensores ultrasónicos y el sensor ToF matricial VL53L5CX.
+* **Consumo promedio constante:** 120 mA (ESP32) + 300 mA (HuskyLens promedio) + 45 mA (Ultrasónicos) + 110 mA (VL53L5CX) = **575 mA (0.575 A) a 5V**.
+* **Consumo reflejado en la batería (7.4V nominal) considerando la eficiencia del LM2596 (~88%):** $(5\text{V} \times 0.575\text{A}) / (7.4\text{V} \times 0.88) \approx 0.441\text{ A}$ ($441\text{ mA}$).
+* **Cálculo de Autonomía Real:** Capacidad (2,500 mAh) / Consumo de entrada (441 mA) = **5.67 horas de autonomía continua.**
 
 #### 2. Banco 2: Actuación de Dirección (2 celdas en Paralelo = 3.7V / 5,000 mAh efectivos)
-Este banco alimenta exclusivamente al servomotor de 35kg montado en el segundo piso mediante el elevador Step-Up a 6.5V. En una carrera de velocidad, el servo no está bloqueado todo el tiempo; estimamos un régimen de trabajo dinámico del 40%.
-* Consumo promedio estimado en pista: 600 mA (0.6 Amperios).
-* Cálculo de Autonomía Teórica: Capacidad efectiva (5,000 mAh) / Consumo (600 mA) = 8.33 horas.
-* Aplicando Factor de Eficiencia del Step-Up (80%): 8.33 x 0.80 = **6.66 horas de autonomía continua.**
+Alimenta exclusivamente al servomotor de 35kg mediante el elevador Step-Up a 6.5V con un régimen de trabajo dinámico estimado del 40% en pista.
+* **Consumo promedio estimado en pista:** 600 mA (0.6 A).
+* **Autonomía Teórica:** Capacidad efectiva (5,000 mAh) / Consumo (600 mA) = 8.33 horas.
+* **Autonomía Real (Eficiencia Step-Up 80%):** $8.33 \times 0.80 = \mathbf{6.66\text{ \textbf{horas de autonomía continua.}}}$
 
 #### 3. Banco 3: Sistema de Tracción e Iluminación (2 celdas en Serie = 7.4V / 2,500 mAh)
-Este es el banco alojado en el cartucho de cola de milano del primer piso. Alimenta el circuito Step-Up a 10V para el motor DC Turbo Snake y, en cascada, el Step-Down secundario de 3.2V para la iluminación. Elevar el voltaje a 10V incrementa la demanda de corriente en las celdas base.
-* Consumo promedio severo demandado a las baterías en carrera: 2,300 mA (Motor a PWM 190 + pérdidas de conversión) + 30 mA (Leds corregidos por la eficiencia del Step-Down) = ~2,330 mA (2.33 Amperios).
-* Cálculo de Autonomía Teórica en las celdas: Capacidad (2,500 mAh) / Consumo (2,330 mA) = 1.07 horas.
-* Aplicando el Factor de Eficiencia combinado de la etapa de potencia (85%) y la degradación térmica por alta velocidad: 1.07 x 0.85 = 0.91 horas. Esto equivale a **54 minutos de autonomía en carrera pura a máxima velocidad.**
+Ubicado en el cartucho de cola de milano del primer piso. Alimenta el módulo Step-Up a 10V para el motor DC (Driver L298) y el Step-Down secundario de 3.2V para la iluminación.
+* **Consumo promedio severo en carrera:** ~2,300 mA (Motor DC en velocidad crucero + pérdidas de conversión) + 30 mA (LEDs) = ~2,330 mA (2.33 A).
+* **Autonomía Teórica:** Capacidad (2,500 mAh) / Consumo (2,330 mA) = 1.07 horas.
+* **Autonomía Real (Eficiencia combinada 85% y carga térmica):** $1.07 \times 0.85 = 0.91\text{ horas} \approx \mathbf{54\text{ \textbf{minutos de autonomía pura en pista.}}}$
 
 ---
 
 ### 🏁 Conclusión del Análisis de Rendimiento (Criterio Quick-Change)
 
-El desglose matemático final demuestra de forma contundente por qué el diseño de Trivilyn3.0 acertó al colocar **únicamente el Banco 3 en el sistema de corredera extraíble**. 
+El desglose matemático confirma la efectividad de ubicar **únicamente el Banco 3 en la corredera extraíble**. Mientras que la lógica central (ESP32 + sensores) y la dirección disponen de más de 5 horas de operación continua en el segundo piso, el sistema de tracción agota sus celdas rápidamente al elevar el voltaje a 10V para exprimir la máxima potencia del motor. 
 
-Mientras que el cerebro lógico y la dirección pueden operar por más de 5 horas seguidas sin necesidad de tocar las 4 baterías del segundo piso, el sistema de tracción consume la energía rápidamente debido a la enorme exigencia de elevar el voltaje a 10V estables para exprimir las 15,000 RPM del motor. 
+Con 54 minutos de autonomía de carrera, Trivilyn 3.0 completa holgadamente todas las rondas clasificatorias. El mecanismo de cola de milano permite reemplazar el cartucho motriz en boxes en solo 10 segundos, garantizando un rendimiento pico constante sin alterar la alimentación de la electrónica de percepción.
 
-Con 54 minutos de autonomía real bajo pruebas, Trivilyn puede completar holgadamente todas las rondas clasificatorias sin caídas de rendimiento. Sin embargo, el mecanismo de cola de milano nos permite sustituir este cartucho en los fosos de manera preventiva en solo 15 segundos, garantizando que el sistema motriz trabaje siempre en la cresta de su curva de potencia sin comprometer la electrónica sensible del segundo piso.
+---
 
 ## 6. Mitigación de Fallas y Decisiones Críticas
 
-### Aislamiento de Tierras (GND)
+### Aislamiento de Tierras (Star Grounding - GND Común)
 
 > [!IMPORTANT]
->  Al utilizar tres bancos de baterías físicamente separados, es estrictamente obligatorio interconectar todos los cables negativos (*GND Común*) en un solo nodo central del Arduino Mega. Sin esta referencia cero unificada, las señales lógicas UART de la HuskyLens y los pulsos de los ultrasonidos sufrirían de flotación, provocando lecturas erróneas o la pérdida completa de paquetes de datos.
+> Al utilizar tres bancos de baterías físicamente independientes, es estrictamente obligatorio interconectar todos los cables negativos (*GND*) en un **Nodo Central Único** conectado a la referencia de tierra del ESP32. Sin este punto de referencia común, las señales digitales del bus I2C (VL53L5CX), las líneas UART (HuskyLens) y los pulsos de control PWM sufrirían de flotación lógica, provocando corrupción de datos o reinicios imprevistos.
 
 ### Lógica del Sistema de Iluminación Regulada (3.2V)
-¿Por qué elevar el voltaje a 10V para luego regularlo a 3.2V en los LEDs?
+La derivación del riel de 10V hacia un regulador de 3.2V para la red de iluminación responde a dos motivos técnicos:
 
-1. *Estabilidad Lumínica:* Los motores de tracción generan picos de demanda masivos al arrancar o frenar. Si los LEDs se conectaran directo a la batería, parpadearían, afectando el balance de blancos y el umbral de reconocimiento de color de la HuskyLens.
-   
-2. *Filtrado de Ruido:* El elevador a 10V actúa como una "barrera de aislamiento". Al pasar luego por el regulador de 3.2V, los LEDs reciben una energía limpia y constante, asegurando que la HuskyLens siempre vea la pista con la misma intensidad de luz, eliminando falsos positivos en el reconocimiento de señales.
+1. **Estabilidad Lumínica:** Evita que los picos de demanda del motor modulen la intensidad de los LEDs, previniendo alteraciones en el balance de blancos y en el umbral de reconocimiento cromático de la HuskyLens.
+2. **Filtrado de Transitorios:** La etapa de doble regulación actúa como una barrera contra el ruido de conmutación del motor, entregando energía limpia a la matriz de iluminación.
 
 ---
 
 ## 7. Interacción del Sistema (Pensamiento Sistémico)
 
-El flujo secuencial de potencia y datos durante una maniobra compleja (ej. evasión u obstáculo en el estacionamiento) se ejecuta de la siguiente manera:
+El flujo secuencial de potencia y datos durante una maniobra evasiva en pista se ejecuta en las siguientes fases:
 
-1. *Fase de Percepción:* Los 3 sensores HC-SR04 miden distancias de los bloques laterales a 5V estables. Simultáneamente, la HuskyLens procesa la pista y envía las coordenadas por el puerto serie Serial1 (TX/RX) del Mega.
-2. *Fase de Procesamiento:* El Arduino Mega procesa las lecturas de proximidad y los datos de visión artificial de manera paralela gracias al ancho de banda libre de la conexión UART.
-
+1. **Fase de Percepción Multimodal:** 
+   * Los 3 sensores HC-SR04 y el sensor ToF matricial **VL53L5CX** realizan lecturas de proximidad y distancia 3D alimentados por la línea limpia de 5V regulada por el LM2596.
+   * La cámara HuskyLens procesa los marcos de imagen y transmite las coordenadas de los pilares mediante el puerto **Hardware UART** del ESP32.
+2. **Fase de Procesamiento en Tiempo Real:** 
+   * El **ESP32** procesa los paquetes UART e I2C en uno de sus núcleos Xtensa® a 240 MHz, fusionando las lecturas de telemetría y ejecutando el cálculo cinemático.
+3. **Fase de Actuación Coordinada:** 
+   * El ESP32 emite pulsos PWM dedicados vía hardware (**LEDC**) hacia el servomotor de dirección (Banco 2) y hacia el driver L298 (Banco 3) para corregir la trayectoria con suavidad y precisión.
+  ---
 # Distribución Geométrica y Calibración de Sensores
 
 Este capítulo detalla la fundamentación matemática, física y de diseño mecánico detrás de la disposición espacial de la red de sensores de Trivilyn3.0. La correcta ubicación geométrica del hardware de percepción es tan crítica como la optimización de los algoritmos de control; una desalineación de milímetros o de pocos grados en los vectores de lectura puede degradar por completo la fiabilidad del vehículo a altas velocidades.
@@ -1658,128 +1695,109 @@ Efecto: Esto genera lecturas "fantasmales" o ecos falsos. Aunque nuestro filtro 
 - [Reto abierto Horario](https://youtu.be/3rMMLZdWGc4?si=xGYyjhSCZMpKUZd_)
 
 
-# Ronda cerrada 
+# Ronda Cerrada (Closed Challenge)
 
-El firmware de la Ronda Cerrada de **Trivilyn 3.0** está diseñado bajo un paradigma de **Control Reactivo Híbrido** de ejecución síncrona en un microcontrolador ATmega2560 (Arduino Mega). El sistema unifica la telemetría probabilística de una matriz de tres sensores ultrasónicos HC-SR04 y el procesamiento de visión computacional en tiempo real de la cámara inteligente HuskyLens para la toma de decisiones críticas en milisegundos.
+El firmware de la Ronda Cerrada de **Trivilyn 3.0** está diseñado bajo un paradigma de **Control Reactivo Híbrido** de ejecución en un microcontrolador **ESP32** (32 bits). El sistema unifica la telemetría de una matriz tri-sensorial mixta —un sensor de Tiempo de Vuelo matricial **VL53L5CX** (8x8 zonas) en el frente y dos transductores ultrasónicos laterales (**HC-SR04** vía librería `NewPing`)— combinada con el procesamiento de visión computacional en tiempo real de la cámara inteligente **HuskyLens** (vía Hardware Serial `Serial1`) para la toma de decisiones críticas en milisegundos.
 
 ---
 
 ## 📊 Diagrama de flujo closed challenge
 
-Para garantizar la repetibilidad de los resultados, la estabilidad en pista y una toma de decisiones eficiente en milisegundos, la lógica de control de **Trivilyn 3.0** se estructuró formalmente bajo el modelo de una **Máquina de Estados Finitos (FSM)**. Esta arquitectura de software fragmenta el comportamiento dinámico del vehículo autónomo en estados discretos, mutuamente excluyentes y gobernados por transiciones estrictas. Las condiciones de transición dependen directamente del flujo continuo de datos provenientes del vector sensorial (HuskyLens y matriz ultrasónica).
+Para garantizar la repetibilidad de los resultados, la estabilidad en pista y una toma de decisiones eficiente en milisegundos, la lógica de control de **Trivilyn 3.0** se estructuró formalmente bajo el modelo de una **Máquina de Estados Finitos (FSM)**. Esta arquitectura de software fragmenta el comportamiento dinámico del vehículo autónomo en estados discretos, mutuamente excluyentes y gobernados por transiciones estrictas. Las condiciones de transición dependen directamente del flujo continuo de datos provenientes del vector sensorial omnidireccional (HuskyLens, matriz ToF frontal y ultrasonidos laterales).
 
-La implementación de este modelo conceptual no solo previene bloqueos en el hilo principal de ejecución del microcontrolador, sino que optimiza los ciclos de reloj al jerarquizar los procesos. De este modo, los algoritmos de evasión de emergencia tienen prioridad absoluta sobre las tareas secundarias de telemetría y navegación de crucero. 
+La implementación de este modelo conceptual no solo previene bloqueos en el hilo principal de ejecución del microcontrolador, sino que optimiza los ciclos de reloj al jerarquizar los procesos. De este modo, los algoritmos de evasión de emergencia por proximidad o bloques de color identificados por la HuskyLens tienen prioridad sobre las tareas secundarias de navegación de crucero.
 
 A continuación, se presenta el mapa analítico y el diagrama de flujo detallado que gobierna la sincronización, los bucles de control y los criterios de decisión que determinan el comportamiento autónomo del prototipo en tiempo real:
 
 <img width="1185" height="896" alt="image" src="https://github.com/user-attachments/assets/47361b28-2b61-4326-98ea-6a762af9a9ea" />
 
+---
 
 ### A. Fase de Inicialización y Calibración del Vector de Ataque
 
-Para asegurar un comportamiento cinemático simétrico desde el primer milisegundo de la carrera, el firmware ejecuta una rutina de arranque único. En esta etapa, las variables críticas del sistema se estructuran bajo métricas de rendimiento dinámico, abstrayendo los identificadores de desarrollo hacia funciones formales de ingeniería:
+Para asegurar un comportamiento cinemático simétrico desde el primer milisegundo de la carrera, el firmware ejecuta una rutina de arranque único en el `setup()`:
 
-* **Calibración de Punto Neutro Coaxial (`centro`):** Mediante la instrucción `myservo.write(80)`, el tren delantero ejecuta un pulso de orientación inicial, seguido por un ajuste a `94°`. Este desfase calibrado absorbe las tolerancias físicas del puente de dirección impreso en PETG y suprime la deriva lateral (*drifting*).
-* **Control de Tracción Principal (`carSpeed`):** Modulación por Ancho de Pulsos (PWM) balanceada entre estabilidad en rectas (`PWM 50`) y par de fuerza incremental en curvas o bloques de color (`PWM 70`).
-* **Secuencia de Escape Inicial y Bloqueo (`pepe`):** Variable de control inicializada en `0`. Al arrancar, el robot ejecuta un avance rectilíneo retrasando la activación de los lazos de interrupción por `1000 ms` mediante `forward()`. Esto estabiliza el voltaje del sistema y evita falsos positivos ópticos. Acto seguido, el incremento `pepe++` actúa como un interruptor lógico irreversible (*single-shot*) que transfiere el control a la FSM de exploración activa.
-* **Registro de Fin de Carrera:** Cuando este mismo contador acumulativo supera el umbral crítico de evasiones (`pepe > 12`), el firmware interpreta la culminación de las 3 vueltas, ejecuta una subrutina de frenado dinámico y detiene el tren motriz por completo de forma reglamentaria.
-* **Filtros de Histéresis Temporal (`winnie` / `winnieV`):** Retardos temporales dinámicos (`delay(220)`) aplicados tras la detección de bloques de color para evitar que los rebotes ópticos (*chatter*) reanuden la búsqueda antes de que el chasis complete físicamente la maniobra de rebase.
-
----
-
-### B. Lazo de Telemetría Ultrasónica y Evasión Periférica (Matriz Tri-Sensorial)
-
-El vehículo procesa el entorno mediante tres transductores HC-SR04 gestionados por la librería de alta eficiencia `NewPing`. Esta configuración evita los bloqueos críticos del procesador (asociados al uso de `pulseIn`) y computa distancias simultáneas para resolver el centrado dinámico dentro del pasillo de 100 cm.
+* **Calibración de Punto Neutro Coaxial (`centro = 87°`):** Mediante la librería `ESP32Servo`, el servomotor (asignado al pin GPIO 32) ejecuta un pulso de orientación inicial de `80°` para luego estabilizarse en `87°`. Este ajuste absorbe las tolerancias mecánicas de la dirección impresa en PETG y suprime la deriva lateral (*drifting*).
+* **Control de Tracción Principal (`carSpeed = 58`):** Modulación por Ancho de Pulsos (PWM) en el pin `ENA` (GPIO 13) del driver L298N, balanceada entre velocidad de crucero en rectas (`PWM 58`) e incremento de par en maniobras evasivas o curvas (`carSpeedColor = 100`).
+* **Secuencia de Escape Inicial y Bloqueo (`pepe`):** Variable de control inicializada en `0`. Al arrancar, el robot ejecuta un avance inicial aplicando ligeras deflexiones al servomotor (`80°` y `70°`) para alinear el vehículo dentro del carril y habilitar el contador (`pepe++`).
+* **Registro de Fin de Carrera (`pepe > 12`):** Cuando el contador acumulativo de esquivas o ciclos supera el umbral crítico de `12`, el firmware interpreta la culminación de las 3 vueltas reglamentarias, desenergiza las salidas del driver (`stop()`) y detiene el tren motriz de forma indefinida.
+* **Filtros de Histéresis Temporal (`winnie` / `winnieV` / `COOLDOWN_ESQUIVA_MS`):** Retardos temporales dinámicos (`delay(winnie)`) y temporizadores de bloqueo por hardware (`ultimaEsquivaMillis` a 1500 ms) para evitar que rebotes ópticos o falsos ecos ultrasónicos disparen evasiones consecutivas antes de que el chasis complete la maniobra.
 
 ---
 
-### 1. Lógica de Evasión Crítica Frontal
+### B. Lazo de Telemetría Multimodal y Evasión Periférica
 
-- El sistema de navegación de proximidad utiliza la librería optimizada `NewPing` para gestionar tres transductores ultrasónicos en una configuración de triple flanco (Izquierdo, Central, Derecho). Esta matriz computa distancias simultáneas para evitar colisiones contra los muros de la pista:
+El vehículo procesa el entorno mediante una arquitectura híbrida de detección: la matriz ToF **VL53L5CX** monitorea el frente en I2C Fast Mode (SDA GPIO 25, SCL GPIO 26), dos sensores ultrasónicos **HC-SR04** resuelven los flancos laterales vía `NewPing` (Izquierdo: Trig 17/Echo 18; Derecho: Trig 22/Echo 23) y un sensor frontal ultrasónico auxiliar (Trig 19/Echo 21) valida distancias de choque inminente.
 
-La maniobra de emergencia se dispara cuando el sensor frontal (`middleDistance`) registra una barrera inminente en el rango de `1 cm a 3 cm`. El microcontrolador suspende el procesamiento de imágenes y evalúa de forma binaria los flancos laterales:
-* **Si `leftDistance <= rightDistance`:** Se asume proximidad crítica al muro izquierdo. Se activan las banderas de bloqueo interno (`tilin++`, `lecrer++`) y se ejecuta la subrutina `derecha()`, la cual invierte el sentido de tracción (`back()`) y deflexiona el servo a `70°` para pivotar el frente.
-* **Si `leftDistance > rightDistance`:** Se detecta proximidad al muro derecho. Se activan las banderas de flanco opuesto (`grasa++`, `lewis++`) y se gatilla la subrutina `izquierda()`, aplicando una reversa con deflexión angular de `125°` para liberar el chasis de la colisión.
+---
+
+### 1. Lógica de Evasión Crítica Frontal y Matriz ToF 3D
+
+El sistema evalúa de forma continua tanto el eco del sensor ultrasónico frontal (`middleDistance`) como la matriz de 8x8 zonas del sensor **VL53L5CX**:
+
+* **Mapeo Matricial ToF:** El firmware evalúa la fila inferior de la matriz (índices 56 a 63). Si alguna de estas 8 zonas registra un valor inferior a `UMBRAL_FRONTAL` (350 mm), la bandera booleana `obstaculoDetectado` se conmuta a `true`.
+* **Disparo de Emergencia Ultrasónico:** Cuando `middleDistance` detecta un muro cercano en el rango de `1 cm a 7 cm` y el cooldown de seguridad se ha cumplido (`> 1500 ms`), el robot incrementa la potencia del motor a `PWM 110` y evalúa la asimetría de los pasillos laterales:
+  * **Si `leftDistance < rightDistance` (y `grasa == 0`):** Se asume mayor cercanía al muro izquierdo. Se incrementan los contadores de flanco (`tilin++`, `lecrer++`) y se ejecuta la rutina `derecha()`, aplicando reversa (`back()` a `PWM 85`), viraje a `58°` y posterior aceleración frontal.
+  * **Si `leftDistance > rightDistance` (y `tilin == 0`):** Se detecta proximidad al muro derecho. Se activan los contadores opuestos (`grasa++`, `lewis++`) y se ejecuta la rutina `izquierda()`, aplicando reversa y viraje angular a `121°`.
 
 #### 2. Lazo Cerrado de Microajustes Proporcionales Laterales
-Para evitar que el robot golpee los muros en los tramos rectos de los pasillos aleatorios, el firmware monitorea continuamente los flancos laterales en un rango de seguridad de `40 cm`:
-* **Proximidad Izquierda (`leftDistance <= 40 cm`):** El servo aplica de forma instantánea un ángulo de ataque de `105°` hacia la derecha durante `30 ms` antes de retornar al punto neutro (`centroH`).
-* **Proximidad Derecha (`rightDistance <= 40 cm`):** El servo desvía la dirección a `75°` hacia la izquierda durante `30 ms` antes de restablecer el rumbo neutro (`centroA`).
-Este algoritmo actúa como un corrector de rumbo continuo que estabiliza el avance del robot sin inducir inercias parásitas.
-
- A continuación se detallan las justificaciones técnicas por las cuales el equipo implementóNewPing :
-
-- Eliminación del Bloqueo del Procesador ( Código sin bloqueo )
-La función nativa de Arduino pulseIn()es bloqueadora . Cuando se ejecuta, el microcontrolador detiene por completo el hilo del programa principal esperando a que el pin de Echo cambie de estado.
-
-Si un obstáculo está lejos o el pulso se pierde (eco nulo), pulseIn()puede congelar el procesador hasta por 1 segundo (por su tiempo de espera por defecto).
-
-A una velocidad de carrera donde el motor Turbo Snake gira a 15.000 RPM, un retraso de incluso 50 ms significa que el robot avanza a ciegas varios centímetros, provocando una colisión ineludible.
-
-Solución de NewPing: Utiliza interrupciones de hardware y temporizadores internos altamente optimizados que permiten realizar el muestreo en un esquema no bloqueante . El procesador solicita la lectura y puede continuar ejecutando la lógica de la cámara HuskyLens o los movimientos del servo mientras el hardware calcula el eco.
-
-- Gestión Eficiente de Múltiples Sensores en Paralelo
-Trivilyn 3.0 utiliza una matriz trisensorial (Izquierdo, Centro, Derecho). Leer tres sensores de forma secuencial con el método clásico multiplica el tiempo de retraso por tres.
-
-NewPingestá diseñado específicamente para gestionar arreglos de múltiples sensores mediante un método de programación síncrona por intervalos. Permite intercalar los pulsos acústicos (ajustados en el firmware a delay(50)) evitando el asincronismo o solapamiento acústico (que el eco del sensor izquierdo sea recibido incorrectamente por el sensor central) sin comprometer el ciclo de reloj del ATmega2560.
-
-- Filtrado Integrado de Datos Erráticos ( Filtrado Digital )
-Los sensores de ultrasonido HC-SR04 sufren constantemente de ruido acústico debido a las vibraciones mecánicas del chasis a PWM 180 y las reflexiones parásitas en las esquinas de la WRO.
-
-El método clásico requiere que el programador desarrolle manualmente bucles y promedios matemáticos, lo que satura la memoria dinámica.
-
-Solución de NewPing: Cuenta con la función optimizada sonar.ping_median(votos), la cual realiza múltiples lecturas consecutivas a nivel de registros de hardware, descarta los valores atípicos (picos de ruido) y devuelve la mediana estadística del rango real. Esto proporciona una telemetría limpia y estabiliza los microajustes del servo de dirección.
-
-- Control del Fenómeno de "Eco Nulo" y Retorno Cero
-Cuando un pulso ultrasónico choca contra una superficie inclinada o un material que absorbe el sonido (como ciertos plásticos o acrílicos de la pista), el eco nunca regresa al receptor.
-
-Con el código nativo, esto genera lecturas erráticas o tiempos de espera máximos destructivos.
-
-Solución de NewPing: Si el pulso supera la distancia máxima configurada ( MAX_DISTANCE 400), la librería aborta inmediatamente la espera y devuelve un valor de 0 cm. Esto permitió al equipo diseñar el filtro condicional estricto if (middleDistance <= 3 && middleDistance > 1)para ignorar estos ceros lógicos (ecos nulos) y evitar que el robot ejecute volantazos o correcciones fantasma ante pasillos completamente vacíos.
+Para mantener la trayectoria centrada en el carril sin golpear las paredes durante los tramos rectos, la función `leerUltrasonico()` convierte el pulso de los sensores laterales a milímetros. Si la distancia cae en la zona de corrección (`100 mm a 390 mm`):
+* **Proximidad Izquierda (`leftDistance <= 390 mm`):** El servomotor efectúa una rápida corrección hacia la derecha (`104°`) durante `30 ms` antes de retornar al punto neutro (`centro`).
+* **Proximidad Derecha (`rightDistance <= 390 mm`):** El servomotor desvía la dirección hacia la izquierda (`70°`) durante `30 ms` antes de restablecer el rumbo neutro (`centro`).
 
 ---
 
-El robot ignora los bloques lejanos y solo activa las rutinas de rebase cuando el objeto ingresa al área de influencia crítica, evaluando su posición respecto al eje central de la pantalla (`xOrigin = 188`).
+### C. Justificación Técnica de Librerías y Protocolos Integrados
 
-### C. Matriz de Decisiones Ópticas Basada en Firmas de Color:
+* **Implementación de NewPing sin Bloqueo:** La función nativa `pulseIn()` congela el procesador esperando el retorno del pulso. `NewPing` realiza el cálculo mediante temporizadores de hardware sin bloquear la ejecución. Además, la función `leerUltrasonico()` retorna `9999 mm` ante un "eco nulo" (fuera de rango), evitando que un cero lógico dispare maniobras fantasma.
+* **Procesamiento de Visión HuskyLens (Hardware Serial):** La cámara se comunica por la interfaz `Serial1` del ESP32 (RX GPIO 16, TX GPIO 4) a 9600 baudios. El firmware consulta los bloques aprendidos (`IDs 1 a 3` para bloques Rojos; `IDs 4 a 6` para bloques Verdes).
+* **Integración Condicional Visión + ToF (`obstaculoDetectado`):** Para evitar falsos rebasamientos por reflexiones de luz, las subrutinas de esquiva de color de la HuskyLens (`rojoderecha`, `rojoizquierda`, `verdeizquierda`, `verdederecha`, `Rojolargo`, `Verdelargo`) condicionan su disparo a que la matriz del **VL53L5CX** haya confirmado la presencia física real del objeto en su zona frontal (`obstaculoDetectado == true`) o que la altura del bloque visual supere umbrales críticos de pixeles.
+  
+### C. Matriz de Decisiones Ópticas Basada en Firmas de Color e Integración ToF
 
-| ID Registrado | Clasificación Óptica | Ubicación en Pantalla | Subrutina Ejecutada | Dinámica del Rebase en Pista |
-| :---: | :--- | :--- | :---: | :--- |
-| **ID 1, 2, 3** | Pilar Rojo | `xOrigin >= 188` (Derecha) | `rojoderecha()` | Deflexiona a `130°` (izq), acelera a `PWM 70` por `700ms`, contragira a `63°` por `1250ms` para evadir por fuera y recupera el centro. |
-| **ID 1, 2, 3** | Pilar Rojo | `xOrigin < 188` (Izquierda) | `rojoizquierda()` | Deflexiona a `125°` (izq), modula velocidad por `500ms`, contragira a `65°` por `970ms` para esquivar el bloque por el flanco interno. |
-| **ID 5, 6** | Pilar Verde | `xOrigin <= 135` (Izquierda) | `verdeizquierda()` | Deflexiona a `60°` (der absoluta), sostiene el avance por `700ms`, contragira a `133°` por `1350ms` para equilibrar y estabiliza a `centro`. |
-| **ID 5, 6** | Pilar Verde | `xOrigin > 130` (Derecha) | `verdederecha()` | Deflexiona a `70°` (der), desplaza el chasis por `500ms`, contragira a `130°` por `620ms` y cierra la maniobra de rebase limpio. |
+| ID Registrado | Clasificación Óptica | Filtro de Proximidad Visual / Matriz ToF | Flanco / Posición Pantalla | Subrutina Ejecutada | Dinámica del Rebase en Pista |
+| :---: | :--- | :--- | :--- | :---: | :--- |
+| **ID 1, 2, 3** | Pilar Rojo | `height > 0` + `obstaculoDetectado` (ToF) **o** `height > 57px` | Derecha (`160 <= xOrigin < 270`) | `rojoderecha()` | Deflexiona a `121°` (izq), acelera a `PWM 100` por `580ms`, contragira a `58°` por `1200ms`, equilibra a `123°` (`550ms`) y retorna al neutro (`centro`). |
+| **ID 1, 2, 3** | Pilar Rojo | `height > 0` + `obstaculoDetectado` (ToF) **o** `height > 62px` | Extrema Derecha (`xOrigin > 270`) | `Rojolargo()` | Deflexiona a `123°` (izq), acelera por `690ms`, contragira a `58°` por `1420ms`, equilibra a `123°` (`600ms`) para rebase de trayectoria abierta. |
+| **ID 1, 2, 3** | Pilar Rojo | `height > 0` + `obstaculoDetectado` (ToF) **o** `height > 70px` | Izquierda (`20 < xOrigin < 160`) | `rojoizquierda()` | Deflexiona a `123°` (izq) a `PWM 100` por `300ms`, contragira a `63°` por `800ms`, retoma impulso a `123°` (`300ms`) para esquiva estrecha. |
+| **ID 1, 2, 3** | Pilar Rojo | `height > 0` + `obstaculoDetectado` (ToF) **o** `height > 70px` | Extrema Izquierda (`0 < xOrigin < 20`) | `esquivarObjetoMuyIzquierda()` | Mantiene avance rectilíneo acelerado (`forward()`) durante `300ms` para despejar el área de colisión del flanco. |
+| **ID 4, 5, 6** | Pilar Verde | `height > 0` + `obstaculoDetectado` (ToF) **o** `height > 50px` | Izquierda (`50 < xOrigin < 160`) | `verdeizquierda()` | Deflexiona a `59°` (der) a `PWM 100` por `700ms`, contragira a `125°` por `1120ms` y equilibra a `63°` por `780ms`. |
+| **ID 4, 5, 6** | Pilar Verde | `height > 0` + `obstaculoDetectado` (ToF) **o** `height > 54px` | Extrema Izquierda (`1 < xOrigin < 50`) | `Verdelargo()` | Deflexiona a `65°` (der) por `700ms`, contragira a `120°` por `1170ms`, sostiene a `63°` (`750ms`) y frena en seco (`stop()`) para estabilización. |
+| **ID 4, 5, 6** | Pilar Verde | `height > 0` + `obstaculoDetectado` (ToF) **o** `height > 70px` | Derecha (`160 <= xOrigin < 290`) | `verdederecha()` | Deflexiona a `68°` (der) por `550ms`, contragira a `123°` por `600ms` y equilibra a `63°` por `500ms`. |
+| **ID 4, 5, 6** | Pilar Verde | `height > 0` + `obstaculoDetectado` (ToF) **o** `height > 60px` | Extrema Derecha (`xOrigin > 290`) | `esquivarObjetoMuyDerecha()` | Modula avance rectilíneo de seguridad por `300ms` para rebasar el bloque sin colisión tangencial. |
 
->[Nota]
-> Las firmas de color duplican múltiples IDs (IDs 1, 2, 3 para Rojo / IDs 5, 6 para Verde) en el algoritmo para dar soporte continuo a los bloques aprendidos bajo diferentes condiciones de luz artificial y degradaciones cromáticas en el recinto de la competencia.*
+> [!NOTE]
+> **Soporte Multicromático y Doble Condición de Redundancia:**
+> Las firmas de color asignan múltiples identificadores (`IDs 1, 2, 3` para Rojo / `IDs 4, 5, 6` para Verde) para cubrir variaciones de brillo e iluminación en la pista de competencia. Además, el algoritmo exige una **doble condición de validación**: la esquiva se ejecuta si la cámara ve el objeto **Y** el sensor ToF **VL53L5CX** confirma la presencia física (`obstaculoDetectado == true`), **O** si la altura del bloque visual en pantalla supera un umbral crítico de píxeles (ej. `height > 57px` o `height > 70px`), garantizando cero falsos positivos por sombras o reflejos de fondo.
 
 ---
+
 ## Proceso de Pruebas y Ajustes: "Closed Challenge" (Ronda Cerrada con Obstáculos)
 
-Correr con los pilares rojos y verdes metidos en la pista cambió por completo las métricas del taller. En la Ronda Abierta solo nos importaba la velocidad fluida, pero aquí tuvimos que buscar un equilibrio entre el procesamiento de la HuskyLens, los tiempos de reacción del servo y la distancia que dejábamos respecto a los muros al salir de cada esquive.
+Correr con los pilares rojos y verdes metidos en la pista cambió por completo las métricas del taller. En la Ronda Abierta solo nos importaba la velocidad fluida, pero aquí tuvimos que buscar un equilibrio entre el procesamiento de la HuskyLens vía Hardware Serial (`Serial1`), los tiempos de respuesta del servomotor en el pin GPIO 32 y la distancia de separación respecto a los muros al salir de cada esquive.
 
-Las pruebas las dividimos en tres métricas reales para validar si las correcciones en el taller funcionaban:
+Las pruebas se dividieron en tres métricas reales para validar si las correcciones en el firmware funcionaban:
 
 ---
 
 ### 1. Distancia de Seguridad en Rebase (Evitar el "Toque" del Obstáculo)
-Mide el espacio libre que queda entre el chasis de PETG y el pilar en el momento exacto en que el carro le pasa por el lado. 
-* **El Problema en Pista:** En los primeros intentos, configuramos los giros con ángulos de servo muy suaves. El carro detectaba el bloque, pero por la inercia pasaba raspando el pilar o tumbándolo con la rueda trasera (la cola del carro le pegaba al obstáculo).
-* **El Ajuste en Boxes:** Tuvimos que recortar los tiempos de reacción en el código y meter contra-volanteo agresivo (cambiar rápido de un ángulo como `60°` a `133°`). Con esto logramos una métrica de distancia de seguridad constante de entre **8 cm y 12 cm** al pasarle por el lado a los bloques, asegurando que el carro libre el obstáculo limpio sin tocarlo.
+Mide el espacio libre que queda entre el chasis de PETG y el pilar en el momento exacto en que el carro le pasa por el lado.
+* **El Problema en Pista:** En los primeros intentos, configuramos los giros con ángulos de servo muy suaves. El carro detectaba el bloque, pero por la inercia del chasis pasaba raspando el pilar o tumbándolo con la rueda trasera (la cola del carro le pegaba al obstáculo).
+* **El Ajuste en Boxes:** Tuvimos que recortar los tiempos de reacción en el código y meter contra-volanteo agresivo (cambiar rápido de un ángulo como `123°` a `58°` o de `59°` a `125°`). Con esto logramos una métrica de distancia de seguridad constante de entre **8 cm y 12 cm** al pasarle por el lado a los bloques, asegurando que el carro libre el obstáculo limpio sin tocarlo.
 
-### 2. Tiempo de Reconocimiento y Filtro de Falsos Positivos
-Mide qué tan rápido procesa la HuskyLens las firmas de color y qué tan cerca tiene que estar el carro para activar el giro.
-* **El Problema en Pista:** Si dejábamos que la cámara disparara la maniobra apenas veía un color a lo lejos, el carro se confundía con los reflejos de las luces del techo en la lona o con los pilares del otro lado de la pista, dando volantazos de la nada en medio de las rectas.
-* **El Ajuste en Boxes:** Usamos el alto del bloque en píxeles (`result.height`) como un sensor de proximidad virtual. Calibramos en boxes que el carro ignorara el pilar hasta que midiera más de **90px para el rojo** y **70px para el verde**. Así aseguramos que el robot reaccione justo a la distancia correcta (unos 30-40 cm antes de chocar) sin importar el brillo del recinto.
+### 2. Tiempo de Reconocimiento y Filtro de Falsos Positivos (HuskyLens + VL53L5CX)
+Mide qué tan rápido procesa la HuskyLens las firmas de color y la distancia real requerida para activar el giro.
+* **El Problema en Pista:** Si dejábamos que la cámara disparara la maniobra apenas veía un color a lo lejos, el carro se confundía con los reflejos de las luces en la lona o con los pilares del otro lado de la pista, dando volantazos de la nada en medio de las rectas.
+* **El Ajuste en Boxes:** Implementamos un filtro condicional estricto en el firmware: la esquiva solo se habilita si la matriz de 8x8 zonas del sensor **VL53L5CX** detecta un objeto cercano en sus zonas inferiores (`distancia < 350 mm`, activando `obstaculoDetectado = true`) o si la altura en píxeles del bloque en la cámara supera umbrales calibrados (**50px a 70px** según el flanco). Así aseguramos que el robot reaccione justo a la distancia correcta (unos 30-40 cm antes de chocar) sin importar el brillo del recinto.
 
-### 3. Histéresis de Recuperación Posterior al Esquive (`winnie` / `winnieV`)
-Mide los milisegundos que necesita el carro para estabilizarse en línea recta justo después de terminar la coreografía de escape de un pilar, antes de poder leer el siguiente obstáculo.
-* **El Problema en Pista:** Al salir de esquivar un bloque a PWM 70 (`carSpeedColor`), la cámara detectaba inmediatamente el fondo de la pista o el mismo pilar que acababa de pasar, intentando encadenar otra maniobra de la nada. Esto hacía que el coche culebreara y se fuera directo contra el muro lateral.
-* **El Ajuste en Boxes:** Metimos retardos muertos controlados por las variables `winnie = 220` (rojo) y `winnieV = 100` (verde) al final de cada función de giro. Ese tiempo en milisegundos congela la lectura de la cámara lo suficiente para que los sensores ultrasónicos laterales (`leftDistance` y `rightDistance`) tomen el control con ráfagas de **30ms** y centren el carro en el carril antes de buscar el próximo pilar.
+### 3. Histéresis de Recuperación Posterior al Esquive (`winnie` / `COOLDOWN_ESQUIVA_MS`)
+Mide los milisegundos que necesita el carro para estabilizarse en línea recta justo después de terminar la coreografía de escape de un pilar, antes de poder procesar la siguiente lectura.
+* **El Problema en Pista:** Al salir de esquivar un bloque a `carSpeedColor = 100`, la cámara detectaba inmediatamente el fondo de la pista o el mismo pilar que acababa de pasar, intentando encadenar otra maniobra fantasma. Esto hacía que el coche culebreara y se fuera directo contra el muro lateral.
+* **El Ajuste en Boxes:** Metimos retardos muertos controlados y un filtro de histéresis por temporizador de hardware (`millis() - ultimaEsquivaMillis > 1500 ms`). Ese tiempo en milisegundos congela la activación de evasiones consecutivas lo suficiente para que los sensores ultrasónicos laterales (`sonarLeft` y `sonarRight`) tomen el control con ráfagas de **30ms** (corrigiendo rumbos si detectan paredes a menos de **390 mm**) y centren el carro en el carril antes de buscar el próximo pilar.
 
 ---
 
-> **Métrica Final de Validación:** Al empezar las pruebas de la ronda cerrada, la tasa de efectividad era menor al 10% (el carro tumbaba 6 de cada 10 pilares o se estrellaba con la pared al salir del rebase). Ajustando los tiempos de retardo de las variables `winnie`, cerrando el filtro de altura de píxeles y activando el escudo ultrasónico lateral a menos de **40 cm**, logramos subir la efectividad al **60% de rondas limpias** en el taller.
+> **Métrica Final de Validación:** Al empezar las pruebas de la ronda cerrada, la tasa de efectividad era menor al 10% (el carro tumbaba 6 de cada 10 pilares o se estrellaba con la pared al salir del rebase). Ajustando los tiempos de retardo, cerrando el filtro matricial del VL53L5CX y activando el escudo ultrasónico lateral a menos de **390 mm**, logramos subir la efectividad al **60% de rondas limpias** en el taller.
 
 <a name="fallas-edgecases"></a>
 
@@ -1789,27 +1807,24 @@ En un entorno de competencia de alta velocidad como la Ronda Cerrada de la WRO, 
 
 ---
 
-### 🔋 Caso Extremo : Caída Crítica de Voltaje bajo Torque Máximo (Preservación Lógica)
-* **El Problema:** Al ingresar a una maniobra evasiva cerrada, el servomotor de 35 kg demanda el pico máximo de corriente para mover las ruedas delanteras, coincidiendo con la aceleración del motor trasero para mantener la inercia. Esta alta demanda de corriente puede inducir una caída transitoria en las celdas 18650, arrastrando el voltaje de entrada por debajo del umbral de estabilidad del procesador.
-* **La Solución Electrónica (Búfer Conmutado XL6009):** Gracias al convertidor Boost XL6009 calibrado a alta frecuencia (400 kHz), la caída de tensión en el pack de baterías es absorbida por el módulo elevador. El circuito integrado eleva dinámicamente el voltaje estabilizándolo firmemente en los 12.0V configurados para los actuadores, mientras que sus capacitores electrolíticos de baja resistencia interna (ESR) actúan como un tanque de reserva de energía, manteniendo la línea de alimentación de la lógica del Arduino y la HuskyLens intacta y libre de reseteos parásitos (*voltage brownouts*).
+### 🔋 Caso Extremo: Caída Crítica de Voltaje bajo Torque Máximo (Preservación Lógica)
+* **El Problema:** Al ingresar a una maniobra evasiva cerrada, el servomotor de alto torque demanda un pico elevado de corriente para mover las ruedas delanteras, coincidiendo con la aceleración del motor trasero (`carSpeedColor = 100`) para mantener la inercia. Esta alta demanda de corriente puede inducir una caída transitoria en el pack de baterías de Ion de Litio 18650 (configuración 2S), arrastrando el voltaje de entrada por debajo del umbral de estabilidad del procesador.
+* **La Solución Electrónica (Regulador Buck LM2596):** El sistema utiliza un módulo regulador Buck **LM2596** ajustado a **5.0V constante**, aislado mediante una red de capacitores de filtrado ESR y línea de masa unificada (GND). Este circuito absorbe los rizos de tensión causados por los picos del motor conducido por el driver L298N (`ENA` GPIO 13, `IN1` GPIO 14, `IN2` GPIO 27), manteniendo la alimentación lógica del **ESP32**, el sensor **VL53L5CX** y la **HuskyLens** completamente limpia y libre de reinicios parásitos (*voltage brownouts*).
 
 > [!WARNING]
-> **Monitoreo Térmico de Potencia en Tofas de Alta Fricción**
-> Si el pack de celdas 18650 cae por debajo del umbral crítico de descarga segura (3.0V por celda, es decir, 6.0V totales de entrada), la eficiencia del XL6009 disminuye y eleva la corriente de entrada para compensar el voltaje de salida, generando estrés térmico en el disipador. El equipo realiza el cambio preventivo de baterías guiándose por la telemetría del display LED en boxes tan pronto como el indicador marca valores inferiores a 6.4V en vacío.
+> **Monitoreo de Batería en Celdas 18650 (2S)**
+> Si el pack de celdas 18650 cae por debajo del umbral crítico de descarga segura (3.0V por celda, es decir, 6.0V totales en el paquete 2S), el rendimiento de tracción disminuye negativamente y aumenta el rizo de corriente. El equipo realiza el cambio preventivo de celdas en boxes tan pronto como la medición en vacío marca valores inferiores a 7.2V.
 
 ---
 
 ### D. Protocolo de Fin de Carrera y Parada de Seguridad
 
-La conclusión de la Ronda Cerrada se gestiona de manera automatizada mediante la variable acumulativa de ciclos de evasión (`pepe`). Al cumplirse la condición condicional `if (pepe > 12)`, que representa de forma estadística la culminación de las 3 vueltas reglamentarias del circuito:
-* El firmware ejecuta un avance lineal residual de posicionamiento.
-* Desenergiza los canales del puente H L298N aplicando un estado de baja impedancia absoluta mediante la función `stop()`.
-* Detiene el reloj del microcontrolador de forma indefinida mediante un bloqueo secuencial (`delay(1000000000)`), asegurando que el robot permanezca estático dentro del cuadrante de meta y evitando penalizaciones por desborde de pista.
-
+La conclusión de la Ronda Cerrada se gestiona de manera automatizada mediante la variable acumulativa de ciclos y evasiones (`pepe`). Al cumplirse la condición condicional `if (pepe > 12)`, que representa de forma estadística la culminación de las 3 vueltas reglamentarias del circuito:
+* El firmware ejecuta un avance lineal residual de posicionamiento y fuerza el servomotor al punto neutro (`myservo.write(centro)`).
+* Desenergiza los canales del puente H L298N desactivando las salidas digitales (`digitalWrite(IN1, LOW)`, `digitalWrite(IN2, LOW)`) mediante la función `stop()`.
+* Detiene el hilo de ejecución de forma indefinida mediante un bloqueo secuencial (`delay(1000000000)`), asegurando que el robot permanezca estático dentro del cuadrante de meta y evitando penalizaciones por desborde de pista.
 ---
-
 ## Analisis de Rendimiento en el Desafío Cerrado
-
 
 
 ## Ensayos Cinemáticos y Navegación Continua.
@@ -2161,6 +2176,54 @@ Para erradicar esta degradación de la señal, se implementó el cableado indust
 
 # Trivilyn3.1
 
+## Mejoras de la versión 3.1
+
+La versión 3.1 de Trivilyn introduce dos cambios principales respecto a la v3.0: la migración del sistema de control a un microcontrolador ESP32 y la incorporación de un sensor de distancia multizona VL53L5CX en la parte frontal del robot.
+
+### Migración a ESP32
+
+El controlador principal pasó de un Arduino Mega 2560 a un ESP32, reemplazándolo por completo (ambos sistemas no coexisten en la v3.1). La razón técnica principal para el cambio no fue la disponibilidad de pines, sino la capacidad de procesamiento: el Arduino Mega 2560 no tiene la potencia de cómputo necesaria para leer y procesar en tiempo real los datos de la matriz 8x8 del sensor VL53L5CX, mientras que el ESP32 sí puede manejar ese volumen de datos sin afectar el ciclo de control del robot. El firmware fue migrado en su totalidad a la nueva plataforma.
+
+### Sensor frontal VL53L5CX
+
+Se incorporó un sensor VL53L5CX (matriz multizona de 8x8, tiempo de vuelo) en la parte frontal del robot, montado a una altura aproximada de 14 cm respecto al piso, con una inclinación de 16-17° hacia arriba. Esta inclinación permite usar únicamente la fila inferior de la matriz (8 zonas) como referencia de distancia, evitando que el sensor lea el piso de forma constante y genere falsos positivos.
+
+El sensor opera dentro de un rango físico aproximado de 400-500 mm, y el disparo de la lógica de esquiva de obstáculos de color está fijado a un umbral único: se activa cuando alguna de las 8 zonas de la fila inferior reporta una distancia menor a 350 mm.
+
+**Es importante precisar el rol de este sensor, ya que no reemplaza al sensor ultrasónico frontal existente**, sino que trabaja en conjunto con el HuskyLens:
+
+- El sensor ultrasónico frontal se mantiene para dos funciones: la decisión de obstáculos en la ronda abierta y la detección de la pared de la pista en la ronda cerrada (para decidir cuándo tomar una esquina).
+- El VL53L5CX se utiliza exclusivamente en la categoría Future Engineers, en conjunto con el HuskyLens: primero el HuskyLens identifica el color y la posición del obstáculo, y solo después de esa confirmación se evalúa la lectura del VL53L5CX para determinar la distancia al obstáculo. Este orden evita que el VL53L5CX dispare falsamente la lógica de esquiva al detectar la pared u otros elementos sin color relevante.
+- Como respaldo a la lectura de distancia del VL53L5CX, el sistema también evalúa el tamaño (`height`) del bloque de color detectado por el HuskyLens como una estimación alternativa de cercanía.
+
+### Tabla comparativa v3.0 vs v3.1
+
+| Aspecto | v3.0 | v3.1 |
+|---|---|---|
+| Microcontrolador | Arduino Mega 2560 | ESP32 |
+| Motivo del cambio | — | Capacidad de procesamiento insuficiente en el Mega para manejar la matriz 8x8 del VL53L5CX |
+| Sensor frontal | Solo ultrasónico (HC-SR04) | Ultrasónico (HC-SR04) + VL53L5CX (multizona 8x8) |
+| Rol del ultrasónico frontal | Detección de obstáculos y pared | Se mantiene: obstáculos en ronda abierta, pared/esquinas en ronda cerrada |
+| Rol del VL53L5CX | No existía | Confirmación de distancia a obstáculos de color, exclusivo de Future Engineers |
+| Lógica de disparo de color | Basada solo en `height` del bloque HuskyLens | HuskyLens confirma color/posición → VL53L5CX o `height` confirma distancia (OR) |
+| Umbral de detección frontal | N/A | 350 mm (fila inferior de la matriz) |
+| Montaje sensor frontal | N/A | ~14 cm de altura, 16-17° de inclinación hacia arriba |
+
+### Diagrama de flujo de decisión (detección de obstáculos de color)
+
+\`\`\`mermaid
+flowchart TD
+    A[HuskyLens detecta bloque de color] --> B{ID y xOrigin<br/>coinciden con zona válida?}
+    B -- No --> Z[Sin acción]
+    B -- Sí --> C[Lectura VL53L5CX:<br/>fila inferior de la matriz 8x8]
+    C --> D{Alguna zona < 350 mm?<br/>obstaculoDetectado}
+    D -- Sí --> F[Ejecutar maniobra de esquiva<br/>según color y posición]
+    D -- No --> E{height del bloque<br/>supera umbral de respaldo?}
+    E -- Sí --> F
+    E -- No --> Z
+\`\`\`
+
+> Nota: el sensor ultrasónico frontal opera de forma independiente a este flujo — se usa para obstáculos en ronda abierta y para detección de pared/esquinas en ronda cerrada, no para la lógica de esquiva de obstáculos de color.
 
 # Desafíos Técnicos, Limitaciones y Soluciones en el Desarrollo
 
