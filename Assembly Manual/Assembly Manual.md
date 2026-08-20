@@ -63,7 +63,7 @@ El puente H doble **L298N** se encarga de conmutar los giros y la velocidad medi
 
 ---
 
-## 🏎️ 4. Fase II: Sistema de Dirección Electrónica "Steer-by-Wire" (SbW)
+## 4. Fase II: Sistema de Dirección Electrónica "Steer-by-Wire" (SbW)
 
 Trivilyn 3.0 rompe radicalmente con los esquemas de dirección tradicionales (como la geometría Ackerman). En su lugar, el equipo implementó un sistema puramente **Steer-by-Wire (SbW)** o dirección electrónica digital por cable. No existe una columna de dirección física ni varillaje mecánico complejo que acople las ruedas de forma asimétrica; el ángulo de guiado se calcula por software y se transmite de forma directa e instantánea a través del actuador a los bloques de dirección independientes.
 
@@ -89,7 +89,7 @@ El mayor error en boxes es montar el brazo del servo a ciegas. Siga este protoco
 
 ---
 
-## ⚡ 5. Fase III: Gestión Energética Modular y Riel "Quick-Change"
+## 5. Fase III: Gestión Energética Modular y Riel "Quick-Change"
 
 La eficiencia en una carrera autónoma no solo se mide en la pista, sino en la velocidad de respuesta del equipo técnico en la zona de boxes. El diseño del carro prioriza que el mantenimiento eléctrico se realice en segundos.
 
@@ -103,7 +103,7 @@ Para alimentar la planta motriz y aislarla del consumo lógico, el robot utiliza
 
 ---
 
-## 📡 6. Fase IV: Segundo Piso (Aislamiento y Red de Percepción)
+## 6. Fase IV: Segundo Piso (Aislamiento y Red de Percepción)
 
 El segundo nivel (plataforma naranja) cumple una doble función: actúa como escudo de separación magnética y física para las líneas lógicas superiores y aloja los sensores de proximidad de rango medio.
 
@@ -126,16 +126,14 @@ El robot utiliza sensores **HC-SR04** para mapear la distancia lateral respecto 
 
 ## 🧠 7. Fase V: Tercer Piso (Procesamiento Analítico y Visión de Máquina)
 
-El plano de mayor elevación geométrica de Trivilyn 3.0 está dedicado exclusivamente a la computación lógica de alto nivel. Aquí es donde se ejecuta el bucle principal de control, el procesamiento de la cámara inteligente HuskyLens y las decisiones evasivas.
+El plano de mayor elevación geométrica de Trivilyn 3.0 está dedicado exclusivamente a la computación lógica de alto nivel. Aquí es donde se ejecuta el bucle principal de control de 32 bits, el procesamiento de la cámara inteligente HuskyLens y la toma de decisiones evasivas a alta velocidad.
 
 | Componente Estructural Superior Real | Protocolo de Instalación Lógica Central |
 | :--- | :--- |
-| <img width="280" alt="Arduino Mega Montado en Tercer Piso Amarillo" src="https://github.com/user-attachments/assets/bcd0af55-5fb9-4952-80ec-29b253fe054e" /> | **Fijación Dieléctrica de la MCU:** Monte la placa del **Tercer Piso (Placa Amarilla)** utilizando los tres puntos de atornillado correspondientes sobre las columnas estructurales elevadas. Posicione el microcontrolador **Arduino Mega 2560 R3** sobre sus guías perimetrales exactas. Asegure la placa firmemente insertando sus respectivos tornillos de montaje directos sobre la base. La elevación prismática de este tercer piso amarillo es una decisión de ingeniería crítica: permite crear una cámara de aire para la refrigeración por convección del procesador ATmega y lo mantiene aislado de los campos electromagnéticos parásitos generados por la planta motriz inferior. |
+| <img width="280" alt="ESP32 Montado en Tercer Piso Amarillo" src="./fotos/tercer-piso.png" /> | **Fijación Dieléctrica del SoC:** Monte la placa del **Tercer Piso (Placa Amarilla)** utilizando los tres puntos de atornillado correspondientes sobre las columnas estructurales elevadas. Posicione el microcontrolador **ESP32 (32 bits)** sobre sus guías perimetrales exactas. Asegure la placa firmemente insertando sus respectivos tornillos de montaje directos sobre la base. La elevación prismática de este tercer piso amarillo es una decisión de ingeniería crítica: permite crear una cámara de aire para la disipación térmica por convección pasiva del SoC y lo mantiene aislado de los campos electromagnéticos parásitos (EMI) generados por la planta motriz e inductancias del driver L298N en los pisos inferiores. |
 
 > [!IMPORTANT]
-> **ENRUTAMIENTO DE BUSES DE DATOS DE ALTA VELOCIDAD:** Al conectar los buses de comunicación de la HuskyLens y de los sensores ultrasónicos a los pines del Arduino Mega, asegúrese de trenzar físicamente los cables de señal (SDA/SCL, TX/RX) o utilizar cables con malla de blindaje. Estos cables jamás deben correr paralelos a las líneas de alta corriente de 7.4V que van del driver L298N al motor, ya que la inductancia generaría caídas de paquetes de datos y colgaría el bus $\text{I}^2\text{C}$ a mitad de una ronda competitiva.
-
----
+> **ENRUTAMIENTO DE BUSES DE DATOS Y LÓGICA DE 3.3V:** Al conectar la cámara HuskyLens (vía Hardware Serial `Serial1` en GPIO 16/4), el sensor ToF VL53L5CX (vía $\text{I}^2\text{C}$ Fast Mode en GPIO 25/26) y los sensores ultrasónicos a las líneas del ESP32, asegúrese de trenzar físicamente los cables de señal o utilizar líneas blindadas de longitud mínima. Dado que el ESP32 opera con tolerancia nativa a **3.3V**, estas líneas de datos jamás deben correr en paralelo con los cables de alta corriente de la batería que alimentan el driver L298N ni con los pulsos de potencia del servomotor, evitando ruidos inductivos que puedan congelar el bus $\text{I}^2\text{C}$ o corruptar los paquetes en plena carrera.
 
 ## 🧪 8. Protocolo de Mantenimiento Químico y Lubricación de Polímeros
 
