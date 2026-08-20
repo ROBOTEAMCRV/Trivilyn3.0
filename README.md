@@ -1172,7 +1172,7 @@ El sistema de posicionamiento y lectura de pista se compone de un arreglo redund
 | **HuskyLens** | Buses de Datos (TX/RX) | Puertos UART ESP32 | Digital Bidireccional | Envío de IDs de marcas por Machine Learning |
 | **Sensores HC 1, 2 y 3** | Pines de Señal (Echo/Trig) | GPIOs ESP32 (Entradas) | Entrada Digital | Mapeo milimétrico de la pista |
 | **Sensor ToF VL53L5CX** | Bus I2C (SDA/SCL) | GPIOs I2C ESP32 | Digital I2C (3.3V) | Mapeo matricial 8x8 de distancia por Tiempo de Vuelo |
-| **Línea Step-DOWN** | Ánodo / Cátodo | LED1 / LED2 (Rojo) | Corriente Limitada | Indicador luminoso de sistema activo |
+| **Línea Step-DOWN** | Ánodo / Cátodo | LED1 / LED2 | Corriente Limitada | Indicador luminoso de sistema activo |
 
 ---
 
