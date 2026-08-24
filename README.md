@@ -1132,7 +1132,7 @@ A continuación, se presenta y analiza detalladamente el plano esquemático ofic
 
 ## 3.1 Desglose de Bloques Funcionales y Mallas de Corriente
 
-Con base en la arquitectura del vehículo, el circuito se divide en cuatro subsistemas críticos interconectados de forma estratégica:
+Con base en la arquitectura del vehículo, el circuito se divide en cuatro subsistemas interconectados de forma estratégica:
 
 ### a. Etapa de Regulación Conmutada y Gestión de Potencia (Power Layer)
 El sistema gestiona la energía basal de las baterías empleando una estrategia de regulación y elevación multirriel:
@@ -1231,7 +1231,7 @@ El presupuesto de cargas eléctricas se calculó modelando el peor escenario din
 
 > [!NOTE]
 > **Auditoría de Capacidad de Baterías y Mitigación de Riesgos en Pits**
-> Las celdas 18650 utilizadas en el sistema de dirección presentaban una etiqueta comercial engañosa de 8,800 mAh. Tras un análisis de densidad energética, el equipo de ROBOTEAMCRV determinó una capacidad real efectiva de **2,200 a 2,500 mAh** por celda.
+> Las celdas 18650 utilizadas en el sistema de dirección presentaban una etiqueta comercial engañosa de 8,800 mAh. Tras un análisis de densidad energética, determinamos una capacidad real efectiva de **2,200 a 2,500 mAh** por celda.
 > 
 > * **Mitigación y Factor de Seguridad:** Para el Banco 2 (conectado en paralelo), la capacidad real efectiva se establece entre 4,400 y 5,000 mAh, garantizando reserva de corriente suficiente para el servo de 35kg.
 > * **Estrategia de Distribución de Masas por Pisos:** Para optimizar el centro de gravedad, se fijaron las **4 celdas de Lógica (Banco 1) y Dirección (Banco 2) en el segundo piso**. Al ser líneas de consumo estable, no requieren reemplazos de emergencia. Por el contrario, el **Banco 3 (Tracción e Iluminación)** opera bajo el régimen severo del Step-Up a 10V absorbiendo picos masivos de corriente. Por ello, se montó **únicamente este banco en el cartucho de cola de milano del primer piso**, permitiendo un recambio rápido (*Quick-Change*) en boxes en menos de 10 segundos sin descalibrar los sensores ni la electrónica del segundo piso.
@@ -1382,7 +1382,7 @@ Se sitúa el vehículo apuntando fijamente al objeto o trayectoria objetivo. Uti
 ---
 
 #### 3. Validación del Filtro de Datos por Firmware
-Se verifica en la interfaz de telemetría que el sensor mantenga el rastreo continuo mostrando el cuadro de ID en color verde permanente. A nivel de software en el Arduino Mega 2560, se ejecuta una rutina de filtrado que restringe las peticiones del bus I2C únicamente a los fotogramas donde la función `huskyLens.isLearned()` y la coincidencia del ID entrenado sean verdaderas.
+A nivel de software en el ESP32, se ejecuta una rutina de filtrado que restringe las peticiones del bus I2C únicamente a los fotogramas donde la función huskyLens.isLearned() y la coincidencia del ID entrenado sean verdaderas.
 
 > [!WARNING]
 > **Saturación del Procesador RISC-V por Multi-ID Habilitado**
@@ -1412,7 +1412,7 @@ Para garantizar que Trivilyn mantenga una navegación continua y fluida en la Ro
 
 3. **Estabilidad Dinámica:** Esta relación matemática permite que el sistema Steer-by-Wire (SbW) anticipe el radio de giro óptimo en ambos sentidos de carrera (horario y antihorario) sin necesidad de recalibraciones físicas de última hora.
 
-La cámara debe ser capaz de detectar los pilares de color Rojo y Verde (cuya altura típica es de 15 cm) para ejecutar las maniobras evasivas. Para calcular la distancia de la zona ciega (d_ciega) por delante del robot, aplicamos la siguiente fórmula trigonométrica basada en la cotangente:
+La cámara debe ser capaz de detectar los pilares de color Rojo y Verde (cuya altura típica es de 10 cm) para ejecutar las maniobras evasivas. Para calcular la distancia de la zona ciega (d_ciega) por delante del robot, aplicamos la siguiente fórmula trigonométrica basada en la cotangente:
 
  $$Distancia\ Ciega = Altura\ de\ la\ Cámara \times \tan(90^\circ - \alpha_{inclinación} - \frac{FOV_{vertical}}{2})$$
  
@@ -1465,6 +1465,18 @@ Para esquivar los pilares en la Ronda Cerrada sin dar bandazos, la cámara neces
 * **Punto de Corte de Decisión Lateral:** Al mapear la pantalla en 320 píxeles, la posición física centradita de la cámara nos permite usar los umbrales del código (`188` para el rojo y `130-135` para el verde). Si el pilar se encuentra a la derecha o izquierda de estas marcas, el carro sabe exactamente hacia dónde maniobrar para librar el obstáculo.
 * **El Límite de la Zona Ciega:** Debido a la altura del montaje y el ángulo de inclinación de la HuskyLens, calculamos geométricamente que el carro pierde de vista la base del pilar cuando se acerca demasiado. Para solucionar este límite físico, calibramos el tamaño del bloque en píxeles (`result.height > 90` para rojo y `> 70` para verde). Esto fuerza al carro a disparar las funciones de rebase (`rojoderecha()`, `verdeizquierda()`, etc.) justo **antes** de entrar en la zona ciega del suelo, asegurando que el coche ya esté ejecutando la coreografía de curvas cuando el obstáculo desaparezca de la pantalla.
 
+---
+
+### c. Matriz ToF VL53L5CX (Confirmación de Obstáculos en Ronda Cerrada)
+
+El sensor multizona VL53L5CX no reemplaza a ningún sensor existente: se suma como una segunda opinión, exclusiva de la Ronda Cerrada, para confirmar lo que la HuskyLens ya detectó por color.
+
+* **Altura y ángulo de montaje:** fijado a **14 cm** sobre el chasis con una inclinación ascendente de **16-17°**. El sistema solo lee la fila inferior de la matriz de 8x8 zonas, ya que a esa altura e inclinación es la única franja que intersecta de forma consistente los 10 cm reglamentarios de un pilar sin recoger ruido del entorno por encima.
+* **Umbral de disparo:** 350 mm, dentro del rango físico de 400-500 mm del sensor, calibrado y validado en pista para separar la lectura de un pilar real de la superficie continua de una pared.
+* **Orden de activación:** el VL53L5CX no lee de forma continua — se enciende únicamente después de que la HuskyLens ya confirmó color y posición del obstáculo. Con esto se evita que el sensor dispare una evasión por su cuenta ante una lectura ambigua o un reflejo, algo que sí podría pasar si actuara como gatillo único.
+
+>[!NOTE]
+>Uso exclusivo para obstáculos de color en Ronda Cerrada. La detección de pared y esquina, en ambas rondas, la sigue resolviendo el sensor ultrasónico frontal.
 
 ## Sistema de Correderas de Precisión: Adaptabilidad en Pista
 
@@ -1695,7 +1707,7 @@ Efecto: Esto genera lecturas "fantasmales" o ecos falsos. Aunque nuestro filtro 
 
 # Ronda Cerrada (Closed Challenge)
 
-El firmware de la Ronda Cerrada de **Trivilyn 3.0** está diseñado bajo un paradigma de **Control Reactivo Híbrido** de ejecución en un microcontrolador **ESP32** (32 bits). El sistema unifica la telemetría de una matriz tri-sensorial mixta —un sensor de Tiempo de Vuelo matricial **VL53L5CX** (8x8 zonas) en el frente y dos transductores ultrasónicos laterales (**HC-SR04** vía librería `NewPing`)— combinada con el procesamiento de visión computacional en tiempo real de la cámara inteligente **HuskyLens** (vía Hardware Serial `Serial1`) para la toma de decisiones críticas en milisegundos.
+El firmware de la Ronda Cerrada de **Trivilyn 3.0** está diseñado bajo un paradigma de **Control Reactivo Híbrido** de ejecución en un microcontrolador **ESP32** (32 bits). El sistema unifica la telemetría de una matriz tetra-sensorial mixta, un sensor de Tiempo de Vuelo matricial VL53L5CX (8x8 zonas) en el frente, un sensor ultrasónico frontal auxiliar y dos transductores ultrasónicos laterales (HC-SR04 vía librería NewPing) combinada con el procesamiento de visión computacional en tiempo real de la cámara inteligente **HuskyLens** (vía Hardware Serial `Serial1`) para la toma de decisiones críticas en milisegundos.
 
 ---
 
@@ -1745,13 +1757,13 @@ Para mantener la trayectoria centrada en el carril sin golpear las paredes duran
 
 ---
 
-### C. Justificación Técnica de Librerías y Protocolos Integrados
+### 3. Justificación Técnica de Librerías y Protocolos Integrados
 
 * **Implementación de NewPing sin Bloqueo:** La función nativa `pulseIn()` congela el procesador esperando el retorno del pulso. `NewPing` realiza el cálculo mediante temporizadores de hardware sin bloquear la ejecución. Además, la función `leerUltrasonico()` retorna `9999 mm` ante un "eco nulo" (fuera de rango), evitando que un cero lógico dispare maniobras fantasma.
 * **Procesamiento de Visión HuskyLens (Hardware Serial):** La cámara se comunica por la interfaz `Serial1` del ESP32 (RX GPIO 16, TX GPIO 4) a 9600 baudios. El firmware consulta los bloques aprendidos (`IDs 1 a 3` para bloques Rojos; `IDs 4 a 6` para bloques Verdes).
 * **Integración Condicional Visión + ToF (`obstaculoDetectado`):** Para evitar falsos rebasamientos por reflexiones de luz, las subrutinas de esquiva de color de la HuskyLens (`rojoderecha`, `rojoizquierda`, `verdeizquierda`, `verdederecha`, `Rojolargo`, `Verdelargo`) condicionan su disparo a que la matriz del **VL53L5CX** haya confirmado la presencia física real del objeto en su zona frontal (`obstaculoDetectado == true`) o que la altura del bloque visual supere umbrales críticos de pixeles.
   
-### C. Matriz de Decisiones Ópticas Basada en Firmas de Color e Integración ToF
+### 4. Matriz de Decisiones Ópticas Basada en Firmas de Color e Integración ToF
 
 | ID Registrado | Clasificación Óptica | Filtro de Proximidad Visual / Matriz ToF | Flanco / Posición Pantalla | Subrutina Ejecutada | Dinámica del Rebase en Pista |
 | :---: | :--- | :--- | :--- | :---: | :--- |
@@ -1794,9 +1806,13 @@ Mide los milisegundos que necesita el carro para estabilizarse en línea recta j
 * **El Ajuste en Boxes:** Metimos retardos muertos controlados y un filtro de histéresis por temporizador de hardware (`millis() - ultimaEsquivaMillis > 1500 ms`). Ese tiempo en milisegundos congela la activación de evasiones consecutivas lo suficiente para que los sensores ultrasónicos laterales (`sonarLeft` y `sonarRight`) tomen el control con ráfagas de **30ms** (corrigiendo rumbos si detectan paredes a menos de **390 mm**) y centren el carro en el carril antes de buscar el próximo pilar.
 
 ---
+## Protocolo de Fin de Carrera y Parada de Seguridad
 
-> **Métrica Final de Validación:** Al empezar las pruebas de la ronda cerrada, la tasa de efectividad era menor al 10% (el carro tumbaba 6 de cada 10 pilares o se estrellaba con la pared al salir del rebase). Ajustando los tiempos de retardo, cerrando el filtro matricial del VL53L5CX y activando el escudo ultrasónico lateral a menos de **390 mm**, logramos subir la efectividad al **60% de rondas limpias** en el taller.
-
+La conclusión de la Ronda Cerrada se gestiona de manera automatizada mediante la variable acumulativa de ciclos y evasiones (`pepe`). Al cumplirse la condición condicional `if (pepe > 12)`, que representa de forma estadística la culminación de las 3 vueltas reglamentarias del circuito:
+* El firmware ejecuta un avance lineal residual de posicionamiento y fuerza el servomotor al punto neutro (`myservo.write(centro)`).
+* Desenergiza los canales del puente H L298N desactivando las salidas digitales (`digitalWrite(IN1, LOW)`, `digitalWrite(IN2, LOW)`) mediante la función `stop()`.
+* Detiene el hilo de ejecución de forma indefinida mediante un bloqueo secuencial (`delay(1000000000)`), asegurando que el robot permanezca estático dentro del cuadrante de meta y evitando penalizaciones por desborde de pista.
+---
 <a name="fallas-edgecases"></a>
 
 ## Sistema de Mitigación de Fallas y Manejo de Casos Extremos (Edge Cases)
@@ -1813,28 +1829,42 @@ En un entorno de competencia de alta velocidad como la Ronda Cerrada de la WRO, 
 > **Monitoreo de Batería en Celdas 18650 (2S)**
 > Si el pack de celdas 18650 cae por debajo del umbral crítico de descarga segura (3.0V por celda, es decir, 6.0V totales en el paquete 2S), el rendimiento de tracción disminuye negativamente y aumenta el rizo de corriente. El equipo realiza el cambio preventivo de celdas en boxes tan pronto como la medición en vacío marca valores inferiores a 7.2V.
 
+ ### ⚠️ Limitación Conocida: Maniobras de Esquiva por Temporización Fija
+
+Las subrutinas de evasión de color (`rojoderecha()`, `verdeizquierda()`, `Rojolargo()`, etc.) ejecutan su secuencia de deflexión mediante llamadas bloqueantes a `delay()`. Durante la ventana de tiempo que dura cada maniobra (entre 300 ms y 1420 ms según la subrutina), el firmware no procesa nuevas lecturas del VL53L5CX ni de los sensores ultrasónicos laterales — el robot ejecuta la coreografía de esquiva "a ciegas" respecto a cambios en el entorno que ocurran a mitad de la maniobra.
+
+**Por qué se mantiene así por ahora:** los tiempos fueron calibrados empíricamente y de forma exhaustiva en pista (ver métricas de la sección anterior, subida de 10% a 80% de efectividad), y una migración a una máquina de estados no bloqueante basada en `millis()` requiere recalibrar cada subrutina desde cero bajo el nuevo modelo de ejecución.
+
+**Mejora identificada para siguiente iteración:** refactorizar las subrutinas de esquiva a una FSM temporizada por `millis()`, manteniendo el muestreo de sensores activo durante toda la maniobra. Esto permitiría abortar o ajustar una evasión en curso si el VL53L5CX detecta una segunda amenaza (por ejemplo, un pilar adicional muy cercano) antes de que termine la secuencia actual.
+
 ---
+## Análisis de Rendimiento en el Desafío Cerrado
 
-### D. Protocolo de Fin de Carrera y Parada de Seguridad
+Para validar el desempeño real de Trivilyn 3.1 en la Ronda Cerrada, registramos dos métricas distintas durante las pruebas en taller, evaluadas en niveles de granularidad diferentes:
 
-La conclusión de la Ronda Cerrada se gestiona de manera automatizada mediante la variable acumulativa de ciclos y evasiones (`pepe`). Al cumplirse la condición condicional `if (pepe > 12)`, que representa de forma estadística la culminación de las 3 vueltas reglamentarias del circuito:
-* El firmware ejecuta un avance lineal residual de posicionamiento y fuerza el servomotor al punto neutro (`myservo.write(centro)`).
-* Desenergiza los canales del puente H L298N desactivando las salidas digitales (`digitalWrite(IN1, LOW)`, `digitalWrite(IN2, LOW)`) mediante la función `stop()`.
-* Detiene el hilo de ejecución de forma indefinida mediante un bloqueo secuencial (`delay(1000000000)`), asegurando que el robot permanezca estático dentro del cuadrante de meta y evitando penalizaciones por desborde de pista.
----
-## Analisis de Rendimiento en el Desafío Cerrado
+### 1. Tasa de Esquiva por Obstáculo Individual
+Durante las tandas de calibración fina de las subrutinas de esquiva (`rojoderecha()`, `verdeizquierda()`, etc.), el robot logró esquivar limpiamente **8 de cada 10 pilares** presentados de forma aislada (80% de efectividad), sin distinción marcada entre pilares rojos y verdes — las fallas se distribuyeron de forma mixta entre ambos colores.
 
+### 2. Tasa de Éxito en Desafío Completo (Secuencia de Obstáculos)
+Al evaluar el desafío completo — es decir, la secuencia completa de obstáculos en una sola corrida, en vez de un pilar aislado — la tasa de fallas aumenta, como es esperable al acumular el riesgo de cada maniobra en cadena: el equipo registró la pérdida de **1 a 2 pilares por cada 2 o 3 intentos completos** del desafío.
+
+> **Nota metodológica:** estas dos métricas no son directamente comparables entre sí — la primera mide la fiabilidad de una maniobra individual bajo condiciones controladas de calibración, mientras que la segunda mide el desempeño acumulado del sistema completo en una corrida real, donde el error de una maniobra puede arrastrar al robot a una posición desalineada para el siguiente obstáculo.
+
+### 3. Modo de Falla Predominante: Desplazamiento del Pilar fuera del Círculo Delimitador
+El tipo de falla registrado con mayor frecuencia no fue la pérdida de trayectoria por deriva lateral, sino el **contacto físico directo con el pilar**, desplazándolo fuera del círculo verde reglamentario que delimita su posición válida en pista. Esto es relevante porque, bajo el reglamento de la WRO, el desplazamiento de un obstáculo fuera de su zona de tolerancia constituye una falla de puntuación aun cuando el robot logre completar la maniobra de esquiva sin descarrilarse — es decir, el chasis puede "pasar" el obstáculo con éxito aparente y aun así perder el punto de la misión si el impacto lateral movió el pilar de su sitio.
+
+**Causa raíz identificada:** este modo de falla es consistente con la limitación de temporización fija documentada en la sección de Mitigación de Fallas — al no reevaluar la posición del pilar durante la ejecución de la maniobra (`delay()` bloqueante), el margen de separación calculado al inicio de la esquiva puede no corresponder ya con la posición real del chasis en el instante del contragiro, resultando en un roce lateral que desplaza el obstáculo en vez de una colisión frontal directa.
+
+### Conclusión del Análisis
+Los datos evidencian que la arquitectura de fusión sensorial (HuskyLens + VL53L5CX) resuelve de forma efectiva la detección y clasificación del obstáculo — el robot identifica correctamente el color y dispara la maniobra en el momento adecuado en la gran mayoría de los casos. La brecha de rendimiento actual se concentra en la fase de ejecución de la maniobra en sí, no en la fase de percepción, lo cual valida la limitación conocida documentada previamente (temporización fija por `delay()`) como el próximo punto de mejora prioritario para elevar la tasa de éxito en el desafío completo.
 
 ## Ensayos Cinemáticos y Navegación Continua.
 
 - [Closed Challenge](https://youtu.be/hMEwIUEK_SI?si=5NZFc5rS4aASXCg7)
 
 # Pensamiento Sistémico y Decisiones de Ingeniería 
-
-
-## Temporada 2024 Rexbot1.0 
-
 Trivilyn, a través de los años, ha tenido muchos cambios desde su primera versión en 2024 hasta lo que es el día de hoy.
+## Temporada 2024 Rexbot1.0 
 
 2024 Rexbot 1.0: Principalmente, su diferencia es el tamaño y sus mecanismos. Esta versión es muy rudimentaria, hecha con materiales reciclados. Este robot tuvo tres versiones principales durante su transcurso para llegar a la final internacional de Turquía.
 
@@ -2181,12 +2211,15 @@ La versión 3.1 de Trivilyn introduce dos cambios principales respecto a la v3.0
 ### Migración a ESP32
 
 El controlador principal pasó de un Arduino Mega 2560 a un ESP32, reemplazándolo por completo (ambos sistemas no coexisten en la v3.1). La razón técnica principal para el cambio no fue la disponibilidad de pines, sino la capacidad de procesamiento: el Arduino Mega 2560 no tiene la potencia de cómputo necesaria para leer y procesar en tiempo real los datos de la matriz 8x8 del sensor VL53L5CX, mientras que el ESP32 sí puede manejar ese volumen de datos sin afectar el ciclo de control del robot. El firmware fue migrado en su totalidad a la nueva plataforma.
+<img width="960" height="1280" alt="image" src="https://github.com/user-attachments/assets/38723540-f115-4598-aaf8-73b0bf5b332f" />
 
 ### Sensor frontal VL53L5CX
 
 Se incorporó un sensor VL53L5CX (matriz multizona de 8x8, tiempo de vuelo) en la parte frontal del robot, montado a una altura aproximada de 14 cm respecto al piso, con una inclinación de 16-17° hacia arriba. Esta inclinación permite usar únicamente la fila inferior de la matriz (8 zonas) como referencia de distancia, evitando que el sensor lea el piso de forma constante y genere falsos positivos.
+<img width="960" height="1280" alt="image" src="https://github.com/user-attachments/assets/be41d291-3a03-4521-877a-176f1712514a" />
 
 El sensor opera dentro de un rango físico aproximado de 400-500 mm, y el disparo de la lógica de esquiva de obstáculos de color está fijado a un umbral único: se activa cuando alguna de las 8 zonas de la fila inferior reporta una distancia menor a 350 mm.
+<img width="960" height="1280" alt="image" src="https://github.com/user-attachments/assets/ff40bbb9-d675-44b9-80ec-5db2714cac30" />
 
 **Es importante precisar el rol de este sensor, ya que no reemplaza al sensor ultrasónico frontal existente**, sino que trabaja en conjunto con el HuskyLens:
 
