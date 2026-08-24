@@ -1129,7 +1129,7 @@ El sistema electrónico de Trivilyn 3.0 se fundamenta en un diseño circuital de
 
 A continuación, se presenta y analiza detalladamente el plano esquemático oficial del robot:
 
-<img width="1144" height="928" alt="image" src="https://github.com/user-attachments/assets/e8f14544-bcc7-4581-96bb-628cec9963a7" />
+<img width="1280" height="714" alt="image" src="https://github.com/user-attachments/assets/64bbecc1-02a1-4677-8219-5710b1730dd1" />
 
 ---
 
