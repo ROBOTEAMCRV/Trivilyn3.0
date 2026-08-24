@@ -1134,28 +1134,30 @@ A continuación, se presenta y analiza detalladamente el plano esquemático ofic
 
 Con base en la arquitectura del vehículo, el circuito se divide en cuatro subsistemas críticos interconectados de forma estratégica:
 
-### 1. Etapa de Regulación Conmutada y Gestión de Potencia (Power Layer)
+### a. Etapa de Regulación Conmutada y Gestión de Potencia (Power Layer)
 El sistema gestiona la energía basal de las baterías empleando una estrategia de regulación y elevación multirriel:
 * **Módulo Step-Down LM2596 (Buck Converter):** Recibe la tensión nominal (7.4V - 8.4V) de las dos celdas en serie y la reduce a **5.0V regulados de alta eficiencia**. Este riel limpio se inyecta directamente al pin VIN/5V de la placa de desarrollo del ESP32 y distribuye energía a los periféricos de sensado.
 * **Módulo STEP-UP de 6.5V:** Eleva la alimentación del banco dedicado a un voltaje constante de 6.5V. Esta línea alimenta prioritariamente al servomotor de dirección, garantizando un torque de retención óptimo para el mecanismo Steer-by-Wire.
 * **Módulo STEP-UP de 10V:** Trabaja de forma paralela para fijar un riel de potencia de 10V para el driver de tracción trasera (L298), asegurando la diferencia de potencial necesaria para alcanzar velocidad crucero.
 * **Red de Señalización de Estado:** Conectada a la salida del sistema de alimentación, se incorpora una etapa Step-Down pasiva que regula el paso de corriente hacia dos diodos emisores de luz (LED1 y LED2 en color Rojo) para telemetría visual sobre el estado de energización del chasis.
 
-### 2. Núcleo de Procesamiento Central (ESP32 Layer)
+### b. Núcleo de Procesamiento Central (ESP32 Layer)
 La lógica de control de alto rendimiento se concentra en el SoC ESP32 (lógica de 3.3V).
 * **Gestión Eficiente de Pines (GPIOs):** Los pines del microcontrolador están mapeados para optimizar el procesamiento dual-core y evitar cruces de señales. Todas las mallas de tierra convergen en un Nodo de Tierra Común (GND), previniendo bucles que puedan corromper las lecturas digitales a 3.3V.
 * **Generación de Hardware PWM (LEDC):** El ESP32 utiliza sus canales periféricos LEDC dedicados para emitir señales de modulación por ancho de pulso hacia el servomotor y el driver L298, traduciendo las decisiones algorítmicas en movimientos de alta precisión.
 
-### 3. Conmutación e Inversión de Giro de Tracción (Driver L298)
+### c. Conmutación e Inversión de Giro de Tracción (Driver L298)
 El control dinámico del motor de tracción trasera (M1) se ejecuta mediante la etapa de potencia comandada por el driver L298.
 * **Control Predictivo:** Recibe las señales lógicas provenientes de los GPIOs de 3.3V del ESP32 (mapeados a IN1, IN2 y EN) para determinar el sentido de giro y la aceleración lineal.
 * **Salida Homogénea:** Los pines de salida OUT1 y OUT2 inyectan la corriente de forma simétrica a los terminales del motor M1, garantizando una respuesta lineal y predecible.
 
-### 4. Matriz de Percepción Espacial y Buses de Datos (Sensors Layer)
-El sistema de posicionamiento y lectura de pista se compone de un arreglo redundante de sensores:
-* **Módulos de Sensado HC:** El vehículo incorpora tres sensores ultrasónicos independientes (HC-SR04).
-* **Matriz ToF Multizona (VL53L5CX):** Sensor de distancia por Tiempo de Vuelo (ToF) matricial de 8x8 zonas, encargado de medir perfiles tridimensionales de obstáculos con alta resolución temporal.
-* **Arquitectura de Conexión y Alimentación:** Los módulos ultrasónicos y el sensor ToF VL53L5CX se alimentan desde la línea limpia de 5V/3.3V proveniente de la etapa del regulador LM2596. Sus líneas de datos (Echo/Trigger e I2C) se conectan directamente al ESP32 con la debida protección lógica.
+### d. Matriz de Percepción Espacial y Buses de Datos (Sensors Layer)
+
+El sistema de posicionamiento y telemetría de pista se compone de un arreglo especializado según la fase de competencia:
+
+* **Módulos Ultrasónicos de Pared (HC-SR04):** Tres sensores ultrasónicos orientados a los flancos y frente auxiliar para el autocentrado continuo entre las paredes de la pista y el control de carril en tiempo real.
+* **Matriz ToF Multizona (VL53L5CX — Uso Exclusivo Ronda Cerrada):** Sensor de Tiempo de Vuelo (8x8 zonas) dedicado **única y exclusivamente a la confirmación de obstáculos de color (pilares rojos/verdes)** en la Ronda Cerrada (*Closed Challenge*). Mide en tiempo real la proximidad frontal física (hasta 350 mm) para resolver la zona ciega de 19.6 cm de la HuskyLens y evitar falsos giros por reflejos en la lona.
+* **Arquitectura de Conexión y Alimentación:** Todos los sensores se alimentan desde la línea limpia de **5.0V** del regulador Buck LM2596. Las líneas de datos $\text{I}^2\text{C}$ (GPIO 25/26) del ToF operan a 3.3V nativos del ESP32 con filtrado por software para evitar bloqueos del bus durante las maniobras de rebase.
 * **Canal Perceptivo HuskyLens:** Cámara de visión artificial acoplada de forma directa a uno de los puertos UART por hardware del ESP32 para la transmisión instantánea de las coordenadas de los pilares de color de la WRO.
 
 ---
@@ -1192,10 +1194,6 @@ Elegimos la plataforma ESP32 para sustituir arquitecturas tradicionales de 8 bit
 ### 4.2 Coprocesamiento de Visión: Cámara Inteligente HuskyLens
 El rastreo de las líneas lógicas de la pista se delega enteramente a los algoritmos internos de procesamiento de la HuskyLens.
 * **Protocolo de Comunicación:** Conectamos la cámara mediante la interfaz UART acoplada directamente a los puertos serie físicos (Hardware Serial TX/RX) del ESP32. Al migrar a un canal serie dedicado por hardware, logramos un bus de altísima velocidad inmune a las colisiones de datos y ruido electromagnético de los motores, transmitiendo las coordenadas de los bloques de color al instante.
-
-### 4.3 Matriz de Proximidad (Trifocal) y Sensor Matricial ToF VL53L5CX
-La lectura perimetral del vehículo se apoya en tres sensores ultrasónicos HC-SR04 distribuidos estratégicamente en la defensa delantera más un sensor de tiempo de vuelo matricial VL53L5CX.
-* **Mapeo en Tiempo Real y Ranging 3D:** La disposición trifocal ultrasónica crea un abanico de escaneo perimetral, mientras que el **VL53L5CX** aporta una matriz de 8x8 zonas de medición láser ToF. Esto permite detectar inclinaciones o pequeños relieves en pista que los ultrasónicos no registran, dando al algoritmo la información necesaria para corregir la trayectoria del servo de dirección con suavidad antes de una colisión.
 
 ---
 
