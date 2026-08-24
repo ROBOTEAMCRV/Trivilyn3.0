@@ -110,6 +110,9 @@ Para agilizar la evaluación de los diferentes componentes del proyecto, puedes 
 * [Manual de Ensamblaje (Assembly Manual)](./Assembly%20Manual/)
   *Guía paso a paso con esquemas mecánicos para la construcción y calibración del chasis modular.*
 
+* [Guía de Instalación (Instalación.md)](./Instalación.md)
+  *Manual paso a paso para configurar el firmware, librerías y calibración electrónica del ESP32 desde cero.*
+
 * [Planos y Circuitos (Schematics)](./Schematics/)
   *Acceso directo a la ingeniería electrónica del robot, incluyendo los diagramas de bloques, mapeo de pines (Pinout) y la red de distribución de potencia.*
 
