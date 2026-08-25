@@ -21,7 +21,7 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
 
    * [Tutor - Luis Eduardo Paredes](#tutor---luis-eduardo-paredes)
   
-   * [Trivilyn 3.0](#trivilyn30)
+   * [Trivilyn 3.1](#trivilyn31)
 
 3. [Fotos de Trivilyn 3.0](#trivilyn-360-photos)
 
@@ -67,7 +67,7 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
 
      * [Análisis de Rendimiento](#análisis-de-rendimiento-optimización-de-tiempo-vs-fiabilidad)
 
-   * [Ronda Cerrada](#ronda-cerrada)
+   * [Ronda Cerrada](#ronda-cerrada-closed-challenge)
   
      * [Diagrama de Flujo](#-diagrama-de-flujo-closed-challenge)
     
@@ -75,7 +75,7 @@ Nuestro prototipo es un vehículo autónomo diseñado para la categoría futuros
     
      * [Mitigación de Fallas y Casos Extremos](#fallas-edgecases)
     
-     * [Analisis de Rendimiento](#analisis-de-rendimiento-en-el-desafío-cerrado)
+     * [Análisis de Rendimiento](#análisis-de-rendimiento-en-el-desafío-cerrado)
     
 7. [Pensamiento Sistémico y Decisiones de Ingeniería](#pensamiento-sistémico-y-decisiones-de-ingeniería)
 
@@ -237,12 +237,12 @@ Apoyo Logístico: Colabora en la preparación de las pistas de prueba, recolecci
 
 <img width="400" height="600" alt="image" src="https://github.com/user-attachments/assets/12b81259-f88b-43d7-be25-c19f183fe3eb" />
 
- ##  👤Trivilyn3.0 
+ ##  👤Trivilyn3.1
 
  ### Rol: Vehículo Autónomo de Competición - Plataforma Oficial 2026.
 
-<img width="810" height="885" alt="image" src="https://github.com/user-attachments/assets/b6bfbca7-b9b6-4e8b-a535-d11c9ce3f4d7" />
-    
+<img width="960" height="1280" alt="image" src="https://github.com/user-attachments/assets/b431b261-80f5-4347-a354-a2e3a42bf6c3" />
+
   * **Estatura y Peso:** Estructura modular optimizada en tres niveles con una masa total controlada de 1150 gramos.
     
   * **Habilidades de Percepción:** Visión artificial acelerada por IA con HuskyLens para reconocimiento colorimétrico y una red unificada de sensores ultrasónicos HC-SR04 para mapeo perimetral en tiempo real.
@@ -251,7 +251,7 @@ Apoyo Logístico: Colabora en la preparación de las pistas de prueba, recolecci
     
   * **Dieta Energética:** Sistema de alimentación triple e independiente basado en celdas 18650.
 > [!NOTE]
-> **Nota de Evolución y Origen del Nombre:** Es importante aclarar que la nomenclatura **Trivilyn 3.0** representa la tercera generación de nuestra plataforma de competencia, siendo la evolución tecnológica directa de los prototipos anteriores **Rexbot 1.0** y **Rexbot 2.0** (no existen versiones 1.0 o 2.0 bajo el nombre de Trivilyn). El cambio de nombre y el término "Trivilyn" fue acuñado formalmente como un homenaje al apodo de cariño con el que nuestro tutor se refiere al equipo.
+> **Nota de Evolución y Origen del Nombre:** Es importante aclarar que la nomenclatura **Trivilyn 3.0** Y **Trivilyn 3.1** representa la tercera generación de nuestra plataforma de competencia, siendo la evolución tecnológica directa de los prototipos anteriores **Rexbot 1.0** y **Rexbot 2.0** (no existen versiones 1.0 o 2.0 bajo el nombre de Trivilyn). El cambio de nombre y el término "Trivilyn" fue acuñado formalmente como un homenaje al apodo de cariño con el que nuestro tutor se refiere al equipo.
 
 # Trivilyn 360 Photos
 
@@ -259,14 +259,12 @@ Para evidenciar la simetría, la distribución modular en tres niveles y el acab
 
 | 📸 Perfil de Inspección | 🖼️ Registro Visual (Render / Captura) |
 | :--- | :--- |
-| **Vista Superior**<br>• Permite evaluar la distribución de los componentes en el segundo piso y la alineación central. | <img width="400" alt="Perfil Superior" src="https://github.com/user-attachments/assets/5ea353f3-4b35-4c3e-9bb6-72a543cf638f" /> |
-| **Vista Lateral Derecha**<br>• Muestra el despeje sobre el suelo (ground clearance) y el acople del tren motriz. | <img width="400" alt="Perfil Derecho" src="https://github.com/user-attachments/assets/5c40a96a-0570-45fe-94e5-adccd0af3df8" /> |
-| **Vista Lateral Izquierda**<br>• Expone el acceso al sistema perimetral de alimentación y cableado lógico. | <img width="400" alt="Perfil Izquierdo" src="https://github.com/user-attachments/assets/cbf40dd8-de2d-4060-8c28-fb0e8f4901fa" /> |
-| **Vista Frontal**<br>• Muestra la orientación de la HuskyLens, el soporte de sensores y los LEDs de contraste. | <img width="400" alt="Perfil Delante" src="https://github.com/user-attachments/assets/d7749a1f-4eab-4707-9e4a-3e9ab4a34e1b" /> |
-| **Vista Trasera**<br>• Evidencia el anclaje del motor principal y la salida estructurada de las líneas de potencia. | <img width="400" alt="Perfil Trasero" src="https://github.com/user-attachments/assets/659f38c5-4fa7-4f97-a464-c7725a822623" /> |
+| **Vista Superior**<br>• Permite evaluar la distribución de los componentes en el segundo piso y la alineación central. | <img width="400" alt="Perfil Superior" src="https://github.com/user-attachments/assets/b501296b-d524-4837-997a-e543f914c073" /> |
+| **Vista Lateral Derecha**<br>• Muestra el despeje sobre el suelo (*ground clearance*) y el acople del tren motriz. | <img width="400" alt="Perfil Derecho" src="https://github.com/user-attachments/assets/b151d767-1e41-4151-8d0c-055fc917f040" /> |
+| **Vista Lateral Izquierda**<br>• Expone el acceso al sistema perimetral de alimentación y cableado lógico. | <img width="400" alt="Perfil Izquierdo" src="https://github.com/user-attachments/assets/cd847d69-ddd3-4681-ab4d-8374d27463e3" /> |
+| **Vista Frontal**<br>• Muestra la orientación de la HuskyLens, el soporte de sensores y la matriz ToF. | <img width="400" alt="Perfil Delante" src="https://github.com/user-attachments/assets/b431b261-80f5-4347-a354-a2e3a42bf6c3" /> |
+| **Vista Trasera**<br>• Evidencia el anclaje del motor principal y la salida estructurada de las líneas de potencia. | <img width="400" alt="Perfil Trasero" src="https://github.com/user-attachments/assets/2005b6e9-43e4-4e8d-8f6a-bcde1edecc4c" /> |
 | **Vista Inferior (Chasis)**<br>• Expone la geometría del primer piso y el área libre para evitar la fricción con la pista. | <img width="400" alt="Perfil Inferior" src="https://github.com/user-attachments/assets/4d58e3ae-8c33-4a9e-904c-3e7a4e68819d" /> |
-
-
 ---
 
 # 🔩 Movilidad y Diseño Mecánico
