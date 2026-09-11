@@ -1637,6 +1637,44 @@ leftDistance = lsonar.ping_cm();
 rightDistance = Rsonar.ping_cm();
 ```
 
+### E. Estructura Modular del Firmware
+
+Aunque el firmware de Trivilyn 3.0 se organiza en funciones individuales por maniobra, cada una respeta una separación clara de responsabilidades dentro del ciclo de control: **lectura de sensores → decisión → actuación**. La siguiente tabla documenta esa estructura modular y el propósito único de cada bloque de código:
+
+| Módulo / Función | Responsabilidad Única | Capa de la FSM |
+|---|---|---|
+| `leerUltrasonico()` | Lectura y conversión de pulsos de los sensores laterales (HC-SR04 vía NewPing) a milímetros, con filtro de eco nulo (`9999 mm`) | Percepción |
+| `sonar.ping_cm()` / `lsonar` / `Rsonar` | Muestreo bruto de distancia frontal y lateral | Percepción |
+| Consulta HuskyLens (`Serial1`) | Clasificación cromática y posición (`xOrigin`, `height`) del bloque detectado | Percepción (Visión) |
+| Matriz VL53L5CX (fila inferior, zonas 56–63) | Confirmación física de obstáculo frontal (`obstaculoDetectado`) | Percepción (ToF) |
+| `rojoderecha()`, `rojoizquierda()`, `Rojolargo()`, `verdeizquierda()`, `verdederecha()`, `Verdelargo()` | Ejecución de la coreografía de esquiva (deflexión → contragiro → equilibrio) según color y posición en pantalla | Actuación |
+| `esquivarObjetoMuyIzquierda()` / `esquivarObjetoMuyDerecha()` | Avance rectilíneo de seguridad cuando el obstáculo está en el extremo del campo visual | Actuación |
+| `izquierda()` / `derecha()` | Maniobra de giro temporizada en la Ronda Abierta (conteo de esquinas) | Actuación |
+| `forward()` / `freno()` / `stop()` | Control directo del driver L298N (tracción y frenado activo) | Actuación (Motor) |
+| Variable `pepe` | Contador de estado / bandera de fin de misión | Gestión de Misión |
+| Variables `tilin` / `grasa` / `lewis` / `lecrer` | Banderas de sentido de pista y contadores de rendimiento por flanco | Gestión de Misión |
+| `COOLDOWN_ESQUIVA_MS` / `winnie` / `winnieV` | Histéresis temporal para evitar evasiones consecutivas falsas | Sincronización |
+
+**Limitación de modularidad identificada:** las seis funciones de esquiva por color (`rojoderecha()`, `rojoizquierda()`, `Rojolargo()`, `verdeizquierda()`, `verdederecha()`, `Verdelargo()`) comparten la misma estructura lógica (deflexión de servo → contragiro → equilibrio) pero repiten esa lógica con ángulos y tiempos hardcodeados en vez de una única función parametrizada. Esto fue una decisión de calibración rápida en pista: cada color/posición requirió ajuste fino independiente bajo presión de tiempo antes de la regional, y separar las funciones permitió iterar cada una sin afectar a las demás.
+
+**Mejora identificada para la siguiente iteración:** consolidar las seis subrutinas en una única función genérica `esquivar(ladoGiro, anguloDeflexion, tiempoContragiro, anguloEquilibrio, tiempoEquilibrio)`, invocada con una tabla de parámetros por ID de color/posición (la misma tabla de decisiones ópticas ya documentada en la Sección B.4). Esto reduciría la duplicación de código, facilitaría el mantenimiento de los tiempos calibrados y disminuiría el riesgo de error al copiar valores entre funciones similares.
+
+Respecto a los nombres de variable no convencionales (`pepe`, `tilin`, `grasa`, `lewis`, `lecrer`): si bien se mantienen por identidad de equipo (ver nota en la Sección A), reconocemos que representan una deuda técnica de legibilidad. La siguiente iteración del firmware migrará estos nombres a identificadores descriptivos (`contadorEsquinas`, `banderaSentidoHorario`, `banderaSentidoAntihorario`, `contadorFlancoIzquierdo`, `contadorFlancoDerecho`) manteniendo un comentario que preserve el nombre histórico para continuidad del equipo.
+
+---
+
+### F. Justificación del Algoritmo de Corrección Lateral: Control Bang-Bang vs. PID
+
+El sistema de microajustes laterales de Trivilyn 3.0 (Sección B.2) se implementó mediante un **controlador Bang-Bang** (corrección binaria de tiempo fijo ante cruce de umbral) en lugar de un controlador **PID** (Proporcional-Integral-Derivativo), evaluado como alternativa estándar en sistemas de seguimiento de carril con sensores de distancia. La decisión se sustenta en tres factores técnicos:
+
+1. **Costo computacional y contención de ciclos del ESP32.** El microcontrolador ya reparte ciclos de reloj entre el procesamiento de la matriz 8×8 del VL53L5CX, la lectura por Hardware Serial de la HuskyLens y el muestreo de tres canales ultrasónicos. Un lazo PID requiere cálculo continuo de error, integral acumulada y derivada por muestra en cada iteración del loop principal; en un sistema ya saturado de I/O multisensorial, ese costo adicional compite directamente con la latencia de detección de obstáculos, que es la prioridad crítica de seguridad del vehículo.
+
+2. **Resolución y ruido del sensor no justifican un lazo continuo.** Los sensores ultrasónicos HC-SR04 tienen una resolución práctica de ±1–2 cm y están sujetos al ruido por vibración mecánica documentado en la Sección D.4 (variaciones de hasta ±2 cm a PWM alto). Un controlador PID bien afinado depende de una señal de error suficientemente estable para que los términos integral y derivativo aporten valor; con este nivel de ruido, el término derivativo amplificaría las fluctuaciones en vez de suavizar la corrección, obligando a un filtrado adicional que reintroduce la latencia que se buscaba evitar.
+
+3. **El espacio de maniobra no requiere corrección proporcional fina.** En pasillos de hasta 40 cm de ancho, el margen de maniobra es binario en la práctica: o el chasis está dentro de una zona segura, o está lo bastante cerca de una pared como para requerir corrección inmediata. Un control proporcional aportaría suavidad de trayectoria, pero a costa de tiempo de respuesta — y en este contexto, la prioridad de diseño (documentada en la Sección "Estrategia de Competición") es evitar la colisión dentro de la ventana de lectura de los sensores, no optimizar la suavidad de la curva.
+
+**Costo aceptado de esta decisión:** el controlador Bang-Bang introduce el riesgo de oscilación (efecto zig-zag) si el umbral de disparo está mal calibrado. Esto se mitigó empíricamente fijando pulsos de corrección cortos (25–30 ms) en vez de deflexiones sostenidas, de forma que cada corrección sea lo bastante pequeña para no requerir una contra-corrección inmediata — un compromiso de facto con el comportamiento que un PID lograría de forma nativa, sin el costo computacional asociado.
+
 ## Estrategia de Competición y Gestión de Riesgos
 
 Dada la naturaleza de la competencia, donde se dispone de dos intentos por ronda, hemos diseñado una estrategia de dos fases basada en el compromiso entre confiabilidad y velocidad.
